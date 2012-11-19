@@ -1,0 +1,36 @@
+//
+// Prefix header for all source files of the 'Date' target in the 'Date' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import <CoreData/CoreData.h>
+#endif
+
+#define kAppKey             @"277817856"
+#define kAppSecret          @"71f8c810bdd13a4148498c1d14f74468"
+#define kAppRedirectURI     @"http://www.sina.com"
+#define kAppSsoCallbackScheme @"sinaweibosso.277817856"
+
+#define kUserOAuthSuccessMessage @"UserOAuthSuccessMessage"
+#define kOnlineFriendsMessage @"OnlineFriendsMessage"
+
+#define kSinaWeiboUserIDKey @"id"
+#define kSinaWeiboScreenNameKey @"screen_name"
+#define kSinaWeiboProfileImageUrlKey @"profile_image_url"
+#define kSinaWiboGetUserInfoUrl @"users/show.json"
+#define kSinaWeiboGetBilateralFriendsUrl @"friendships/friends/bilateral.json"
+
+#define kSinaWeiboBilateralFriendsUpdateDate @"kSinaWeiboBilateralFiendsUpdateDate"
+
+#define kServerUrl  @"http://"
+#define kRegisterUserParams @"m=user&f=newWeiboUser"
+
+#define kBilateralFriendEntity @"BilateralFriend"
