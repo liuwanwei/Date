@@ -59,16 +59,6 @@ static BilateralFriendManager * sBilateralFriendManager;
     [self synchroniseToStore];
 }
 
-#pragma 静态函数
-+ (BilateralFriendManager *)defaultManager {
-    if (nil == sBilateralFriendManager) {
-        sBilateralFriendManager = [[BilateralFriendManager alloc] init];
-    }
-    
-    return sBilateralFriendManager;
-}
-
-#pragma 类成员函数
 - (BilateralFriend *)bilateralFriendWithUserID:(NSNumber *)userID {
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kBilateralFriendEntity];
     
@@ -82,6 +72,18 @@ static BilateralFriendManager * sBilateralFriendManager;
         return [results objectAtIndex:0];
     }
 }
+
+#pragma 静态函数
++ (BilateralFriendManager *)defaultManager {
+    if (nil == sBilateralFriendManager) {
+        sBilateralFriendManager = [[BilateralFriendManager alloc] init];
+    }
+    
+    return sBilateralFriendManager;
+}
+
+#pragma 类成员函数
+
 
 - (BilateralFriend *)newFriend:(NSNumber *)userID withName:(NSString *)name withImageUrl:(NSString *)imageUrl {
     // check if this friend already exists.
@@ -150,6 +152,17 @@ static BilateralFriendManager * sBilateralFriendManager;
     return results;
 }
 
+- (NSArray *)allOnlineFriends {
+    NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kBilateralFriendEntity];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"isOnline != nil"];
+    request.predicate = predicate;
+    NSArray * results = [self executeFetchRequest:request];
+    if (nil == results || 0 == results.count) {
+        return nil;
+    }
+    return results;
+}
+
 /*
   检查是否有新的注册用户，如果修改数据库isOnline字段为YES，并通知界面层进行提醒
  */
@@ -164,10 +177,10 @@ static BilateralFriendManager * sBilateralFriendManager;
             object = [data objectAtIndex:index];
             if ([object isKindOfClass:[NSDictionary class]]) {
                 if (0 == index) {
-                    predicate = [NSString stringWithFormat:@"userID = %@",[object objectForKey:@"id"]] ;
+                    predicate = [NSString stringWithFormat:@"userID = %@",[object objectForKey:@"userId"]] ;
                 }else {
                     predicate = [predicate stringByAppendingString:@" OR "];
-                    predicate = [predicate stringByAppendingString:[NSString stringWithFormat:@"userID = %@",[object objectForKey:@"id"]]] ;
+                    predicate = [predicate stringByAppendingString:[NSString stringWithFormat:@"userID = %@",[object objectForKey:@"userId"]]] ;
                 }
             }
         }
@@ -205,6 +218,20 @@ static BilateralFriendManager * sBilateralFriendManager;
         return nil;
     }
     return results;
+}
+
+/*
+ 收到新的约定信息后，进行有关数据的更新
+ */
+- (void)modifyLastReminder:(NSString *)reminderId withUserId:(NSNumber *)userId {
+    BilateralFriend * friend = [self bilateralFriendWithUserID:userId];
+
+    if (nil != friend) {
+        NSInteger size = [friend.unReadRemindersSize integerValue] + 1;
+        friend.lastReminderID = reminderId;
+        friend.unReadRemindersSize = [NSNumber numberWithInteger:size];
+        [self synchroniseToStore];
+    }
 }
 
 @end

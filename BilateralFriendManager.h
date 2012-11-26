@@ -18,5 +18,9 @@
 - (NSArray *)allFriendsID;
 - (NSArray *)newOnlineFriends;
 - (NSArray *)haveReminderFriends;
+- (NSArray *)allOnlineFriends;
+
+- (void)modifyLastReminder:(NSString *)reminderId withUserId:(NSNumber *)userId;
+
 - (void)checkRegisteredFriends:(NSArray *)data;
 @end
