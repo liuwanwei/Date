@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SinaWeibo.h"
+#import <MapKit/MapKit.h>
 
 @interface SinaWeiboManager : NSObject <SinaWeiboDelegate,SinaWeiboRequestDelegate>
 
@@ -18,5 +19,6 @@
 - (void)initSinaWeibo;
 - (void)requestUserInfo;
 - (void)requestBilateralFriends;
+- (void)requestAddressWithCoordinate2D:(CLLocationCoordinate2D)coordinate2D;
 
 @end

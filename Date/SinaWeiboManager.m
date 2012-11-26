@@ -15,6 +15,8 @@ static SinaWeiboManager * sWeiboManager;
 
 @interface SinaWeiboManager () {
     UserManager * _userManager;
+    BOOL _finishUserInfo;
+    BOOL _finishFriendsInfo;
 }
 @end
 
@@ -29,6 +31,7 @@ static SinaWeiboManager * sWeiboManager;
     return sWeiboManager;
 }
 
+# pragma 私有函数
 - (BOOL)checkUpdateCycle {
     BOOL result = NO;
     NSDate * now = [NSDate date];
@@ -62,8 +65,36 @@ static SinaWeiboManager * sWeiboManager;
     _sinaWeibo.userID = _userManager.userID;
     
     _sinaWeibo.delegate = self;
+    
+    _finishUserInfo = NO;
+    _finishFriendsInfo = NO;
 }
 
+- (void)handleGetAddressRequest:(NSDictionary *)result {
+    id geos = [result objectForKey:@"geos"];
+    if ([geos isKindOfClass:[NSArray class]]) {
+        NSArray * array = (NSArray *)geos;
+        for (NSInteger index = 0; index < array.count; index++) {
+            NSDictionary * dictionary = [array objectAtIndex:index];
+            id adress = [dictionary objectForKey:@"address"];
+            id name = [dictionary objectForKey:@"name"];
+            NSString * value;
+            if ([adress isKindOfClass:[NSString class] ]) {
+                value = adress;
+            }
+            if ([name isKindOfClass:[NSString class] ]) {
+                value = [value stringByAppendingString:name];
+            }
+            NSNotification * notification = nil;
+            notification = [NSNotification notificationWithName:kGetAddressMessage object:nil userInfo:[NSMutableDictionary dictionaryWithObject:value forKey:@"address"]];
+            
+            [[NSNotificationCenter defaultCenter] postNotification:notification];
+        }
+        
+    }
+}
+
+# pragma 类成员函数
 - (void)requestUserInfo {
     [_sinaWeibo requestWithURL:kSinaWiboGetUserInfoUrl
                         params:[NSMutableDictionary dictionaryWithObject:_sinaWeibo.userID forKey:@"uid"]
@@ -78,6 +109,16 @@ static SinaWeiboManager * sWeiboManager;
                         httpMethod:@"GET"
                           delegate:self];
     }
+}
+
+- (void)requestAddressWithCoordinate2D:(CLLocationCoordinate2D)coordinate2D {
+    NSString * longitude = [NSString stringWithFormat:@"%f",coordinate2D.longitude];
+    NSString * latitude = [NSString stringWithFormat:@"%f",coordinate2D.latitude];
+    NSString * param = longitude;
+    param = [param stringByAppendingString:@","];
+    param = [param stringByAppendingString:latitude];
+    
+    [_sinaWeibo requestWithURL:kSinaWeiboGetAddress params:[NSMutableDictionary dictionaryWithObject:param forKey:@"coordinate"] httpMethod:@"GET" delegate:self];
 }
 
 #pragma mark - SinaWeibo Delegate
@@ -111,11 +152,28 @@ static SinaWeiboManager * sWeiboManager;
 #pragma mark - SinaWeiboRequest Delegate
 - (void)request:(SinaWeiboRequest *)request didFinishLoadingWithResult:(id)result {
     if ([request.url hasSuffix:kSinaWiboGetUserInfoUrl]) {
+        NSLog(@"GetUser success");
         [_userManager analyzeData:result];
+        _finishUserInfo  = YES;
     }else if ([request.url hasSuffix:kSinaWeiboGetBilateralFriendsUrl]) {
         if([result isKindOfClass:[NSDictionary class]]) {
+             NSLog(@"BilateralFriends success");
             [[BilateralFriendManager defaultManager] analyzeData:result];
+            _finishFriendsInfo = YES;
         }
+    }else if ([request.url hasSuffix:kSinaWeiboGetAddress]) {
+        if ([result isKindOfClass:[NSDictionary class]]) {
+            [self handleGetAddressRequest:result];
+        }
+    }
+    
+    if (YES == _finishUserInfo && YES == _finishFriendsInfo) {
+        _finishUserInfo = NO;
+        _finishFriendsInfo = NO;
+        NSNotification * notification = nil;
+        notification = [NSNotification notificationWithName:kGoRegisterUserMessage object:nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotification:notification];
     }
 }
 
