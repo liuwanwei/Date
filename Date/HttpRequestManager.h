@@ -7,11 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Reminder.h"
 
 @interface HttpRequestManager : NSObject
 
 + (HttpRequestManager *)defaultManager;
 
-- (void)registerUserRequest:(NSString *)userID withBilateralFriends:(NSArray *)friends;
+- (void)registerUserRequest;
+- (void)sendReminderRequest:(Reminder *)reminder;
+- (void)getRemoteRemindersRequest:(NSString *)timeline;
+- (void)downloadAudioFileRequest:(Reminder *)reminder;
 
 @end
