@@ -11,8 +11,7 @@
 static UserManager * sUserManager;
 
 @implementation UserManager {
-    NSDictionary *_userAuthData;
-    NSDictionary *_userData;
+
 }
 
 @synthesize userID = _userID;
@@ -38,9 +37,6 @@ static UserManager * sUserManager;
 
 - (id)init {
     if (self = [super init]) {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        _userAuthData = [defaults objectForKey:@"SinaWeiboAuthData"];
-        _userData = [defaults objectForKey:@"UserData"];
     }
     
     return self;
@@ -69,15 +65,24 @@ expirationDate == nil) {
 }
 
 - (NSString *)userID {
-    return [_userAuthData objectForKey:@"UserIDKey"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary * userAuthData = [defaults objectForKey:@"SinaWeiboAuthData"];
+
+    return [userAuthData objectForKey:@"UserIDKey"];
 }
 
 - (NSString *)accessToken {
-    return [_userAuthData objectForKey:@"AccessTokenKey"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary * userAuthData = [defaults objectForKey:@"SinaWeiboAuthData"];
+
+    return [userAuthData objectForKey:@"AccessTokenKey"];
 }
 
 - (NSDate *)expirationDate {
-    return [_userAuthData objectForKey:@"ExpirationDateKey"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary * userAuthData = [defaults objectForKey:@"SinaWeiboAuthData"];
+
+    return [userAuthData objectForKey:@"ExpirationDateKey"];
 }
 
 - (void)storeUserData:(NSString *)screenName withImageUrl:(NSString *)imageUrl {
@@ -98,11 +103,17 @@ expirationDate == nil) {
 }
 
 - (NSString *)screenName {
-    return [_userData objectForKey:@"ScreenNameKey"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary * userData = [defaults objectForKey:@"UserData"];
+
+    return [userData objectForKey:@"ScreenNameKey"];
 }
 
 - (NSString *)imageUrl {
-    return [_userData objectForKey:@"ImageUrlKey"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary * userData = [defaults objectForKey:@"UserData"];
+
+    return [userData objectForKey:@"ImageUrlKey"];
 }
 
 - (BOOL)analyzeData:(NSDictionary *)wrapped {
