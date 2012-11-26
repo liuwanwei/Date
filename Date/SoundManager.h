@@ -7,14 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AudioToolbox/AudioToolbox.h>
+#import <AVFoundation/AVFoundation.h>
 
-@interface SoundManager : NSObject
+@interface SoundManager : NSObject <AVAudioPlayerDelegate>
 
 @property (strong, nonatomic) NSURL * recordFileURL;
+@property (strong, nonatomic) IBOutlet UIView * view;
+@property (weak, nonatomic) IBOutlet UIImageView * imageView;
 
 + (SoundManager *)defaultSoundManager;
 
 - (BOOL)startRecord;
-- (void)stopRecord;
+- (BOOL)stopRecord;
+
+- (BOOL)playRecording;
 
 @end
