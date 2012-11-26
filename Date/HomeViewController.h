@@ -20,4 +20,6 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UITableView * tableView;
 @property (weak, nonatomic) IBOutlet UITableViewCell * homeCell;
 
+- (IBAction)startRecord:(id)sender;
+- (IBAction)stopRecord:(id)sender;
 @end

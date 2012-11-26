@@ -16,10 +16,14 @@
 #import "BilateralFriend.h"
 #import "ReminderManager.h"
 #import "EGOImageView.h"
+#import "SoundManager.h"
+#import "ReminderSettingViewController.h"
+#import "HttpRequestManager.h"
 
 @interface HomeViewController () {
     SinaWeiboManager * _sinaWeiboManager;
     UserManager * _userManager;
+    ReminderManager * _reminderManager;
     LoginViewController * _loginViewController;
     NSArray * _friends;
     NSDictionary * _reminders;
@@ -42,6 +46,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOAuthSuccessMessage:) name:kUserOAuthSuccessMessage object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOnlineFriendsMessage:) name:kOnlineFriendsMessage object:nil];
+    
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRegisterUserMessage:) name:kGoRegisterUserMessage object:nil];
 }
 
 - (void)initFriends {
@@ -84,8 +90,12 @@
  */
 - (void)handleOnlineFriendsMessage:(NSNotification *)note {
     OnlineFriendsRemindViewController * viewController = [[OnlineFriendsRemindViewController alloc] initWithNibName:@"OnlineFriendsRemindViewController" bundle:nil];
-    [self presentViewController:viewController animated:YES completion:nil];
+    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:viewController];
+    [self presentViewController:nav animated:YES completion:nil];
+}
 
+- (void)handleRegisterUserMessage:(NSNotification *)note {
+    [[HttpRequestManager defaultManager] registerUserRequest];
 }
 
 #pragma 事件函数
@@ -95,6 +105,7 @@
     if (self) {
         _sinaWeiboManager = [SinaWeiboManager defaultManager];
         _userManager = [UserManager defaultManager];
+        _reminderManager = [ReminderManager defaultManager];
     }
     return self;
 }
@@ -105,6 +116,7 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.rowHeight = 60.0;
+    self.title = @"约定";
     
     [self initFriends];
     [self initReminders];
@@ -113,6 +125,7 @@
         [self showLoginViewController];
     }else {
         [_sinaWeiboManager requestBilateralFriends];
+        [_reminderManager getRemoteRemindersRequest];
     }
 }
 
@@ -124,6 +137,22 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)startRecord:(id)sender {
+    SoundManager * manager = [SoundManager defaultSoundManager];
+    manager.view.frame = CGRectMake(50.0, 100.0, manager.view.frame.size.width, manager.view.frame.size.height);
+    [self.view addSubview:manager.view];
+    [manager startRecord];
+}
+
+- (IBAction)stopRecord:(id)sender {
+     SoundManager * manager = [SoundManager defaultSoundManager];
+    [manager.view removeFromSuperview];
+    if (YES == [manager stopRecord]) {
+        ReminderSettingViewController * controller = [[ReminderSettingViewController alloc] initWithNibName:@"ReminderSettingViewController" bundle:nil];
+        [self.navigationController pushViewController:controller animated:YES];
+    }
 }
 
 #pragma mark - Table view data source
@@ -146,18 +175,29 @@
         cell = _homeCell;
         self.homeCell = nil;
         
-        imageView = (EGOImageView *)[cell viewWithTag:TagsHomeCellImage];
-        [imageView  setPlaceholderImage:[UIImage imageNamed:@"male"]];
-    } else {
-        imageView = (EGOImageView *)[cell viewWithTag:TagsHomeCellImage];
     }
+    imageView = (EGOImageView *)[cell viewWithTag:TagsHomeCellImage];
+    [imageView  setPlaceholderImage:[UIImage imageNamed:@"male"]];
     
     BilateralFriend * friend = [_friends objectAtIndex:indexPath.row];
     if (nil != friend.imageUrl) {
         [imageView setImageURL:[NSURL URLWithString:friend.imageUrl]];
     }
     
-    UILabel * nicknameLabel = (UILabel *)[cell viewWithTag:UIFriendNameTag];
+    UIButton * btnBadge = (UIButton *)[cell viewWithTag:TagsHomeCellBadge];
+    if (nil != friend.unReadRemindersSize) {
+        NSInteger size = [friend.unReadRemindersSize integerValue];
+        if (size > 0) {
+            [btnBadge setHidden:NO];
+            [btnBadge setTitle:[NSString stringWithFormat: @"%d", size] forState:UIControlStateNormal];
+        }else {
+            [btnBadge setHidden:YES];
+        }
+    }else {
+        [btnBadge setHidden:YES];
+    }
+    
+    UILabel * nicknameLabel = (UILabel *)[cell viewWithTag:TagsHomeCellNickname];
     nicknameLabel.text = friend.nickname;
     
     return cell;
