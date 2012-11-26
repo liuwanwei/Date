@@ -7,6 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C044CAD1659DA20000551C5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C044CAC1659DA20000551C5 /* AVFoundation.framework */; };
+		3C044CAF1659DC5D000551C5 /* RecordView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C044CAE1659DC5D000551C5 /* RecordView.xib */; };
+		3C044CBF1659E00F000551C5 /* recordingBkg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C044CB51659E00F000551C5 /* recordingBkg.png */; };
+		3C044CC01659E00F000551C5 /* recordingBkg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C044CB61659E00F000551C5 /* recordingBkg@2x.png */; };
+		3C044CC11659E00F000551C5 /* recordingSignal001.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C044CB71659E00F000551C5 /* recordingSignal001.png */; };
+		3C044CC21659E00F000551C5 /* recordingSignal002.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C044CB81659E00F000551C5 /* recordingSignal002.png */; };
+		3C044CC31659E00F000551C5 /* recordingSignal003.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C044CB91659E00F000551C5 /* recordingSignal003.png */; };
+		3C044CC41659E00F000551C5 /* recordingSignal004.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C044CBA1659E00F000551C5 /* recordingSignal004.png */; };
+		3C044CC51659E00F000551C5 /* recordingSignal005.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C044CBB1659E00F000551C5 /* recordingSignal005.png */; };
+		3C044CC61659E00F000551C5 /* recordingSignal006.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C044CBC1659E00F000551C5 /* recordingSignal006.png */; };
+		3C044CC71659E00F000551C5 /* recordingSignal007.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C044CBD1659E00F000551C5 /* recordingSignal007.png */; };
+		3C044CC81659E00F000551C5 /* recordingSignal008.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C044CBE1659E00F000551C5 /* recordingSignal008.png */; };
+		3C044CCC165A0E1B000551C5 /* ReminderSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C044CCA165A0E1B000551C5 /* ReminderSettingViewController.m */; };
+		3C044CCD165A0E1B000551C5 /* ReminderSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C044CCB165A0E1B000551C5 /* ReminderSettingViewController.xib */; };
+		3C044CD9165A8C58000551C5 /* ReminderMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C044CD7165A8C58000551C5 /* ReminderMapViewController.m */; };
+		3C044CDA165A8C58000551C5 /* ReminderMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C044CD8165A8C58000551C5 /* ReminderMapViewController.xib */; };
+		3C044CDC165A92C6000551C5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C044CDB165A92C5000551C5 /* MapKit.framework */; };
+		3C044CDE165A9736000551C5 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C044CDD165A9736000551C5 /* CoreLocation.framework */; };
+		3C0DC303165CB11F00355619 /* libHUDLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0DC300165CB0EA00355619 /* libHUDLibrary.a */; };
+		3C0DC307165CB1EA00355619 /* MBProgressManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C0DC306165CB1EA00355619 /* MBProgressManager.m */; };
 		3C13E869164DF4DB006424A2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C13E868164DF4DB006424A2 /* UIKit.framework */; };
 		3C13E86B164DF4DB006424A2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C13E86A164DF4DB006424A2 /* Foundation.framework */; };
 		3C13E86D164DF4DB006424A2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C13E86C164DF4DB006424A2 /* CoreGraphics.framework */; };
@@ -42,6 +62,10 @@
 		3CB275151654EAF400FAEF1F /* OnlineFriendsRemindViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CB275131654EAF400FAEF1F /* OnlineFriendsRemindViewController.xib */; };
 		3CB275181654EC1C00FAEF1F /* ZhiHuNavigationBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CB275161654EC1C00FAEF1F /* ZhiHuNavigationBar.png */; };
 		3CB275191654EC1C00FAEF1F /* ZhiHuNavigationBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CB275171654EC1C00FAEF1F /* ZhiHuNavigationBar@2x.png */; };
+		3CC9CE23165F730100E7E9D9 /* FriendRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9CE21165F730100E7E9D9 /* FriendRemindersViewController.m */; };
+		3CC9CE24165F730100E7E9D9 /* FriendRemindersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CC9CE22165F730100E7E9D9 /* FriendRemindersViewController.xib */; };
+		3CC9CE28165F76D000E7E9D9 /* FriendReminderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9CE27165F76D000E7E9D9 /* FriendReminderCell.m */; };
+		3CC9CE2A165F772A00E7E9D9 /* FriendReminderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CC9CE29165F772A00E7E9D9 /* FriendReminderCell.xib */; };
 		3CE0ABF716507BD4004B785A /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE0ABF616507BD4004B785A /* UserManager.m */; };
 		3CE0AC0116507EBE004B785A /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE0ABFC16507EBE004B785A /* HomeViewController.m */; };
 		3CE0AC0216507EBE004B785A /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CE0ABFD16507EBE004B785A /* HomeViewController.xib */; };
@@ -57,9 +81,25 @@
 		3CE0AC5E1650F521004B785A /* BilateralFriendManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE0AC5D1650F521004B785A /* BilateralFriendManager.m */; };
 		3CE0AC6D1650FA8D004B785A /* libLMLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CE0AC6A1650FA76004B785A /* libLMLibrary.a */; };
 		3CEFEC4616521FE3005BF516 /* HttpRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CEFEC4516521FE3005BF516 /* HttpRequestManager.m */; };
+		3CF017E1165B500E00F83814 /* ReminderSendingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CF017DF165B500E00F83814 /* ReminderSendingViewController.m */; };
+		3CF017E2165B500E00F83814 /* ReminderSendingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CF017E0165B500E00F83814 /* ReminderSendingViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		3C0DC2FF165CB0EA00355619 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C0DC2F8165CB0EA00355619 /* HUDLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3C0DC2E0165CABFB00355619;
+			remoteInfo = HUDLibrary;
+		};
+		3C0DC301165CB11200355619 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C0DC2F8165CB0EA00355619 /* HUDLibrary.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C0DC2DF165CABFB00355619;
+			remoteInfo = HUDLibrary;
+		};
 		3C13E890164DF4DB006424A2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C13E85B164DF4DA006424A2 /* Project object */;
@@ -133,6 +173,29 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3C044CAC1659DA20000551C5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		3C044CAE1659DC5D000551C5 /* RecordView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecordView.xib; sourceTree = "<group>"; };
+		3C044CB51659E00F000551C5 /* recordingBkg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = recordingBkg.png; path = Resources/images/recordingBkg.png; sourceTree = "<group>"; };
+		3C044CB61659E00F000551C5 /* recordingBkg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "recordingBkg@2x.png"; path = "Resources/images/recordingBkg@2x.png"; sourceTree = "<group>"; };
+		3C044CB71659E00F000551C5 /* recordingSignal001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = recordingSignal001.png; path = Resources/images/recordingSignal001.png; sourceTree = "<group>"; };
+		3C044CB81659E00F000551C5 /* recordingSignal002.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = recordingSignal002.png; path = Resources/images/recordingSignal002.png; sourceTree = "<group>"; };
+		3C044CB91659E00F000551C5 /* recordingSignal003.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = recordingSignal003.png; path = Resources/images/recordingSignal003.png; sourceTree = "<group>"; };
+		3C044CBA1659E00F000551C5 /* recordingSignal004.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = recordingSignal004.png; path = Resources/images/recordingSignal004.png; sourceTree = "<group>"; };
+		3C044CBB1659E00F000551C5 /* recordingSignal005.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = recordingSignal005.png; path = Resources/images/recordingSignal005.png; sourceTree = "<group>"; };
+		3C044CBC1659E00F000551C5 /* recordingSignal006.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = recordingSignal006.png; path = Resources/images/recordingSignal006.png; sourceTree = "<group>"; };
+		3C044CBD1659E00F000551C5 /* recordingSignal007.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = recordingSignal007.png; path = Resources/images/recordingSignal007.png; sourceTree = "<group>"; };
+		3C044CBE1659E00F000551C5 /* recordingSignal008.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = recordingSignal008.png; path = Resources/images/recordingSignal008.png; sourceTree = "<group>"; };
+		3C044CC9165A0E1B000551C5 /* ReminderSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderSettingViewController.h; sourceTree = "<group>"; };
+		3C044CCA165A0E1B000551C5 /* ReminderSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderSettingViewController.m; sourceTree = "<group>"; };
+		3C044CCB165A0E1B000551C5 /* ReminderSettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderSettingViewController.xib; sourceTree = "<group>"; };
+		3C044CD6165A8C57000551C5 /* ReminderMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderMapViewController.h; sourceTree = "<group>"; };
+		3C044CD7165A8C58000551C5 /* ReminderMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderMapViewController.m; sourceTree = "<group>"; };
+		3C044CD8165A8C58000551C5 /* ReminderMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderMapViewController.xib; sourceTree = "<group>"; };
+		3C044CDB165A92C5000551C5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		3C044CDD165A9736000551C5 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		3C0DC2F8165CB0EA00355619 /* HUDLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HUDLibrary.xcodeproj; path = ../HUDLibrary/HUDLibrary.xcodeproj; sourceTree = "<group>"; };
+		3C0DC305165CB1EA00355619 /* MBProgressManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressManager.h; sourceTree = "<group>"; };
+		3C0DC306165CB1EA00355619 /* MBProgressManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressManager.m; sourceTree = "<group>"; };
 		3C13E864164DF4DA006424A2 /* Date.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Date.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C13E868164DF4DB006424A2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3C13E86A164DF4DB006424A2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -178,6 +241,12 @@
 		3CB275131654EAF400FAEF1F /* OnlineFriendsRemindViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OnlineFriendsRemindViewController.xib; sourceTree = "<group>"; };
 		3CB275161654EC1C00FAEF1F /* ZhiHuNavigationBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ZhiHuNavigationBar.png; path = Resources/images/ZhiHuNavigationBar.png; sourceTree = "<group>"; };
 		3CB275171654EC1C00FAEF1F /* ZhiHuNavigationBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ZhiHuNavigationBar@2x.png"; path = "Resources/images/ZhiHuNavigationBar@2x.png"; sourceTree = "<group>"; };
+		3CC9CE20165F730100E7E9D9 /* FriendRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendRemindersViewController.h; sourceTree = "<group>"; };
+		3CC9CE21165F730100E7E9D9 /* FriendRemindersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendRemindersViewController.m; sourceTree = "<group>"; };
+		3CC9CE22165F730100E7E9D9 /* FriendRemindersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendRemindersViewController.xib; sourceTree = "<group>"; };
+		3CC9CE26165F76D000E7E9D9 /* FriendReminderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendReminderCell.h; sourceTree = "<group>"; };
+		3CC9CE27165F76D000E7E9D9 /* FriendReminderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendReminderCell.m; sourceTree = "<group>"; };
+		3CC9CE29165F772A00E7E9D9 /* FriendReminderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendReminderCell.xib; sourceTree = "<group>"; };
 		3CE0ABF516507BD4004B785A /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
 		3CE0ABF616507BD4004B785A /* UserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserManager.m; sourceTree = "<group>"; };
 		3CE0ABFB16507EBE004B785A /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
@@ -199,6 +268,9 @@
 		3CE0AC621650FA75004B785A /* LMLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LMLibrary.xcodeproj; path = ../LMLibrary/LMLibrary.xcodeproj; sourceTree = "<group>"; };
 		3CEFEC4416521FE3005BF516 /* HttpRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestManager.h; sourceTree = "<group>"; };
 		3CEFEC4516521FE3005BF516 /* HttpRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequestManager.m; sourceTree = "<group>"; };
+		3CF017DE165B500D00F83814 /* ReminderSendingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderSendingViewController.h; sourceTree = "<group>"; };
+		3CF017DF165B500E00F83814 /* ReminderSendingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderSendingViewController.m; sourceTree = "<group>"; };
+		3CF017E0165B500E00F83814 /* ReminderSendingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderSendingViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +278,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C0DC303165CB11F00355619 /* libHUDLibrary.a in Frameworks */,
+				3C044CDE165A9736000551C5 /* CoreLocation.framework in Frameworks */,
+				3C044CDC165A92C6000551C5 /* MapKit.framework in Frameworks */,
+				3C044CAD1659DA20000551C5 /* AVFoundation.framework in Frameworks */,
 				3CB0DC181655478100209DF6 /* libEgoLibrary.a in Frameworks */,
 				3C28DA93165383BC009A661E /* MobileCoreServices.framework in Frameworks */,
 				3C28DA911653838B009A661E /* SystemConfiguration.framework in Frameworks */,
@@ -235,9 +311,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C0DC2F9165CB0EA00355619 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3C0DC300165CB0EA00355619 /* libHUDLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3C0DC304165CB18900355619 /* Hud */ = {
+			isa = PBXGroup;
+			children = (
+				3C0DC305165CB1EA00355619 /* MBProgressManager.h */,
+				3C0DC306165CB1EA00355619 /* MBProgressManager.m */,
+			);
+			name = Hud;
+			sourceTree = "<group>";
+		};
 		3C13E859164DF4DA006424A2 = {
 			isa = PBXGroup;
 			children = (
+				3C0DC2F8165CB0EA00355619 /* HUDLibrary.xcodeproj */,
 				3CB0DC081654F10F00209DF6 /* EgoLibrary.xcodeproj */,
 				3CE0AC621650FA75004B785A /* LMLibrary.xcodeproj */,
 				3C484F52164DFE0600D678F3 /* SinaWeiboLibrary.xcodeproj */,
@@ -261,6 +355,9 @@
 		3C13E867164DF4DA006424A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3C044CDD165A9736000551C5 /* CoreLocation.framework */,
+				3C044CDB165A92C5000551C5 /* MapKit.framework */,
+				3C044CAC1659DA20000551C5 /* AVFoundation.framework */,
 				3C28DA8C165381DC009A661E /* libz.dylib */,
 				3C28DA92165383BC009A661E /* MobileCoreServices.framework */,
 				3C28DA901653838B009A661E /* SystemConfiguration.framework */,
@@ -277,6 +374,7 @@
 		3C13E870164DF4DB006424A2 /* Date */ = {
 			isa = PBXGroup;
 			children = (
+				3C0DC304165CB18900355619 /* Hud */,
 				3CB0DC3A16561A5900209DF6 /* Sound */,
 				3CE0ABF416507B50004B785A /* DataStore */,
 				3CEFEC4316521EF7005BF516 /* HttpRequest */,
@@ -355,6 +453,7 @@
 			children = (
 				3CB0DC121654F29500209DF6 /* OnlineFriendRemindCell.xib */,
 				3CB0DC321655D17600209DF6 /* HomeCell.xib */,
+				3CC9CE29165F772A00E7E9D9 /* FriendReminderCell.xib */,
 			);
 			name = cell;
 			sourceTree = "<group>";
@@ -366,6 +465,15 @@
 				3CB0DC3C16561A9500209DF6 /* SoundManager.m */,
 			);
 			name = Sound;
+			sourceTree = "<group>";
+		};
+		3CC9CE25165F768D00E7E9D9 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				3CC9CE26165F76D000E7E9D9 /* FriendReminderCell.h */,
+				3CC9CE27165F76D000E7E9D9 /* FriendReminderCell.m */,
+			);
+			name = Cell;
 			sourceTree = "<group>";
 		};
 		3CE0ABF416507B50004B785A /* DataStore */ = {
@@ -399,6 +507,16 @@
 		3CE0ABF916507EA2004B785A /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3C044CB51659E00F000551C5 /* recordingBkg.png */,
+				3C044CB61659E00F000551C5 /* recordingBkg@2x.png */,
+				3C044CB71659E00F000551C5 /* recordingSignal001.png */,
+				3C044CB81659E00F000551C5 /* recordingSignal002.png */,
+				3C044CB91659E00F000551C5 /* recordingSignal003.png */,
+				3C044CBA1659E00F000551C5 /* recordingSignal004.png */,
+				3C044CBB1659E00F000551C5 /* recordingSignal005.png */,
+				3C044CBC1659E00F000551C5 /* recordingSignal006.png */,
+				3C044CBD1659E00F000551C5 /* recordingSignal007.png */,
+				3C044CBE1659E00F000551C5 /* recordingSignal008.png */,
 				3CB0DC1416553CEB00209DF6 /* male.png */,
 				3CB275161654EC1C00FAEF1F /* ZhiHuNavigationBar.png */,
 				3CB275171654EC1C00FAEF1F /* ZhiHuNavigationBar@2x.png */,
@@ -414,9 +532,14 @@
 		3CE0ABFA16507EA9004B785A /* xib */ = {
 			isa = PBXGroup;
 			children = (
+				3CC9CE22165F730100E7E9D9 /* FriendRemindersViewController.xib */,
+				3CF017E0165B500E00F83814 /* ReminderSendingViewController.xib */,
+				3C044CD8165A8C58000551C5 /* ReminderMapViewController.xib */,
+				3C044CCB165A0E1B000551C5 /* ReminderSettingViewController.xib */,
 				3CB275131654EAF400FAEF1F /* OnlineFriendsRemindViewController.xib */,
 				3CE0ABFD16507EBE004B785A /* HomeViewController.xib */,
 				3CE0AC0016507EBE004B785A /* LoginViewController.xib */,
+				3C044CAE1659DC5D000551C5 /* RecordView.xib */,
 			);
 			name = xib;
 			sourceTree = "<group>";
@@ -433,12 +556,21 @@
 		3CE0AC541650D5C3004B785A /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				3CC9CE25165F768D00E7E9D9 /* Cell */,
 				3CE0ABFB16507EBE004B785A /* HomeViewController.h */,
 				3CE0ABFC16507EBE004B785A /* HomeViewController.m */,
 				3CE0ABFE16507EBE004B785A /* LoginViewController.h */,
 				3CE0ABFF16507EBE004B785A /* LoginViewController.m */,
 				3CB275111654EAF400FAEF1F /* OnlineFriendsRemindViewController.h */,
 				3CB275121654EAF400FAEF1F /* OnlineFriendsRemindViewController.m */,
+				3C044CC9165A0E1B000551C5 /* ReminderSettingViewController.h */,
+				3C044CCA165A0E1B000551C5 /* ReminderSettingViewController.m */,
+				3C044CD6165A8C57000551C5 /* ReminderMapViewController.h */,
+				3C044CD7165A8C58000551C5 /* ReminderMapViewController.m */,
+				3CF017DE165B500D00F83814 /* ReminderSendingViewController.h */,
+				3CF017DF165B500E00F83814 /* ReminderSendingViewController.m */,
+				3CC9CE20165F730100E7E9D9 /* FriendRemindersViewController.h */,
+				3CC9CE21165F730100E7E9D9 /* FriendRemindersViewController.m */,
 			);
 			name = Class;
 			sourceTree = "<group>";
@@ -483,6 +615,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				3C0DC302165CB11200355619 /* PBXTargetDependency */,
 				3CB0DC171655477400209DF6 /* PBXTargetDependency */,
 				3CE0AC6C1650FA86004B785A /* PBXTargetDependency */,
 				3C484F5E164DFE2700D678F3 /* PBXTargetDependency */,
@@ -541,6 +674,10 @@
 					ProjectRef = 3CB0DC081654F10F00209DF6 /* EgoLibrary.xcodeproj */;
 				},
 				{
+					ProductGroup = 3C0DC2F9165CB0EA00355619 /* Products */;
+					ProjectRef = 3C0DC2F8165CB0EA00355619 /* HUDLibrary.xcodeproj */;
+				},
+				{
 					ProductGroup = 3CE0AC631650FA75004B785A /* Products */;
 					ProjectRef = 3CE0AC621650FA75004B785A /* LMLibrary.xcodeproj */;
 				},
@@ -558,6 +695,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		3C0DC300165CB0EA00355619 /* libHUDLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libHUDLibrary.a;
+			remoteRef = 3C0DC2FF165CB0EA00355619 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		3C484675164DF56700D678F3 /* libAsiHttpRequestLib.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -617,6 +761,22 @@
 				3CB0DC131654F29500209DF6 /* OnlineFriendRemindCell.xib in Resources */,
 				3CB0DC1516553CEB00209DF6 /* male.png in Resources */,
 				3CB0DC331655D17600209DF6 /* HomeCell.xib in Resources */,
+				3C044CAF1659DC5D000551C5 /* RecordView.xib in Resources */,
+				3C044CBF1659E00F000551C5 /* recordingBkg.png in Resources */,
+				3C044CC01659E00F000551C5 /* recordingBkg@2x.png in Resources */,
+				3C044CC11659E00F000551C5 /* recordingSignal001.png in Resources */,
+				3C044CC21659E00F000551C5 /* recordingSignal002.png in Resources */,
+				3C044CC31659E00F000551C5 /* recordingSignal003.png in Resources */,
+				3C044CC41659E00F000551C5 /* recordingSignal004.png in Resources */,
+				3C044CC51659E00F000551C5 /* recordingSignal005.png in Resources */,
+				3C044CC61659E00F000551C5 /* recordingSignal006.png in Resources */,
+				3C044CC71659E00F000551C5 /* recordingSignal007.png in Resources */,
+				3C044CC81659E00F000551C5 /* recordingSignal008.png in Resources */,
+				3C044CCD165A0E1B000551C5 /* ReminderSettingViewController.xib in Resources */,
+				3C044CDA165A8C58000551C5 /* ReminderMapViewController.xib in Resources */,
+				3CF017E2165B500E00F83814 /* ReminderSendingViewController.xib in Resources */,
+				3CC9CE24165F730100E7E9D9 /* FriendRemindersViewController.xib in Resources */,
+				3CC9CE2A165F772A00E7E9D9 /* FriendReminderCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -666,6 +826,12 @@
 				3CB0DC361655DFC100209DF6 /* Reminder.m in Sources */,
 				3CB0DC391655E05000209DF6 /* ReminderManager.m in Sources */,
 				3CB0DC3D16561A9500209DF6 /* SoundManager.m in Sources */,
+				3C044CCC165A0E1B000551C5 /* ReminderSettingViewController.m in Sources */,
+				3C044CD9165A8C58000551C5 /* ReminderMapViewController.m in Sources */,
+				3CF017E1165B500E00F83814 /* ReminderSendingViewController.m in Sources */,
+				3C0DC307165CB1EA00355619 /* MBProgressManager.m in Sources */,
+				3CC9CE23165F730100E7E9D9 /* FriendRemindersViewController.m in Sources */,
+				3CC9CE28165F76D000E7E9D9 /* FriendReminderCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -680,6 +846,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		3C0DC302165CB11200355619 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = HUDLibrary;
+			targetProxy = 3C0DC301165CB11200355619 /* PBXContainerItemProxy */;
+		};
 		3C13E891164DF4DB006424A2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 3C13E863164DF4DA006424A2 /* Date */;
@@ -793,6 +964,7 @@
 					../EgoLibrary/EGOImageView,
 					../EgoLibrary/EGOCache,
 					../EgoLibrary/EGOImageLoader,
+					../HUDLibrary/HUDLibrary,
 				);
 				INFOPLIST_FILE = "Date/Date-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -814,6 +986,7 @@
 					../EgoLibrary/EGOImageView,
 					../EgoLibrary/EGOCache,
 					../EgoLibrary/EGOImageLoader,
+					../HUDLibrary/HUDLibrary,
 				);
 				INFOPLIST_FILE = "Date/Date-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
