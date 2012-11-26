@@ -21,6 +21,10 @@
 @synthesize tableView = _tableView;
 @synthesize friendCell = _friendCell;
 
+- (void)dismiss {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)initFriends {
     _newOnlinefriends = [[BilateralFriendManager defaultManager] newOnlineFriends];
     [self.tableView reloadData];
@@ -41,6 +45,10 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.rowHeight = 60.0;
+    
+    UIBarButtonItem * leftItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismiss)];
+    self.navigationItem.leftBarButtonItem = leftItem;
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
