@@ -21,16 +21,23 @@
 
 #define kUserOAuthSuccessMessage @"UserOAuthSuccessMessage"
 #define kOnlineFriendsMessage @"OnlineFriendsMessage"
+#define kGetAddressMessage @"GetAddressMessage"
+#define kGoRegisterUserMessage @"GoRegisterUserMessage"
 
 #define kSinaWeiboUserIDKey @"id"
 #define kSinaWeiboScreenNameKey @"screen_name"
 #define kSinaWeiboProfileImageUrlKey @"profile_image_url"
 #define kSinaWiboGetUserInfoUrl @"users/show.json"
 #define kSinaWeiboGetBilateralFriendsUrl @"friendships/friends/bilateral.json"
+#define kSinaWeiboGetAddress @"location/geo/geo_to_address.json"
 
 #define kSinaWeiboBilateralFriendsUpdateDate @"kSinaWeiboBilateralFiendsUpdateDate"
+#define kRemoteRemindersUpdateTimeline @"RemoteRemindersUpdateTimeline"
 
-#define kServerUrl  @"http://"
-#define kRegisterUserParams @"m=user&f=newWeiboUser"
+#define kServerUrl  @"http://192.168.10.108/"
+#define kRegisterUserParams @"date.php?m=user&f=newWeiboUser&t=json"
+#define kSendReminderParams @"date.php?m=reminder&f=newReminder&t=json"
+#define kGetRemindersParams @"date.php?m=reminder&f=getLatest&t=json"
 
 #define kBilateralFriendEntity @"BilateralFriend"
+#define kReminderEntity @"Reminder"
