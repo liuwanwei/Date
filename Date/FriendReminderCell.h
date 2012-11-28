@@ -17,6 +17,12 @@ typedef enum {
     AudioStatePlaying
 }AudioState;
 
+@protocol FriendReminderCellDelegate <NSObject>
+
+@optional
+- (void)clickAudioButton:(NSIndexPath *)indexPath WithState:(NSNumber *) state;
+@end
+
 @interface FriendReminderCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet EGOImageView * image;
@@ -25,10 +31,17 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIButton * btnMap;
 @property (weak, nonatomic) IBOutlet UIButton * btnClock;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView * indicatorView;
+@property (weak, nonatomic) IBOutlet UIButton * btnMark;
+@property (weak, nonatomic) IBOutlet UILabel * labelAddress;
 
-@property (nonatomic) AudioState audioState;
 @property (weak, nonatomic) Reminder * reminer;
 @property (weak, nonatomic) BilateralFriend * bilateralFriend;
 
+@property (strong, nonatomic) NSIndexPath * indexPath;
+@property (nonatomic) AudioState audioState;
+
+@property (weak, nonatomic) id<FriendReminderCellDelegate> delegate;
+
 - (IBAction)palyAudio:(UIButton *)sender;
+- (IBAction)modifyBell:(UIButton *)sender;
 @end
