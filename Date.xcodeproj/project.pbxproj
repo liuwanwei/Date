@@ -51,11 +51,11 @@
 		3C28DA8F16538347009A661E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C28DA8E16538347009A661E /* CFNetwork.framework */; };
 		3C28DA911653838B009A661E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C28DA901653838B009A661E /* SystemConfiguration.framework */; };
 		3C28DA93165383BC009A661E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C28DA92165383BC009A661E /* MobileCoreServices.framework */; };
+		3C9C16341664985D00D50038 /* Reminder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9C16331664985D00D50038 /* Reminder.m */; };
 		3CB0DC131654F29500209DF6 /* OnlineFriendRemindCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CB0DC121654F29500209DF6 /* OnlineFriendRemindCell.xib */; };
 		3CB0DC1516553CEB00209DF6 /* male.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CB0DC1416553CEB00209DF6 /* male.png */; };
 		3CB0DC181655478100209DF6 /* libEgoLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CB0DC101654F10F00209DF6 /* libEgoLibrary.a */; };
 		3CB0DC331655D17600209DF6 /* HomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CB0DC321655D17600209DF6 /* HomeCell.xib */; };
-		3CB0DC361655DFC100209DF6 /* Reminder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB0DC351655DFC100209DF6 /* Reminder.m */; };
 		3CB0DC391655E05000209DF6 /* ReminderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB0DC381655E05000209DF6 /* ReminderManager.m */; };
 		3CB0DC3D16561A9500209DF6 /* SoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB0DC3C16561A9500209DF6 /* SoundManager.m */; };
 		3CB275141654EAF400FAEF1F /* OnlineFriendsRemindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB275121654EAF400FAEF1F /* OnlineFriendsRemindViewController.m */; };
@@ -226,12 +226,12 @@
 		3C28DA92165383BC009A661E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		3C48466C164DF56600D678F3 /* AsiHttpRequestLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AsiHttpRequestLib.xcodeproj; path = ../AsiHttpRequestLib/AsiHttpRequestLib.xcodeproj; sourceTree = "<group>"; };
 		3C484F52164DFE0600D678F3 /* SinaWeiboLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SinaWeiboLibrary.xcodeproj; path = ../SinaWeiboLibrary/SinaWeiboLibrary.xcodeproj; sourceTree = "<group>"; };
+		3C9C16321664985D00D50038 /* Reminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reminder.h; sourceTree = "<group>"; };
+		3C9C16331664985D00D50038 /* Reminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reminder.m; sourceTree = "<group>"; };
 		3CB0DC081654F10F00209DF6 /* EgoLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = EgoLibrary.xcodeproj; path = ../EgoLibrary/EgoLibrary.xcodeproj; sourceTree = "<group>"; };
 		3CB0DC121654F29500209DF6 /* OnlineFriendRemindCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OnlineFriendRemindCell.xib; sourceTree = "<group>"; };
 		3CB0DC1416553CEB00209DF6 /* male.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = male.png; path = Resources/images/male.png; sourceTree = "<group>"; };
 		3CB0DC321655D17600209DF6 /* HomeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeCell.xib; sourceTree = "<group>"; };
-		3CB0DC341655DFC100209DF6 /* Reminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reminder.h; sourceTree = "<group>"; };
-		3CB0DC351655DFC100209DF6 /* Reminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reminder.m; sourceTree = "<group>"; };
 		3CB0DC371655E05000209DF6 /* ReminderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderManager.h; sourceTree = "<group>"; };
 		3CB0DC381655E05000209DF6 /* ReminderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderManager.m; sourceTree = "<group>"; };
 		3CB0DC3B16561A9500209DF6 /* SoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundManager.h; sourceTree = "<group>"; };
@@ -479,9 +479,9 @@
 		3CE0ABF416507B50004B785A /* DataStore */ = {
 			isa = PBXGroup;
 			children = (
+				3C9C16321664985D00D50038 /* Reminder.h */,
+				3C9C16331664985D00D50038 /* Reminder.m */,
 				3CE0AC591650F405004B785A /* BilateralFriend.h */,
-				3CB0DC341655DFC100209DF6 /* Reminder.h */,
-				3CB0DC351655DFC100209DF6 /* Reminder.m */,
 				3CE0AC5A1650F405004B785A /* BilateralFriend.m */,
 				3CE0ABF516507BD4004B785A /* UserManager.h */,
 				3CE0ABF616507BD4004B785A /* UserManager.m */,
@@ -823,7 +823,6 @@
 				3CE0AC5E1650F521004B785A /* BilateralFriendManager.m in Sources */,
 				3CEFEC4616521FE3005BF516 /* HttpRequestManager.m in Sources */,
 				3CB275141654EAF400FAEF1F /* OnlineFriendsRemindViewController.m in Sources */,
-				3CB0DC361655DFC100209DF6 /* Reminder.m in Sources */,
 				3CB0DC391655E05000209DF6 /* ReminderManager.m in Sources */,
 				3CB0DC3D16561A9500209DF6 /* SoundManager.m in Sources */,
 				3C044CCC165A0E1B000551C5 /* ReminderSettingViewController.m in Sources */,
@@ -832,6 +831,7 @@
 				3C0DC307165CB1EA00355619 /* MBProgressManager.m in Sources */,
 				3CC9CE23165F730100E7E9D9 /* FriendRemindersViewController.m in Sources */,
 				3CC9CE28165F76D000E7E9D9 /* FriendReminderCell.m in Sources */,
+				3C9C16341664985D00D50038 /* Reminder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
