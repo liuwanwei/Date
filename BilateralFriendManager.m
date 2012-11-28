@@ -234,4 +234,21 @@ static BilateralFriendManager * sBilateralFriendManager;
     }
 }
 
+/*
+ 当提醒信息是否读标示，被置为为YES时，调用此函数
+ */
+- (void)modifyUnReadRemindersSizeWithUserId:(NSNumber *)userId withOperateType:(OperateType) operateType {
+    BilateralFriend * friend = [self bilateralFriendWithUserID:userId];
+    if (nil != friend) {
+        NSInteger size;
+        if (operateType == OperateTypeAdd) {
+            size = [friend.unReadRemindersSize integerValue] + 1;
+        }else {
+            size = [friend.unReadRemindersSize integerValue] - 1;
+        }
+        friend.unReadRemindersSize = [NSNumber numberWithInteger:size];
+        [self synchroniseToStore];
+    }
+}
+
 @end

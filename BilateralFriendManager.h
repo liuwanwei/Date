@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "BaseManager.h"
 
+typedef enum {
+    OperateTypeAdd = 0,
+    OperateTypeSub
+}OperateType;
+
 @interface BilateralFriendManager : BaseManager
 
 + (BilateralFriendManager *)defaultManager;
@@ -21,6 +26,7 @@
 - (NSArray *)allOnlineFriends;
 
 - (void)modifyLastReminder:(NSString *)reminderId withUserId:(NSNumber *)userId;
+- (void)modifyUnReadRemindersSizeWithUserId:(NSNumber *)userId withOperateType:(OperateType) operateType;
 
 - (void)checkRegisteredFriends:(NSArray *)data;
 @end
