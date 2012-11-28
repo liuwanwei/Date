@@ -77,6 +77,10 @@ static HttpRequestManager * sHttpRequestManager;
     [[ReminderManager defaultManager] handleRemoteRemindersResponse:json];
 }
 
+- (void)handleDownAudioFileReponse:(NSDictionary *)userInfo {
+    [[ReminderManager defaultManager] handleDowanloadAuioFileResponse:userInfo];
+}
+
 #pragma 静态函数
 + (HttpRequestManager *)defaultManager {
     if (nil == sHttpRequestManager) {
@@ -127,6 +131,8 @@ static HttpRequestManager * sHttpRequestManager;
     [request setPostValue:[reminder.userID stringValue] forKey:@"targetId"];
     [request setFile:reminder.audioUrl forKey:@"audio"];
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    NSTimeZone * timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
+    [formatter setTimeZone:timeZone];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString * triggerTime = [formatter stringFromDate:reminder.triggerTime];
     [request setPostValue:triggerTime forKey:@"triggerTime"];
@@ -154,14 +160,13 @@ static HttpRequestManager * sHttpRequestManager;
 
 - (void)downloadAudioFileRequest:(Reminder *)reminder {
     NSString * path = [kServerUrl stringByAppendingString:reminder.audioUrl];
-    NSString * destinationPath;
     DocumentManager * manager = [DocumentManager defaultManager];
-    destinationPath =  [manager pathForRandomSoundWithSuffix:@"m4a"].absoluteString;
-
+    
+    NSString * destinationPath =  [manager pathForRandomSoundWithSuffix:@"m4a"].relativePath;
     ASIHTTPRequest *request;
     request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:path]];
     [request setDownloadDestinationPath:destinationPath];
-    
+    [request setTimeOutSeconds:20];
     [request setUserInfo:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"downAudioFile",@"request",reminder,@"reminder",destinationPath,@"destinationPath",nil]];
     [_networkQueue addOperation:request];
     [_networkQueue go];
@@ -179,7 +184,11 @@ static HttpRequestManager * sHttpRequestManager;
     }else if ([requestType isEqualToString:@"remoteReminders"]){
         NSLog(@"recive remoteReminders response");
         [self handleRemoteRemindersReponse:[request responseData]];
-    }else if ()
+    }else if ([requestType isEqualToString:@"downAudioFile"]) {
+        // FIXME 需要根据状态进行判断是否成功,后果是音频不能播放
+        NSInteger statue = [request responseStatusCode];
+        [self handleDownAudioFileReponse:request.userInfo];
+    }
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request {
