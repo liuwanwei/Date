@@ -15,6 +15,7 @@
 @optional
 - (void)newReminderSuccess;
 - (void)newReminderFailed;
+- (void)downloadAudioFileSuccess:(Reminder *)reminder;
 @end
 
 @interface ReminderManager : BaseManager
@@ -36,4 +37,11 @@
 - (void)handleRemoteRemindersResponse:(id)json;
 
 - (void)downloadAudioFileWithReminder:(Reminder *)reminder;
+- (void)handleDowanloadAuioFileResponse:(NSDictionary *)userInfo;
+
+- (void)addLocalNotificationWithReminder:(Reminder *)reminder;
+- (void)cancelLocalNotificationWithReminder:(Reminder *)reminder;
+
+- (void)modifyReminder:(Reminder *)reminder withReadState:(BOOL)isRead;
+- (void)modifyReminder:(Reminder *)reminder withBellState:(BOOL)isBell;
 @end

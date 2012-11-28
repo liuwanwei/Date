@@ -79,7 +79,10 @@ static ReminderManager * sReminderManager;
     Reminder * reminder;
     NSNumberFormatter * numberFormatter = [[NSNumberFormatter alloc] init];
     NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
-    for (id object in data) {
+    NSTimeZone * timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
+    [dateFormatter setTimeZone:timeZone];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        for (id object in data) {
         if ([object isKindOfClass:[NSDictionary class]]) {
             NSString * reminderId = [object objectForKey:@"id"];
             if (nil == [self reminderWithId:reminderId]) {
@@ -111,6 +114,37 @@ static ReminderManager * sReminderManager;
     }else {
         return [results objectAtIndex:0];
     }
+}
+
+/*
+ 下载完音频数据后，修改数据库音频字段
+ */
+- (void)modifyReminderAudioUrl:(NSString *)path withReminder:(Reminder *)reminder{
+    reminder.audioUrl = path;
+    [self synchroniseToStore];
+}
+
+/*
+ 通过关键值获取已经添加的本地通知对象
+ */
+- (UILocalNotification *)localNotification:(NSString *)reminderId {
+    UILocalNotification * localNotification = nil;
+    UIApplication * app = [UIApplication sharedApplication];
+    NSArray * localArray = [app scheduledLocalNotifications];
+    if (nil != localArray) {
+        NSDictionary * dict;
+        NSString * value;
+        for (localNotification in localArray) {
+            dict = localNotification.userInfo;
+            value = [dict objectForKey:@"key"];
+            if ([value isEqualToString:reminderId]) {
+                break;
+            }
+            localNotification = nil;
+        }
+    }
+    
+    return localNotification;
 }
 
 #pragma 静态函数
@@ -162,6 +196,10 @@ static ReminderManager * sReminderManager;
     NSArray * results = nil;
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"userID = %@",userId];
+    NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"triggerTime" ascending:NO];
+    NSArray * sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    
+    request.sortDescriptors = sortDescriptors;
     request.predicate = predicate;
     results = [self executeFetchRequest:request];
     
@@ -230,7 +268,51 @@ static ReminderManager * sReminderManager;
 }
 
 - (void)downloadAudioFileWithReminder:(Reminder *)reminder {
-    
+    [[HttpRequestManager defaultManager] downloadAudioFileRequest:reminder];
+}
+
+- (void)handleDowanloadAuioFileResponse:(NSDictionary *)userInfo {
+    NSString * audioPath = [userInfo objectForKey:@"destinationPath"];
+    Reminder * reminder = [userInfo objectForKey:@"reminder"];
+    [self modifyReminderAudioUrl:audioPath withReminder:reminder];
+    if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(downloadAudioFileSuccess:)]) {
+            [self.delegate performSelector:@selector(downloadAudioFileSuccess:) withObject:reminder];
+        }
+    }
+}
+
+- (void)addLocalNotificationWithReminder:(Reminder *)reminder {
+    if (nil == [self localNotification:reminder.id]) {
+        UILocalNotification * newNotification = [[UILocalNotification alloc] init];
+        newNotification.fireDate = [reminder.triggerTime dateByAddingTimeInterval:-30*60];
+        newNotification.alertBody = @"“约定”提醒";
+        newNotification.soundName = UILocalNotificationDefaultSoundName;
+        newNotification.alertAction = @"查看应用";
+        newNotification.timeZone=[NSTimeZone defaultTimeZone];
+        newNotification.userInfo = [NSDictionary dictionaryWithObject:reminder.id forKey:@"key"];
+        [[UIApplication sharedApplication] scheduleLocalNotification:newNotification];
+    }
+}
+
+- (void)cancelLocalNotificationWithReminder:(Reminder *)reminder {
+    UILocalNotification * localNotification = [self localNotification:reminder.id];
+    if (nil != localNotification) {
+        [[UIApplication sharedApplication] cancelLocalNotification:localNotification];
+    }
+}
+
+- (void)modifyReminder:(Reminder *)reminder withReadState:(BOOL)isRead {
+    reminder.isRead = [NSNumber numberWithBool:isRead];
+    [self synchroniseToStore];
+    if (YES == isRead) {
+        [[BilateralFriendManager defaultManager] modifyUnReadRemindersSizeWithUserId:reminder.userID withOperateType:OperateTypeSub];
+    }
+}
+
+- (void)modifyReminder:(Reminder *)reminder withBellState:(BOOL)isBell {
+    reminder.isBell = [NSNumber numberWithBool:isBell];
+    [self synchroniseToStore];
 }
 
 @end
