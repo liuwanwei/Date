@@ -7,13 +7,12 @@
 //
 
 #import "FriendRemindersViewController.h"
-#import "ReminderManager.h"
-#import "FriendReminderCell.h"
 
 @interface FriendRemindersViewController () {
     NSArray * _reminders;
-    NSMutableArray * _audioState;
+    NSMutableArray * _ramindersAudioState;
     ReminderManager * _reminderManager;
+    SoundManager * _soundManager;
 }
 
 @end
@@ -21,19 +20,59 @@
 @implementation FriendRemindersViewController
 @synthesize userId = _userId;
 @synthesize tableView = _tableView;
+@synthesize bilateralFriend = _bilateralFriend;
 
 #pragma 私有函数
 - (void)initData {
     _reminders = [_reminderManager remindersWithUserId:_userId];
     if (nil != _reminders) {
-        _audioState = [NSMutableArray arrayWithCapacity:0];
+        _ramindersAudioState = [NSMutableArray arrayWithCapacity:0];
         NSInteger size = _reminders.count;
         for (NSInteger index = 0; index < size; index++) {
-            [_audioState addObject:[NSNumber numberWithInteger:AudioStateNormal]];
+            [_ramindersAudioState addObject:[NSNumber numberWithInteger:AudioStateNormal]];
         }
         [self.tableView reloadData];
     }
 }
+
+- (NSIndexPath *)indexPathWithReminder:(Reminder *)reminder {
+    if (nil != _reminders) {
+        NSInteger size = _reminders.count;
+        Reminder * tmpReminder;
+        for (NSInteger index = 0;index < size;index++) {
+            tmpReminder = [_reminders objectAtIndex:index];
+            if ([tmpReminder.id isEqualToString:reminder.id]) {
+                return [NSIndexPath indexPathForRow:index inSection:0];
+            }
+        }
+    }
+    return nil;
+}
+
+- (NSIndexPath *)indexPathOfAudioPlaying {
+    if (nil != _ramindersAudioState) {
+        NSInteger size = _ramindersAudioState.count;
+        for (NSInteger index = 0; index < size; index++) {
+            if ([NSNumber numberWithInteger:AudioStatePlaying] == [_ramindersAudioState objectAtIndex:index]) {
+                return [NSIndexPath indexPathForRow:index inSection:0];
+            }
+        }
+    }
+    
+    return nil;
+}
+
+- (void)stopPlayingAudio {
+    NSIndexPath * indexPath = [self indexPathOfAudioPlaying];
+    FriendReminderCell * cell;
+    if (nil != indexPath) {
+        [_soundManager stopAudio];
+        cell = (FriendReminderCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        cell.audioState = AudioStateNormal;
+        [_ramindersAudioState replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithInteger:AudioStateNormal]];
+    }
+}
+
 
 #pragma 事件函数
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -41,6 +80,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         _reminderManager = [ReminderManager defaultManager];
+        _soundManager = [SoundManager defaultSoundManager];
     }
     return self;
 }
@@ -48,8 +88,23 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    self.tableView.delegate = self;
+    self.tableView.dataSource  = self;
+    self.tableView.rowHeight = 80.0;
     [self initData];
+    self.title = _bilateralFriend.nickname;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    _reminderManager.delegate = self;
+    _soundManager.delegate  = self;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    _reminderManager.delegate = nil;
+    _soundManager.delegate  = nil;
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,10 +129,43 @@
     FriendReminderCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[FriendReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.delegate = self;
     }
     
+    cell.indexPath = indexPath;
+    cell.bilateralFriend = _bilateralFriend;
     cell.reminer = [_reminders objectAtIndex:indexPath.row];
+    //cell.remindsAudioState = _ramindersAudioState;
+    cell.audioState = [[_ramindersAudioState objectAtIndex:indexPath.row] integerValue];
     return cell;
+}
+
+#pragma mark - ReminderManager Delegate
+- (void)downloadAudioFileSuccess:(Reminder *)reminder {
+    if (nil != reminder) {
+        [self stopPlayingAudio];
+        NSIndexPath * indexPath;
+        indexPath = [self indexPathWithReminder:reminder];
+        if (nil != indexPath && nil != _ramindersAudioState) {
+            if ([[_ramindersAudioState objectAtIndex:indexPath.row] integerValue] == AudioStateDownload) {
+                FriendReminderCell * cell = (FriendReminderCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+                cell.audioState = AudioStatePlaying;
+                [_ramindersAudioState replaceObjectAtIndex:indexPath.row withObject: [NSNumber numberWithInteger:AudioStatePlaying]];
+                [cell palyAudio:nil];
+            }
+        }
+    }
+}
+
+#pragma mark - FriendReminderCell Delegate
+- (void)clickAudioButton:(NSIndexPath *)indexPath WithState:(NSNumber *)state {
+    [self stopPlayingAudio];
+    [_ramindersAudioState replaceObjectAtIndex:indexPath.row withObject:state];
+}
+
+#pragma mark - SoundManager Delegate
+- (void)audioPlayerDidFinishPlaying {
+    [self stopPlayingAudio];
 }
 
 @end
