@@ -146,11 +146,50 @@ static SoundManager * sSoundManager;
     return result;
 }
 
+- (BOOL)playAudio:(NSString *)path {
+    BOOL result = NO;
+    NSError * error;
+    AVAudioSession * session = [AVAudioSession sharedInstance];
+    [session setCategory:AVAudioSessionCategoryPlayback error:&error];
+    
+    if(session == nil) {
+        NSLog(@"Error creating session: %@", [error description]);
+        return NO;
+    }else {
+        [session setActive:YES error:nil];
+    }
+    
+    NSURL * url = [NSURL fileURLWithPath:path isDirectory:NO];
+    _player  = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+    _player.numberOfLoops  = 0;
+    _player.volume = 1.0;
+    _player.delegate = self;
+    if (nil == _player) {
+        NSLog(@"播放失败 %@",[error localizedFailureReason]);
+    }else {
+        result = YES;
+        [_player prepareToPlay];
+        [_player  play];
+    }
+    
+    return result;
+}
+- (void)stopAudio {
+    if (nil != _player) {
+        [_player stop];
+        _player = nil;
+    }
+}
+
 #pragma AVAudioPlayerDelegate
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
-    /*NSNotification * notification = nil;
-    notification = [NSNotification notificationWithName:kSoundPlaySuccessMessage object:nil];
-    [[NSNotificationCenter defaultCenter] postNotification:notification];*/
+    _player = nil;
+    if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(audioPlayerDidFinishPlaying)]) {
+            [self.delegate performSelector:@selector(audioPlayerDidFinishPlaying) withObject:nil];
+        }
+    }
+
 }
 
 @end

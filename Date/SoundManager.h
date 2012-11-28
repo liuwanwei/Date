@@ -10,11 +10,21 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <AVFoundation/AVFoundation.h>
 
+
+@protocol SoundManagerDelegate <NSObject>
+
+@optional
+- (void)audioPlayerDidFinishPlaying;
+- (void)audioPlayerDidStopPlaying;
+@end
+
 @interface SoundManager : NSObject <AVAudioPlayerDelegate>
 
 @property (strong, nonatomic) NSURL * recordFileURL;
 @property (strong, nonatomic) IBOutlet UIView * view;
 @property (weak, nonatomic) IBOutlet UIImageView * imageView;
+
+@property (weak, nonatomic) id<SoundManagerDelegate> delegate;
 
 + (SoundManager *)defaultSoundManager;
 
@@ -23,4 +33,6 @@
 
 - (BOOL)playRecording;
 
+- (BOOL)playAudio:(NSString *)path;
+- (void)stopAudio;
 @end
