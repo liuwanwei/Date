@@ -19,6 +19,7 @@
 #import "SoundManager.h"
 #import "ReminderSettingViewController.h"
 #import "HttpRequestManager.h"
+#import "FriendRemindersViewController.h"
 
 @interface HomeViewController () {
     SinaWeiboManager * _sinaWeiboManager;
@@ -201,5 +202,15 @@
     nicknameLabel.text = friend.nickname;
     
     return cell;
+}
+
+#pragma mark - Table view delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    FriendRemindersViewController * controller = [[FriendRemindersViewController alloc] initWithNibName:@"FriendRemindersViewController" bundle:nil];
+    BilateralFriend * friend = [_friends objectAtIndex:indexPath.row];
+    controller.userId = friend.userID;
+    controller.bilateralFriend = friend;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 @end
