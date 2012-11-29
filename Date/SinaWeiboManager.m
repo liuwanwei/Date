@@ -9,6 +9,7 @@
 #import "SinaWeiboManager.h"
 #import "UserManager.h"
 #import "BilateralFriendManager.h"
+#import "LMLibrary.h"
 
 #define bilateralFriendsUpdateDate 24*60*60
 static SinaWeiboManager * sWeiboManager;
@@ -170,10 +171,8 @@ static SinaWeiboManager * sWeiboManager;
     if (YES == _finishUserInfo && YES == _finishFriendsInfo) {
         _finishUserInfo = NO;
         _finishFriendsInfo = NO;
-        NSNotification * notification = nil;
-        notification = [NSNotification notificationWithName:kGoRegisterUserMessage object:nil];
         
-        [[NSNotificationCenter defaultCenter] postNotification:notification];
+        [[LMLibrary defaultManager] postNotificationWithName:kGoRegisterUserMessage withObject:nil];
     }
 }
 
