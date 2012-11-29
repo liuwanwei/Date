@@ -7,6 +7,12 @@
 //
 
 #import "FriendRemindersViewController.h"
+#import "ReminderMapViewController.h"
+
+typedef enum {
+    ReminderTypeReceive = 0,
+    ReminderTypeSend
+}ReminderType;
 
 @interface FriendRemindersViewController () {
     NSArray * _reminders;
@@ -131,11 +137,15 @@
         cell = [[FriendReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.delegate = self;
     }
-    
+    Reminder * reminder = [_reminders objectAtIndex:indexPath.row];
     cell.indexPath = indexPath;
-    cell.bilateralFriend = _bilateralFriend;
-    cell.reminer = [_reminders objectAtIndex:indexPath.row];
-    //cell.remindsAudioState = _ramindersAudioState;
+    if (ReminderTypeSend == [reminder.type integerValue]) {
+        cell.bilateralFriend = nil;
+    }else {
+        cell.bilateralFriend = _bilateralFriend;
+    }
+    
+    cell.reminder = reminder;
     cell.audioState = [[_ramindersAudioState objectAtIndex:indexPath.row] integerValue];
     return cell;
 }
@@ -157,10 +167,28 @@
     }
 }
 
+- (void)updateReminderReadStateSuccess:(Reminder *)reminder {
+    NSIndexPath * indexPath;
+    indexPath = [self indexPathWithReminder:reminder];
+    if (nil != indexPath) {
+        FriendReminderCell * cell = (FriendReminderCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        [cell modifyReminderReadState];
+    }
+}
+
 #pragma mark - FriendReminderCell Delegate
 - (void)clickAudioButton:(NSIndexPath *)indexPath WithState:(NSNumber *)state {
     [self stopPlayingAudio];
     [_ramindersAudioState replaceObjectAtIndex:indexPath.row withObject:state];
+}
+
+- (void)clickMapButton:(NSIndexPath *)indexPath {
+    ReminderMapViewController * controller = [[ReminderMapViewController alloc] initWithNibName:@"ReminderMapViewController" bundle:nil];
+    controller.reminder = [_reminders objectAtIndex:indexPath.row];
+    controller.type = OperateTypeShow;
+    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
+    [self presentViewController:nav animated:YES completion:nil];
+
 }
 
 #pragma mark - SoundManager Delegate
