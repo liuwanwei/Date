@@ -22,6 +22,10 @@
 @synthesize friendCell = _friendCell;
 
 - (void)dismiss {
+    for (BilateralFriend * friend in _newOnlinefriends) {
+        [[BilateralFriendManager defaultManager] modifyReadState:friend withState:YES];
+    }
+
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -46,7 +50,7 @@
     self.tableView.delegate = self;
     self.tableView.rowHeight = 60.0;
     
-    UIBarButtonItem * leftItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismiss)];
+    UIBarButtonItem * leftItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismiss)];
     self.navigationItem.leftBarButtonItem = leftItem;
 
 }
