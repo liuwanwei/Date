@@ -2,10 +2,11 @@
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1810" systemVersion="11G56" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="BilateralFriend" representedClassName="BilateralFriend" syncable="YES">
         <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isOnline" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="isRead" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isOnline" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="isRead" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="lastReminderID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="nickname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="unReadRemindersSize" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="userID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
@@ -13,7 +14,8 @@
         <attribute name="adress" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="audioUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="isRead" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isBell" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="isRead" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sendTime" optional="YES" attributeType="Date" syncable="YES"/>
@@ -22,7 +24,7 @@
         <attribute name="userID" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="BilateralFriend" positionX="-2655" positionY="-1611" width="128" height="150"/>
-        <element name="Reminder" positionX="160" positionY="192" width="128" height="195"/>
+        <element name="BilateralFriend" positionX="-2655" positionY="-1611" width="128" height="165"/>
+        <element name="Reminder" positionX="160" positionY="192" width="128" height="210"/>
     </elements>
 </model>
