@@ -34,11 +34,19 @@
 }
 
 - (void)sendReminder {
-    if (_reminder.userID != nil) {
+    if (_reminder.userID != 0) {
          _reminderManager.delegate = self;
         [_reminderManager sendReminder:_reminder];
         [[MBProgressManager defaultManager] showHUD:@"发送中"];
     }
+}
+
+- (void)saveSendReminder:(NSString *)reminderId {
+    _reminder.id = reminderId;
+    _reminder.sendTime = [NSDate date];
+    [[BilateralFriendManager defaultManager] modifyLastReminder:_reminder.id withUserId:_reminder.userID];
+    [_reminderManager saveSentReminder:_reminder];
+
 }
 
 #pragma 事件函数
@@ -121,9 +129,10 @@
 }
 
 #pragma mark - ReminderManager delegate
-- (void)newReminderSuccess {
+- (void)newReminderSuccess:(NSString *)reminderId {
     [[MBProgressManager defaultManager] removeHUD];
     _reminderManager.delegate = nil;
+    [self saveSendReminder:reminderId];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 

@@ -71,6 +71,15 @@
     [self.navigationController pushViewController:controller animated:YES];
 }
 
+- (NSString *)tiggerDate {
+    NSString * date;
+    date = [_days objectAtIndex:[_pickerView selectedRowInComponent:0]];
+    date = [date stringByAppendingString:@"  "];
+    date = [date stringByAppendingString:[_hours objectAtIndex:[_pickerView selectedRowInComponent:1]]];
+    date = [date stringByAppendingString:@"点"];
+    return date;
+}
+
 #pragma 事件函数
 - (void)viewDidLoad
 {
@@ -81,6 +90,7 @@
     _reminder = [[ReminderManager defaultManager] reminder];
     [self initData];
     [self initPickerView];
+    [self setReminderDate];
     
     UIBarButtonItem * rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(chooseFriends)];
     self.navigationItem.rightBarButtonItem = rightItem;
@@ -139,7 +149,7 @@
     if (indexPath.section == 0) {
         cell.textLabel.text = @"时间";
         if (nil != _reminder.triggerTime) {
-            cell.detailTextLabel.text = [_reminder.triggerTime description];
+            cell.detailTextLabel.text = [self tiggerDate];
         }
     
     }else {
@@ -156,12 +166,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        
         [_pickerView setHidden:!_pickerView.hidden];
     }
     if (indexPath.section == 1) {
         ReminderMapViewController * controller = [[ReminderMapViewController alloc] initWithNibName:@"ReminderMapViewController" bundle:nil];
         controller.reminder = _reminder;
+        controller.type = OperateTypeSet;
         UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
         [self presentViewController:nav animated:YES completion:nil];
     }
@@ -192,13 +202,8 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     NSIndexPath * tableRow =  [NSIndexPath indexPathForRow:0 inSection:0];
     UITableViewCell * cell = [_tableView cellForRowAtIndexPath:tableRow];
-    NSString * date;
-    date = [_days objectAtIndex:[pickerView selectedRowInComponent:0]];
-    date = [date stringByAppendingString:@"  "];
-    date = [date stringByAppendingString:[_hours objectAtIndex:[pickerView selectedRowInComponent:1]]];
-    date = [date stringByAppendingString:@"点"];
     
-    [cell.detailTextLabel setText:date];
+    [cell.detailTextLabel setText:[self tiggerDate]];
     [self setReminderDate];
 }
 @end
