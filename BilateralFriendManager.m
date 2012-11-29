@@ -7,7 +7,7 @@
 //
 
 #import "BilateralFriendManager.h"
-#import "BilateralFriend.h"
+#import "HttpRequestManager.h"
 
 static BilateralFriendManager * sBilateralFriendManager;
 
@@ -31,7 +31,7 @@ static BilateralFriendManager * sBilateralFriendManager;
     NSArray * results = nil;
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kBilateralFriendEntity];
     
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"isOnLine = NO"];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"isOnLine = 0"];
     request.predicate = predicate;
     
     results = [self executeFetchRequest:request];
@@ -41,7 +41,7 @@ static BilateralFriendManager * sBilateralFriendManager;
 
 // 查询指定usersID的不在线好友
 - (NSArray *)notOnlineFriendsWithUserID:(NSString *) usersID {
-    NSString * param = [NSString stringWithFormat:@"isOnline = nil AND (%@)", usersID];
+    NSString * param = [NSString stringWithFormat:@"isOnline = 0 AND (%@)", usersID];
 
     NSArray * results = nil;
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kBilateralFriendEntity];
@@ -146,7 +146,7 @@ static BilateralFriendManager * sBilateralFriendManager;
 
 - (NSArray *)newOnlineFriends {
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kBilateralFriendEntity];
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"isOnline != nil AND isRead = nil"];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"isOnline != NO AND isRead = NO"];
     request.predicate = predicate;
     NSArray * results = [self executeFetchRequest:request];
     return results;
@@ -154,7 +154,7 @@ static BilateralFriendManager * sBilateralFriendManager;
 
 - (NSArray *)allOnlineFriends {
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kBilateralFriendEntity];
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"isOnline != nil"];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"isOnline != NO"];
     request.predicate = predicate;
     NSArray * results = [self executeFetchRequest:request];
     if (nil == results || 0 == results.count) {
@@ -163,44 +163,60 @@ static BilateralFriendManager * sBilateralFriendManager;
     return results;
 }
 
+- (void)checkRegisteredFriendsRequest {
+    [[HttpRequestManager defaultManager] checkRegisteredFriendsRequest];
+}
+
 /*
-  检查是否有新的注册用户，如果修改数据库isOnline字段为YES，并通知界面层进行提醒
+  检查是否有新的注册用户，修改数据库isOnline字段为YES，并通知界面层进行提醒
  */
-- (void)checkRegisteredFriends:(NSArray *)data {
-    if (nil != data) {
-        NSString * predicate = nil;
-        NSInteger size = data.count;
-        id object;
-        BOOL sign = NO;
-        
-        for (NSInteger index = 0; index < size; index++) {
-            object = [data objectAtIndex:index];
-            if ([object isKindOfClass:[NSDictionary class]]) {
-                if (0 == index) {
-                    predicate = [NSString stringWithFormat:@"userID = %@",[object objectForKey:@"userId"]] ;
-                }else {
-                    predicate = [predicate stringByAppendingString:@" OR "];
-                    predicate = [predicate stringByAppendingString:[NSString stringWithFormat:@"userID = %@",[object objectForKey:@"userId"]]] ;
+- (void)handleCheckRegisteredFriendsResponse:(id)json {
+    if (nil != json) {
+        if ([json isKindOfClass:[NSDictionary class]]) {
+            NSString * status = [json objectForKey:@"status"];
+            if ([status isEqualToString:@"success"]) {
+                id object = [json objectForKey:@"data"];
+                if ([object isKindOfClass:[NSArray class]]) {
+                    NSArray * data = (NSArray *)object;
+                    NSString * predicate = nil;
+                    NSInteger size = data.count;
+                    id object;
+                    BOOL sign = NO;
+                    
+                    for (NSInteger index = 0; index < size; index++) {
+                        object = [data objectAtIndex:index];
+                        if ([object isKindOfClass:[NSDictionary class]]) {
+                            if (0 == index) {
+                                predicate = [NSString stringWithFormat:@"userID = %@",[object objectForKey:@"userId"]] ;
+                            }else {
+                                predicate = [predicate stringByAppendingString:@" OR "];
+                                predicate = [predicate stringByAppendingString:[NSString stringWithFormat:@"userID = %@",[object objectForKey:@"userId"]]] ;
+                            }
+                        }
+                    }
+                    
+                    if (nil != predicate) {
+                        NSArray * friendsArray = [self notOnlineFriendsWithUserID:predicate];
+                        if (nil != friendsArray) {
+                            NSLog(@"new online friends");
+                            NSInteger friendsArraySize = friendsArray.count;
+                            if (friendsArraySize > 0) {
+                                sign = YES;
+                            }
+                            for (NSInteger index = 0; index < friendsArraySize; index++) {
+                                [self modifyOnline:YES withBilateralFriend:[friendsArray objectAtIndex:index]];
+                            }
+                        }
+                    }
+                    
+                    if (YES == sign) {
+                        NSNotification * notification = nil;
+                        notification = [NSNotification notificationWithName:kOnlineFriendsMessage object:nil];
+                        [[NSNotificationCenter defaultCenter] postNotification:notification];
+                    }
+
                 }
             }
-        }
-        
-        if (nil != predicate) {
-            NSArray * friendsArray = [self notOnlineFriendsWithUserID:predicate];
-            if (nil != friendsArray) {
-                NSLog(@"new online friends");
-                sign = YES;
-                NSInteger friendsArraySize = friendsArray.count;
-                for (NSInteger index = 0; index < friendsArraySize; index++) {
-                    [self modifyOnline:YES withBilateralFriend:[friendsArray objectAtIndex:index]];
-                }
-            }
-        }
-        
-        if (YES == sign) {
-            NSNotification * notification = nil;
-            notification = [NSNotification notificationWithName:kOnlineFriendsMessage object:nil];
-            [[NSNotificationCenter defaultCenter] postNotification:notification];
         }
     }
 }
@@ -227,9 +243,7 @@ static BilateralFriendManager * sBilateralFriendManager;
     BilateralFriend * friend = [self bilateralFriendWithUserID:userId];
 
     if (nil != friend) {
-        NSInteger size = [friend.unReadRemindersSize integerValue] + 1;
         friend.lastReminderID = reminderId;
-        friend.unReadRemindersSize = [NSNumber numberWithInteger:size];
         [self synchroniseToStore];
     }
 }
@@ -249,6 +263,14 @@ static BilateralFriendManager * sBilateralFriendManager;
         friend.unReadRemindersSize = [NSNumber numberWithInteger:size];
         [self synchroniseToStore];
     }
+}
+
+/*
+ 当新好友提醒界面关闭的时候，修改状态为已读
+ */
+- (void)modifyReadState:(BilateralFriend *)friend withState:(BOOL)state {
+    friend.isRead = [NSNumber numberWithBool:state];
+    [self synchroniseToStore];
 }
 
 @end

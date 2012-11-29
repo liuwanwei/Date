@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "BaseManager.h"
+#import "BilateralFriend.h"
 
 typedef enum {
     OperateTypeAdd = 0,
@@ -28,5 +29,8 @@ typedef enum {
 - (void)modifyLastReminder:(NSString *)reminderId withUserId:(NSNumber *)userId;
 - (void)modifyUnReadRemindersSizeWithUserId:(NSNumber *)userId withOperateType:(OperateType) operateType;
 
-- (void)checkRegisteredFriends:(NSArray *)data;
+- (void)modifyReadState:(BilateralFriend *)friend withState:(BOOL)state;
+
+- (void)checkRegisteredFriendsRequest;
+- (void)handleCheckRegisteredFriendsResponse:(id)json;
 @end
