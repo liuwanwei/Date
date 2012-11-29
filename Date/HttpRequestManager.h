@@ -17,5 +17,7 @@
 - (void)sendReminderRequest:(Reminder *)reminder;
 - (void)getRemoteRemindersRequest:(NSString *)timeline;
 - (void)downloadAudioFileRequest:(Reminder *)reminder;
+- (void)checkRegisteredFriendsRequest;
+- (void)updateReminderReadStateRequest:(Reminder *)reminder withReadState:(BOOL)state;
 
 @end

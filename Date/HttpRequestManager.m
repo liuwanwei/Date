@@ -54,17 +54,8 @@ static HttpRequestManager * sHttpRequestManager;
 
 - (void)handleRegisterResponse:(NSData *)responseData {
     id json = [self serializationJson:responseData];
-    if (nil != json) {
-        if ([json isKindOfClass:[NSDictionary class]]) {
-            NSString * status = [json objectForKey:@"status"];
-            if ([status isEqualToString:@"success"]) {
-                id data = [json objectForKey:@"data"];
-                if ([data isKindOfClass:[NSArray class]]) {
-                    [[BilateralFriendManager defaultManager] checkRegisteredFriends:data];
-                }
-            }
-        }
-    }
+    [[BilateralFriendManager defaultManager] handleCheckRegisteredFriendsResponse:json];
+    [[ReminderManager defaultManager] getRemoteRemindersRequest];
 }
 
 - (void)handleNewReminderReponse:(NSData *)responseData {
@@ -81,6 +72,41 @@ static HttpRequestManager * sHttpRequestManager;
     [[ReminderManager defaultManager] handleDowanloadAuioFileResponse:userInfo];
 }
 
+- (void)handleCheckRegisteredFriendsReponse:(NSData *)responseData {
+    id json = [self serializationJson:responseData];
+    [[BilateralFriendManager defaultManager] handleCheckRegisteredFriendsResponse:json];
+}
+
+- (void)handleUpdateReminderReadStateResponse:(NSData *)responseData withUserInfo:(NSDictionary *)userInfo{
+    id json = [self serializationJson:responseData];
+    Reminder * reminder = [userInfo objectForKey:@"reminder"];
+    [[ReminderManager defaultManager] handleUpdateReminderReadStateResponse:json withReminder:reminder];
+}
+
+/*
+ 按标准对好友数据进行格式化
+ */
+- (NSString *)formatFollower{
+    NSString * param = nil;
+    NSArray * array = [[BilateralFriendManager defaultManager] allFriendsID];
+    if (nil != array) {
+        BilateralFriend * friend;
+        NSInteger size = array.count;
+        for (NSInteger index = 0;index < size;index++) {
+            if (index == 0) {
+                friend = [array objectAtIndex:index];
+                param = [friend.userID stringValue];
+            }else {
+                param = [param stringByAppendingString:@","];
+                friend = [array objectAtIndex:index];
+                param = [param stringByAppendingString:[friend.userID stringValue]];
+            }
+        }
+    }
+    
+    return param;
+}
+
 #pragma 静态函数
 + (HttpRequestManager *)defaultManager {
     if (nil == sHttpRequestManager) {
@@ -92,35 +118,19 @@ static HttpRequestManager * sHttpRequestManager;
 
 #pragma 类成员函数
 - (void)registerUserRequest {
-        NSString * url = [kServerUrl stringByAppendingString:kRegisterUserParams];
-        NSString  * param;
-        NSArray * array = [[BilateralFriendManager defaultManager] allFriendsID];
-        if (nil != array) {
-            BilateralFriend * friend;
-            NSInteger size = array.count;
-            for (NSInteger index = 0;index < size;index++) {
-                if (index == 0) {
-                    friend = [array objectAtIndex:index];
-                    param = [friend.userID stringValue];
-                }else {
-                    param = [param stringByAppendingString:@","];
-                    friend = [array objectAtIndex:index];
-                    param = [param stringByAppendingString:[friend.userID stringValue]];
-                }
-            }
-            
-            ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:url]];
-            [request setPostValue:[UserManager defaultManager].userID forKey:@"userId"];
-            [request setPostValue:[UserManager defaultManager].screenName forKey:@"nickname"];
-            [request setPostValue:param forKey:@"biFollower"];
-            [request setTimeOutSeconds:30];
-            [request setUserInfo:[NSDictionary dictionaryWithObject:@"register" forKey:@"request"]];
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_4_0
-            [request setShouldContinueWhenAppEntersBackground:YES];
-#endif
-            [_networkQueue addOperation:request];
-            [_networkQueue go];
-        }
+    NSString * url = [kServerUrl stringByAppendingString:kRegisterUserParams];
+    NSString  * param = [self formatFollower];
+    if (nil != param) {
+        ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:url]];
+        [request setPostValue:[UserManager defaultManager].userID forKey:@"userId"];
+        [request setPostValue:[UserManager defaultManager].screenName forKey:@"nickname"];
+        [request setPostValue:param forKey:@"biFollower"];
+        [request setTimeOutSeconds:20];
+        [request setUserInfo:[NSDictionary dictionaryWithObject:@"register" forKey:@"request"]];
+        [request setShouldContinueWhenAppEntersBackground:YES];
+        [_networkQueue addOperation:request];
+        [_networkQueue go];
+    }
 }
 
 - (void)sendReminderRequest:(Reminder *)reminder {
@@ -172,6 +182,32 @@ static HttpRequestManager * sHttpRequestManager;
     [_networkQueue go];
 }
 
+- (void)checkRegisteredFriendsRequest {
+    NSString * url = [kServerUrl stringByAppendingString:kCheckRegisteredFriendsParams];
+    NSString  * param = [self formatFollower];
+    if (nil != param) {
+        ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:url]];
+        [request setPostValue:[UserManager defaultManager].userID forKey:@"userId"];
+        [request setPostValue:param forKey:@"biFollower"];
+        [request setTimeOutSeconds:20];
+        [request setUserInfo:[NSDictionary dictionaryWithObject:@"checkRegisteredFriends" forKey:@"request"]];
+        [request setShouldContinueWhenAppEntersBackground:YES];
+        [_networkQueue addOperation:request];
+        [_networkQueue go];
+    }
+}
+
+- (void)updateReminderReadStateRequest:(Reminder *)reminder withReadState:(BOOL)state {
+    NSString * url = [kServerUrl stringByAppendingString:kUpdateReminderReadStateParams];
+    url = [NSString stringWithFormat:url,reminder.id,[UserManager defaultManager].userID,state];
+    
+    ASIHTTPRequest * request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
+    [request setTimeOutSeconds:20];
+    [request setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"updateReminderReadState",@"request",reminder,@"reminder",nil]];
+    [_networkQueue addOperation:request];
+    [_networkQueue go];
+}
+
 #pragma AsiNetWorkQueue delegate
 - (void)requestComplete:(ASIHTTPRequest *)request {
     NSString * requestType = [request.userInfo objectForKey:@"request"];
@@ -188,6 +224,10 @@ static HttpRequestManager * sHttpRequestManager;
         // FIXME 需要根据状态进行判断是否成功,后果是音频不能播放
         NSInteger statue = [request responseStatusCode];
         [self handleDownAudioFileReponse:request.userInfo];
+    }else if ([requestType isEqualToString:@"checkRegisteredFriends"]) {
+        [self handleCheckRegisteredFriendsReponse:[request responseData]];
+    }else if ([requestType isEqualToString:@"updateReminderReadState"]) {
+        [self handleUpdateReminderReadStateResponse:[request responseData] withUserInfo:request.userInfo];
     }
 }
 
