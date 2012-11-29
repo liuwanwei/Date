@@ -13,9 +13,10 @@
 @protocol ReminderManagerDelegate <NSObject>
 
 @optional
-- (void)newReminderSuccess;
+- (void)newReminderSuccess:(NSString *)reminderId;
 - (void)newReminderFailed;
 - (void)downloadAudioFileSuccess:(Reminder *)reminder;
+- (void)updateReminderReadStateSuccess:(Reminder *)reminder;
 @end
 
 @interface ReminderManager : BaseManager
@@ -26,7 +27,8 @@
 
 - (Reminder *)reminder;
 
-- (void)saveReminder:(Reminder *)reminder;
+- (void)saveSentReminder:(Reminder *)reminder;
+
 - (NSMutableDictionary *)remindersWithId:(NSArray *) remindersId;
 - (NSArray *)remindersWithUserId:(NSNumber *)userId;
 
@@ -39,9 +41,13 @@
 - (void)downloadAudioFileWithReminder:(Reminder *)reminder;
 - (void)handleDowanloadAuioFileResponse:(NSDictionary *)userInfo;
 
+- (void)updateReminderReadStateRequest:(Reminder *)reminder withReadState:(BOOL)state;
+- (void)handleUpdateReminderReadStateResponse:(id)json withReminder:(Reminder *)reminder;
+
 - (void)addLocalNotificationWithReminder:(Reminder *)reminder;
 - (void)cancelLocalNotificationWithReminder:(Reminder *)reminder;
 
 - (void)modifyReminder:(Reminder *)reminder withReadState:(BOOL)isRead;
 - (void)modifyReminder:(Reminder *)reminder withBellState:(BOOL)isBell;
+
 @end

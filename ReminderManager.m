@@ -8,6 +8,7 @@
 #import "ReminderManager.h"
 #import "HttpRequestManager.h"
 #import "BilateralFriendManager.h"
+#import "LMLibrary.h"
 
 static ReminderManager * sReminderManager;
 
@@ -44,16 +45,16 @@ static ReminderManager * sReminderManager;
 - (NSString *)timeline {
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSTimeZone * timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
+    formatter.timeZone = timeZone;
     NSString * timeline =  [formatter stringFromDate:[NSDate date]];
     return timeline;
 }
 
 /*
  获取上次更新提醒的时间
- TODO 应该获取UTC时间
  */
 - (NSString *)getTimeline {
-    return @"1999-10-10 10:10:10";
     
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString * timeline = [defaults objectForKey:kRemoteRemindersUpdateTimeline];
@@ -83,22 +84,25 @@ static ReminderManager * sReminderManager;
     [dateFormatter setTimeZone:timeZone];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         for (id object in data) {
-        if ([object isKindOfClass:[NSDictionary class]]) {
-            NSString * reminderId = [object objectForKey:@"id"];
-            if (nil == [self reminderWithId:reminderId]) {
-                reminder = (Reminder *)[NSEntityDescription insertNewObjectForEntityForName:kReminderEntity inManagedObjectContext:self.managedObjectContext];
-                reminder.id = [object objectForKey:@"id"];
-                reminder.audioUrl = [object objectForKey:@"audio"];
-                reminder.adress = [object objectForKey:@"description"];
-                reminder.userID = [numberFormatter numberFromString:[object objectForKey:@"senderId"]];
-                reminder.triggerTime = [dateFormatter dateFromString:[object objectForKey:@"triggerTime"]];
-                reminder.sendTime = [dateFormatter dateFromString:[object objectForKey:@"createTime"]];
-                reminder.latitude = [object objectForKey:@"latitude"];
-                reminder.longitude = [object objectForKey:@"longitude"];
-                [self synchroniseToStore];
-                [[BilateralFriendManager defaultManager] modifyLastReminder:reminder.id withUserId:reminder.userID];
+            if ([object isKindOfClass:[NSDictionary class]]) {
+                NSString * reminderId = [object objectForKey:@"id"];
+                    if (nil == [self reminderWithId:reminderId]) {
+                        reminder = (Reminder *)[NSEntityDescription insertNewObjectForEntityForName:kReminderEntity inManagedObjectContext:self.managedObjectContext];
+                        reminder.id = [object objectForKey:@"id"];
+                        reminder.audioUrl = [object objectForKey:@"audio"];
+                        reminder.adress = [object objectForKey:@"description"];
+                        reminder.userID = [numberFormatter numberFromString:[object objectForKey:@"senderId"]];
+                        reminder.triggerTime = [dateFormatter dateFromString:[object objectForKey:@"triggerTime"]];
+                        reminder.sendTime = [dateFormatter dateFromString:[object objectForKey:@"createTime"]];
+                        reminder.latitude = [object objectForKey:@"latitude"];
+                        reminder.longitude = [object objectForKey:@"longitude"];
+                        reminder.type = [NSNumber numberWithInteger:0];
+                        [self synchroniseToStore];
+                        [[BilateralFriendManager defaultManager] modifyLastReminder:reminder.id withUserId:reminder.userID];
+                        [[BilateralFriendManager defaultManager] modifyUnReadRemindersSizeWithUserId: reminder.userID withOperateType:OperateTypeAdd];
             }
         }
+        [[LMLibrary defaultManager] postNotificationWithName:kRemindesUpdateMessage withObject:nil];
     }
 }
 
@@ -157,11 +161,15 @@ static ReminderManager * sReminderManager;
 }
 
 #pragma 类成员函数
-
-- (void)saveReminder:(Reminder *)reminder {
+- (void)saveSentReminder:(Reminder *)reminder {
+    reminder.type = [NSNumber numberWithInteger:1];
+    reminder.isRead = [NSNumber numberWithBool:YES];
+    reminder.isBell = [NSNumber numberWithBool:NO];
     if (! [self synchroniseToStore]) {
         return;
     }
+    
+    [[LMLibrary defaultManager] postNotificationWithName:kRemindesUpdateMessage withObject:nil];
 }
 
 - (NSMutableDictionary *)remindersWithId:(NSArray *) remindersId {
@@ -224,9 +232,10 @@ static ReminderManager * sReminderManager;
         if ([json isKindOfClass:[NSDictionary class]]) {
             NSString * status = [json objectForKey:@"status"];
             if ([status isEqualToString:@"success"]) {
+                NSString * reminderId = [json objectForKey:@"data"];
                 if (self.delegate != nil) {
-                    if ([self.delegate respondsToSelector:@selector(newReminderSuccess)]) {
-                        [self.delegate performSelector:@selector(newReminderSuccess) withObject:nil];
+                    if ([self.delegate respondsToSelector:@selector(newReminderSuccess:)]) {
+                        [self.delegate performSelector:@selector(newReminderSuccess:) withObject:reminderId];
                     }
                 }
             }else {
@@ -278,6 +287,27 @@ static ReminderManager * sReminderManager;
     if (self.delegate != nil) {
         if ([self.delegate respondsToSelector:@selector(downloadAudioFileSuccess:)]) {
             [self.delegate performSelector:@selector(downloadAudioFileSuccess:) withObject:reminder];
+        }
+    }
+}
+
+- (void)updateReminderReadStateRequest:(Reminder *)reminder withReadState:(BOOL)state {
+    [[HttpRequestManager defaultManager] updateReminderReadStateRequest:reminder withReadState:state];
+}
+
+- (void)handleUpdateReminderReadStateResponse:(id)json withReminder:(Reminder *)reminder {
+    if (nil != json) {
+        if ([json isKindOfClass:[NSDictionary class]]) {
+            NSString * status = [json objectForKey:@"status"];
+            if ([status isEqualToString:@"success"]) {
+                if (nil != reminder) {
+                    if (self.delegate != nil) {
+                        if ([self.delegate respondsToSelector:@selector(updateReminderReadStateSuccess:)]) {
+                            [self.delegate performSelector:@selector(updateReminderReadStateSuccess:) withObject:reminder];
+                        }
+                    }
+                }
+            }
         }
     }
 }
