@@ -48,7 +48,9 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOnlineFriendsMessage:) name:kOnlineFriendsMessage object:nil];
     
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRegisterUserMessage:) name:kGoRegisterUserMessage object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRegisterUserMessage:) name:kGoRegisterUserMessage object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRemindersUpdateMessage:) name:kRemindesUpdateMessage object:nil];
 }
 
 - (void)initFriends {
@@ -99,6 +101,11 @@
     [[HttpRequestManager defaultManager] registerUserRequest];
 }
 
+- (void)handleRemindersUpdateMessage:(NSNotification *)note {
+    [self initFriends];
+    [self initReminders];
+}
+
 #pragma 事件函数
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -126,7 +133,7 @@
         [self showLoginViewController];
     }else {
         [_sinaWeiboManager requestBilateralFriends];
-        [_reminderManager getRemoteRemindersRequest];
+        [[BilateralFriendManager defaultManager] checkRegisteredFriendsRequest];
     }
 }
 
