@@ -11,6 +11,7 @@
 #import "UserManager.h"
 #import "SinaWeiboManager.h"
 #import "OnlineFriendsRemindViewController.h"
+#import "ReminderManager.h"
 
 @implementation AppDelegate
 
@@ -49,6 +50,7 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [[ReminderManager defaultManager] getRemoteRemindersRequest];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
