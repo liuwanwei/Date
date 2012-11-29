@@ -19,6 +19,8 @@ typedef enum {
 
 @property (nonatomic) OperateType type;
 @property (weak, nonatomic) Reminder * reminder;
+
 @property (weak, nonatomic) IBOutlet MKMapView * mapView;
+
 
 @end

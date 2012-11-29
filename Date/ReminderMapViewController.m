@@ -41,38 +41,47 @@
 
 - (void)initMapView {
     _mapView.delegate = self;
-    if (nil == _reminder.adress) {
+    MKCoordinateRegion theRegion;
+
+    if (OperateTypeSet == _type) {
         _mapView.showsUserLocation=YES;
         
-        CLLocationManager *locationManager = [[CLLocationManager alloc] init];//创建位置管理器
-        locationManager.delegate= self ;//设置代理
-        locationManager.desiredAccuracy=kCLLocationAccuracyNearestTenMeters;//指定需要的精度级别
-        locationManager.distanceFilter=10.0f;//设置距离筛选器
+        CLLocationManager * locationManager = [[CLLocationManager alloc] init];//创建位置管理器
+        locationManager.delegate = self ;//设置代理
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;//指定需要的精度级别
+        locationManager.distanceFilter = 10.0f;//设置距离筛选器
         [locationManager startUpdatingLocation];//启动位置管理器
         
-        //定义显示的范围
-        MKCoordinateSpan theSpan;
-        theSpan.latitudeDelta = 0.02;
-        theSpan.longitudeDelta = 0.02;
         //定义一个区域（用定义的经纬度和范围来大小来定义）
-        MKCoordinateRegion theRegion;
         theRegion.center = [[locationManager location] coordinate];
-        theRegion.span = theSpan;
         
-        //在地图上显示此区域
-        [_mapView setRegion:theRegion animated:YES];
+        //长按事件
+        UILongPressGestureRecognizer *lpress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+        lpress.minimumPressDuration = 1.0;//按1秒响应longPress方法
+        lpress.allowableMovement = 10.0;
+        [_mapView addGestureRecognizer:lpress];
+    }else {
+        CLLocationCoordinate2D coordinate;
+        coordinate.longitude = [_reminder.longitude doubleValue];
+        coordinate.latitude = [_reminder.latitude doubleValue];
+        theRegion.center = coordinate;
+        
+        _pointAnnotation = [[MKPointAnnotation alloc] init];
+        _pointAnnotation.coordinate = coordinate;
+        [_mapView addAnnotation:_pointAnnotation];
     }
     
-    //长按事件
-    UILongPressGestureRecognizer *lpress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
-    lpress.minimumPressDuration = 1.0;//按1秒响应longPress方法
-    lpress.allowableMovement = 10.0;
-    [_mapView addGestureRecognizer:lpress];
+    //定义显示的范围
+    MKCoordinateSpan theSpan;
+    theSpan.latitudeDelta = 0.01;
+    theSpan.longitudeDelta = 0.01;
+    theRegion.span = theSpan;
+    //在地图上显示此区域
+    [_mapView setRegion:theRegion animated:YES];
 }
 
 - (void)longPress:(UIGestureRecognizer*)gestureRecognizer{
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan){
-        
         _isLongPress = YES;
         //取地图上的长按的点坐标
         CGPoint touchPoint = [gestureRecognizer locationInView:_mapView];
@@ -146,15 +155,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self registerHandleMessage];
-    _isLongPress = NO;
-    
+    if (OperateTypeSet == _type) {
+        [self registerHandleMessage];
+        _isLongPress = NO;
+
+        UIBarButtonItem * rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save)];
+        self.navigationItem.rightBarButtonItem = rightItem;
+
+    }
+
     UIBarButtonItem * leftItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismiss)];
     self.navigationItem.leftBarButtonItem = leftItem;
-    
-    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save)];
-    self.navigationItem.rightBarButtonItem = rightItem;
 }
 
 - (void)didReceiveMemoryWarning
