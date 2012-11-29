@@ -21,6 +21,7 @@ typedef enum {
 
 @optional
 - (void)clickAudioButton:(NSIndexPath *)indexPath WithState:(NSNumber *) state;
+- (void)clickMapButton:(NSIndexPath *)indexPath;
 @end
 
 @interface FriendReminderCell : UITableViewCell
@@ -34,7 +35,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIButton * btnMark;
 @property (weak, nonatomic) IBOutlet UILabel * labelAddress;
 
-@property (weak, nonatomic) Reminder * reminer;
+@property (weak, nonatomic) Reminder * reminder;
 @property (weak, nonatomic) BilateralFriend * bilateralFriend;
 
 @property (strong, nonatomic) NSIndexPath * indexPath;
@@ -44,4 +45,7 @@ typedef enum {
 
 - (IBAction)palyAudio:(UIButton *)sender;
 - (IBAction)modifyBell:(UIButton *)sender;
+- (IBAction)showMap:(UIButton *)sender;
+
+- (void)modifyReminderReadState;
 @end

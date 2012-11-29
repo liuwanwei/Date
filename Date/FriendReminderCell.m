@@ -9,6 +9,7 @@
 #import "FriendReminderCell.h"
 #import "SoundManager.h"
 #import "ReminderManager.h"
+#import "UserManager.h"
 
 @implementation FriendReminderCell
 @synthesize btnAudio = _btnAudio;
@@ -18,32 +19,33 @@
 @synthesize labelTriggerDate = _labelTriggerDate;
 @synthesize indicatorView = _indicatorView;
 @synthesize audioState = _audioState;
-@synthesize reminer = _reminer;
+@synthesize reminder = _reminder;
 @synthesize bilateralFriend = _bilateralFriend;
 @synthesize indexPath = _indexPath;
 @synthesize btnMark = _btnMark;
 @synthesize labelAddress = _labelAddress;
 
 #pragma 私有函数
+- (void)modifyReminderBellState:(BOOL)isBell {
+    [[ReminderManager defaultManager] modifyReminder:_reminder withBellState:isBell];
+    if (YES == [_reminder.isBell integerValue]) {
+        [_btnClock setTitle:@"取消提醒" forState:UIControlStateNormal];
+        [[ReminderManager defaultManager] addLocalNotificationWithReminder:_reminder];
+    }else {
+        [_btnClock setTitle:@"提醒" forState:UIControlStateNormal];
+        [[ReminderManager defaultManager] cancelLocalNotificationWithReminder:_reminder];
+    }
+}
+
+#pragma 类成员函数
 - (void)modifyReminderReadState{
-    if (nil == _reminer.isRead || NO == [_reminer.isRead integerValue]) {
-        [[ReminderManager defaultManager] modifyReminder:_reminer withReadState:YES];
-        if (YES == [_reminer.isRead integerValue]) {
+    if (nil == _reminder.isRead || NO == [_reminder.isRead integerValue]) {
+        [[ReminderManager defaultManager] modifyReminder:_reminder withReadState:YES];
+        if (YES == [_reminder.isRead integerValue]) {
             [_btnClock setHidden:NO];
             [_btnMark setHidden:YES];
         }
         [self modifyReminderBellState:YES];
-    }
-}
-
-- (void)modifyReminderBellState:(BOOL)isBell {
-    [[ReminderManager defaultManager] modifyReminder:_reminer withBellState:isBell];
-    if (YES == [_reminer.isBell integerValue]) {
-        [_btnClock setTitle:@"取消提醒" forState:UIControlStateNormal];
-        [[ReminderManager defaultManager] addLocalNotificationWithReminder:_reminer];
-    }else {
-        [_btnClock setTitle:@"提醒" forState:UIControlStateNormal];
-        [[ReminderManager defaultManager] cancelLocalNotificationWithReminder:_reminer];
     }
 }
 
@@ -66,15 +68,17 @@
 }
 
 - (IBAction)palyAudio:(UIButton *)sender {
-    [self modifyReminderReadState];
+    if (NO == [_reminder.isRead integerValue]) {
+        [[ReminderManager defaultManager] updateReminderReadStateRequest:_reminder withReadState:YES];
+    }
     
-    if ([[NSFileManager defaultManager] fileExistsAtPath:_reminer.audioUrl]) {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:_reminder.audioUrl]) {
         [self setAudioState:AudioStatePlaying];
-        [[SoundManager defaultSoundManager] playAudio:_reminer.audioUrl];
+        [[SoundManager defaultSoundManager] playAudio:_reminder.audioUrl];
         
     }else {
         [self setAudioState:AudioStateDownload];
-        [[ReminderManager defaultManager] downloadAudioFileWithReminder:_reminer];
+        [[ReminderManager defaultManager] downloadAudioFileWithReminder:_reminder];
     }
     
     if (self.delegate != nil) {
@@ -85,16 +89,24 @@
 }
 
 - (IBAction)modifyBell:(UIButton *)sender {
-    if (YES == [_reminer.isBell integerValue]) {
+    if (YES == [_reminder.isBell integerValue]) {
         [self modifyReminderBellState:NO];
     }else {
         [self modifyReminderBellState:YES];
     }
 }
 
-- (void)setReminer:(Reminder *)reminer {
+- (IBAction)showMap:(UIButton *)sender {
+    if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(clickMapButton:)]) {
+            [self.delegate performSelector:@selector(clickMapButton:) withObject:_indexPath];
+        }
+    }
+}
+
+- (void)setReminder:(Reminder *)reminer {
     if (nil != reminer) {
-        _reminer = reminer;
+        _reminder = reminer;
         NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         _labelTriggerDate.text = [formatter stringFromDate:reminer.triggerTime];
@@ -106,20 +118,20 @@
             [_btnMark setHidden:NO];
         }
         
-        if (YES == [_reminer.isBell integerValue]) {
+        if (YES == [_reminder.isBell integerValue]) {
             [_btnClock setTitle:@"取消提醒" forState:UIControlStateNormal];
         }else {
             [_btnClock setTitle:@"提醒" forState:UIControlStateNormal];
         }
 
-        if ([_reminer.longitude isEqualToString:@"0"] && [_reminer.latitude isEqualToString:@"0"]) {
+        if (nil == _reminder.longitude || [_reminder.longitude isEqualToString:@"0"]) {
             [_btnMap setHidden:YES];
             [_labelAddress setHidden:YES];
         }else {
             [_btnMap setHidden:NO];
-            if (nil != _reminer.adress) {
+            if (nil != _reminder.adress) {
                 [_labelAddress setHidden:NO];
-                _labelAddress.text = _reminer.adress;
+                _labelAddress.text = _reminder.adress;
             }else {
                 [_labelAddress setHidden:YES];
             }
@@ -133,6 +145,9 @@
         if (nil != bilateralFriend.imageUrl) {
             [_image setImageURL:[NSURL URLWithString:bilateralFriend.imageUrl]];
         }
+    }else {
+        
+        [_image setImageURL:[NSURL URLWithString:[UserManager defaultManager].imageUrl]];
     }
 }
 
