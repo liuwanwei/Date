@@ -51,6 +51,7 @@
 		3C28DA8F16538347009A661E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C28DA8E16538347009A661E /* CFNetwork.framework */; };
 		3C28DA911653838B009A661E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C28DA901653838B009A661E /* SystemConfiguration.framework */; };
 		3C28DA93165383BC009A661E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C28DA92165383BC009A661E /* MobileCoreServices.framework */; };
+		3C40DE3E1666ED4A005627C9 /* BilateralFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C40DE3D1666ED49005627C9 /* BilateralFriend.m */; };
 		3C9C16341664985D00D50038 /* Reminder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9C16331664985D00D50038 /* Reminder.m */; };
 		3CB0DC131654F29500209DF6 /* OnlineFriendRemindCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CB0DC121654F29500209DF6 /* OnlineFriendRemindCell.xib */; };
 		3CB0DC1516553CEB00209DF6 /* male.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CB0DC1416553CEB00209DF6 /* male.png */; };
@@ -77,7 +78,6 @@
 		3CE0AC0A16508F8B004B785A /* libSinaWeiboLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C484F5A164DFE0600D678F3 /* libSinaWeiboLibrary.a */; };
 		3CE0AC511650D478004B785A /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE0AC501650D478004B785A /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3CE0AC581650D79F004B785A /* SinaWeiboManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE0AC571650D79F004B785A /* SinaWeiboManager.m */; };
-		3CE0AC5B1650F405004B785A /* BilateralFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE0AC5A1650F405004B785A /* BilateralFriend.m */; };
 		3CE0AC5E1650F521004B785A /* BilateralFriendManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE0AC5D1650F521004B785A /* BilateralFriendManager.m */; };
 		3CE0AC6D1650FA8D004B785A /* libLMLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CE0AC6A1650FA76004B785A /* libLMLibrary.a */; };
 		3CEFEC4616521FE3005BF516 /* HttpRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CEFEC4516521FE3005BF516 /* HttpRequestManager.m */; };
@@ -224,6 +224,8 @@
 		3C28DA8E16538347009A661E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		3C28DA901653838B009A661E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3C28DA92165383BC009A661E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		3C40DE3C1666ED49005627C9 /* BilateralFriend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BilateralFriend.h; sourceTree = "<group>"; };
+		3C40DE3D1666ED49005627C9 /* BilateralFriend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BilateralFriend.m; sourceTree = "<group>"; };
 		3C48466C164DF56600D678F3 /* AsiHttpRequestLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AsiHttpRequestLib.xcodeproj; path = ../AsiHttpRequestLib/AsiHttpRequestLib.xcodeproj; sourceTree = "<group>"; };
 		3C484F52164DFE0600D678F3 /* SinaWeiboLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SinaWeiboLibrary.xcodeproj; path = ../SinaWeiboLibrary/SinaWeiboLibrary.xcodeproj; sourceTree = "<group>"; };
 		3C9C16321664985D00D50038 /* Reminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reminder.h; sourceTree = "<group>"; };
@@ -261,8 +263,6 @@
 		3CE0AC501650D478004B785A /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		3CE0AC561650D79F004B785A /* SinaWeiboManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeiboManager.h; sourceTree = "<group>"; };
 		3CE0AC571650D79F004B785A /* SinaWeiboManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeiboManager.m; sourceTree = "<group>"; };
-		3CE0AC591650F405004B785A /* BilateralFriend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BilateralFriend.h; sourceTree = "<group>"; };
-		3CE0AC5A1650F405004B785A /* BilateralFriend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BilateralFriend.m; sourceTree = "<group>"; };
 		3CE0AC5C1650F521004B785A /* BilateralFriendManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BilateralFriendManager.h; sourceTree = "<group>"; };
 		3CE0AC5D1650F521004B785A /* BilateralFriendManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BilateralFriendManager.m; sourceTree = "<group>"; };
 		3CE0AC621650FA75004B785A /* LMLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LMLibrary.xcodeproj; path = ../LMLibrary/LMLibrary.xcodeproj; sourceTree = "<group>"; };
@@ -479,10 +479,10 @@
 		3CE0ABF416507B50004B785A /* DataStore */ = {
 			isa = PBXGroup;
 			children = (
+				3C40DE3C1666ED49005627C9 /* BilateralFriend.h */,
+				3C40DE3D1666ED49005627C9 /* BilateralFriend.m */,
 				3C9C16321664985D00D50038 /* Reminder.h */,
 				3C9C16331664985D00D50038 /* Reminder.m */,
-				3CE0AC591650F405004B785A /* BilateralFriend.h */,
-				3CE0AC5A1650F405004B785A /* BilateralFriend.m */,
 				3CE0ABF516507BD4004B785A /* UserManager.h */,
 				3CE0ABF616507BD4004B785A /* UserManager.m */,
 				3CE0AC5C1650F521004B785A /* BilateralFriendManager.h */,
@@ -819,7 +819,6 @@
 				3CE0AC0316507EBE004B785A /* LoginViewController.m in Sources */,
 				3CE0AC511650D478004B785A /* JSONKit.m in Sources */,
 				3CE0AC581650D79F004B785A /* SinaWeiboManager.m in Sources */,
-				3CE0AC5B1650F405004B785A /* BilateralFriend.m in Sources */,
 				3CE0AC5E1650F521004B785A /* BilateralFriendManager.m in Sources */,
 				3CEFEC4616521FE3005BF516 /* HttpRequestManager.m in Sources */,
 				3CB275141654EAF400FAEF1F /* OnlineFriendsRemindViewController.m in Sources */,
@@ -832,6 +831,7 @@
 				3CC9CE23165F730100E7E9D9 /* FriendRemindersViewController.m in Sources */,
 				3CC9CE28165F76D000E7E9D9 /* FriendReminderCell.m in Sources */,
 				3C9C16341664985D00D50038 /* Reminder.m in Sources */,
+				3C40DE3E1666ED4A005627C9 /* BilateralFriend.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
