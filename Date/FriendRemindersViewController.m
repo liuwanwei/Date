@@ -79,6 +79,24 @@ typedef enum {
     }
 }
 
+- (void)handleDownloadAudioFileResponse:(Reminder *)reminder withResult:(BOOL)result {
+    NSIndexPath * indexPath;
+    indexPath = [self indexPathWithReminder:reminder];
+    if (nil != indexPath && nil != _ramindersAudioState) {
+        if (YES == result) {
+            [self stopPlayingAudio];
+        }
+        
+        if ([[_ramindersAudioState objectAtIndex:indexPath.row] integerValue] == AudioStateDownload) {
+            FriendReminderCell * cell = (FriendReminderCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+            cell.audioState = AudioStatePlaying;
+            [_ramindersAudioState replaceObjectAtIndex:indexPath.row withObject: [NSNumber numberWithInteger:AudioStatePlaying]];
+            if (YES == result) {
+                [cell palyAudio:nil];
+            }
+        }
+    }
+}
 
 #pragma 事件函数
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -153,17 +171,13 @@ typedef enum {
 #pragma mark - ReminderManager Delegate
 - (void)downloadAudioFileSuccess:(Reminder *)reminder {
     if (nil != reminder) {
-        [self stopPlayingAudio];
-        NSIndexPath * indexPath;
-        indexPath = [self indexPathWithReminder:reminder];
-        if (nil != indexPath && nil != _ramindersAudioState) {
-            if ([[_ramindersAudioState objectAtIndex:indexPath.row] integerValue] == AudioStateDownload) {
-                FriendReminderCell * cell = (FriendReminderCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-                cell.audioState = AudioStatePlaying;
-                [_ramindersAudioState replaceObjectAtIndex:indexPath.row withObject: [NSNumber numberWithInteger:AudioStatePlaying]];
-                [cell palyAudio:nil];
-            }
-        }
+        [self handleDownloadAudioFileResponse:reminder withResult:YES];
+    }
+}
+
+- (void)downloadAudioFileFailed:(Reminder *)reminder {
+    if (nil != reminder) {
+        [self handleDownloadAudioFileResponse:reminder withResult:NO];
     }
 }
 
@@ -185,7 +199,7 @@ typedef enum {
 - (void)clickMapButton:(NSIndexPath *)indexPath {
     ReminderMapViewController * controller = [[ReminderMapViewController alloc] initWithNibName:@"ReminderMapViewController" bundle:nil];
     controller.reminder = [_reminders objectAtIndex:indexPath.row];
-    controller.type = OperateTypeShow;
+    controller.type = MapOperateTypeShow;
     UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
     [self presentViewController:nav animated:YES completion:nil];
 
