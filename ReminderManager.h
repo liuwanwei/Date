@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "BaseManager.h"
 #import "Reminder.h"
+#import "BilateralFriendManager.h"
 
 @protocol ReminderManagerDelegate <NSObject>
 
@@ -16,6 +17,7 @@
 - (void)newReminderSuccess:(NSString *)reminderId;
 - (void)newReminderFailed;
 - (void)downloadAudioFileSuccess:(Reminder *)reminder;
+- (void)downloadAudioFileFailed:(Reminder *)reminder;
 - (void)updateReminderReadStateSuccess:(Reminder *)reminder;
 @end
 
@@ -39,12 +41,12 @@
 - (void)handleRemoteRemindersResponse:(id)json;
 
 - (void)downloadAudioFileWithReminder:(Reminder *)reminder;
-- (void)handleDowanloadAuioFileResponse:(NSDictionary *)userInfo;
+- (void)handleDowanloadAuioFileResponse:(NSDictionary *)userInfo withErrorCode:(NSInteger)code;
 
 - (void)updateReminderReadStateRequest:(Reminder *)reminder withReadState:(BOOL)state;
 - (void)handleUpdateReminderReadStateResponse:(id)json withReminder:(Reminder *)reminder;
 
-- (void)addLocalNotificationWithReminder:(Reminder *)reminder;
+- (void)addLocalNotificationWithReminder:(Reminder *)reminder withBilateralFriend:(BilateralFriend *)friend;
 - (void)cancelLocalNotificationWithReminder:(Reminder *)reminder;
 
 - (void)modifyReminder:(Reminder *)reminder withReadState:(BOOL)isRead;

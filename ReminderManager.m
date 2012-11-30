@@ -7,10 +7,11 @@
 //
 #import "ReminderManager.h"
 #import "HttpRequestManager.h"
-#import "BilateralFriendManager.h"
 #import "LMLibrary.h"
 
 static ReminderManager * sReminderManager;
+
+#define AheadOfTime 30 * 60
 
 @implementation ReminderManager
 @synthesize delegate = _delegate;
@@ -280,13 +281,21 @@ static ReminderManager * sReminderManager;
     [[HttpRequestManager defaultManager] downloadAudioFileRequest:reminder];
 }
 
-- (void)handleDowanloadAuioFileResponse:(NSDictionary *)userInfo {
-    NSString * audioPath = [userInfo objectForKey:@"destinationPath"];
+- (void)handleDowanloadAuioFileResponse:(NSDictionary *)userInfo withErrorCode:(NSInteger)code {
     Reminder * reminder = [userInfo objectForKey:@"reminder"];
-    [self modifyReminderAudioUrl:audioPath withReminder:reminder];
-    if (self.delegate != nil) {
-        if ([self.delegate respondsToSelector:@selector(downloadAudioFileSuccess:)]) {
-            [self.delegate performSelector:@selector(downloadAudioFileSuccess:) withObject:reminder];
+    if (200 == code) {
+        NSString * audioPath = [userInfo objectForKey:@"destinationPath"];
+        [self modifyReminderAudioUrl:audioPath withReminder:reminder];
+        if (self.delegate != nil) {
+            if ([self.delegate respondsToSelector:@selector(downloadAudioFileSuccess:)]) {
+                [self.delegate performSelector:@selector(downloadAudioFileSuccess:) withObject:reminder];
+            }
+        }
+    }else {
+        if (self.delegate != nil) {
+            if ([self.delegate respondsToSelector:@selector(downloadAudioFileFailed:)]) {
+                [self.delegate performSelector:@selector(downloadAudioFileFailed:) withObject:reminder];
+            }
         }
     }
 }
@@ -312,11 +321,18 @@ static ReminderManager * sReminderManager;
     }
 }
 
-- (void)addLocalNotificationWithReminder:(Reminder *)reminder {
+- (void)addLocalNotificationWithReminder:(Reminder *)reminder withBilateralFriend:(BilateralFriend *)friend{
     if (nil == [self localNotification:reminder.id]) {
+        NSString * body;
+        if (nil != friend) {
+            body = [friend.nickname stringByAppendingString:@" 提醒你"];
+        }else {
+            body = @"约定提醒您";
+        }
+        
         UILocalNotification * newNotification = [[UILocalNotification alloc] init];
-        newNotification.fireDate = [reminder.triggerTime dateByAddingTimeInterval:-30*60];
-        newNotification.alertBody = @"“约定”提醒";
+        newNotification.fireDate = [reminder.triggerTime dateByAddingTimeInterval: - AheadOfTime];
+        newNotification.alertBody = body;
         newNotification.soundName = UILocalNotificationDefaultSoundName;
         newNotification.alertAction = @"查看应用";
         newNotification.timeZone=[NSTimeZone defaultTimeZone];
@@ -338,6 +354,7 @@ static ReminderManager * sReminderManager;
     if (YES == isRead) {
         [[BilateralFriendManager defaultManager] modifyUnReadRemindersSizeWithUserId:reminder.userID withOperateType:OperateTypeSub];
     }
+    [[LMLibrary defaultManager] postNotificationWithName:kRemindesUpdateMessage withObject:nil];
 }
 
 - (void)modifyReminder:(Reminder *)reminder withBellState:(BOOL)isBell {
