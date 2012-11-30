@@ -11,13 +11,13 @@
 #import "Reminder.h"
 
 typedef enum {
-    OperateTypeSet= 0,
-    OperateTypeShow
-}OperateType;
+    MapOperateTypeSet = 0,
+    MapOperateTypeShow
+}MapOperateType;
 
 @interface ReminderMapViewController : UIViewController <MKMapViewDelegate, CLLocationManagerDelegate>
 
-@property (nonatomic) OperateType type;
+@property (nonatomic) MapOperateType type;
 @property (weak, nonatomic) Reminder * reminder;
 
 @property (weak, nonatomic) IBOutlet MKMapView * mapView;

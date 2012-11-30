@@ -43,7 +43,7 @@
     _mapView.delegate = self;
     MKCoordinateRegion theRegion;
 
-    if (OperateTypeSet == _type) {
+    if (MapOperateTypeSet == _type) {
         _mapView.showsUserLocation=YES;
         
         CLLocationManager * locationManager = [[CLLocationManager alloc] init];//创建位置管理器
@@ -155,7 +155,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if (OperateTypeSet == _type) {
+    if (MapOperateTypeSet == _type) {
         [self registerHandleMessage];
         _isLongPress = NO;
 
