@@ -49,7 +49,10 @@
     NSDateFormatter * hour = [[NSDateFormatter alloc] init];
     [hour setDateFormat:@"HH"];
     NSString * currentDateStr = [hour stringFromDate:[NSDate date]];
-    NSInteger index = [currentDateStr integerValue];
+    NSInteger index = [currentDateStr integerValue] + 1;
+    if (index == 24) {
+        index = 23;
+    }
     [_pickerView selectRow:index inComponent:1 animated:NO];
 }
 
@@ -171,7 +174,7 @@
     if (indexPath.section == 1) {
         ReminderMapViewController * controller = [[ReminderMapViewController alloc] initWithNibName:@"ReminderMapViewController" bundle:nil];
         controller.reminder = _reminder;
-        controller.type = OperateTypeSet;
+        controller.type = MapOperateTypeSet;
         UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
         [self presentViewController:nav animated:YES completion:nil];
     }
