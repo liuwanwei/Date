@@ -30,7 +30,7 @@
     [[ReminderManager defaultManager] modifyReminder:_reminder withBellState:isBell];
     if (YES == [_reminder.isBell integerValue]) {
         [_btnClock setTitle:@"取消提醒" forState:UIControlStateNormal];
-        [[ReminderManager defaultManager] addLocalNotificationWithReminder:_reminder];
+        [[ReminderManager defaultManager] addLocalNotificationWithReminder:_reminder withBilateralFriend:_bilateralFriend];
     }else {
         [_btnClock setTitle:@"提醒" forState:UIControlStateNormal];
         [[ReminderManager defaultManager] cancelLocalNotificationWithReminder:_reminder];
@@ -81,7 +81,7 @@
         [[ReminderManager defaultManager] downloadAudioFileWithReminder:_reminder];
     }
     
-    if (self.delegate != nil) {
+    if (self.delegate != nil && nil != sender) {
         if ([self.delegate respondsToSelector:@selector(clickAudioButton: WithState:)]) {
             [self.delegate performSelector:@selector(clickAudioButton: WithState:) withObject:_indexPath withObject:[NSNumber numberWithInteger:_audioState]];
         }
