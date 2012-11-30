@@ -68,8 +68,8 @@ static HttpRequestManager * sHttpRequestManager;
     [[ReminderManager defaultManager] handleRemoteRemindersResponse:json];
 }
 
-- (void)handleDownAudioFileReponse:(NSDictionary *)userInfo {
-    [[ReminderManager defaultManager] handleDowanloadAuioFileResponse:userInfo];
+- (void)handleDownAudioFileReponse:(NSDictionary *)userInfo withErrorCode:(NSInteger)code {
+    [[ReminderManager defaultManager] handleDowanloadAuioFileResponse:userInfo withErrorCode:code];
 }
 
 - (void)handleCheckRegisteredFriendsReponse:(NSData *)responseData {
@@ -169,7 +169,12 @@ static HttpRequestManager * sHttpRequestManager;
 }
 
 - (void)downloadAudioFileRequest:(Reminder *)reminder {
-    NSString * path = [kServerUrl stringByAppendingString:reminder.audioUrl];
+    NSString * path;
+    if ([kServerUrl isEqualToString:@"http://192.168.1.102/"]) {
+        path = [kServerUrl stringByAppendingString:reminder.audioUrl];
+    }else  {
+        path = reminder.audioUrl;
+    }
     DocumentManager * manager = [DocumentManager defaultManager];
     
     NSString * destinationPath =  [manager pathForRandomSoundWithSuffix:@"m4a"].relativePath;
@@ -221,9 +226,7 @@ static HttpRequestManager * sHttpRequestManager;
         NSLog(@"recive remoteReminders response");
         [self handleRemoteRemindersReponse:[request responseData]];
     }else if ([requestType isEqualToString:@"downAudioFile"]) {
-        // FIXME 需要根据状态进行判断是否成功,后果是音频不能播放
-        NSInteger statue = [request responseStatusCode];
-        [self handleDownAudioFileReponse:request.userInfo];
+        [self handleDownAudioFileReponse:request.userInfo withErrorCode:[request responseStatusCode]];
     }else if ([requestType isEqualToString:@"checkRegisteredFriends"]) {
         [self handleCheckRegisteredFriendsReponse:[request responseData]];
     }else if ([requestType isEqualToString:@"updateReminderReadState"]) {
