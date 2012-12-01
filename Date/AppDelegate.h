@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MenuViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -16,9 +17,14 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-@property (strong, nonatomic) UINavigationController *navController;
+@property (strong, nonatomic) UINavigationController * navController;
+@property (strong, nonatomic) MenuViewController * menuViewController;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
+
++(AppDelegate *)delegate;
+
+- (void)makeMenuViewVisible;
 
 @end

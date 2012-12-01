@@ -12,6 +12,8 @@
 #import "SinaWeiboManager.h"
 #import "OnlineFriendsRemindViewController.h"
 #import "ReminderManager.h"
+#import "ReminderNotificationViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation AppDelegate
 
@@ -19,17 +21,54 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize navController = _navController;
+@synthesize menuViewController = _menuViewController;
+@synthesize window = _window;
 
+#pragma 私有函数
+- (void)showReminderNotificationViewController {
+    ReminderNotificationViewController * viewController = [[ReminderNotificationViewController alloc] initWithNibName:@"ReminderNotificationViewController" bundle:nil];
+    
+    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:viewController];
+    [_navController presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)checkRemindersExpired {
+    NSArray * reminders = [[ReminderManager defaultManager] remindersExpired];
+    if (nil != reminders) {
+        [self showReminderNotificationViewController];
+    }
+}
+
+#pragma 类成员函数
+- (void)makeMenuViewVisible {
+    _navController.view.layer.shadowColor = [UIColor blackColor].CGColor;
+    _navController.view.layer.shadowOpacity = 0.4f;
+    _navController.view.layer.shadowOffset = CGSizeMake(-12.0, 1.0f);
+    _navController.view.layer.shadowRadius = 7.0f;
+    _navController.view.layer.masksToBounds = NO;
+    [_menuViewController setVisible:YES];
+}
+
++(AppDelegate *)delegate{
+    AppDelegate * delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    return delegate;
+}
+
+#pragma 事件函数
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[SinaWeiboManager defaultManager] initSinaWeibo];
     
     HomeViewController * viewController = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
-    //OnlineFriendsRemindViewController * viewController = [[OnlineFriendsRemindViewController alloc] initWithNibName:@"OnlineFriendsRemindViewController" bundle:nil];
     _navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    
+    _menuViewController = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = _navController;
+    [self.window addSubview:_menuViewController.view];
+    
+    [_menuViewController setVisible:NO];
     [self.window makeKeyAndVisible];
     
     return YES;
@@ -57,6 +96,7 @@
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     [[SinaWeiboManager defaultManager].sinaWeibo applicationDidBecomeActive];
+    //[self checkRemindersExpired];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
