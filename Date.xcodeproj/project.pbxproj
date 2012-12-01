@@ -47,13 +47,17 @@
 		3C1988FF1654818F0038031D /* badgeValueRed.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C1988FC1654818F0038031D /* badgeValueRed.png */; };
 		3C1989001654818F0038031D /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C1988FD1654818F0038031D /* menu.png */; };
 		3C1989011654818F0038031D /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C1988FE1654818F0038031D /* menu@2x.png */; };
+		3C23E8AC1669A1A20098149A /* ReminderNotificationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C23E8AB1669A1A20098149A /* ReminderNotificationCell.m */; };
+		3C23E8AE1669A1C10098149A /* ReminderNotificationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C23E8AD1669A1C10098149A /* ReminderNotificationCell.xib */; };
+		3C23E8B11669A41C0098149A /* ReminderBaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C23E8B01669A41C0098149A /* ReminderBaseCell.m */; };
+		3C23E8B41669ACA40098149A /* RemindersBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C23E8B31669ACA30098149A /* RemindersBaseViewController.m */; };
 		3C28DA8D165381DC009A661E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C28DA8C165381DC009A661E /* libz.dylib */; };
 		3C28DA8F16538347009A661E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C28DA8E16538347009A661E /* CFNetwork.framework */; };
 		3C28DA911653838B009A661E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C28DA901653838B009A661E /* SystemConfiguration.framework */; };
 		3C28DA93165383BC009A661E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C28DA92165383BC009A661E /* MobileCoreServices.framework */; };
 		3C40DE3E1666ED4A005627C9 /* BilateralFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C40DE3D1666ED49005627C9 /* BilateralFriend.m */; };
-		3C40DE4216670F41005627C9 /* ReminderNotificationDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C40DE4016670F41005627C9 /* ReminderNotificationDetailViewController.m */; };
-		3C40DE4316670F41005627C9 /* ReminderNotificationDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C40DE4116670F41005627C9 /* ReminderNotificationDetailViewController.xib */; };
+		3C40DE4216670F41005627C9 /* ReminderNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C40DE4016670F41005627C9 /* ReminderNotificationViewController.m */; };
+		3C40DE4316670F41005627C9 /* ReminderNotificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C40DE4116670F41005627C9 /* ReminderNotificationViewController.xib */; };
 		3C9C16341664985D00D50038 /* Reminder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9C16331664985D00D50038 /* Reminder.m */; };
 		3CB0DC131654F29500209DF6 /* OnlineFriendRemindCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CB0DC121654F29500209DF6 /* OnlineFriendRemindCell.xib */; };
 		3CB0DC1516553CEB00209DF6 /* male.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CB0DC1416553CEB00209DF6 /* male.png */; };
@@ -69,6 +73,8 @@
 		3CC9CE24165F730100E7E9D9 /* FriendRemindersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CC9CE22165F730100E7E9D9 /* FriendRemindersViewController.xib */; };
 		3CC9CE28165F76D000E7E9D9 /* FriendReminderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9CE27165F76D000E7E9D9 /* FriendReminderCell.m */; };
 		3CC9CE2A165F772A00E7E9D9 /* FriendReminderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CC9CE29165F772A00E7E9D9 /* FriendReminderCell.xib */; };
+		3CD0AE00166877C0001986F0 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD0ADFE166877C0001986F0 /* MenuViewController.m */; };
+		3CD0AE01166877C0001986F0 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CD0ADFF166877C0001986F0 /* MenuViewController.xib */; };
 		3CE0ABF716507BD4004B785A /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE0ABF616507BD4004B785A /* UserManager.m */; };
 		3CE0AC0116507EBE004B785A /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE0ABFC16507EBE004B785A /* HomeViewController.m */; };
 		3CE0AC0216507EBE004B785A /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CE0ABFD16507EBE004B785A /* HomeViewController.xib */; };
@@ -198,7 +204,7 @@
 		3C0DC2F8165CB0EA00355619 /* HUDLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HUDLibrary.xcodeproj; path = ../HUDLibrary/HUDLibrary.xcodeproj; sourceTree = "<group>"; };
 		3C0DC305165CB1EA00355619 /* MBProgressManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressManager.h; sourceTree = "<group>"; };
 		3C0DC306165CB1EA00355619 /* MBProgressManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressManager.m; sourceTree = "<group>"; };
-		3C13E864164DF4DA006424A2 /* Date.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Date.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C13E864164DF4DA006424A2 /* date.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = date.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C13E868164DF4DB006424A2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3C13E86A164DF4DB006424A2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3C13E86C164DF4DB006424A2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -222,15 +228,22 @@
 		3C1988FC1654818F0038031D /* badgeValueRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = badgeValueRed.png; path = Resources/images/badgeValueRed.png; sourceTree = "<group>"; };
 		3C1988FD1654818F0038031D /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = menu.png; path = Resources/images/menu.png; sourceTree = "<group>"; };
 		3C1988FE1654818F0038031D /* menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu@2x.png"; path = "Resources/images/menu@2x.png"; sourceTree = "<group>"; };
+		3C23E8AA1669A1A20098149A /* ReminderNotificationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderNotificationCell.h; sourceTree = "<group>"; };
+		3C23E8AB1669A1A20098149A /* ReminderNotificationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderNotificationCell.m; sourceTree = "<group>"; };
+		3C23E8AD1669A1C10098149A /* ReminderNotificationCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderNotificationCell.xib; sourceTree = "<group>"; };
+		3C23E8AF1669A41C0098149A /* ReminderBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderBaseCell.h; sourceTree = "<group>"; };
+		3C23E8B01669A41C0098149A /* ReminderBaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderBaseCell.m; sourceTree = "<group>"; };
+		3C23E8B21669ACA30098149A /* RemindersBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemindersBaseViewController.h; sourceTree = "<group>"; };
+		3C23E8B31669ACA30098149A /* RemindersBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemindersBaseViewController.m; sourceTree = "<group>"; };
 		3C28DA8C165381DC009A661E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		3C28DA8E16538347009A661E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		3C28DA901653838B009A661E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3C28DA92165383BC009A661E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		3C40DE3C1666ED49005627C9 /* BilateralFriend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BilateralFriend.h; sourceTree = "<group>"; };
 		3C40DE3D1666ED49005627C9 /* BilateralFriend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BilateralFriend.m; sourceTree = "<group>"; };
-		3C40DE3F16670F41005627C9 /* ReminderNotificationDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderNotificationDetailViewController.h; sourceTree = "<group>"; };
-		3C40DE4016670F41005627C9 /* ReminderNotificationDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderNotificationDetailViewController.m; sourceTree = "<group>"; };
-		3C40DE4116670F41005627C9 /* ReminderNotificationDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderNotificationDetailViewController.xib; sourceTree = "<group>"; };
+		3C40DE3F16670F41005627C9 /* ReminderNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderNotificationViewController.h; sourceTree = "<group>"; };
+		3C40DE4016670F41005627C9 /* ReminderNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderNotificationViewController.m; sourceTree = "<group>"; };
+		3C40DE4116670F41005627C9 /* ReminderNotificationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderNotificationViewController.xib; sourceTree = "<group>"; };
 		3C48466C164DF56600D678F3 /* AsiHttpRequestLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AsiHttpRequestLib.xcodeproj; path = ../AsiHttpRequestLib/AsiHttpRequestLib.xcodeproj; sourceTree = "<group>"; };
 		3C484F52164DFE0600D678F3 /* SinaWeiboLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SinaWeiboLibrary.xcodeproj; path = ../SinaWeiboLibrary/SinaWeiboLibrary.xcodeproj; sourceTree = "<group>"; };
 		3C9C16321664985D00D50038 /* Reminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reminder.h; sourceTree = "<group>"; };
@@ -254,6 +267,9 @@
 		3CC9CE26165F76D000E7E9D9 /* FriendReminderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendReminderCell.h; sourceTree = "<group>"; };
 		3CC9CE27165F76D000E7E9D9 /* FriendReminderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendReminderCell.m; sourceTree = "<group>"; };
 		3CC9CE29165F772A00E7E9D9 /* FriendReminderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendReminderCell.xib; sourceTree = "<group>"; };
+		3CD0ADFD166877C0001986F0 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
+		3CD0ADFE166877C0001986F0 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		3CD0ADFF166877C0001986F0 /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
 		3CE0ABF516507BD4004B785A /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
 		3CE0ABF616507BD4004B785A /* UserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserManager.m; sourceTree = "<group>"; };
 		3CE0ABFB16507EBE004B785A /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
@@ -351,7 +367,7 @@
 		3C13E865164DF4DA006424A2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3C13E864164DF4DA006424A2 /* Date.app */,
+				3C13E864164DF4DA006424A2 /* date.app */,
 				3C13E88A164DF4DB006424A2 /* DateTests.octest */,
 			);
 			name = Products;
@@ -456,10 +472,10 @@
 		3CB0DC111654F1AC00209DF6 /* cell */ = {
 			isa = PBXGroup;
 			children = (
-				3C40DE4116670F41005627C9 /* ReminderNotificationDetailViewController.xib */,
 				3CB0DC121654F29500209DF6 /* OnlineFriendRemindCell.xib */,
 				3CB0DC321655D17600209DF6 /* HomeCell.xib */,
 				3CC9CE29165F772A00E7E9D9 /* FriendReminderCell.xib */,
+				3C23E8AD1669A1C10098149A /* ReminderNotificationCell.xib */,
 			);
 			name = cell;
 			sourceTree = "<group>";
@@ -478,6 +494,10 @@
 			children = (
 				3CC9CE26165F76D000E7E9D9 /* FriendReminderCell.h */,
 				3CC9CE27165F76D000E7E9D9 /* FriendReminderCell.m */,
+				3C23E8AA1669A1A20098149A /* ReminderNotificationCell.h */,
+				3C23E8AB1669A1A20098149A /* ReminderNotificationCell.m */,
+				3C23E8AF1669A41C0098149A /* ReminderBaseCell.h */,
+				3C23E8B01669A41C0098149A /* ReminderBaseCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -538,6 +558,8 @@
 		3CE0ABFA16507EA9004B785A /* xib */ = {
 			isa = PBXGroup;
 			children = (
+				3C40DE4116670F41005627C9 /* ReminderNotificationViewController.xib */,
+				3CD0ADFF166877C0001986F0 /* MenuViewController.xib */,
 				3CC9CE22165F730100E7E9D9 /* FriendRemindersViewController.xib */,
 				3CF017E0165B500E00F83814 /* ReminderSendingViewController.xib */,
 				3C044CD8165A8C58000551C5 /* ReminderMapViewController.xib */,
@@ -563,8 +585,12 @@
 			isa = PBXGroup;
 			children = (
 				3CC9CE25165F768D00E7E9D9 /* Cell */,
-				3C40DE3F16670F41005627C9 /* ReminderNotificationDetailViewController.h */,
-				3C40DE4016670F41005627C9 /* ReminderNotificationDetailViewController.m */,
+				3C23E8B21669ACA30098149A /* RemindersBaseViewController.h */,
+				3C23E8B31669ACA30098149A /* RemindersBaseViewController.m */,
+				3CD0ADFD166877C0001986F0 /* MenuViewController.h */,
+				3CD0ADFE166877C0001986F0 /* MenuViewController.m */,
+				3C40DE3F16670F41005627C9 /* ReminderNotificationViewController.h */,
+				3C40DE4016670F41005627C9 /* ReminderNotificationViewController.m */,
 				3CE0ABFB16507EBE004B785A /* HomeViewController.h */,
 				3CE0ABFC16507EBE004B785A /* HomeViewController.m */,
 				3CE0ABFE16507EBE004B785A /* LoginViewController.h */,
@@ -612,9 +638,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3C13E863164DF4DA006424A2 /* Date */ = {
+		3C13E863164DF4DA006424A2 /* date */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3C13E89D164DF4DB006424A2 /* Build configuration list for PBXNativeTarget "Date" */;
+			buildConfigurationList = 3C13E89D164DF4DB006424A2 /* Build configuration list for PBXNativeTarget "date" */;
 			buildPhases = (
 				3C13E860164DF4DA006424A2 /* Sources */,
 				3C13E861164DF4DA006424A2 /* Frameworks */,
@@ -629,9 +655,9 @@
 				3C484F5E164DFE2700D678F3 /* PBXTargetDependency */,
 				3C484F5C164DFE2300D678F3 /* PBXTargetDependency */,
 			);
-			name = Date;
+			name = date;
 			productName = Date;
-			productReference = 3C13E864164DF4DA006424A2 /* Date.app */;
+			productReference = 3C13E864164DF4DA006424A2 /* date.app */;
 			productType = "com.apple.product-type.application";
 		};
 		3C13E889164DF4DB006424A2 /* DateTests */ = {
@@ -662,7 +688,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Liu&Mao";
 			};
-			buildConfigurationList = 3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "Date" */;
+			buildConfigurationList = 3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "date" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -696,7 +722,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				3C13E863164DF4DA006424A2 /* Date */,
+				3C13E863164DF4DA006424A2 /* date */,
 				3C13E889164DF4DB006424A2 /* DateTests */,
 			);
 		};
@@ -785,7 +811,9 @@
 				3CF017E2165B500E00F83814 /* ReminderSendingViewController.xib in Resources */,
 				3CC9CE24165F730100E7E9D9 /* FriendRemindersViewController.xib in Resources */,
 				3CC9CE2A165F772A00E7E9D9 /* FriendReminderCell.xib in Resources */,
-				3C40DE4316670F41005627C9 /* ReminderNotificationDetailViewController.xib in Resources */,
+				3C40DE4316670F41005627C9 /* ReminderNotificationViewController.xib in Resources */,
+				3CD0AE01166877C0001986F0 /* MenuViewController.xib in Resources */,
+				3C23E8AE1669A1C10098149A /* ReminderNotificationCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -841,7 +869,11 @@
 				3CC9CE28165F76D000E7E9D9 /* FriendReminderCell.m in Sources */,
 				3C9C16341664985D00D50038 /* Reminder.m in Sources */,
 				3C40DE3E1666ED4A005627C9 /* BilateralFriend.m in Sources */,
-				3C40DE4216670F41005627C9 /* ReminderNotificationDetailViewController.m in Sources */,
+				3C40DE4216670F41005627C9 /* ReminderNotificationViewController.m in Sources */,
+				3CD0AE00166877C0001986F0 /* MenuViewController.m in Sources */,
+				3C23E8AC1669A1A20098149A /* ReminderNotificationCell.m in Sources */,
+				3C23E8B11669A41C0098149A /* ReminderBaseCell.m in Sources */,
+				3C23E8B41669ACA40098149A /* RemindersBaseViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -863,7 +895,7 @@
 		};
 		3C13E891164DF4DB006424A2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3C13E863164DF4DA006424A2 /* Date */;
+			target = 3C13E863164DF4DA006424A2 /* date */;
 			targetProxy = 3C13E890164DF4DB006424A2 /* PBXContainerItemProxy */;
 		};
 		3C484F5C164DFE2300D678F3 /* PBXTargetDependency */ = {
@@ -1044,7 +1076,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "Date" */ = {
+		3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "date" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C13E89B164DF4DB006424A2 /* Debug */,
@@ -1053,7 +1085,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3C13E89D164DF4DB006424A2 /* Build configuration list for PBXNativeTarget "Date" */ = {
+		3C13E89D164DF4DB006424A2 /* Build configuration list for PBXNativeTarget "date" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C13E89E164DF4DB006424A2 /* Debug */,
