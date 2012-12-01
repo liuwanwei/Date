@@ -7,16 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ReminderManager.h"
 #import "FriendReminderCell.h"
 #import "BilateralFriend.h"
-#import "SoundManager.h"
+#import "RemindersBaseViewController.h"
 
-@interface FriendRemindersViewController : UIViewController <UITableViewDelegate, UITableViewDataSource,ReminderManagerDelegate,FriendReminderCellDelegate,SoundManagerDelegate>
+@interface FriendRemindersViewController : RemindersBaseViewController
 
 @property (weak, nonatomic) NSNumber * userId;
 @property (weak, nonatomic) BilateralFriend * bilateralFriend;
-
-@property (weak, nonatomic) IBOutlet UITableView * tableView;
 
 @end
