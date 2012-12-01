@@ -7,7 +7,6 @@
 //
 
 #import "LoginViewController.h"
-#import "AppDelegate.h"
 #import "UserManager.h"
 #import "SinaWeiboManager.h"
 
