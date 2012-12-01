@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3C13E863164DF4DA006424A2"
-               BuildableName = "Date.app"
-               BlueprintName = "Date"
-               ReferencedContainer = "container:Date.xcodeproj">
+               BuildableName = "date.app"
+               BlueprintName = "date"
+               ReferencedContainer = "container:date.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
                BlueprintIdentifier = "3C13E889164DF4DB006424A2"
                BuildableName = "DateTests.octest"
                BlueprintName = "DateTests"
-               ReferencedContainer = "container:Date.xcodeproj">
+               ReferencedContainer = "container:date.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -43,9 +43,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3C13E863164DF4DA006424A2"
-            BuildableName = "Date.app"
-            BlueprintName = "Date"
-            ReferencedContainer = "container:Date.xcodeproj">
+            BuildableName = "date.app"
+            BlueprintName = "date"
+            ReferencedContainer = "container:date.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3C13E863164DF4DA006424A2"
-            BuildableName = "Date.app"
-            BlueprintName = "Date"
-            ReferencedContainer = "container:Date.xcodeproj">
+            BuildableName = "date.app"
+            BlueprintName = "date"
+            ReferencedContainer = "container:date.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -80,9 +80,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3C13E863164DF4DA006424A2"
-            BuildableName = "Date.app"
-            BlueprintName = "Date"
-            ReferencedContainer = "container:Date.xcodeproj">
+            BuildableName = "date.app"
+            BlueprintName = "date"
+            ReferencedContainer = "container:date.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
