@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "Reminder.h"
 
+typedef enum {
+    ServerModeLocal = 0,
+    ServerModeRemote
+}ServerMode;
+
 @interface HttpRequestManager : NSObject
 
 + (HttpRequestManager *)defaultManager;
@@ -20,4 +25,6 @@
 - (void)checkRegisteredFriendsRequest;
 - (void)updateReminderReadStateRequest:(Reminder *)reminder withReadState:(BOOL)state;
 
+- (void)storeServerMode:(NSInteger)mode;
+- (ServerMode)serverMode;
 @end

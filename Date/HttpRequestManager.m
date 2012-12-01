@@ -21,6 +21,7 @@ static HttpRequestManager * sHttpRequestManager;
 
 @interface HttpRequestManager () {
     ASINetworkQueue * _networkQueue;
+    NSString * _serverUrl;
 }
 @end
 
@@ -107,6 +108,38 @@ static HttpRequestManager * sHttpRequestManager;
     return param;
 }
 
+/*
+ 保存服务器模式，用于测试方便使用
+ */
+- (void)storeServerMode:(NSInteger)mode {
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:mode] forKey:@"ServerMode"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    _serverUrl = nil;
+}
+
+- (ServerMode)serverMode {
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber * mode = [defaults objectForKey:@"ServerMode"];
+    if (nil == mode) {
+        mode = [NSNumber numberWithInteger:ServerModeRemote];
+    }
+    
+    return [mode integerValue];
+}
+
+- (NSString *)serverUrl {
+    NSString * url = nil;
+    if (nil == _serverUrl) {
+        if (ServerModeLocal == [self serverMode]) {
+            url = kLocalServerUrl;
+        }else {
+            url = kRemoteServerUrl;
+        }
+    }
+    
+    return url;
+}
+
 #pragma 静态函数
 + (HttpRequestManager *)defaultManager {
     if (nil == sHttpRequestManager) {
@@ -118,7 +151,7 @@ static HttpRequestManager * sHttpRequestManager;
 
 #pragma 类成员函数
 - (void)registerUserRequest {
-    NSString * url = [kServerUrl stringByAppendingString:kRegisterUserParams];
+    NSString * url = [[self serverUrl] stringByAppendingString:kRegisterUserParams];
     NSString  * param = [self formatFollower];
     if (nil != param) {
         ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:url]];
@@ -134,7 +167,7 @@ static HttpRequestManager * sHttpRequestManager;
 }
 
 - (void)sendReminderRequest:(Reminder *)reminder {
-    NSString * url = [kServerUrl stringByAppendingString:kSendReminderParams];
+    NSString * url = [[self serverUrl] stringByAppendingString:kSendReminderParams];
            
     ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:url]];
     [request setPostValue:[UserManager defaultManager].userID forKey:@"senderId"];
@@ -156,7 +189,7 @@ static HttpRequestManager * sHttpRequestManager;
 }
 
 - (void)getRemoteRemindersRequest:(NSString *)timeline {
-    NSString * url = [kServerUrl stringByAppendingString:kGetRemindersParams];
+    NSString * url = [[self serverUrl] stringByAppendingString:kGetRemindersParams];
     
     ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:url]];
     [request setPostValue:[UserManager defaultManager].userID forKey:@"userId"];
@@ -170,8 +203,8 @@ static HttpRequestManager * sHttpRequestManager;
 
 - (void)downloadAudioFileRequest:(Reminder *)reminder {
     NSString * path;
-    if ([kServerUrl isEqualToString:@"http://192.168.1.102/"]) {
-        path = [kServerUrl stringByAppendingString:reminder.audioUrl];
+    if ([[self serverUrl] isEqualToString:kLocalServerUrl]) {
+        path = [[self serverUrl] stringByAppendingString:reminder.audioUrl];
     }else  {
         path = reminder.audioUrl;
     }
@@ -188,7 +221,7 @@ static HttpRequestManager * sHttpRequestManager;
 }
 
 - (void)checkRegisteredFriendsRequest {
-    NSString * url = [kServerUrl stringByAppendingString:kCheckRegisteredFriendsParams];
+    NSString * url = [[self serverUrl] stringByAppendingString:kCheckRegisteredFriendsParams];
     NSString  * param = [self formatFollower];
     if (nil != param) {
         ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:url]];
@@ -203,7 +236,7 @@ static HttpRequestManager * sHttpRequestManager;
 }
 
 - (void)updateReminderReadStateRequest:(Reminder *)reminder withReadState:(BOOL)state {
-    NSString * url = [kServerUrl stringByAppendingString:kUpdateReminderReadStateParams];
+    NSString * url = [[self serverUrl] stringByAppendingString:kUpdateReminderReadStateParams];
     url = [NSString stringWithFormat:url,reminder.id,[UserManager defaultManager].userID,state];
     
     ASIHTTPRequest * request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
