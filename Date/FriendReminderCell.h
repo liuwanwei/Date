@@ -7,45 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "EGOImageView.h"
-#import "Reminder.h"
-#import "BilateralFriend.h"
+#import "ReminderBaseCell.h"
 
-typedef enum {
-    AudioStateNormal = 0,
-    AudioStateDownload,
-    AudioStatePlaying
-}AudioState;
+@interface FriendReminderCell : ReminderBaseCell
 
-@protocol FriendReminderCellDelegate <NSObject>
-
-@optional
-- (void)clickAudioButton:(NSIndexPath *)indexPath WithState:(NSNumber *) state;
-- (void)clickMapButton:(NSIndexPath *)indexPath;
-@end
-
-@interface FriendReminderCell : UITableViewCell
-
-@property (weak, nonatomic) IBOutlet EGOImageView * image;
-@property (weak, nonatomic) IBOutlet UILabel * labelTriggerDate;
-@property (weak, nonatomic) IBOutlet UIButton * btnAudio;
-@property (weak, nonatomic) IBOutlet UIButton * btnMap;
 @property (weak, nonatomic) IBOutlet UIButton * btnClock;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView * indicatorView;
 @property (weak, nonatomic) IBOutlet UIButton * btnMark;
-@property (weak, nonatomic) IBOutlet UILabel * labelAddress;
 
-@property (weak, nonatomic) Reminder * reminder;
-@property (weak, nonatomic) BilateralFriend * bilateralFriend;
-
-@property (strong, nonatomic) NSIndexPath * indexPath;
-@property (nonatomic) AudioState audioState;
-
-@property (weak, nonatomic) id<FriendReminderCellDelegate> delegate;
-
-- (IBAction)palyAudio:(UIButton *)sender;
 - (IBAction)modifyBell:(UIButton *)sender;
-- (IBAction)showMap:(UIButton *)sender;
 
 - (void)modifyReminderReadState;
 @end
