@@ -7,6 +7,7 @@
 //
 
 #import "UserManager.h"
+#import "BilateralFriendManager.h"
 
 static UserManager * sUserManager;
 
@@ -128,7 +129,8 @@ expirationDate == nil) {
     }
     
     [self storeUserData:screenName withImageUrl:imageUrl];
-    
+    NSInteger userId = [[self userID] integerValue];
+    [[BilateralFriendManager defaultManager] newFriend:[NSNumber numberWithInteger:userId] withName:screenName withImageUrl:imageUrl withState:YES];
     return YES;
 }
 
