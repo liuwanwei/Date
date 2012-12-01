@@ -35,7 +35,8 @@
 #define kSinaWeiboBilateralFriendsUpdateDate @"kSinaWeiboBilateralFiendsUpdateDate"
 #define kRemoteRemindersUpdateTimeline @"RemoteRemindersUpdateTimeline"
 
-#define kServerUrl  @"http://192.168.1.102/"
+#define kLocalServerUrl  @"http://192.168.1.102/"
+#define kRemoteServerUrl   @"http://lingling1.sinaapp.com/"
 #define kRegisterUserParams @"date.php?m=user&f=newWeiboUser&t=json"
 #define kSendReminderParams @"date.php?m=reminder&f=newReminder&t=json"
 #define kGetRemindersParams @"date.php?m=reminder&f=getLatest&t=json"
