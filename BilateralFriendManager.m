@@ -85,7 +85,7 @@ static BilateralFriendManager * sBilateralFriendManager;
 #pragma 类成员函数
 
 
-- (BilateralFriend *)newFriend:(NSNumber *)userID withName:(NSString *)name withImageUrl:(NSString *)imageUrl {
+- (BilateralFriend *)newFriend:(NSNumber *)userID withName:(NSString *)name withImageUrl:(NSString *)imageUrl withState:(BOOL)state{
     // check if this friend already exists.
     BilateralFriend * friend = [self bilateralFriendWithUserID:userID];
     
@@ -97,6 +97,11 @@ static BilateralFriendManager * sBilateralFriendManager;
         friend.userID = userID;
         friend.nickname = name;
         friend.imageUrl = imageUrl;
+    }
+    
+    if (YES == state) {
+        friend.isOnline = [NSNumber numberWithBool:state];
+        friend.isRead = [NSNumber numberWithBool:state];
     }
     
     if (! [self synchroniseToStore]) {
@@ -127,7 +132,7 @@ static BilateralFriendManager * sBilateralFriendManager;
                     friendID = [object objectForKey:kSinaWeiboUserIDKey];
                     nickname = [object objectForKey:kSinaWeiboScreenNameKey];
                     imageUrl = [object objectForKey:kSinaWeiboProfileImageUrlKey];
-                    [self newFriend:friendID withName:nickname withImageUrl:imageUrl];
+                    [self newFriend:friendID withName:nickname withImageUrl:imageUrl withState:NO];
                 }
             }
             

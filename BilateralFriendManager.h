@@ -20,6 +20,7 @@ typedef enum {
 + (BilateralFriendManager *)defaultManager;
 
 - (BOOL)analyzeData:(NSArray *)data;
+- (BilateralFriend *)newFriend:(NSNumber *)userID withName:(NSString *)name withImageUrl:(NSString *)imageUrl withState:(BOOL)state;
 
 - (NSArray *)allFriendsID;
 - (NSArray *)newOnlineFriends;
