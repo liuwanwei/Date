@@ -219,6 +219,24 @@ static ReminderManager * sReminderManager;
     
 }
 
+- (NSArray *)remindersExpired {
+    NSDate * date = [NSDate date];
+    NSArray * results = nil;
+    NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"isRead = YES AND triggerTime > %@",[date dateByAddingTimeInterval: - AheadOfTime]];
+    NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"triggerTime" ascending:NO];
+    NSArray * sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    
+    request.sortDescriptors = sortDescriptors;
+    request.predicate = predicate;
+    results = [self executeFetchRequest:request];
+    
+    if (nil == results || results.count == 0) {
+        return nil;
+    }
+    return nil;
+}
+
 - (Reminder *)reminder {
     Reminder * reminder = [[Reminder alloc] initWithEntity:[NSEntityDescription entityForName: kReminderEntity inManagedObjectContext:self.managedObjectContext] insertIntoManagedObjectContext:self.managedObjectContext] ;
     return reminder;
