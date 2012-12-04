@@ -11,6 +11,11 @@
 #import "Reminder.h"
 #import "BilateralFriendManager.h"
 
+typedef enum {
+    ReminderTypeReceive = 0,
+    ReminderTypeSend
+}ReminderType;
+
 @protocol ReminderManagerDelegate <NSObject>
 
 @optional

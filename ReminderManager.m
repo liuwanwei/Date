@@ -8,10 +8,9 @@
 #import "ReminderManager.h"
 #import "HttpRequestManager.h"
 #import "LMLibrary.h"
+#import "UserManager.h"
 
 static ReminderManager * sReminderManager;
-
-#define AheadOfTime 30 * 60
 
 @implementation ReminderManager
 @synthesize delegate = _delegate;
@@ -79,6 +78,7 @@ static ReminderManager * sReminderManager;
  */
 - (void)saveRemotesReminders:(NSArray *)data {
     Reminder * reminder;
+    BilateralFriend * friend;
     NSNumberFormatter * numberFormatter = [[NSNumberFormatter alloc] init];
     NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
     NSTimeZone * timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
@@ -97,10 +97,15 @@ static ReminderManager * sReminderManager;
                         reminder.sendTime = [dateFormatter dateFromString:[object objectForKey:@"createTime"]];
                         reminder.latitude = [object objectForKey:@"latitude"];
                         reminder.longitude = [object objectForKey:@"longitude"];
-                        reminder.type = [NSNumber numberWithInteger:0];
+                        reminder.type = [NSNumber numberWithInteger:ReminderTypeReceive];
+                        reminder.isRead = [numberFormatter numberFromString:[object objectForKey:@"state"]];
+                        reminder.isBell = [NSNumber numberWithBool:YES];
                         [self synchroniseToStore];
                         [[BilateralFriendManager defaultManager] modifyLastReminder:reminder.id withUserId:reminder.userID];
                         [[BilateralFriendManager defaultManager] modifyUnReadRemindersSizeWithUserId: reminder.userID withOperateType:OperateTypeAdd];
+                        
+                        friend = [[BilateralFriendManager defaultManager]bilateralFriendWithUserID:reminder.userID];
+                        [self addLocalNotificationWithReminder:reminder withBilateralFriend:friend];
             }
         }
         [[LMLibrary defaultManager] postNotificationWithName:kRemindesUpdateMessage withObject:nil];
@@ -163,9 +168,16 @@ static ReminderManager * sReminderManager;
 
 #pragma 类成员函数
 - (void)saveSentReminder:(Reminder *)reminder {
-    reminder.type = [NSNumber numberWithInteger:1];
+    if ([[reminder.userID stringValue] isEqualToString:[UserManager defaultManager].userID] ) {
+        reminder.isBell = [NSNumber numberWithBool:YES];
+        reminder.type = [NSNumber numberWithInteger:ReminderTypeReceive];
+        [self addLocalNotificationWithReminder:reminder withBilateralFriend:nil];
+    }else {
+        reminder.isBell = [NSNumber numberWithBool:NO];
+        reminder.type = [NSNumber numberWithInteger:ReminderTypeSend];
+    }
     reminder.isRead = [NSNumber numberWithBool:YES];
-    reminder.isBell = [NSNumber numberWithBool:NO];
+    
     if (! [self synchroniseToStore]) {
         return;
     }
@@ -205,7 +217,8 @@ static ReminderManager * sReminderManager;
     NSArray * results = nil;
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"userID = %@",userId];
-    NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"triggerTime" ascending:NO];
+    NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"sendTime" ascending:NO];
+
     NSArray * sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     
     request.sortDescriptors = sortDescriptors;
@@ -223,7 +236,7 @@ static ReminderManager * sReminderManager;
     NSDate * date = [NSDate date];
     NSArray * results = nil;
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"isRead = YES AND triggerTime > %@",[date dateByAddingTimeInterval: - AheadOfTime]];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"isBell = YES AND triggerTime < %@",date];
     NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"triggerTime" ascending:NO];
     NSArray * sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     
@@ -234,7 +247,7 @@ static ReminderManager * sReminderManager;
     if (nil == results || results.count == 0) {
         return nil;
     }
-    return nil;
+    return results;
 }
 
 - (Reminder *)reminder {
@@ -342,14 +355,16 @@ static ReminderManager * sReminderManager;
 - (void)addLocalNotificationWithReminder:(Reminder *)reminder withBilateralFriend:(BilateralFriend *)friend{
     if (nil == [self localNotification:reminder.id]) {
         NSString * body;
-        if (nil != friend) {
-            body = [friend.nickname stringByAppendingString:@" 提醒你"];
+        if (nil == friend) {
+            body = @"您自己的提醒";
+        }else if ([[friend.userID stringValue] isEqualToString:[UserManager defaultManager].userID]) {
+             body = @"您自己的提醒";
         }else {
-            body = @"约定提醒您";
+            body = [friend.nickname stringByAppendingString:@" 提醒你"];  
         }
         
         UILocalNotification * newNotification = [[UILocalNotification alloc] init];
-        newNotification.fireDate = [reminder.triggerTime dateByAddingTimeInterval: - AheadOfTime];
+        newNotification.fireDate = reminder.triggerTime;
         newNotification.alertBody = body;
         newNotification.soundName = UILocalNotificationDefaultSoundName;
         newNotification.alertAction = @"查看应用";
