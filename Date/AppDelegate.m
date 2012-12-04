@@ -12,7 +12,7 @@
 #import "SinaWeiboManager.h"
 #import "OnlineFriendsRemindViewController.h"
 #import "ReminderManager.h"
-#import "ReminderNotificationViewController.h"
+#import "RemindersNotificationViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation AppDelegate
@@ -25,8 +25,9 @@
 @synthesize window = _window;
 
 #pragma 私有函数
-- (void)showReminderNotificationViewController {
-    ReminderNotificationViewController * viewController = [[ReminderNotificationViewController alloc] initWithNibName:@"ReminderNotificationViewController" bundle:nil];
+- (void)showRemindersNotificationViewControllerWithReminders:(NSArray *)reminders{
+    RemindersNotificationViewController * viewController = [[RemindersNotificationViewController alloc] initWithNibName:@"RemindersNotificationViewController" bundle:nil];
+    viewController.reminders = reminders;
     
     UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:viewController];
     [_navController presentViewController:nav animated:YES completion:nil];
@@ -35,7 +36,7 @@
 - (void)checkRemindersExpired {
     NSArray * reminders = [[ReminderManager defaultManager] remindersExpired];
     if (nil != reminders) {
-        [self showReminderNotificationViewController];
+        [self showRemindersNotificationViewControllerWithReminders:reminders];
     }
 }
 
@@ -74,6 +75,10 @@
     return YES;
 }
 
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    [self checkRemindersExpired];
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -89,14 +94,15 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    [[ReminderManager defaultManager] getRemoteRemindersRequest];
-}
+    }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     [[SinaWeiboManager defaultManager].sinaWeibo applicationDidBecomeActive];
-    //[self checkRemindersExpired];
+    [[ReminderManager defaultManager] getRemoteRemindersRequest];
+    [self checkRemindersExpired];
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
