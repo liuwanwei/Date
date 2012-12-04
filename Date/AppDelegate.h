@@ -26,5 +26,6 @@
 +(AppDelegate *)delegate;
 
 - (void)makeMenuViewVisible;
+- (void)checkRemindersExpired;
 
 @end
