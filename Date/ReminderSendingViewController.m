@@ -45,8 +45,14 @@
     _reminder.id = reminderId;
     _reminder.sendTime = [NSDate date];
     [[BilateralFriendManager defaultManager] modifyLastReminder:_reminder.id withUserId:_reminder.userID];
+    
     [_reminderManager saveSentReminder:_reminder];
+    
+}
 
+- (void)showAlertView {
+    UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"是否发送" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [alertView show];
 }
 
 #pragma 事件函数
@@ -69,8 +75,8 @@
     self.tableView.rowHeight = 60.0;
     NSLog(@"%@", [EGOImageView class]);
     [self initData];
-    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(sendReminder)];
-    self.navigationItem.rightBarButtonItem = rightItem;
+    //UIBarButtonItem * rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(sendReminder)];
+    //self.navigationItem.rightBarButtonItem = rightItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -126,13 +132,14 @@
     
     _reminder.userID = friend.userID;
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    [self showAlertView];
 }
 
 #pragma mark - ReminderManager delegate
 - (void)newReminderSuccess:(NSString *)reminderId {
-    [[MBProgressManager defaultManager] removeHUD];
     _reminderManager.delegate = nil;
     [self saveSendReminder:reminderId];
+    [[MBProgressManager defaultManager] removeHUD];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
@@ -140,5 +147,10 @@
     
 }
 
-
+#pragma mark - AlertView delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (1 == buttonIndex) {
+        [self sendReminder];
+    }
+}
 @end

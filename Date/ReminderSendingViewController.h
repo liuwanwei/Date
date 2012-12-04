@@ -10,7 +10,7 @@
 #import "Reminder.h"
 #import "ReminderManager.h"
 
-@interface ReminderSendingViewController : UIViewController <UITableViewDelegate, UITableViewDataSource,ReminderManagerDelegate>
+@interface ReminderSendingViewController : UIViewController <UITableViewDelegate, UITableViewDataSource,ReminderManagerDelegate,UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView * tableView;
 @property (weak, nonatomic) IBOutlet UITableViewCell * friendCell;
