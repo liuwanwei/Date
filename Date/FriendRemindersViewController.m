@@ -31,6 +31,10 @@
     }
 }
 
+- (void)handleRemindersUpdateMessage:(NSNotification *)note {
+    [self initData];
+}
+
 #pragma 事件函数
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,6 +49,7 @@
     [super viewDidLoad];
     [self initData];
     self.title = _bilateralFriend.nickname;
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRemindersUpdateMessage:) name:kRemindesUpdateMessage object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,18 +61,15 @@
 #pragma mark - Table view data source
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString * CellIdentifier = @"Cell";
+    Reminder * reminder = [self.reminders objectAtIndex:indexPath.row];
+
     FriendReminderCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[FriendReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[FriendReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier reminderType:[reminder.type integerValue]];
         cell.delegate = self;
     }
-    Reminder * reminder = [self.reminders objectAtIndex:indexPath.row];
     cell.indexPath = indexPath;
-    if (ReminderTypeSend == [reminder.type integerValue]) {
-        cell.bilateralFriend = nil;
-    }else {
-        cell.bilateralFriend = _bilateralFriend;
-    }
+    cell.bilateralFriend = _bilateralFriend;
     
     cell.reminder = reminder;
     cell.audioState = [[self.remindersAudioState objectAtIndex:indexPath.row] integerValue];

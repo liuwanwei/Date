@@ -13,7 +13,7 @@
 
 @interface FriendRemindersViewController : RemindersBaseViewController
 
-@property (weak, nonatomic) NSNumber * userId;
-@property (weak, nonatomic) BilateralFriend * bilateralFriend;
+@property (strong, nonatomic) NSNumber * userId;
+@property (strong, nonatomic) BilateralFriend * bilateralFriend;
 
 @end
