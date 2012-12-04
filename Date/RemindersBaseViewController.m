@@ -97,7 +97,7 @@
     [super viewDidLoad];
     self.tableView.delegate = self;
     self.tableView.dataSource  = self;
-    self.tableView.rowHeight = 80.0;
+    self.tableView.rowHeight = 100.0;
 }
 
 - (void)didReceiveMemoryWarning
@@ -109,11 +109,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     _soundManager.delegate = self;
+    _reminderManager.delegate = self;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     _soundManager.delegate  = nil;
+    _reminderManager.delegate = nil;
 }
 
 #pragma mark - Table view data source

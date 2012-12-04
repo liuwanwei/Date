@@ -11,11 +11,6 @@
 #import "ReminderBaseCell.h"
 #import "SoundManager.h"
 
-typedef enum {
-    ReminderTypeReceive = 0,
-    ReminderTypeSend
-}ReminderType;
-
 @interface RemindersBaseViewController : UIViewController <UITableViewDelegate, UITableViewDataSource,ReminderManagerDelegate,ReminderCellDelegate,SoundManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView * tableView;
