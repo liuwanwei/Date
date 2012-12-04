@@ -17,10 +17,10 @@
 - (void)modifyReminderBellState:(BOOL)isBell {
     [[ReminderManager defaultManager] modifyReminder:self.reminder withBellState:isBell];
     if (YES == [self.reminder.isBell integerValue]) {
-        [_btnClock setTitle:@"取消提醒" forState:UIControlStateNormal];
+        [self.labelTriggerDate setHidden:NO];
         [[ReminderManager defaultManager] addLocalNotificationWithReminder:self.reminder withBilateralFriend:self.bilateralFriend];
     }else {
-        [_btnClock setTitle:@"提醒" forState:UIControlStateNormal];
+        [self.labelTriggerDate setHidden:YES];
         [[ReminderManager defaultManager] cancelLocalNotificationWithReminder:self.reminder];
     }
 }
@@ -38,11 +38,16 @@
 }
 
 #pragma 事件函数
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier reminderType:(ReminderType)type
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"FriendReminderCell" owner:self options:nil] ;
+        NSArray * nib;
+        if (ReminderTypeSend == type) {
+             nib = [[NSBundle mainBundle] loadNibNamed:@"FriendReminderSenderCell" owner:self options:nil] ;
+        }else {
+            nib = [[NSBundle mainBundle] loadNibNamed:@"FriendReminderCell" owner:self options:nil] ;
+        }
         self = [nib objectAtIndex:0];
     }
     return self;
@@ -67,20 +72,26 @@
     if (nil != reminer) {
         
         [super setReminder:reminer];
+        if (YES == [self.reminder.isBell integerValue]) {
+            [self.labelTriggerDate setHidden:NO];
+        }else {
+            [self.labelTriggerDate setHidden:YES];
+        }
         
         if (nil != reminer.isRead && YES == [reminer.isRead integerValue]) {
-            [_btnClock setHidden:NO];
             [_btnMark setHidden:YES];
         }else {
-            [_btnClock setHidden:YES];
             [_btnMark setHidden:NO];
         }
         
         if (YES == [self.reminder.isBell integerValue]) {
-            [_btnClock setTitle:@"取消提醒" forState:UIControlStateNormal];
+            [self.labelTriggerDate setHidden:NO];
+            [_btnClock setHidden:NO];
         }else {
-            [_btnClock setTitle:@"提醒" forState:UIControlStateNormal];
+            [self.labelTriggerDate setHidden:YES];
+            [_btnClock setHidden:YES];
         }
+        
     }
 }
 

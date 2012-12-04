@@ -17,4 +17,5 @@
 - (IBAction)modifyBell:(UIButton *)sender;
 
 - (void)modifyReminderReadState;
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier reminderType:(ReminderType)type;
 @end
