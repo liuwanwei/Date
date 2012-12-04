@@ -59,6 +59,29 @@ static BilateralFriendManager * sBilateralFriendManager;
     [self synchroniseToStore];
 }
 
+- (NSArray *)friendsWithIdPredicate:(NSString *) usersId {
+    NSArray * results = nil;
+    NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kBilateralFriendEntity];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:usersId];
+    request.predicate = predicate;
+    results = [self executeFetchRequest:request];
+    
+    if (nil == results || results.count == 0) {
+        return nil;
+    }
+    return results;
+}
+
+#pragma 静态函数
++ (BilateralFriendManager *)defaultManager {
+    if (nil == sBilateralFriendManager) {
+        sBilateralFriendManager = [[BilateralFriendManager alloc] init];
+    }
+    
+    return sBilateralFriendManager;
+}
+
+#pragma 类成员函数
 - (BilateralFriend *)bilateralFriendWithUserID:(NSNumber *)userID {
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kBilateralFriendEntity];
     
@@ -72,18 +95,6 @@ static BilateralFriendManager * sBilateralFriendManager;
         return [results objectAtIndex:0];
     }
 }
-
-#pragma 静态函数
-+ (BilateralFriendManager *)defaultManager {
-    if (nil == sBilateralFriendManager) {
-        sBilateralFriendManager = [[BilateralFriendManager alloc] init];
-    }
-    
-    return sBilateralFriendManager;
-}
-
-#pragma 类成员函数
-
 
 - (BilateralFriend *)newFriend:(NSNumber *)userID withName:(NSString *)name withImageUrl:(NSString *)imageUrl withState:(BOOL)state{
     // check if this friend already exists.
@@ -168,6 +179,34 @@ static BilateralFriendManager * sBilateralFriendManager;
     return results;
 }
 
+- (NSMutableDictionary *)friendsWithId:(NSArray *) usersId {
+    NSMutableDictionary * results = nil;
+    if (nil == usersId) {
+        return nil;
+    }else {
+        NSInteger size = usersId.count;
+        NSString * predicate = nil;
+        for (NSInteger index = 0; index < size; index++) {
+            if (index == 0) {
+                predicate = [NSString stringWithFormat:@"userID = %@", [usersId objectAtIndex:index]] ;
+            }else {
+                predicate = [predicate stringByAppendingString:@" OR "];
+                predicate = [predicate stringByAppendingString: predicate = [NSString stringWithFormat:@"userID = %@", [usersId objectAtIndex:index]]] ;
+            }
+        }
+        
+        NSArray * friends = [self friendsWithIdPredicate:predicate];
+        if (nil != friends && friends.count != 0) {
+            results = [NSMutableDictionary dictionaryWithCapacity:0];
+            for (BilateralFriend * friend in friends) {
+                [results setObject:friend forKey:friend.userID];
+            }
+        }
+    }
+    
+    return results;
+}
+
 - (void)checkRegisteredFriendsRequest {
     [[HttpRequestManager defaultManager] checkRegisteredFriendsRequest];
 }
@@ -233,6 +272,11 @@ static BilateralFriendManager * sBilateralFriendManager;
     NSArray * results;
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kBilateralFriendEntity];
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"lastReminderID != 0"];
+    NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastReminderID" ascending:NO];
+    
+    NSArray * sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    
+    request.sortDescriptors = sortDescriptors;
     request.predicate = predicate;
     results = [self executeFetchRequest:request];
     if (nil == results || results.count == 0) {

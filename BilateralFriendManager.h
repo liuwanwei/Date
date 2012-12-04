@@ -26,6 +26,8 @@ typedef enum {
 - (NSArray *)newOnlineFriends;
 - (NSArray *)haveReminderFriends;
 - (NSArray *)allOnlineFriends;
+- (NSMutableDictionary *)friendsWithId:(NSArray *) usersId;
+- (BilateralFriend *)bilateralFriendWithUserID:(NSNumber *)userID;
 
 - (void)modifyLastReminder:(NSString *)reminderId withUserId:(NSNumber *)userId;
 - (void)modifyUnReadRemindersSizeWithUserId:(NSNumber *)userId withOperateType:(OperateType) operateType;
