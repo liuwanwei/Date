@@ -17,6 +17,7 @@
     Reminder * _reminder;
     NSArray * _days;
     NSArray * _hours;
+    NSArray * _minutes;
 }
 
 @end
@@ -37,23 +38,28 @@
 - (void)initData {
     _days = [[NSArray alloc] initWithObjects:@"今天",@"明天",@"后天", nil];
     _hours = [[NSArray alloc] initWithObjects:@"00",@"01",@"02",@"03",@"04",@"05",@"06",@"07",@"08",@"09",@"10",@"11",@"12",@"13",@"14",@"15",@"16",@"17",@"18",@"19",@"20",@"21",@"22",@"23", nil];
+    //_minutes = [[NSArray alloc] initWithObjects:@"00",@"01",@"02",@"03",@"04",@"05",@"06",@"07",@"08",@"09",@"10",@"11",@"12",@"13",@"14",@"15",@"16",@"17",@"18",@"19",@"20",@"21",@"22",@"23",@"24",@"25",@"26",@"27",@"28",@"29",@"30",@"31",@"32",@"33",@"34",@"35",@"36",@"37",@"38",@"39",@"40",@"41",@"42",@"43",@"44",@"45",@"46",@"47",@"48",@"49",@"50",@"51",@"52",@"53",@"54",@"55",@"56",@"57",@"58",@"59", nil];
+    
+    _minutes = [[NSArray alloc] initWithObjects:@"00",@"10",@"20",@"30",@"40",@"50",nil];
     
     SoundManager * manager = [SoundManager defaultSoundManager];
     _reminder.audioUrl = [manager.recordFileURL relativePath];
 }
 
 - (void)initPickerView {
+    NSDate * now = [NSDate date];
     self.pickerView.delegate = self;
     self.pickerView.dataSource = self;
     [self.pickerView setHidden:YES];
     NSDateFormatter * hour = [[NSDateFormatter alloc] init];
     [hour setDateFormat:@"HH"];
-    NSString * currentDateStr = [hour stringFromDate:[NSDate date]];
-    NSInteger index = [currentDateStr integerValue] + 1;
-    if (index == 24) {
-        index = 23;
-    }
-    [_pickerView selectRow:index inComponent:1 animated:NO];
+    NSString * currentDateStr = [hour stringFromDate:now];
+    NSInteger hourIndex = [currentDateStr integerValue];
+    [_pickerView selectRow:hourIndex inComponent:1 animated:NO];
+    [hour setDateFormat:@"mm"];
+    currentDateStr = [hour stringFromDate:now];
+    NSInteger minuteIndex = [currentDateStr integerValue];
+    [_pickerView selectRow:2 inComponent:2 animated:NO];
 }
 
 - (void)setReminderDate {
@@ -64,7 +70,7 @@
     NSDate * triggerDate = [hour dateFromString:strTriggerDate];
     triggerDate = [triggerDate dateByAddingTimeInterval:24*60*60*[_pickerView selectedRowInComponent:0]];
     triggerDate = [triggerDate dateByAddingTimeInterval:[_pickerView selectedRowInComponent:1]*60*60];
-    
+    triggerDate = [triggerDate dateByAddingTimeInterval:[_pickerView selectedRowInComponent:2]*60];
     _reminder.triggerTime = triggerDate;
 }
 
@@ -80,6 +86,9 @@
     date = [date stringByAppendingString:@"  "];
     date = [date stringByAppendingString:[_hours objectAtIndex:[_pickerView selectedRowInComponent:1]]];
     date = [date stringByAppendingString:@"点"];
+    date = [date stringByAppendingString:@"  "];
+    date = [date stringByAppendingString:[_minutes objectAtIndex:[_pickerView selectedRowInComponent:2]]];
+    date = [date stringByAppendingString:@"分"];
     return date;
 }
 
@@ -182,22 +191,26 @@
 
 #pragma  mark - PickerView data source
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     if (component == 0) {
         return _days.count;
-    }else {
+    }else if(component == 1){
         return _hours.count;
+    }else {
+        return _minutes.count;
     }
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     if(component == 0){
         return [_days objectAtIndex:row];
-    }else {
+    }else if(component == 1) {
         return [_hours objectAtIndex:row];
+    }else {
+        return [_minutes objectAtIndex:row];
     }
 }
 
