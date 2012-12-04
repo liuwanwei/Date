@@ -11,6 +11,7 @@
 #import "Reminder.h"
 #import "BilateralFriend.h"
 #import "ReminderManager.h"
+#import "UserManager.h"
 
 typedef enum {
     AudioStateNormal = 0,
@@ -33,6 +34,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIButton * btnMap;
 @property (weak, nonatomic) IBOutlet UILabel * labelAddress;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView * indicatorView;
+@property (weak, nonatomic) IBOutlet UILabel * labelSendDate;
 
 @property (weak, nonatomic) Reminder * reminder;
 @property (weak, nonatomic) BilateralFriend * bilateralFriend;

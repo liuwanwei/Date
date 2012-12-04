@@ -8,7 +8,6 @@
 
 #import "ReminderBaseCell.h"
 #import "SoundManager.h"
-#import "UserManager.h"
 
 @implementation ReminderBaseCell
 
@@ -22,14 +21,16 @@
 @synthesize indexPath = _indexPath;
 @synthesize labelAddress = _labelAddress;
 @synthesize indicatorView = _indicatorView;
+@synthesize labelSendDate = _labelSendDate;
 
 - (void)setReminder:(Reminder *)reminer {
     if (nil != reminer) {
         _reminder = reminer;
         NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        _labelTriggerDate.text = [formatter stringFromDate:reminer.triggerTime];
-        
+        NSString * triggerDate = @"提醒时间:";
+        [formatter setDateFormat:@"MM-dd HH:mm"];
+        _labelTriggerDate.text =[triggerDate stringByAppendingString:[formatter stringFromDate:reminer.triggerTime]];
+        _labelSendDate.text = [formatter stringFromDate:reminer.sendTime];
         if (nil == _reminder.longitude || [_reminder.longitude isEqualToString:@"0"]) {
             [_btnMap setHidden:YES];
             [_labelAddress setHidden:YES];
@@ -48,19 +49,18 @@
 - (void)setBilateralFriend:(BilateralFriend *)bilateralFriend {
     if (nil != bilateralFriend) {
         _bilateralFriend = bilateralFriend;
-        if (nil != bilateralFriend.imageUrl) {
+        if ([[_bilateralFriend.userID stringValue] isEqualToString:[UserManager defaultManager].userID]) {
+            [_image setImageURL:[NSURL URLWithString:[UserManager defaultManager].imageUrl]];
+        }else if (nil != bilateralFriend.imageUrl) {
             [_image setImageURL:[NSURL URLWithString:bilateralFriend.imageUrl]];
         }
-    }else {
-        
-        [_image setImageURL:[NSURL URLWithString:[UserManager defaultManager].imageUrl]];
     }
 }
 
 - (void)setAudioState:(AudioState)audioState {
     _audioState = audioState;
     if (_audioState == AudioStateNormal) {
-        [_btnAudio setTitle:@"播放" forState:UIControlStateNormal];
+        [_btnAudio setBackgroundImage:[UIImage imageNamed:@"btnPlay"] forState:UIControlStateNormal];
         [_indicatorView stopAnimating];
         [_indicatorView setHidden:YES];
     }else if (_audioState == AudioStateDownload){
@@ -69,7 +69,7 @@
         [_btnAudio setHidden:YES];
     }else if (_audioState == AudioStatePlaying) {
         [_btnAudio setHidden:NO];
-        [_btnAudio setTitle:@"暂停" forState:UIControlStateNormal];
+         [_btnAudio setBackgroundImage:[UIImage imageNamed:@"btnPause"] forState:UIControlStateNormal];
         [_indicatorView stopAnimating];
         [_indicatorView setHidden:YES];
     }
