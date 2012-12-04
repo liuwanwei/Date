@@ -22,6 +22,7 @@ static SoundManager * sSoundManager;
 @synthesize recordFileURL = _recordFileURL;
 @synthesize view = _view;
 @synthesize imageView = _imageView;
+@synthesize viewWarning = _viewWarning;
 
 + (SoundManager *)defaultSoundManager {
     if (nil == sSoundManager) {

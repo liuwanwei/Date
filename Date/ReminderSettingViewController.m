@@ -17,7 +17,7 @@
     Reminder * _reminder;
     NSArray * _days;
     NSArray * _hours;
-    NSArray * _minutes;
+    NSMutableArray * _minutes;
 }
 
 @end
@@ -38,9 +38,12 @@
 - (void)initData {
     _days = [[NSArray alloc] initWithObjects:@"今天",@"明天",@"后天", nil];
     _hours = [[NSArray alloc] initWithObjects:@"00",@"01",@"02",@"03",@"04",@"05",@"06",@"07",@"08",@"09",@"10",@"11",@"12",@"13",@"14",@"15",@"16",@"17",@"18",@"19",@"20",@"21",@"22",@"23", nil];
-    //_minutes = [[NSArray alloc] initWithObjects:@"00",@"01",@"02",@"03",@"04",@"05",@"06",@"07",@"08",@"09",@"10",@"11",@"12",@"13",@"14",@"15",@"16",@"17",@"18",@"19",@"20",@"21",@"22",@"23",@"24",@"25",@"26",@"27",@"28",@"29",@"30",@"31",@"32",@"33",@"34",@"35",@"36",@"37",@"38",@"39",@"40",@"41",@"42",@"43",@"44",@"45",@"46",@"47",@"48",@"49",@"50",@"51",@"52",@"53",@"54",@"55",@"56",@"57",@"58",@"59", nil];
     
-    _minutes = [[NSArray alloc] initWithObjects:@"00",@"10",@"20",@"30",@"40",@"50",nil];
+    _minutes = [[NSMutableArray alloc] initWithCapacity:0];
+    NSInteger size = 12;
+    for (NSInteger index = 0; index < size; index++) {
+        [_minutes addObject:[NSString stringWithFormat:@"%.2d",index * 5]];
+    }
     
     SoundManager * manager = [SoundManager defaultSoundManager];
     _reminder.audioUrl = [manager.recordFileURL relativePath];
@@ -58,8 +61,7 @@
     [_pickerView selectRow:hourIndex inComponent:1 animated:NO];
     [hour setDateFormat:@"mm"];
     currentDateStr = [hour stringFromDate:now];
-    NSInteger minuteIndex = [currentDateStr integerValue];
-    [_pickerView selectRow:2 inComponent:2 animated:NO];
+    [_pickerView selectRow:6 inComponent:2 animated:NO];
 }
 
 - (void)setReminderDate {
@@ -70,7 +72,7 @@
     NSDate * triggerDate = [hour dateFromString:strTriggerDate];
     triggerDate = [triggerDate dateByAddingTimeInterval:24*60*60*[_pickerView selectedRowInComponent:0]];
     triggerDate = [triggerDate dateByAddingTimeInterval:[_pickerView selectedRowInComponent:1]*60*60];
-    triggerDate = [triggerDate dateByAddingTimeInterval:[_pickerView selectedRowInComponent:2]*60];
+    triggerDate = [triggerDate dateByAddingTimeInterval:[_pickerView selectedRowInComponent:2]*5*60];
     _reminder.triggerTime = triggerDate;
 }
 
