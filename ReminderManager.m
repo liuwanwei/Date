@@ -134,7 +134,9 @@ static ReminderManager * sReminderManager;
                         }
             }
         }
-        [[LMLibrary defaultManager] postNotificationWithName:kRemindesUpdateMessage withObject:nil];
+        NSNotification * notification = nil;
+        notification = [NSNotification notificationWithName:kRemindesUpdateMessage object:nil];
+        [[NSNotificationCenter defaultCenter] postNotification:notification];
     }
 }
 
@@ -207,8 +209,9 @@ static ReminderManager * sReminderManager;
     if (! [self synchroniseToStore]) {
         return;
     }
-    
-    [[LMLibrary defaultManager] postNotificationWithName:kRemindesUpdateMessage withObject:nil];
+    NSNotification * notification = nil;
+    notification = [NSNotification notificationWithName:kRemindesUpdateMessage object:nil];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
 - (NSMutableDictionary *)remindersWithId:(NSArray *) remindersId {
@@ -413,7 +416,9 @@ static ReminderManager * sReminderManager;
     if (YES == isRead) {
         [[BilateralFriendManager defaultManager] modifyUnReadRemindersSizeWithUserId:reminder.userID withOperateType:OperateTypeSub];
     }
-    [[LMLibrary defaultManager] postNotificationWithName:kRemindesUpdateMessage withObject:nil];
+    NSNotification * notification = nil;
+    notification = [NSNotification notificationWithName:kRemindesUpdateMessage object:nil];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
 - (void)modifyReminder:(Reminder *)reminder withBellState:(BOOL)isBell {
