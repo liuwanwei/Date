@@ -172,7 +172,9 @@ static SinaWeiboManager * sWeiboManager;
         _finishUserInfo = NO;
         _finishFriendsInfo = NO;
         
-        [[LMLibrary defaultManager] postNotificationWithName:kGoRegisterUserMessage withObject:nil];
+        NSNotification * notification = nil;
+        notification = [NSNotification notificationWithName:kGoRegisterUserMessage object:nil];
+        [[NSNotificationCenter defaultCenter] postNotification:notification];
     }
 }
 

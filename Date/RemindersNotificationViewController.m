@@ -48,7 +48,7 @@
     for (Reminder * reminder in self.reminders) {
         [self.reminderManager modifyReminder:reminder withBellState:YES];
     }
-    //[[LMLibrary defaultManager] postNotificationWithName:kRemindesUpdateMessage withObject:nil];
+  
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
