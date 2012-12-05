@@ -43,17 +43,20 @@
                 [_labelAddress setHidden:YES];
             }
         }
+        
+        if ([_reminder.type integerValue] == ReminderTypeReceive) {
+            if (nil != _bilateralFriend && nil != _bilateralFriend.imageUrl) {
+                [_image setImageURL:[NSURL URLWithString:_bilateralFriend.imageUrl]];
+            }
+        }else  {
+            [_image setImageURL:[NSURL URLWithString:[UserManager defaultManager].imageUrl]];
+        }
     }
 }
 
 - (void)setBilateralFriend:(BilateralFriend *)bilateralFriend {
     if (nil != bilateralFriend) {
         _bilateralFriend = bilateralFriend;
-        if ([[_bilateralFriend.userID stringValue] isEqualToString:[UserManager defaultManager].userID]) {
-            [_image setImageURL:[NSURL URLWithString:[UserManager defaultManager].imageUrl]];
-        }else if (nil != bilateralFriend.imageUrl) {
-            [_image setImageURL:[NSURL URLWithString:bilateralFriend.imageUrl]];
-        }
     }
 }
 
@@ -73,6 +76,7 @@
         [_indicatorView stopAnimating];
         [_indicatorView setHidden:YES];
     }
+    
 }
 
 - (void)modifyReminderReadState {

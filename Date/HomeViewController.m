@@ -104,6 +104,7 @@
 - (void)handleRemindersUpdateMessage:(NSNotification *)note {
     [self initFriends];
     [self initReminders];
+    [[AppDelegate delegate] checkRemindersExpired];
 }
 
 // move view to right side

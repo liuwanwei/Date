@@ -72,26 +72,12 @@
     if (nil != reminer) {
         
         [super setReminder:reminer];
-        if (YES == [self.reminder.isBell integerValue]) {
-            [self.labelTriggerDate setHidden:NO];
-        }else {
-            [self.labelTriggerDate setHidden:YES];
-        }
         
         if (nil != reminer.isRead && YES == [reminer.isRead integerValue]) {
             [_btnMark setHidden:YES];
         }else {
             [_btnMark setHidden:NO];
         }
-        
-        if (YES == [self.reminder.isBell integerValue]) {
-            [self.labelTriggerDate setHidden:NO];
-            [_btnClock setHidden:NO];
-        }else {
-            [self.labelTriggerDate setHidden:YES];
-            [_btnClock setHidden:YES];
-        }
-        
     }
 }
 

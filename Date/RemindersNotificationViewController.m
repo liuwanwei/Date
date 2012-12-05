@@ -46,7 +46,7 @@
 
 - (void)dismiss {
     for (Reminder * reminder in self.reminders) {
-        [self.reminderManager modifyReminder:reminder withBellState:NO];
+        [self.reminderManager modifyReminder:reminder withBellState:YES];
     }
     //[[LMLibrary defaultManager] postNotificationWithName:kRemindesUpdateMessage withObject:nil];
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -96,13 +96,14 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    Reminder * reminder = [self.reminders objectAtIndex:indexPath.row];
     static NSString * CellIdentifier = @"Cell";
-    ReminderNotificationCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    FriendReminderCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[ReminderNotificationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[FriendReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier reminderType:[reminder.type integerValue]];
         cell.delegate = self;
     }
-    Reminder * reminder = [self.reminders objectAtIndex:indexPath.row];
+    
     BilateralFriend * friend = [_friends objectForKey:reminder.userID];
     cell.indexPath = indexPath;
     cell.bilateralFriend = friend;
@@ -110,7 +111,7 @@
     if (YES == _isAutoPlayAudio) {
         cell.audioState = AudioStatePlaying;
         [self.remindersAudioState replaceObjectAtIndex:indexPath.row withObject: [NSNumber numberWithInteger:AudioStatePlaying]];
-        [cell palyAudio:nil];
+        [cell palyAudio:cell.btnAudio];
     }else {
         cell.audioState = [[self.remindersAudioState objectAtIndex:indexPath.row] integerValue];
     }

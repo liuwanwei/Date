@@ -60,13 +60,14 @@
 
 #pragma mark - Table view data source
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString * CellIdentifier = @"Cell";
+    static NSString * CellIdentifier = @"FriendReminderCell";
     Reminder * reminder = [self.reminders objectAtIndex:indexPath.row];
 
     FriendReminderCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[FriendReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier reminderType:[reminder.type integerValue]];
         cell.delegate = self;
+        NSLog(@"FriendReminderCell");
     }
     cell.indexPath = indexPath;
     cell.bilateralFriend = _bilateralFriend;
