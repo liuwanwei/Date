@@ -77,14 +77,17 @@ static ReminderManager * sReminderManager;
  新加reminder表数据的同时，修改BilateralFriend表
  */
 - (void)saveRemotesReminders:(NSArray *)data {
+    BOOL isBell;
     Reminder * reminder;
     BilateralFriend * friend;
+    NSDate * nowDate = [NSDate date];
     NSNumberFormatter * numberFormatter = [[NSNumberFormatter alloc] init];
     NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
     NSTimeZone * timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
     [dateFormatter setTimeZone:timeZone];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         for (id object in data) {
+            isBell = NO;
             if ([object isKindOfClass:[NSDictionary class]]) {
                 NSString * reminderId = [object objectForKey:@"id"];
                     if (nil == [self reminderWithId:reminderId]) {
@@ -99,16 +102,41 @@ static ReminderManager * sReminderManager;
                         reminder.longitude = [object objectForKey:@"longitude"];
                         reminder.type = [NSNumber numberWithInteger:ReminderTypeReceive];
                         reminder.isRead = [numberFormatter numberFromString:[object objectForKey:@"state"]];
-                        reminder.isBell = [NSNumber numberWithBool:YES];
-                        [self synchroniseToStore];
-                        [[BilateralFriendManager defaultManager] modifyLastReminder:reminder.id withUserId:reminder.userID];
-                        [[BilateralFriendManager defaultManager] modifyUnReadRemindersSizeWithUserId: reminder.userID withOperateType:OperateTypeAdd];
                         
-                        friend = [[BilateralFriendManager defaultManager]bilateralFriendWithUserID:reminder.userID];
-                        [self addLocalNotificationWithReminder:reminder withBilateralFriend:friend];
+                        if (YES == [reminder.isRead boolValue]) {
+                            if ([nowDate compare:reminder.triggerTime] == NSOrderedDescending) {
+                                //过期
+                                reminder.isBell = [NSNumber numberWithBool:YES];
+                            }else {
+                                //未过期
+                                isBell = YES;
+                                reminder.isBell = [NSNumber numberWithBool:NO];
+                            }
+                        }else {
+                            if ([nowDate compare:reminder.triggerTime] == NSOrderedAscending) {
+                                // 未过期
+                                isBell = YES;
+                            }
+                            reminder.isBell = [NSNumber numberWithBool:NO];
+                        }
+                        
+                        [self synchroniseToStore];
+                        
+                        [[BilateralFriendManager defaultManager] modifyLastReminder:reminder.id withUserId:reminder.userID];
+                        
+                        if (NO == [reminder.isRead boolValue])  {
+                             [[BilateralFriendManager defaultManager] modifyUnReadRemindersSizeWithUserId: reminder.userID withOperateType:OperateTypeAdd];
+                        }
+                       
+                        if (YES == isBell) {
+                            friend = [[BilateralFriendManager defaultManager]bilateralFriendWithUserID:reminder.userID];
+                            [self addLocalNotificationWithReminder:reminder withBilateralFriend:friend];
+                        }
             }
         }
-        [[LMLibrary defaultManager] postNotificationWithName:kRemindesUpdateMessage withObject:nil];
+        NSNotification * notification = nil;
+        notification = [NSNotification notificationWithName:kRemindesUpdateMessage object:nil];
+        [[NSNotificationCenter defaultCenter] postNotification:notification];
     }
 }
 
@@ -169,11 +197,11 @@ static ReminderManager * sReminderManager;
 #pragma 类成员函数
 - (void)saveSentReminder:(Reminder *)reminder {
     if ([[reminder.userID stringValue] isEqualToString:[UserManager defaultManager].userID] ) {
-        reminder.isBell = [NSNumber numberWithBool:YES];
+        reminder.isBell = [NSNumber numberWithBool:NO];
         reminder.type = [NSNumber numberWithInteger:ReminderTypeReceive];
         [self addLocalNotificationWithReminder:reminder withBilateralFriend:nil];
     }else {
-        reminder.isBell = [NSNumber numberWithBool:NO];
+        reminder.isBell = [NSNumber numberWithBool:YES];
         reminder.type = [NSNumber numberWithInteger:ReminderTypeSend];
     }
     reminder.isRead = [NSNumber numberWithBool:YES];
@@ -181,8 +209,9 @@ static ReminderManager * sReminderManager;
     if (! [self synchroniseToStore]) {
         return;
     }
-    
-    [[LMLibrary defaultManager] postNotificationWithName:kRemindesUpdateMessage withObject:nil];
+    NSNotification * notification = nil;
+    notification = [NSNotification notificationWithName:kRemindesUpdateMessage object:nil];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
 - (NSMutableDictionary *)remindersWithId:(NSArray *) remindersId {
@@ -236,7 +265,7 @@ static ReminderManager * sReminderManager;
     NSDate * date = [NSDate date];
     NSArray * results = nil;
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"isBell = YES AND triggerTime < %@",date];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"isBell = NO AND triggerTime < %@",date];
     NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"triggerTime" ascending:NO];
     NSArray * sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     
@@ -387,7 +416,9 @@ static ReminderManager * sReminderManager;
     if (YES == isRead) {
         [[BilateralFriendManager defaultManager] modifyUnReadRemindersSizeWithUserId:reminder.userID withOperateType:OperateTypeSub];
     }
-    [[LMLibrary defaultManager] postNotificationWithName:kRemindesUpdateMessage withObject:nil];
+    NSNotification * notification = nil;
+    notification = [NSNotification notificationWithName:kRemindesUpdateMessage object:nil];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
 - (void)modifyReminder:(Reminder *)reminder withBellState:(BOOL)isBell {

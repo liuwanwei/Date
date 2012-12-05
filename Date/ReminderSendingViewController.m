@@ -150,7 +150,8 @@
 #pragma mark - AlertView delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (1 == buttonIndex) {
-        [self sendReminder];
+        // 让alertView先关上，不然HUD会立刻消失
+        [self performSelector:@selector(sendReminder) withObject:self afterDelay:0.3];
     }
 }
 @end

@@ -71,8 +71,7 @@
     [_pickerView selectRow:hourIndex inComponent:1 animated:NO];
     [hour setDateFormat:@"mm"];
     currentDateStr = [hour stringFromDate:now];
-    NSInteger minuteIndex = [currentDateStr integerValue];
-    [_pickerView selectRow:2 inComponent:2 animated:NO];
+    [_pickerView selectRow:6 inComponent:2 animated:NO];
 }
 
 - (void)setReminderDate {
@@ -83,7 +82,7 @@
     NSDate * triggerDate = [hour dateFromString:strTriggerDate];
     triggerDate = [triggerDate dateByAddingTimeInterval:24*60*60*[_pickerView selectedRowInComponent:0]];
     triggerDate = [triggerDate dateByAddingTimeInterval:[_pickerView selectedRowInComponent:1]*60*60];
-    triggerDate = [triggerDate dateByAddingTimeInterval:[_pickerView selectedRowInComponent:2]*60];
+    triggerDate = [triggerDate dateByAddingTimeInterval:[_pickerView selectedRowInComponent:2]*5*60];
     _reminder.triggerTime = triggerDate;
 }
 
