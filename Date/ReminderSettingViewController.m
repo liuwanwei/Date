@@ -12,12 +12,14 @@
 #import "ReminderManager.h"
 #import "ReminderMapViewController.h"
 #import "ReminderSendingViewController.h"
+#import "ChoiceViewController.h                             "
 
 @interface ReminderSettingViewController () {
     Reminder * _reminder;
+    NSArray * _tags;
     NSArray * _days;
-    NSArray * _hours;
-    NSArray * _minutes;
+    NSMutableArray * _hours;
+    NSMutableArray * _minutes;
 }
 
 @end
@@ -36,11 +38,22 @@
 }
 
 - (void)initData {
-    _days = [[NSArray alloc] initWithObjects:@"今天",@"明天",@"后天", nil];
-    _hours = [[NSArray alloc] initWithObjects:@"00",@"01",@"02",@"03",@"04",@"05",@"06",@"07",@"08",@"09",@"10",@"11",@"12",@"13",@"14",@"15",@"16",@"17",@"18",@"19",@"20",@"21",@"22",@"23", nil];
-    //_minutes = [[NSArray alloc] initWithObjects:@"00",@"01",@"02",@"03",@"04",@"05",@"06",@"07",@"08",@"09",@"10",@"11",@"12",@"13",@"14",@"15",@"16",@"17",@"18",@"19",@"20",@"21",@"22",@"23",@"24",@"25",@"26",@"27",@"28",@"29",@"30",@"31",@"32",@"33",@"34",@"35",@"36",@"37",@"38",@"39",@"40",@"41",@"42",@"43",@"44",@"45",@"46",@"47",@"48",@"49",@"50",@"51",@"52",@"53",@"54",@"55",@"56",@"57",@"58",@"59", nil];
+    _tags = [[NSArray alloc] initWithObjects:@"不要忘记带", @"不要忘记买", @"不要忘记做",@"奇思妙想", nil];
     
-    _minutes = [[NSArray alloc] initWithObjects:@"00",@"10",@"20",@"30",@"40",@"50",nil];
+    _days = [[NSArray alloc] initWithObjects:@"今天",@"明天",@"后天", nil];
+    
+    _minutes = [[NSMutableArray alloc] init];
+    int step = 5;
+    for(int i = 0; i < 60 ; i ++){
+        if (i % step == 0) {
+            [_minutes addObject:[NSString stringWithFormat:@"%02d", i / step]];
+        }
+    }
+    
+    _hours = [[NSMutableArray alloc] init];
+    for (int i = 0; i < 24; i ++) {
+        [_hours addObject:[NSString stringWithFormat:@"%02d", i]];
+    }
     
     SoundManager * manager = [SoundManager defaultSoundManager];
     _reminder.audioUrl = [manager.recordFileURL relativePath];
@@ -142,12 +155,12 @@
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -158,12 +171,9 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
-    if (indexPath.section == 0) {
-        cell.textLabel.text = @"时间";
-        if (nil != _reminder.triggerTime) {
-            cell.detailTextLabel.text = [self tiggerDate];
-        }
-    
+    if (indexPath.section =＝ 0) {
+        cell.textLabel.text = @"标签";
+        cell.detailTextLabel.text = _reminder.description;
     }else {
         cell.textLabel.text = @"地点";
         if (nil != _reminder.adress) {
@@ -178,7 +188,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        [_pickerView setHidden:!_pickerView.hidden];
+//        [_pickerView setHidden:!_pickerView.hidden];
+        ChoiceViewController * choiceViewController = [[ChoiceViewController alloc] init];//TODO
     }
     if (indexPath.section == 1) {
         ReminderMapViewController * controller = [[ReminderMapViewController alloc] initWithNibName:@"ReminderMapViewController" bundle:nil];
@@ -216,10 +227,10 @@
 
 #pragma  mark - PickerView Delegate
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    NSIndexPath * tableRow =  [NSIndexPath indexPathForRow:0 inSection:0];
-    UITableViewCell * cell = [_tableView cellForRowAtIndexPath:tableRow];
-    
-    [cell.detailTextLabel setText:[self tiggerDate]];
+//    NSIndexPath * tableRow =  [NSIndexPath indexPathForRow:0 inSection:0];
+//    UITableViewCell * cell = [_tableView cellForRowAtIndexPath:tableRow];
+//    
+//    [cell.detailTextLabel setText:[self tiggerDate]];
     [self setReminderDate];
 }
 @end
