@@ -422,10 +422,10 @@
 						<reference key="object" ref="934174607"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="221419631"/>
-							<reference ref="1012104186"/>
 							<reference ref="595971432"/>
 							<reference ref="16642223"/>
 							<reference ref="282662365"/>
+							<reference ref="1012104186"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
