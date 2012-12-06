@@ -33,7 +33,6 @@
             [_btnClock setHidden:NO];
             [_btnMark setHidden:YES];
         }
-        [self modifyReminderBellState:YES];
     }
 }
 
