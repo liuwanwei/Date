@@ -22,12 +22,7 @@
 #pragma 私有函数
 - (void)initData {
     if (nil != self.reminders) {
-        self.remindersAudioState = [NSMutableArray arrayWithCapacity:0];
         NSInteger size = self.reminders.count;
-        for (NSInteger index = 0; index < size; index++) {
-            [self.remindersAudioState addObject:[NSNumber numberWithInteger:AudioStateNormal]];
-        }
-        
         if (1 == size) {
             _isAutoPlayAudio = YES;
         }
@@ -65,10 +60,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.tableView.delegate = self;
-    self.tableView.dataSource  = self;
-    self.tableView.rowHeight = 100.0;
-    self.title = @"到时提醒";
+    self.title = @"提醒";
     
     _isAutoPlayAudio = NO;
     UIBarButtonItem * leftItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismiss)];
@@ -97,10 +89,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     Reminder * reminder = [self.reminders objectAtIndex:indexPath.row];
-    static NSString * CellIdentifier = @"Cell";
-    FriendReminderCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString * CellIdentifier = @"ReminderNotificationCell";
+    ReminderNotificationCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[FriendReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier reminderType:[reminder.type integerValue]];
+        cell = [[ReminderNotificationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.delegate = self;
     }
     
@@ -110,10 +102,9 @@
     cell.reminder = reminder;
     if (YES == _isAutoPlayAudio) {
         cell.audioState = AudioStatePlaying;
-        [self.remindersAudioState replaceObjectAtIndex:indexPath.row withObject: [NSNumber numberWithInteger:AudioStatePlaying]];
         [cell palyAudio:cell.btnAudio];
     }else {
-        cell.audioState = [[self.remindersAudioState objectAtIndex:indexPath.row] integerValue];
+        cell.audioState = AudioStateNormal;
     }
     return cell;
 }

@@ -8,6 +8,7 @@
 
 #import "UserManager.h"
 #import "BilateralFriendManager.h"
+#import "HttpRequestManager.h"
 
 static UserManager * sUserManager;
 
@@ -115,6 +116,10 @@ expirationDate == nil) {
     NSDictionary * userData = [defaults objectForKey:@"UserData"];
 
     return [userData objectForKey:@"ImageUrlKey"];
+}
+
+- (void)registerUserRequest {
+    [[HttpRequestManager defaultManager] registerUserRequest];
 }
 
 - (BOOL)analyzeData:(NSDictionary *)wrapped {

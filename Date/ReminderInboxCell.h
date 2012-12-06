@@ -1,15 +1,15 @@
 //
-//  ReminderNotificationCell.h
+//  ReminderInboxCell.h
 //  date
 //
-//  Created by maoyu on 12-12-1.
+//  Created by maoyu on 12-12-5.
 //  Copyright (c) 2012年 Liu&Mao. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "ReminderBaseCell.h"
 
-@interface ReminderNotificationCell : ReminderBaseCell
+@interface ReminderInboxCell : ReminderBaseCell
 
 @property (weak, nonatomic) IBOutlet UIButton * btnMark;
 
