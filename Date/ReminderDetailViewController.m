@@ -31,10 +31,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _sections = [[NSArray alloc] initWithObjects:@"提醒时间", nil];
+    _sections = [[NSArray alloc] initWithObjects:@"标签", @"闹铃时间",nil];
      _dateFormatter = [[NSDateFormatter alloc] init];
     [_dateFormatter setDateFormat:@"MM-dd HH:mm"];
-    self.title = _friend.nickname;
+    self.title = [NSString stringWithFormat:@"来自:%@", _friend.nickname];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     [self.tableView reloadData];
@@ -66,8 +66,13 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
     
-    cell.textLabel.text = [_sections objectAtIndex:indexPath.row];
-    cell.detailTextLabel.text = [_dateFormatter stringFromDate:_reminder.triggerTime];
+    cell.textLabel.text = [_sections objectAtIndex:indexPath.section];
+    if (indexPath.section == 0) {
+        cell.detailTextLabel.text = _reminder.desc == nil ? _reminder.desc : @"未设置";
+    }else{
+        cell.detailTextLabel.text = [_dateFormatter stringFromDate:_reminder.triggerTime];
+    }
+    
     
     return cell;
 }
