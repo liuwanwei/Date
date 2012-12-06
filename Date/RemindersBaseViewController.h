@@ -17,8 +17,7 @@
 
 @property (weak, nonatomic) ReminderManager * reminderManager;
 @property (strong, nonatomic) NSArray * reminders;
-@property (strong, nonatomic) NSMutableArray * remindersAudioState;
-
-- (NSIndexPath *)indexPathWithReminder:(Reminder *)reminder;
+@property (weak, nonatomic) Reminder * curReminder;
+@property (strong, nonatomic) NSIndexPath * curIndexPath;
 
 @end

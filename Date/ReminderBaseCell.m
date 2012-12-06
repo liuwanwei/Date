@@ -28,9 +28,8 @@
         _reminder = reminer;
         NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
         NSString * triggerDate = @"提醒时间:";
-        [formatter setDateFormat:@"MM-dd HH:mm"];
+        [formatter setDateFormat:@"HH:mm"];
         _labelTriggerDate.text =[triggerDate stringByAppendingString:[formatter stringFromDate:reminer.triggerTime]];
-        _labelSendDate.text = [formatter stringFromDate:reminer.sendTime];
         if (nil == _reminder.longitude || [_reminder.longitude isEqualToString:@"0"]) {
             [_btnMap setHidden:YES];
             [_labelAddress setHidden:YES];
@@ -112,8 +111,8 @@
     }
     
     if (self.delegate != nil && nil != sender) {
-        if ([self.delegate respondsToSelector:@selector(clickAudioButton: WithState:)]) {
-            [self.delegate performSelector:@selector(clickAudioButton: WithState:) withObject:_indexPath withObject:[NSNumber numberWithInteger:_audioState]];
+        if ([self.delegate respondsToSelector:@selector(clickAudioButton: withReminder:)]) {
+            [self.delegate performSelector:@selector(clickAudioButton: withReminder:) withObject:_indexPath withObject:_reminder];
         }
     }
     

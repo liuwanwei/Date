@@ -1,14 +1,14 @@
 //
-//  ReminderNotificationCell.m
+//  ReminderInboxCell.m
 //  date
 //
-//  Created by maoyu on 12-12-1.
+//  Created by maoyu on 12-12-5.
 //  Copyright (c) 2012年 Liu&Mao. All rights reserved.
 //
 
-#import "ReminderNotificationCell.h"
+#import "ReminderInboxCell.h"
 
-@implementation ReminderNotificationCell
+@implementation ReminderInboxCell
 @synthesize btnMark = _btnMark;
 
 #pragma 类成员函数
@@ -25,7 +25,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"ReminderNotificationCell" owner:self options:nil] ;
+        NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"ReminderInboxCell" owner:self options:nil] ;
         self = [nib objectAtIndex:0];
     }
     return self;
@@ -38,19 +38,20 @@
     // Configure the view for the selected state
 }
 
-- (void)setReminder:(Reminder *)reminder {
-    if (nil != reminder) {
-        [super setReminder:reminder];
-    }
-    
-    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yy-MM HH:mm"];
-    self.labelSendDate.text = [formatter stringFromDate:reminder.sendTime];
-    
-    if (nil != reminder.isRead && YES == [reminder.isRead integerValue]) {
-        [_btnMark setHidden:YES];
-    }else {
-        [_btnMark setHidden:NO];
+- (void)setReminder:(Reminder *)reminer {
+    if (nil != reminer) {
+        
+        [super setReminder:reminer];
+        
+        NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"HH:mm"];
+        self.labelSendDate.text = [formatter stringFromDate:reminer.sendTime];
+        
+        if (nil != reminer.isRead && YES == [reminer.isRead integerValue]) {
+            [_btnMark setHidden:YES];
+        }else {
+            [_btnMark setHidden:NO];
+        }
     }
 }
 
