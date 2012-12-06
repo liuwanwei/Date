@@ -58,6 +58,8 @@
 		3C34992B166EEF62001012B6 /* RemindersInboxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C349929166EEF62001012B6 /* RemindersInboxViewController.xib */; };
 		3C34992E166EFC25001012B6 /* ReminderInboxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C34992D166EFC25001012B6 /* ReminderInboxCell.m */; };
 		3C349930166F1062001012B6 /* ReminderInboxCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C34992F166F1062001012B6 /* ReminderInboxCell.xib */; };
+		3C3499391670509E001012B6 /* ReminderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3499371670509D001012B6 /* ReminderDetailViewController.m */; };
+		3C34993A1670509E001012B6 /* ReminderDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C3499381670509E001012B6 /* ReminderDetailViewController.xib */; };
 		3C40DE3E1666ED4A005627C9 /* BilateralFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C40DE3D1666ED49005627C9 /* BilateralFriend.m */; };
 		3C40DE4216670F41005627C9 /* RemindersNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C40DE4016670F41005627C9 /* RemindersNotificationViewController.m */; };
 		3C40DE4316670F41005627C9 /* RemindersNotificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C40DE4116670F41005627C9 /* RemindersNotificationViewController.xib */; };
@@ -257,6 +259,9 @@
 		3C34992C166EFC25001012B6 /* ReminderInboxCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderInboxCell.h; sourceTree = "<group>"; };
 		3C34992D166EFC25001012B6 /* ReminderInboxCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderInboxCell.m; sourceTree = "<group>"; };
 		3C34992F166F1062001012B6 /* ReminderInboxCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderInboxCell.xib; sourceTree = "<group>"; };
+		3C3499361670509C001012B6 /* ReminderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderDetailViewController.h; sourceTree = "<group>"; };
+		3C3499371670509D001012B6 /* ReminderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderDetailViewController.m; sourceTree = "<group>"; };
+		3C3499381670509E001012B6 /* ReminderDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderDetailViewController.xib; sourceTree = "<group>"; };
 		3C40DE3C1666ED49005627C9 /* BilateralFriend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BilateralFriend.h; sourceTree = "<group>"; };
 		3C40DE3D1666ED49005627C9 /* BilateralFriend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BilateralFriend.m; sourceTree = "<group>"; };
 		3C40DE3F16670F41005627C9 /* RemindersNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemindersNotificationViewController.h; sourceTree = "<group>"; };
@@ -579,6 +584,7 @@
 		3CE0ABFA16507EA9004B785A /* xib */ = {
 			isa = PBXGroup;
 			children = (
+				3C3499381670509E001012B6 /* ReminderDetailViewController.xib */,
 				3C349929166EEF62001012B6 /* RemindersInboxViewController.xib */,
 				3C40DE4116670F41005627C9 /* RemindersNotificationViewController.xib */,
 				3CD0ADFF166877C0001986F0 /* MenuViewController.xib */,
@@ -629,6 +635,8 @@
 				3CF017DF165B500E00F83814 /* ReminderSendingViewController.m */,
 				3CC9CE20165F730100E7E9D9 /* FriendRemindersViewController.h */,
 				3CC9CE21165F730100E7E9D9 /* FriendRemindersViewController.m */,
+				3C3499361670509C001012B6 /* ReminderDetailViewController.h */,
+				3C3499371670509D001012B6 /* ReminderDetailViewController.m */,
 			);
 			name = Class;
 			sourceTree = "<group>";
@@ -881,6 +889,7 @@
 				3C984EE0166C90D4005AA529 /* FriendReminderSenderCell.xib in Resources */,
 				3C34992B166EEF62001012B6 /* RemindersInboxViewController.xib in Resources */,
 				3C349930166F1062001012B6 /* ReminderInboxCell.xib in Resources */,
+				3C34993A1670509E001012B6 /* ReminderDetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -943,6 +952,7 @@
 				3C23E8B41669ACA40098149A /* RemindersBaseViewController.m in Sources */,
 				3C34992A166EEF62001012B6 /* RemindersInboxViewController.m in Sources */,
 				3C34992E166EFC25001012B6 /* ReminderInboxCell.m in Sources */,
+				3C3499391670509E001012B6 /* ReminderDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
