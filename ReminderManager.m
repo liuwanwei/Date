@@ -94,7 +94,7 @@ static ReminderManager * sReminderManager;
                         reminder = (Reminder *)[NSEntityDescription insertNewObjectForEntityForName:kReminderEntity inManagedObjectContext:self.managedObjectContext];
                         reminder.id = [object objectForKey:@"id"];
                         reminder.audioUrl = [object objectForKey:@"audio"];
-                        reminder.adress = [object objectForKey:@"description"];
+                        reminder.desc = [object objectForKey:@"description"];
                         reminder.userID = [numberFormatter numberFromString:[object objectForKey:@"senderId"]];
                         reminder.triggerTime = [dateFormatter dateFromString:[object objectForKey:@"triggerTime"]];
                         reminder.sendTime = [dateFormatter dateFromString:[object objectForKey:@"createTime"]];

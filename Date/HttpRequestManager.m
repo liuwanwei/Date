@@ -181,7 +181,7 @@ static HttpRequestManager * sHttpRequestManager;
     [request setPostValue:triggerTime forKey:@"triggerTime"];
     [request setPostValue:reminder.longitude forKey:@"longitude"];
     [request setPostValue:reminder.latitude forKey:@"latitude"];
-    [request setPostValue:reminder.adress forKey:@"description"];
+    [request setPostValue:reminder.desc forKey:@"description"];
     [request setTimeOutSeconds:20];
     [request setUserInfo:[NSDictionary dictionaryWithObject:@"newReminder" forKey:@"request"]];
     [_networkQueue addOperation:request];

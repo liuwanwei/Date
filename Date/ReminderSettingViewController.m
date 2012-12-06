@@ -15,8 +15,9 @@
 
 @interface ReminderSettingViewController () {
     Reminder * _reminder;
+    NSArray * _tags;
     NSArray * _days;
-    NSArray * _hours;
+    NSMutableArray * _hours;
     NSMutableArray * _minutes;
 }
 
@@ -36,13 +37,21 @@
 }
 
 - (void)initData {
-    _days = [[NSArray alloc] initWithObjects:@"今天",@"明天",@"后天", nil];
-    _hours = [[NSArray alloc] initWithObjects:@"00",@"01",@"02",@"03",@"04",@"05",@"06",@"07",@"08",@"09",@"10",@"11",@"12",@"13",@"14",@"15",@"16",@"17",@"18",@"19",@"20",@"21",@"22",@"23", nil];
+    _tags = [[NSArray alloc] initWithObjects:@"不要忘记带", @"不要忘记买", @"不要忘记做",@"奇思妙想", nil];
     
-    _minutes = [[NSMutableArray alloc] initWithCapacity:0];
-    NSInteger size = 12;
-    for (NSInteger index = 0; index < size; index++) {
-        [_minutes addObject:[NSString stringWithFormat:@"%.2d",index * 5]];
+    _days = [[NSArray alloc] initWithObjects:@"今天",@"明天",@"后天", nil];
+    
+    _minutes = [[NSMutableArray alloc] init];
+    int step = 5;
+    for(int i = 0; i < 60 ; i ++){
+        if (i % step == 0) {
+            [_minutes addObject:[NSString stringWithFormat:@"%02d", i / step]];
+        }
+    }
+    
+    _hours = [[NSMutableArray alloc] init];
+    for (int i = 0; i < 24; i ++) {
+        [_hours addObject:[NSString stringWithFormat:@"%02d", i]];
     }
     
     SoundManager * manager = [SoundManager defaultSoundManager];
@@ -53,7 +62,7 @@
     NSDate * now = [NSDate date];
     self.pickerView.delegate = self;
     self.pickerView.dataSource = self;
-    [self.pickerView setHidden:YES];
+    [self.pickerView setHidden:NO];
     NSDateFormatter * hour = [[NSDateFormatter alloc] init];
     [hour setDateFormat:@"HH"];
     NSString * currentDateStr = [hour stringFromDate:now];
@@ -106,7 +115,7 @@
     [self initPickerView];
     [self setReminderDate];
     
-    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(chooseFriends)];
+    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc] initWithTitle:@"Send" style:UIBarButtonItemStyleBordered target:self action:@selector(chooseFriends)];
     self.navigationItem.rightBarButtonItem = rightItem;
 }
 
@@ -144,13 +153,15 @@
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return 2;
 }
+
+#define IsZero(float) (float > - 0.000001 && float < 0.000001)
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString * CellIdentifier = @"Cell";
@@ -161,28 +172,44 @@
     }
     
     if (indexPath.section == 0) {
-        cell.textLabel.text = @"时间";
-        if (nil != _reminder.triggerTime) {
-            cell.detailTextLabel.text = [self tiggerDate];
-        }
-    
-    }else {
-        cell.textLabel.text = @"地点";
-        if (nil != _reminder.adress) {
-            cell.detailTextLabel.text = _reminder.adress;
+        if (indexPath.row == 0) {
+            cell.textLabel.text = @"标签";
+            cell.detailTextLabel.text = _reminder.desc;
+        }else {
+            cell.textLabel.text = @"地点";
+            if (_reminder.longitude.length == 0 || _reminder.latitude.length == 0) {
+                cell.detailTextLabel.text = @"未设置";
+            }else{
+                cell.detailTextLabel.text = @"已设置";
+            }
         }
     }
     
     return cell;
 }
 
+#pragma mark - ChoiceViewDelegate
+-(void)choiceViewController:(ChoiceViewController *)choiceViewController gotChoice:(NSArray *)choices{
+//    choiceViewController.currentChoices = choices;
+    _reminder.desc = [choices objectAtIndex:0];
+}
+
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        [_pickerView setHidden:!_pickerView.hidden];
+    if (indexPath.section == 0 && indexPath.row == 0) {
+//        [_pickerView setHidden:!_pickerView.hidden];
+        ChoiceViewController * choiceViewController = [[ChoiceViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        choiceViewController.choices = _tags;
+        if (_reminder.desc != nil) {
+            choiceViewController.currentChoices = [NSArray arrayWithObject:_reminder.desc];
+        }
+        choiceViewController.delegate = self;
+        choiceViewController.type = SingleChoice;
+        choiceViewController.autoDisappear = YES;
+        [self.navigationController pushViewController:choiceViewController animated:YES];
     }
-    if (indexPath.section == 1) {
+    if (indexPath.section == 0 && indexPath.row == 1) {
         ReminderMapViewController * controller = [[ReminderMapViewController alloc] initWithNibName:@"ReminderMapViewController" bundle:nil];
         controller.reminder = _reminder;
         controller.type = MapOperateTypeSet;
@@ -218,10 +245,10 @@
 
 #pragma  mark - PickerView Delegate
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    NSIndexPath * tableRow =  [NSIndexPath indexPathForRow:0 inSection:0];
-    UITableViewCell * cell = [_tableView cellForRowAtIndexPath:tableRow];
-    
-    [cell.detailTextLabel setText:[self tiggerDate]];
+//    NSIndexPath * tableRow =  [NSIndexPath indexPathForRow:0 inSection:0];
+//    UITableViewCell * cell = [_tableView cellForRowAtIndexPath:tableRow];
+//    
+//    [cell.detailTextLabel setText:[self tiggerDate]];
     [self setReminderDate];
 }
 @end
