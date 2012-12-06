@@ -23,7 +23,7 @@ typedef enum {
 
 @optional
 - (void)clickAudioButton:(NSIndexPath *)indexPath withReminder:(Reminder *)reminder;
-- (void)clickMapButton:(NSIndexPath *)indexPath;
+- (void)clickMapButton:(NSIndexPath *)indexPath withReminder:(Reminder *)reminder;
 @end
 
 @interface ReminderBaseCell : UITableViewCell
@@ -33,8 +33,10 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIButton * btnAudio;
 @property (weak, nonatomic) IBOutlet UIButton * btnMap;
 @property (weak, nonatomic) IBOutlet UILabel * labelAddress;
+@property (weak, nonatomic) IBOutlet UILabel * labelNickname;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView * indicatorView;
 @property (weak, nonatomic) IBOutlet UILabel * labelSendDate;
+@property (weak, nonatomic) IBOutlet UILabel * labelAudioTime;
 
 @property (weak, nonatomic) Reminder * reminder;
 @property (weak, nonatomic) BilateralFriend * bilateralFriend;

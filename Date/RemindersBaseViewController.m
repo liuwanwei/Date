@@ -39,6 +39,13 @@
     }
 }
 
+#pragma 类成员函数
+- (NSString *)custumDateString:(NSDate *)date {
+    NSString * dateString;
+    NSDate * now = [NSDate date];
+    return dateString;
+}
+
 #pragma 事件函数
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -112,10 +119,10 @@
     _curReminder = reminder;
 }
 
-- (void)clickMapButton:(NSIndexPath *)indexPath {
+- (void)clickMapButton:(NSIndexPath *)indexPath withReminder:reminder{
     
     ReminderMapViewController * controller = [[ReminderMapViewController alloc] initWithNibName:@"ReminderMapViewController" bundle:nil];
-    controller.reminder = [_reminders objectAtIndex:indexPath.row];
+    controller.reminder = reminder;
     controller.type = MapOperateTypeShow;
     UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
     [self presentViewController:nav animated:YES completion:nil];

@@ -1,8 +1,8 @@
 //
 //  Reminder.m
-//  Date
+//  date
 //
-//  Created by Liu Wanwei on 12-12-6.
+//  Created by maoyu on 12-12-6.
 //  Copyright (c) 2012年 Liu&Mao. All rights reserved.
 //
 
@@ -11,8 +11,8 @@
 
 @implementation Reminder
 
-@dynamic desc;
 @dynamic audioUrl;
+@dynamic desc;
 @dynamic id;
 @dynamic isBell;
 @dynamic isRead;
@@ -22,5 +22,6 @@
 @dynamic triggerTime;
 @dynamic type;
 @dynamic userID;
+@dynamic audioTime;
 
 @end

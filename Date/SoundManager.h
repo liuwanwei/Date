@@ -37,4 +37,6 @@
 
 - (BOOL)playAudio:(NSString *)path;
 - (void)stopAudio;
+
+- (NSInteger)audioTime:(NSString *)path;
 @end

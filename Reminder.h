@@ -1,8 +1,8 @@
 //
 //  Reminder.h
-//  Date
+//  date
 //
-//  Created by Liu Wanwei on 12-12-6.
+//  Created by maoyu on 12-12-6.
 //  Copyright (c) 2012年 Liu&Mao. All rights reserved.
 //
 
@@ -12,8 +12,8 @@
 
 @interface Reminder : NSManagedObject
 
-@property (nonatomic, retain) NSString * desc;
 @property (nonatomic, retain) NSString * audioUrl;
+@property (nonatomic, retain) NSString * desc;
 @property (nonatomic, retain) NSString * id;
 @property (nonatomic, retain) NSNumber * isBell;
 @property (nonatomic, retain) NSNumber * isRead;
@@ -23,5 +23,6 @@
 @property (nonatomic, retain) NSDate * triggerTime;
 @property (nonatomic, retain) NSNumber * type;
 @property (nonatomic, retain) NSNumber * userID;
+@property (nonatomic, retain) NSNumber * audioTime;
 
 @end

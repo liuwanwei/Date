@@ -40,6 +40,7 @@ typedef enum {
 - (NSArray *)remindersWithUserId:(NSNumber *)userId;
 - (NSArray *)remindersExpired;
 - (NSArray *)allRemindersWithReimnderType:(ReminderType) type;
+- (NSArray *)recentReminders;
 
 - (void)sendReminder:(Reminder *)reminder;
 - (void)handleNewReminderResponse:(id)json;
