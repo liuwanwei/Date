@@ -74,6 +74,7 @@
     self.tableView.delegate = self;
     self.tableView.rowHeight = 60.0;
     NSLog(@"%@", [EGOImageView class]);
+    self.title = @"发送对象";
     [self initData];
     //UIBarButtonItem * rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(sendReminder)];
     //self.navigationItem.rightBarButtonItem = rightItem;

@@ -37,7 +37,7 @@
 }
 
 - (void)initData {
-    _tags = [[NSArray alloc] initWithObjects:@"不要忘记带", @"不要忘记买", @"不要忘记做",@"奇思妙想", nil];
+    _tags = [[NSArray alloc] initWithObjects:@"不要忘记买", @"不要忘记带", @"不要忘记做",@"奇思妙想", nil];
     
     _days = [[NSArray alloc] initWithObjects:@"今天",@"明天",@"后天", nil];
     
@@ -45,7 +45,7 @@
     int step = 5;
     for(int i = 0; i < 60 ; i ++){
         if (i % step == 0) {
-            [_minutes addObject:[NSString stringWithFormat:@"%02d", i / step]];
+            [_minutes addObject:[NSString stringWithFormat:@"%02d", i]];
         }
     }
     
@@ -63,6 +63,8 @@
     self.pickerView.delegate = self;
     self.pickerView.dataSource = self;
     [self.pickerView setHidden:NO];
+    
+    [_pickerView selectRow:1 inComponent:0 animated:NO];
     NSDateFormatter * hour = [[NSDateFormatter alloc] init];
     [hour setDateFormat:@"HH"];
     NSString * currentDateStr = [hour stringFromDate:now];
@@ -174,7 +176,7 @@
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             cell.textLabel.text = @"标签";
-            cell.detailTextLabel.text = _reminder.desc;
+            cell.detailTextLabel.text = (_reminder.desc == nil ? @"未设置" : _reminder.desc);
         }else {
             cell.textLabel.text = @"地点";
             if (_reminder.longitude.length == 0 || _reminder.latitude.length == 0) {
