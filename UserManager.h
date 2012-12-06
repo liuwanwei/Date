@@ -26,5 +26,6 @@
 - (void)storeUserData:(NSString *)screenName withImageUrl:(NSString *)imageUrl;
 - (void)removeUserData;
 
+- (void)registerUserRequest;
 - (BOOL)analyzeData:(NSDictionary *)data;
 @end

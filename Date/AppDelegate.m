@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "HomeViewController.h"
+#import "RemindersInboxViewController.h"
 #import "UserManager.h"
 #import "SinaWeiboManager.h"
 #import "OnlineFriendsRemindViewController.h"
@@ -60,7 +61,8 @@
 {
     [[SinaWeiboManager defaultManager] initSinaWeibo];
     
-    HomeViewController * viewController = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
+    //HomeViewController * viewController = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
+    RemindersInboxViewController * viewController = [[RemindersInboxViewController alloc] initWithNibName:@"RemindersInboxViewController" bundle:nil];
     _navController = [[UINavigationController alloc] initWithRootViewController:viewController];
     
     _menuViewController = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];

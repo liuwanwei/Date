@@ -426,4 +426,20 @@ static ReminderManager * sReminderManager;
     [self synchroniseToStore];
 }
 
+- (NSArray *)allRemindersWithReimnderType:(ReminderType)type {
+    NSArray * results = nil;
+    NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
+    NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"sendTime" ascending:NO];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"type = %d",type];
+    NSArray * sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    request.sortDescriptors = sortDescriptors;
+    request.predicate = predicate;
+    results = [self executeFetchRequest:request];
+    
+    if (nil == results || results.count == 0) {
+        return nil;
+    }
+    return results;
+}
+
 @end
