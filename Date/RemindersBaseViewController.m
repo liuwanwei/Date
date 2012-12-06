@@ -19,66 +19,23 @@
 @synthesize tableView = _tableView;
 @synthesize reminderManager = _reminderManager;
 @synthesize reminders = _reminders;
-@synthesize remindersAudioState = _remindersAudioState;
 
 #pragma 私有函数
-
-- (NSIndexPath *)indexPathOfAudioPlaying {
-    if (nil != _remindersAudioState) {
-        NSInteger size = _remindersAudioState.count;
-        for (NSInteger index = 0; index < size; index++) {
-            if ([NSNumber numberWithInteger:AudioStatePlaying] == [_remindersAudioState objectAtIndex:index]) {
-                return [NSIndexPath indexPathForRow:index inSection:0];
-            }
-        }
-    }
-    
-    return nil;
-}
-
 - (void)stopPlayingAudio {
-    NSIndexPath * indexPath = [self indexPathOfAudioPlaying];
-    ReminderBaseCell * cell;
-    if (nil != indexPath) {
-        [_soundManager stopAudio];
-        cell = (ReminderBaseCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-        cell.audioState = AudioStateNormal;
-        [_remindersAudioState replaceObjectAtIndex:indexPath.row withObject:[NSNumber numberWithInteger:AudioStateNormal]];
-    }
+    [_soundManager stopAudio];
+    ReminderBaseCell * cell = (ReminderBaseCell *)[self.tableView cellForRowAtIndexPath:_curIndexPath];
+    cell.audioState = AudioStateNormal;
 }
 
 - (void)handleDownloadAudioFileResponse:(Reminder *)reminder withResult:(BOOL)result {
-    NSIndexPath * indexPath;
-    indexPath = [self indexPathWithReminder:reminder];
-    if (nil != indexPath && nil != _remindersAudioState) {
+    if (nil != _curReminder && nil != _curIndexPath) {
+        [self stopPlayingAudio];
+        ReminderBaseCell * cell = (ReminderBaseCell *)[self.tableView cellForRowAtIndexPath:_curIndexPath];
+        cell.audioState = AudioStatePlaying;
         if (YES == result) {
-            [self stopPlayingAudio];
-        }
-        
-        if ([[_remindersAudioState objectAtIndex:indexPath.row] integerValue] == AudioStateDownload) {
-            ReminderBaseCell * cell = (ReminderBaseCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-            cell.audioState = AudioStatePlaying;
-            [_remindersAudioState replaceObjectAtIndex:indexPath.row withObject: [NSNumber numberWithInteger:AudioStatePlaying]];
-            if (YES == result) {
-                [cell palyAudio:nil];
-            }
+            [cell palyAudio:nil];
         }
     }
-}
-
-#pragma 类成员函数
-- (NSIndexPath *)indexPathWithReminder:(Reminder *)reminder {
-    if (nil != _reminders) {
-        NSInteger size = _reminders.count;
-        Reminder * tmpReminder;
-        for (NSInteger index = 0;index < size;index++) {
-            tmpReminder = [_reminders objectAtIndex:index];
-            if ([tmpReminder.id isEqualToString:reminder.id]) {
-                return [NSIndexPath indexPathForRow:index inSection:0];
-            }
-        }
-    }
-    return nil;
 }
 
 #pragma 事件函数
@@ -135,9 +92,12 @@
 }
 
 #pragma mark - FriendReminderCell Delegate
-- (void)clickAudioButton:(NSIndexPath *)indexPath WithState:(NSNumber *)state {
-    [self stopPlayingAudio];
-    [_remindersAudioState replaceObjectAtIndex:indexPath.row withObject:state];
+- (void)clickAudioButton:(NSIndexPath *)indexPath withReminder:(Reminder *)reminder {
+    if (nil != _curIndexPath && _curIndexPath != indexPath) {
+        [self stopPlayingAudio];
+    }
+    _curIndexPath = indexPath;
+    _curReminder = reminder;
 }
 
 - (void)clickMapButton:(NSIndexPath *)indexPath {
@@ -162,10 +122,8 @@
 }
 
 - (void)updateReminderReadStateSuccess:(Reminder *)reminder {
-    NSIndexPath * indexPath;
-    indexPath = [self indexPathWithReminder:reminder];
-    if (nil != indexPath) {
-        ReminderBaseCell * cell = (ReminderBaseCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    if (nil != _curIndexPath) {
+        ReminderBaseCell * cell = (ReminderBaseCell *)[self.tableView cellForRowAtIndexPath:_curIndexPath];
         [cell modifyReminderReadState];
     }
 }

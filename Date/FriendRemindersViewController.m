@@ -22,11 +22,6 @@
 - (void)initData {
     self.reminders = [self.reminderManager remindersWithUserId:_userId];
     if (nil != self.reminders) {
-        self.remindersAudioState = [NSMutableArray arrayWithCapacity:0];
-        NSInteger size = self.reminders.count;
-        for (NSInteger index = 0; index < size; index++) {
-            [self.remindersAudioState addObject:[NSNumber numberWithInteger:AudioStateNormal]];
-        }
         [self.tableView reloadData];
     }
 }
@@ -73,7 +68,7 @@
     cell.bilateralFriend = _bilateralFriend;
     
     cell.reminder = reminder;
-    cell.audioState = [[self.remindersAudioState objectAtIndex:indexPath.row] integerValue];
+    cell.audioState = AudioStateNormal;
     return cell;
 }
 
