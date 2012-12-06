@@ -60,10 +60,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.tableView.delegate = self;
-    self.tableView.dataSource  = self;
-    self.tableView.rowHeight = 100.0;
-    self.title = @"到时提醒";
+    self.title = @"提醒";
     
     _isAutoPlayAudio = NO;
     UIBarButtonItem * leftItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismiss)];
@@ -92,10 +89,10 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     Reminder * reminder = [self.reminders objectAtIndex:indexPath.row];
-    static NSString * CellIdentifier = @"Cell";
-    FriendReminderCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString * CellIdentifier = @"ReminderNotificationCell";
+    ReminderNotificationCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[FriendReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier reminderType:[reminder.type integerValue]];
+        cell = [[ReminderNotificationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.delegate = self;
     }
     

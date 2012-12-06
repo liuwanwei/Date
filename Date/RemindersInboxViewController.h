@@ -11,4 +11,9 @@
 
 @interface RemindersInboxViewController : RemindersBaseViewController
 
+- (IBAction)startRecord:(id)sender;
+- (IBAction)stopRecord:(id)sender;
+
+- (IBAction)leftBarBtnTapped:(id)sender;
+
 @end

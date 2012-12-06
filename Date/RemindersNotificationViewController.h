@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FriendReminderCell.h"
+#import "ReminderNotificationCell.h"
 #import "RemindersBaseViewController.h"
 
 @interface RemindersNotificationViewController : RemindersBaseViewController

@@ -11,4 +11,6 @@
 
 @interface ReminderNotificationCell : ReminderBaseCell
 
+@property (weak, nonatomic) IBOutlet UIButton * btnMark;
+
 @end

@@ -28,9 +28,8 @@
         _reminder = reminer;
         NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
         NSString * triggerDate = @"提醒时间:";
-        [formatter setDateFormat:@"MM-dd HH:mm"];
+        [formatter setDateFormat:@"HH:mm"];
         _labelTriggerDate.text =[triggerDate stringByAppendingString:[formatter stringFromDate:reminer.triggerTime]];
-        _labelSendDate.text = [formatter stringFromDate:reminer.sendTime];
         if (nil == _reminder.longitude || [_reminder.longitude isEqualToString:@"0"]) {
             [_btnMap setHidden:YES];
             [_labelAddress setHidden:YES];

@@ -9,7 +9,17 @@
 #import "ReminderNotificationCell.h"
 
 @implementation ReminderNotificationCell
+@synthesize btnMark = _btnMark;
 
+#pragma 类成员函数
+- (void)modifyReminderReadState{
+    if (nil == self.reminder.isRead || NO == [self.reminder.isRead integerValue]) {
+        [[ReminderManager defaultManager] modifyReminder:self.reminder withReadState:YES];
+        if (YES == [self.reminder.isRead integerValue]) {
+            [_btnMark setHidden:YES];
+        }
+    }
+}
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -28,9 +38,19 @@
     // Configure the view for the selected state
 }
 
-- (void)setReminder:(Reminder *)reminer {
-    if (nil != reminer) {
-        [super setReminder:reminer];
+- (void)setReminder:(Reminder *)reminder {
+    if (nil != reminder) {
+        [super setReminder:reminder];
+    }
+    
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yy-MM HH:mm"];
+    self.labelSendDate.text = [formatter stringFromDate:reminder.sendTime];
+    
+    if (nil != reminder.isRead && YES == [reminder.isRead integerValue]) {
+        [_btnMark setHidden:YES];
+    }else {
+        [_btnMark setHidden:NO];
     }
 }
 

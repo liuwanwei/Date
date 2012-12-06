@@ -8,6 +8,7 @@
 
 #import "RemindersBaseViewController.h"
 #import "ReminderMapViewController.h"
+#import "ReminderDetailViewController.h"
 
 @interface RemindersBaseViewController () {
     SoundManager * _soundManager;
@@ -54,7 +55,7 @@
     [super viewDidLoad];
     self.tableView.delegate = self;
     self.tableView.dataSource  = self;
-    self.tableView.rowHeight = 100.0;
+    self.tableView.rowHeight = 60.0;
 }
 
 - (void)didReceiveMemoryWarning
@@ -86,6 +87,17 @@
     return _reminders.count;
 }
 
+#pragma mark - Table view delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ReminderBaseCell * cell = (ReminderBaseCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    
+    ReminderDetailViewController * controller = [[ReminderDetailViewController alloc] initWithNibName:@"ReminderDetailViewController" bundle:nil];
+    controller.reminder = cell.reminder;
+    controller.friend = cell.bilateralFriend;
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
 #pragma mark - SoundManager Delegate
 - (void)audioPlayerDidFinishPlaying {
     [self stopPlayingAudio];
@@ -101,6 +113,7 @@
 }
 
 - (void)clickMapButton:(NSIndexPath *)indexPath {
+    
     ReminderMapViewController * controller = [[ReminderMapViewController alloc] initWithNibName:@"ReminderMapViewController" bundle:nil];
     controller.reminder = [_reminders objectAtIndex:indexPath.row];
     controller.type = MapOperateTypeShow;
