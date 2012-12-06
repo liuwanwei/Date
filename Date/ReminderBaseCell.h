@@ -22,7 +22,7 @@ typedef enum {
 @protocol ReminderCellDelegate <NSObject>
 
 @optional
-- (void)clickAudioButton:(NSIndexPath *)indexPath WithState:(NSNumber *) state;
+- (void)clickAudioButton:(NSIndexPath *)indexPath withReminder:(Reminder *)reminder;
 - (void)clickMapButton:(NSIndexPath *)indexPath;
 @end
 

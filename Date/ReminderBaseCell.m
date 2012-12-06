@@ -112,8 +112,8 @@
     }
     
     if (self.delegate != nil && nil != sender) {
-        if ([self.delegate respondsToSelector:@selector(clickAudioButton: WithState:)]) {
-            [self.delegate performSelector:@selector(clickAudioButton: WithState:) withObject:_indexPath withObject:[NSNumber numberWithInteger:_audioState]];
+        if ([self.delegate respondsToSelector:@selector(clickAudioButton: withReminder:)]) {
+            [self.delegate performSelector:@selector(clickAudioButton: withReminder:) withObject:_indexPath withObject:_reminder];
         }
     }
     
