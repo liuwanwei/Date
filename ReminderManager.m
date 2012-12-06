@@ -9,6 +9,7 @@
 #import "HttpRequestManager.h"
 #import "LMLibrary.h"
 #import "UserManager.h"
+#import "SoundManager.h"
 
 static ReminderManager * sReminderManager;
 
@@ -155,10 +156,11 @@ static ReminderManager * sReminderManager;
 }
 
 /*
- 下载完音频数据后，修改数据库音频字段
+ 下载完音频数据后，修改数据库音频相关字段
  */
-- (void)modifyReminderAudioUrl:(NSString *)path withReminder:(Reminder *)reminder{
+- (void)modifyReminderAudioUrl:(NSString *)path withAudioTime:(NSInteger)time withReminder:(Reminder *)reminder{
     reminder.audioUrl = path;
+    reminder.audioTime = [NSNumber numberWithInteger:time];
     [self synchroniseToStore];
 }
 
@@ -345,7 +347,8 @@ static ReminderManager * sReminderManager;
     Reminder * reminder = [userInfo objectForKey:@"reminder"];
     if (200 == code) {
         NSString * audioPath = [userInfo objectForKey:@"destinationPath"];
-        [self modifyReminderAudioUrl:audioPath withReminder:reminder];
+        NSInteger audioTime = [[SoundManager defaultSoundManager] audioTime:audioPath];
+        [self modifyReminderAudioUrl:audioPath withAudioTime:audioTime withReminder:reminder];
         if (self.delegate != nil) {
             if ([self.delegate respondsToSelector:@selector(downloadAudioFileSuccess:)]) {
                 [self.delegate performSelector:@selector(downloadAudioFileSuccess:) withObject:reminder];
@@ -431,6 +434,25 @@ static ReminderManager * sReminderManager;
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
     NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"sendTime" ascending:NO];
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"type = %d",type];
+    NSArray * sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    request.sortDescriptors = sortDescriptors;
+    request.predicate = predicate;
+    results = [self executeFetchRequest:request];
+    
+    if (nil == results || results.count == 0) {
+        return nil;
+    }
+    return results;
+}
+
+- (NSArray *)recentReminders {
+    NSDate * date = [NSDate date];
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSArray * results = nil;
+    NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
+    NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"triggerTime" ascending:YES];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"type = %d AND triggerTime >= %@",ReminderTypeReceive,[formatter dateFromString:[formatter stringFromDate:date]]];
     NSArray * sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     request.sortDescriptors = sortDescriptors;
     request.predicate = predicate;

@@ -175,11 +175,34 @@ static SoundManager * sSoundManager;
     
     return result;
 }
+
 - (void)stopAudio {
     if (nil != _player) {
         [_player stop];
         _player = nil;
     }
+}
+
+- (NSInteger)audioTime:(NSString *)path {
+    NSInteger time = 0;
+    NSError * error;
+    AVAudioSession * session = [AVAudioSession sharedInstance];
+    [session setCategory:AVAudioSessionCategoryPlayback error:&error];
+    
+    if(session == nil) {
+        NSLog(@"Error creating session: %@", [error description]);
+        return NO;
+    }else {
+        [session setActive:YES error:nil];
+    }
+    
+    NSURL * url = [NSURL fileURLWithPath:path isDirectory:NO];
+    _player  = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+    if (nil != _player) {
+        time = _player.duration;
+    }
+    
+    return time;
 }
 
 #pragma AVAudioPlayerDelegate

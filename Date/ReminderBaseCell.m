@@ -22,25 +22,20 @@
 @synthesize labelAddress = _labelAddress;
 @synthesize indicatorView = _indicatorView;
 @synthesize labelSendDate = _labelSendDate;
+@synthesize labelNickname = _labelNickname;
+@synthesize labelAudioTime = _labelAudioTime;
 
 - (void)setReminder:(Reminder *)reminer {
     if (nil != reminer) {
         _reminder = reminer;
         NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-        NSString * triggerDate = @"提醒时间:";
         [formatter setDateFormat:@"HH:mm"];
-        _labelTriggerDate.text =[triggerDate stringByAppendingString:[formatter stringFromDate:reminer.triggerTime]];
+        _labelTriggerDate.text =[formatter stringFromDate:reminer.triggerTime];
+        
         if (nil == _reminder.longitude || [_reminder.longitude isEqualToString:@"0"]) {
             [_btnMap setHidden:YES];
-            [_labelAddress setHidden:YES];
         }else {
             [_btnMap setHidden:NO];
-            if (nil != _reminder.desc) {
-                [_labelAddress setHidden:NO];
-//                _labelAddress.text = _reminder.desc;
-            }else {
-                [_labelAddress setHidden:YES];
-            }
         }
         
         if ([_reminder.type integerValue] == ReminderTypeReceive) {
@@ -50,6 +45,16 @@
         }else  {
             [_image setImageURL:[NSURL URLWithString:[UserManager defaultManager].imageUrl]];
         }
+        
+        if (YES == [_reminder.isBell boolValue]) {
+            self.backgroundColor = [UIColor redColor];
+        }else {
+            self.backgroundColor = [UIColor clearColor];
+        }
+        
+        _labelAudioTime.text = [_reminder.audioTime stringValue];
+        
+        _labelNickname.text = _bilateralFriend.nickname;
     }
 }
 
@@ -105,7 +110,7 @@
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:_reminder.audioUrl]) {
         [self setAudioState:AudioStatePlaying];
-        
+        self.labelAudioTime.text = [_reminder.audioTime stringValue];
     }else {
         [self setAudioState:AudioStateDownload];
     }
@@ -125,8 +130,8 @@
 
 - (IBAction)showMap:(UIButton *)sender {
     if (self.delegate != nil) {
-        if ([self.delegate respondsToSelector:@selector(clickMapButton:)]) {
-            [self.delegate performSelector:@selector(clickMapButton:) withObject:_indexPath];
+        if ([self.delegate respondsToSelector:@selector(clickMapButton: withReminder:)]) {
+            [self.delegate performSelector:@selector(clickMapButton: withReminder:) withObject:_indexPath withObject:_reminder];
         }
     }
 }
