@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ChoiceViewController.h"
 
-@interface ReminderSettingViewController : UIViewController <UITableViewDelegate, UITableViewDataSource,UIPickerViewDelegate,UIPickerViewDataSource>
+@interface ReminderSettingViewController : UIViewController <UITableViewDelegate, UITableViewDataSource,UIPickerViewDelegate,UIPickerViewDataSource, ChoiceViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView * tableView;
 @property (weak, nonatomic) IBOutlet UIPickerView * pickerView;
