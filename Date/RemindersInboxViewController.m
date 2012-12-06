@@ -44,7 +44,7 @@
 }
 
 - (void)initData {
-    self.reminders = [self.reminderManager allRemindersWithReimnderType:ReminderTypeReceive];
+    self.reminders = [self.reminderManager recentReminders];
     if (nil != self.reminders) {
         _group = [[NSMutableDictionary alloc] initWithCapacity:0];
         _keys = [[NSMutableArray alloc] initWithCapacity:0];
@@ -55,7 +55,7 @@
         NSMutableArray * reminders;
         NSString * key;
         for (Reminder * reminder in self.reminders) {
-            key = [formatter stringFromDate:reminder.sendTime];
+            key = [formatter stringFromDate:reminder.triggerTime];
             // FIXME key怎么会有nil？
             if (nil != key) {
                 if (nil == [_group objectForKey:key]) {
