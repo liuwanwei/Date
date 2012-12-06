@@ -36,9 +36,9 @@
             [_labelAddress setHidden:YES];
         }else {
             [_btnMap setHidden:NO];
-            if (nil != _reminder.adress) {
+            if (nil != _reminder.desc) {
                 [_labelAddress setHidden:NO];
-                _labelAddress.text = _reminder.adress;
+//                _labelAddress.text = _reminder.desc;
             }else {
                 [_labelAddress setHidden:YES];
             }

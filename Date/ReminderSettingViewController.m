@@ -12,7 +12,6 @@
 #import "ReminderManager.h"
 #import "ReminderMapViewController.h"
 #import "ReminderSendingViewController.h"
-#import "ChoiceViewController.h                             "
 
 @interface ReminderSettingViewController () {
     Reminder * _reminder;
@@ -63,7 +62,7 @@
     NSDate * now = [NSDate date];
     self.pickerView.delegate = self;
     self.pickerView.dataSource = self;
-    [self.pickerView setHidden:YES];
+    [self.pickerView setHidden:NO];
     NSDateFormatter * hour = [[NSDateFormatter alloc] init];
     [hour setDateFormat:@"HH"];
     NSString * currentDateStr = [hour stringFromDate:now];
@@ -116,7 +115,7 @@
     [self initPickerView];
     [self setReminderDate];
     
-    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(chooseFriends)];
+    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc] initWithTitle:@"Send" style:UIBarButtonItemStyleBordered target:self action:@selector(chooseFriends)];
     self.navigationItem.rightBarButtonItem = rightItem;
 }
 
@@ -162,6 +161,8 @@
     return 2;
 }
 
+#define IsZero(float) (float > - 0.000001 && float < 0.000001)
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString * CellIdentifier = @"Cell";
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -170,27 +171,45 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
-    if (indexPath.section =＝ 0) {
-        cell.textLabel.text = @"标签";
-        cell.detailTextLabel.text = _reminder.description;
-    }else {
-        cell.textLabel.text = @"地点";
-        if (nil != _reminder.adress) {
-            cell.detailTextLabel.text = _reminder.adress;
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            cell.textLabel.text = @"标签";
+            cell.detailTextLabel.text = _reminder.desc;
+        }else {
+            cell.textLabel.text = @"地点";
+            if (_reminder.longitude.length == 0 || _reminder.latitude.length == 0) {
+                cell.detailTextLabel.text = @"未设置";
+            }else{
+                cell.detailTextLabel.text = @"已设置";
+            }
         }
     }
     
     return cell;
 }
 
+#pragma mark - ChoiceViewDelegate
+-(void)choiceViewController:(ChoiceViewController *)choiceViewController gotChoice:(NSArray *)choices{
+//    choiceViewController.currentChoices = choices;
+    _reminder.desc = [choices objectAtIndex:0];
+}
+
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
+    if (indexPath.section == 0 && indexPath.row == 0) {
 //        [_pickerView setHidden:!_pickerView.hidden];
-        ChoiceViewController * choiceViewController = [[ChoiceViewController alloc] init];//TODO
+        ChoiceViewController * choiceViewController = [[ChoiceViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        choiceViewController.choices = _tags;
+        if (_reminder.desc != nil) {
+            choiceViewController.currentChoices = [NSArray arrayWithObject:_reminder.desc];
+        }
+        choiceViewController.delegate = self;
+        choiceViewController.type = SingleChoice;
+        choiceViewController.autoDisappear = YES;
+        [self.navigationController pushViewController:choiceViewController animated:YES];
     }
-    if (indexPath.section == 1) {
+    if (indexPath.section == 0 && indexPath.row == 1) {
         ReminderMapViewController * controller = [[ReminderMapViewController alloc] initWithNibName:@"ReminderMapViewController" bundle:nil];
         controller.reminder = _reminder;
         controller.type = MapOperateTypeSet;

@@ -65,7 +65,7 @@
 					</object>
 					<object class="IBUIToolbar" id="139390899">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">266</int>
+						<int key="NSvFlags">-2147483382</int>
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="IBUIButton" id="756340129">
 								<reference key="NSNextResponder" ref="139390899"/>
@@ -73,6 +73,7 @@
 								<string key="NSFrame">{{79, 7}, {150, 30}}</string>
 								<reference key="NSSuperview" ref="139390899"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>

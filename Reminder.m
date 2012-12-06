@@ -2,7 +2,7 @@
 //  Reminder.m
 //  Date
 //
-//  Created by lixiaoyu on 12-11-27.
+//  Created by Liu Wanwei on 12-12-6.
 //  Copyright (c) 2012年 Liu&Mao. All rights reserved.
 //
 
@@ -11,9 +11,10 @@
 
 @implementation Reminder
 
-@dynamic adress;
+@dynamic desc;
 @dynamic audioUrl;
 @dynamic id;
+@dynamic isBell;
 @dynamic isRead;
 @dynamic latitude;
 @dynamic longitude;
@@ -21,6 +22,5 @@
 @dynamic triggerTime;
 @dynamic type;
 @dynamic userID;
-@dynamic isBell;
 
 @end

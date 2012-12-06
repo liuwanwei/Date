@@ -32,7 +32,7 @@
         if (nil != value) {
             _reminder.longitude = [NSString stringWithFormat:@"%f",_pointAnnotation.coordinate.longitude];
             _reminder.latitude = [NSString stringWithFormat:@"%f",_pointAnnotation.coordinate.latitude];
-            _reminder.adress = value;
+//            _reminder.desc = value;
             
             [self dismiss];
         }
