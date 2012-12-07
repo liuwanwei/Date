@@ -20,6 +20,6 @@
 @property (weak, nonatomic) Reminder * curReminder;
 @property (strong, nonatomic) NSIndexPath * curIndexPath;
 
-- (NSString *)custumDateString:(NSDate *)date;
+- (NSString *)custumDateString:(NSString *)date;
 
 @end

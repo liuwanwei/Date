@@ -12,5 +12,6 @@
 @interface ReminderInboxCell : ReminderBaseCell
 
 @property (weak, nonatomic) IBOutlet UIButton * btnMark;
+@property (weak, nonatomic) IBOutlet UILabel * labelBellSign;
 
 @end

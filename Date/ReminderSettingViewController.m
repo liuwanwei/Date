@@ -56,6 +56,7 @@
     
     SoundManager * manager = [SoundManager defaultSoundManager];
     _reminder.audioUrl = [manager.recordFileURL relativePath];
+    _reminder.audioTime = [NSNumber numberWithInteger:manager.currentRecordTime];
 }
 
 - (void)initPickerView {
@@ -143,7 +144,9 @@
     SoundManager * manager = [SoundManager defaultSoundManager];
     [manager.view removeFromSuperview];
     if (YES == [manager stopRecord]) {
-        
+        SoundManager * manager = [SoundManager defaultSoundManager];
+        _reminder.audioUrl = [manager.recordFileURL relativePath];
+        _reminder.audioTime = [NSNumber numberWithInteger:manager.currentRecordTime];
     }
 }
 

@@ -23,6 +23,8 @@ static SoundManager * sSoundManager;
 @synthesize view = _view;
 @synthesize imageView = _imageView;
 @synthesize viewWarning = _viewWarning;
+@synthesize currentRecordTime = _currentRecordTime;
+@synthesize parentView = _parentView;
 
 + (SoundManager *)defaultSoundManager {
     if (nil == sSoundManager) {
@@ -38,6 +40,8 @@ static SoundManager * sSoundManager;
         if (nil != _view) {
             _view.layer.masksToBounds = NO;
             _view.layer.cornerRadius = 8.0f;
+            _viewWarning.layer.masksToBounds = NO;
+            _viewWarning.layer.cornerRadius = 8.0f;
             [self initImageView];
         }
     }
@@ -73,6 +77,39 @@ static SoundManager * sSoundManager;
     }
 }
 
+- (void)showWaringView {
+    if (nil != _parentView) {
+        _viewWarning.frame = CGRectMake(50.0, 150.0, _viewWarning.frame.size.width,_viewWarning.frame.size.height);
+        [_parentView addSubview:_viewWarning];
+        
+        [self performSelector:@selector(closeWaringView) withObject:self afterDelay:0.5];
+    }
+}
+
+- (void)closeWaringView {
+    [_viewWarning removeFromSuperview];
+}
+
+- (void)showRecordingView {
+    if (nil != _parentView) {
+        [_imageView startAnimating];
+        _view.frame = CGRectMake(50.0, 100.0, _view.frame.size.width,_view.frame.size.height);
+        [_parentView addSubview:_view];
+    }
+}
+
+- (void)closeRecordingView {
+    [_imageView stopAnimating];
+    [_view removeFromSuperview];
+}
+
+- (NSString *)fileNameWithPath:(NSString *)path {
+    NSString * fileName;
+    NSRange range = [path rangeOfString:@"/" options:NSBackwardsSearch];
+    fileName = [path substringFromIndex:range.location + 1];
+    return fileName;
+}
+
 #pragma 类成员函数
 - (BOOL)startRecord {
     BOOL result = NO;
@@ -95,10 +132,9 @@ static SoundManager * sSoundManager;
     }
         
     _recorder = [[AVAudioRecorder alloc] initWithURL:_recordFileURL settings:[self setting] error:&error];
-    
+    [self showRecordingView];
     if(_recorder) {
         result = YES;
-        [_imageView startAnimating];
         [_recorder record];
     }
     else {
@@ -109,14 +145,28 @@ static SoundManager * sSoundManager;
 }
 
 - (BOOL)stopRecord {
+    BOOL result = NO;
     if (nil != _recorder) {
-        [_imageView stopAnimating];
-        [_recorder stop];
-        _recorder = nil;
-        return YES;
+        [self closeRecordingView];
+        NSInteger diffTime = _recorder.currentTime;
+        if (diffTime < 1) {
+            [_recorder stop];
+            [_recorder deleteRecording];
+            _recorder = nil;
+            [self showWaringView];
+        }else {
+            result = YES;
+            _currentRecordTime = _recorder.currentTime + 1;
+            [self performSelector:@selector(realStopReocrd) withObject:self afterDelay:1.0];
+        }
     }
     
-    return NO;
+    return result;
+}
+
+- (void)realStopReocrd {
+    [_recorder stop];
+    _recorder = nil;
 }
 
 - (BOOL)playRecording {
@@ -160,6 +210,9 @@ static SoundManager * sSoundManager;
         [session setActive:YES error:nil];
     }
     
+    DocumentManager * manager = [DocumentManager defaultManager];
+    
+    path = [[manager soundPath] stringByAppendingPathComponent:[self fileNameWithPath:path]];
     NSURL * url = [NSURL fileURLWithPath:path isDirectory:NO];
     _player  = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
     _player.numberOfLoops  = 0;
@@ -203,6 +256,16 @@ static SoundManager * sSoundManager;
     }
     
     return time;
+}
+
+- (BOOL)fileExistsAtPath:(NSString *)path {
+    DocumentManager * manager = [DocumentManager defaultManager];
+    path = [[manager soundPath] stringByAppendingPathComponent:[self fileNameWithPath:path]];
+    if (YES == [[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        return YES;
+    }
+    
+    return NO;
 }
 
 #pragma AVAudioPlayerDelegate

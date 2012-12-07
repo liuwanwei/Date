@@ -101,7 +101,6 @@
 		3CE0AC0416507EBE004B785A /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CE0AC0016507EBE004B785A /* LoginViewController.xib */; };
 		3CE0AC0716507EF8004B785A /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CE0AC0516507EF8004B785A /* logo.png */; };
 		3CE0AC0816507EF8004B785A /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CE0AC0616507EF8004B785A /* logo@2x.png */; };
-		3CE0AC511650D478004B785A /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE0AC501650D478004B785A /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3CE0AC581650D79F004B785A /* SinaWeiboManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE0AC571650D79F004B785A /* SinaWeiboManager.m */; };
 		3CE0AC5E1650F521004B785A /* BilateralFriendManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE0AC5D1650F521004B785A /* BilateralFriendManager.m */; };
 		3CE0AC6D1650FA8D004B785A /* libLMLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CE0AC6A1650FA76004B785A /* libLMLibrary.a */; };
@@ -314,8 +313,6 @@
 		3CE0AC0016507EBE004B785A /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		3CE0AC0516507EF8004B785A /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = Resources/images/logo.png; sourceTree = "<group>"; };
 		3CE0AC0616507EF8004B785A /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo@2x.png"; path = "Resources/images/logo@2x.png"; sourceTree = "<group>"; };
-		3CE0AC4F1650D478004B785A /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
-		3CE0AC501650D478004B785A /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
 		3CE0AC561650D79F004B785A /* SinaWeiboManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SinaWeiboManager.h; sourceTree = "<group>"; };
 		3CE0AC571650D79F004B785A /* SinaWeiboManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SinaWeiboManager.m; sourceTree = "<group>"; };
 		3CE0AC5C1650F521004B785A /* BilateralFriendManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BilateralFriendManager.h; sourceTree = "<group>"; };
@@ -433,7 +430,6 @@
 				3CEFEC4316521EF7005BF516 /* HttpRequest */,
 				3CE0AC551650D730004B785A /* SinaWeibo */,
 				3CE0AC541650D5C3004B785A /* Class */,
-				3CE0AC4E1650D478004B785A /* JSONKit */,
 				3CE0ABF816507E7F004B785A /* Resources */,
 				3C13E879164DF4DB006424A2 /* AppDelegate.h */,
 				3C13E87A164DF4DB006424A2 /* AppDelegate.m */,
@@ -598,15 +594,6 @@
 				3C044CAE1659DC5D000551C5 /* RecordView.xib */,
 			);
 			name = xib;
-			sourceTree = "<group>";
-		};
-		3CE0AC4E1650D478004B785A /* JSONKit */ = {
-			isa = PBXGroup;
-			children = (
-				3CE0AC4F1650D478004B785A /* JSONKit.h */,
-				3CE0AC501650D478004B785A /* JSONKit.m */,
-			);
-			path = JSONKit;
 			sourceTree = "<group>";
 		};
 		3CE0AC541650D5C3004B785A /* Class */ = {
@@ -930,7 +917,6 @@
 				3CE0ABF716507BD4004B785A /* UserManager.m in Sources */,
 				3CE0AC0116507EBE004B785A /* HomeViewController.m in Sources */,
 				3CE0AC0316507EBE004B785A /* LoginViewController.m in Sources */,
-				3CE0AC511650D478004B785A /* JSONKit.m in Sources */,
 				3CE0AC581650D79F004B785A /* SinaWeiboManager.m in Sources */,
 				3CE0AC5E1650F521004B785A /* BilateralFriendManager.m in Sources */,
 				3CEFEC4616521FE3005BF516 /* HttpRequestManager.m in Sources */,
