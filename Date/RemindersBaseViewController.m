@@ -40,9 +40,28 @@
 }
 
 #pragma 类成员函数
-- (NSString *)custumDateString:(NSDate *)date {
+- (NSString *)custumDateString:(NSString *)date {
     NSString * dateString;
-    NSDate * now = [NSDate date];
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yy-MM-dd"];
+    
+    NSDate * nowDate = [NSDate date];
+    nowDate = [formatter dateFromString:[formatter stringFromDate:nowDate]];
+    NSDate * startDate = [formatter dateFromString:date];
+    NSCalendar * calendar = [NSCalendar currentCalendar];
+
+    NSUInteger unitFlags = NSDayCalendarUnit;
+    
+    //取相距时间额
+    NSDateComponents * cps = [calendar components:unitFlags fromDate:nowDate  toDate:startDate  options:0];
+    NSInteger diffDay  = [cps day];
+    if (diffDay == 0) {
+        dateString = @"今天";
+    }else if (diffDay == 1) {
+        dateString = @"明天";
+    }else {
+        dateString = @"明天过后";
+    }
     return dateString;
 }
 

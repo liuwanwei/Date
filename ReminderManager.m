@@ -208,6 +208,20 @@ static ReminderManager * sReminderManager;
     }
     reminder.isRead = [NSNumber numberWithBool:YES];
     
+    Reminder * newReminder = [[Reminder alloc] initWithEntity:[NSEntityDescription entityForName: kReminderEntity inManagedObjectContext:self.managedObjectContext] insertIntoManagedObjectContext:self.managedObjectContext];
+    newReminder.audioUrl = reminder.audioUrl;
+    newReminder.desc = reminder.desc;
+    newReminder.id = reminder.id;
+    newReminder.isBell = reminder.isBell;
+    newReminder.isRead = reminder.isRead;
+    newReminder.latitude = reminder.latitude;
+    newReminder.longitude = reminder.longitude;
+    newReminder.sendTime = reminder.sendTime;
+    newReminder.triggerTime = reminder.triggerTime;
+    newReminder.type = reminder.type;
+    newReminder.userID = reminder.userID;
+    newReminder.audioTime = reminder.audioTime;
+    
     if (! [self synchroniseToStore]) {
         return;
     }
@@ -282,7 +296,7 @@ static ReminderManager * sReminderManager;
 }
 
 - (Reminder *)reminder {
-    Reminder * reminder = [[Reminder alloc] initWithEntity:[NSEntityDescription entityForName: kReminderEntity inManagedObjectContext:self.managedObjectContext] insertIntoManagedObjectContext:self.managedObjectContext] ;
+    Reminder * reminder = [[Reminder alloc] initWithEntity:[NSEntityDescription entityForName: kReminderEntity inManagedObjectContext:self.managedObjectContext] insertIntoManagedObjectContext:nil] ;
     return reminder;
 }
 
