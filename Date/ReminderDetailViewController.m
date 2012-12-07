@@ -68,7 +68,7 @@
     
     cell.textLabel.text = [_sections objectAtIndex:indexPath.section];
     if (indexPath.section == 0) {
-        cell.detailTextLabel.text = _reminder.desc == nil ? _reminder.desc : @"未设置";
+        cell.detailTextLabel.text = _reminder.desc == nil ? @"未设置" : _reminder.desc;
     }else{
         cell.detailTextLabel.text = [_dateFormatter stringFromDate:_reminder.triggerTime];
     }
