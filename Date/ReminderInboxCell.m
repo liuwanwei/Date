@@ -10,6 +10,7 @@
 
 @implementation ReminderInboxCell
 @synthesize btnMark = _btnMark;
+@synthesize labelBellSign = _labelBellSign;
 
 #pragma 类成员函数
 - (void)modifyReminderReadState{
@@ -51,6 +52,12 @@
             [_btnMark setHidden:YES];
         }else {
             [_btnMark setHidden:NO];
+        }
+        
+        if (YES == [reminer.isBell boolValue]) {
+            [_labelBellSign setHidden:NO];
+        }else {
+            [_labelBellSign setHidden:YES];
         }
     }
 }

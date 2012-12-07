@@ -23,8 +23,9 @@
 @property (strong, nonatomic) NSURL * recordFileURL;
 @property (strong, nonatomic) IBOutlet UIView * view;
 @property (weak, nonatomic) IBOutlet UIImageView * imageView;
-@property (weak, nonatomic) IBOutlet UIView * viewWarning;
+@property (strong, nonatomic) IBOutlet UIView * viewWarning;
 @property (weak, nonatomic) UIView * parentView;
+@property (nonatomic) NSTimeInterval currentRecordTime;
 
 @property (weak, nonatomic) id<SoundManagerDelegate> delegate;
 
@@ -39,4 +40,6 @@
 - (void)stopAudio;
 
 - (NSInteger)audioTime:(NSString *)path;
+
+- (BOOL)fileExistsAtPath:(NSString *)path;
 @end
