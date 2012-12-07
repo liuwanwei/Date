@@ -13,7 +13,6 @@
 #import "BilateralFriendManager.h"
 #import "UserManager.h"
 #import "BilateralFriend.h"
-#import "JSONKit.h"
 #import "ReminderManager.h"
 #import "DocumentManager.h"
 
