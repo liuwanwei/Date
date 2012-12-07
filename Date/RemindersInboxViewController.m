@@ -24,6 +24,7 @@
     SinaWeiboManager * _sinaWeiboManager;
     UserManager * _userManager;
     LoginViewController * _loginViewController;
+    
 }
 
 @end
@@ -189,14 +190,12 @@
 
 - (IBAction)startRecord:(id)sender {
     SoundManager * manager = [SoundManager defaultSoundManager];
-    manager.view.frame = CGRectMake(50.0, 100.0, manager.view.frame.size.width, manager.view.frame.size.height);
-    [self.view addSubview:manager.view];
+    manager.parentView = self.view;
     [manager startRecord];
 }
 
 - (IBAction)stopRecord:(id)sender {
     SoundManager * manager = [SoundManager defaultSoundManager];
-    [manager.view removeFromSuperview];
     if (YES == [manager stopRecord]) {
         ReminderSettingViewController * controller = [[ReminderSettingViewController alloc] initWithNibName:@"ReminderSettingViewController" bundle:nil];
         [self.navigationController pushViewController:controller animated:YES];
@@ -219,7 +218,7 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [_keys objectAtIndex:section];
+    return  [self custumDateString:[_keys objectAtIndex:section]];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
