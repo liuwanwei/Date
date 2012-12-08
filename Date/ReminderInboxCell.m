@@ -7,6 +7,7 @@
 //
 
 #import "ReminderInboxCell.h"
+#import "LMLibrary.h"
 
 @implementation ReminderInboxCell
 @synthesize btnMark = _btnMark;
@@ -54,11 +55,18 @@
             [_btnMark setHidden:NO];
         }
         
-        if (YES == [reminer.isBell boolValue]) {
-            [_labelBellSign setHidden:NO];
-        }else {
-            [_labelBellSign setHidden:YES];
+        if ([reminer.isBell boolValue]) {
+            self.labelTriggerDate.textColor = RGBColor(153,153,153);
+            self.labelTriggerDate.font = [UIFont systemFontOfSize:14.0];
+        }else{
+            self.labelTriggerDate.textColor = RGBColor(0,0,0);
+            self.labelTriggerDate.font = [UIFont boldSystemFontOfSize:14.0];
         }
+//        if (YES == [reminer.isBell boolValue]) {
+//            [_labelBellSign setHidden:NO];
+//        }else {
+//            [_labelBellSign setHidden:YES];
+//        }
     }
 }
 
