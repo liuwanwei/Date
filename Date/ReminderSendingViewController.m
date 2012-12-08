@@ -55,6 +55,10 @@
     [alertView show];
 }
 
+- (void)removeHUD {
+    [[MBProgressManager defaultManager] removeHUD];
+}
+
 #pragma 事件函数
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -145,7 +149,9 @@
 }
 
 - (void)newReminderFailed {
-    
+    NSLog(@"newReminderFailed");
+    [[MBProgressManager defaultManager] showHUD:@"发送失败"];
+    [self performSelector:@selector(removeHUD) withObject:self afterDelay:0.5];
 }
 
 #pragma mark - AlertView delegate

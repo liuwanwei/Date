@@ -24,6 +24,7 @@ typedef enum {
 - (void)downloadAudioFileRequest:(Reminder *)reminder;
 - (void)checkRegisteredFriendsRequest;
 - (void)updateReminderReadStateRequest:(Reminder *)reminder withReadState:(BOOL)state;
+- (void)updateDeviceTokenRequest:(NSString *)deviceToken;
 
 - (void)storeServerMode:(NSInteger)mode;
 - (ServerMode)serverMode;
