@@ -149,7 +149,7 @@ static SoundManager * sSoundManager;
     if (nil != _recorder) {
         [self closeRecordingView];
         NSInteger diffTime = _recorder.currentTime;
-        if (diffTime < 1) {
+        if (diffTime < 0.5) {
             [_recorder stop];
             [_recorder deleteRecording];
             _recorder = nil;

@@ -28,4 +28,7 @@
 
 - (void)registerUserRequest;
 - (BOOL)analyzeData:(NSDictionary *)data;
+
+- (void)updateDeviceTokenRequest:(NSString *)deviceToken;
+- (void)handleUpdateDeviceTokenResponse:(id)json;
 @end

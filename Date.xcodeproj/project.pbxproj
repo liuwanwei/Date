@@ -54,6 +54,7 @@
 		3C28DA8F16538347009A661E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C28DA8E16538347009A661E /* CFNetwork.framework */; };
 		3C28DA911653838B009A661E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C28DA901653838B009A661E /* SystemConfiguration.framework */; };
 		3C28DA93165383BC009A661E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C28DA92165383BC009A661E /* MobileCoreServices.framework */; };
+		3C3354FB167307CC006E1331 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3354FA167307CC006E1331 /* libxml2.dylib */; };
 		3C34992A166EEF62001012B6 /* RemindersInboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C349928166EEF62001012B6 /* RemindersInboxViewController.m */; };
 		3C34992B166EEF62001012B6 /* RemindersInboxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C349929166EEF62001012B6 /* RemindersInboxViewController.xib */; };
 		3C34992E166EFC25001012B6 /* ReminderInboxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C34992D166EFC25001012B6 /* ReminderInboxCell.m */; };
@@ -252,6 +253,7 @@
 		3C28DA8E16538347009A661E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		3C28DA901653838B009A661E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3C28DA92165383BC009A661E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		3C3354FA167307CC006E1331 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		3C349927166EEF62001012B6 /* RemindersInboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemindersInboxViewController.h; sourceTree = "<group>"; };
 		3C349928166EEF62001012B6 /* RemindersInboxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemindersInboxViewController.m; sourceTree = "<group>"; };
 		3C349929166EEF62001012B6 /* RemindersInboxViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemindersInboxViewController.xib; sourceTree = "<group>"; };
@@ -336,6 +338,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C3354FB167307CC006E1331 /* libxml2.dylib in Frameworks */,
 				3CF83C1E166DF8AB005ED593 /* libAsiHttpRequestLibrary.a in Frameworks */,
 				3CF83C1F166DF8AB005ED593 /* libHUDLibrary.a in Frameworks */,
 				3CF83C20166DF8AB005ED593 /* libSinaWeiboLibrary.a in Frameworks */,
@@ -381,6 +384,7 @@
 		3C13E859164DF4DA006424A2 = {
 			isa = PBXGroup;
 			children = (
+				3C3354FA167307CC006E1331 /* libxml2.dylib */,
 				3CF83C0F166DF889005ED593 /* SinaWeiboLibrary.xcodeproj */,
 				3CF83C06166DF87C005ED593 /* HUDLibrary.xcodeproj */,
 				3CF83BFD166DF86E005ED593 /* AsiHttpRequestLibrary.xcodeproj */,
@@ -1015,6 +1019,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: WANWEI LIU (5Y6RV2MD2B)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1031,8 +1036,10 @@
 				HEADER_SEARCH_PATHS = (
 					"../weibo_ios_sdk_sso-oauth/src/SinaWeibo/",
 					"../asi-http-request/",
+					"../weibo_ios_sdk_sso-oauth/src/JSONKit",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PROVISIONING_PROFILE = "8943D085-22C4-4891-A9CA-97E205FAAA6F";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1048,6 +1055,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: WANWEI LIU (5Y6RV2MD2B)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1057,9 +1065,11 @@
 				HEADER_SEARCH_PATHS = (
 					"../weibo_ios_sdk_sso-oauth/src/SinaWeibo/",
 					"../asi-http-request/",
+					"../weibo_ios_sdk_sso-oauth/src/JSONKit",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "8943D085-22C4-4891-A9CA-97E205FAAA6F";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1070,6 +1080,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: WANWEI LIU (5Y6RV2MD2B)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Date/Date-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -1080,10 +1091,14 @@
 					../EgoImageLoading/EGOCache,
 					../EgoImageLoading/EGOImageLoader,
 					../MBProgressHUD,
+					"../weibo_ios_sdk_sso-oauth/src/JSONKit",
 				);
 				INFOPLIST_FILE = "Date/Date-Info.plist";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = "armv7 armv7s";
+				PROVISIONING_PROFILE = "8943D085-22C4-4891-A9CA-97E205FAAA6F";
+				VALID_ARCHS = "armv7s armv7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1092,6 +1107,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: WANWEI LIU (5Y6RV2MD2B)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Date/Date-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -1102,10 +1118,14 @@
 					../EgoImageLoading/EGOCache,
 					../EgoImageLoading/EGOImageLoader,
 					../MBProgressHUD,
+					"../weibo_ios_sdk_sso-oauth/src/JSONKit",
 				);
 				INFOPLIST_FILE = "Date/Date-Info.plist";
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = "armv7 armv7s";
+				PROVISIONING_PROFILE = "8943D085-22C4-4891-A9CA-97E205FAAA6F";
+				VALID_ARCHS = "armv7s armv7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -81,6 +81,16 @@
     [self checkRemindersExpired];
 }
 
+- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    
+    NSString * token = [NSString stringWithFormat:@"%@",deviceToken];
+    [[UserManager defaultManager] updateDeviceTokenRequest:token];
+}
+
+- (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {
+    
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -102,8 +112,8 @@
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     [[SinaWeiboManager defaultManager].sinaWeibo applicationDidBecomeActive];
-    [[ReminderManager defaultManager] getRemoteRemindersRequest];
-    [self checkRemindersExpired];
+    //[[ReminderManager defaultManager] getRemoteRemindersRequest];
+    //[self checkRemindersExpired];
 
 }
 

@@ -28,6 +28,10 @@ static UserManager * sUserManager;
     return [value isKindOfClass:[NSString class]];
 }
 
+- (void)registerForRemoteNotification {
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge |UIRemoteNotificationTypeSound)];
+}
+
 #pragma 类成员函数
 + (UserManager *)defaultManager {
     if (nil == sUserManager) {
@@ -136,7 +140,24 @@ expirationDate == nil) {
     [self storeUserData:screenName withImageUrl:imageUrl];
     NSInteger userId = [[self userID] integerValue];
     [[BilateralFriendManager defaultManager] newFriend:[NSNumber numberWithInteger:userId] withName:screenName withImageUrl:imageUrl withState:YES];
+    [self registerForRemoteNotification];
     return YES;
+}
+
+- (void)updateDeviceTokenRequest:(NSString *)deviceToken {
+    [[HttpRequestManager defaultManager] updateDeviceTokenRequest:deviceToken];
+}
+
+- (void)handleUpdateDeviceTokenResponse:(id)json {
+    if (nil != json) {
+        if ([json isKindOfClass:[NSDictionary class]]) {
+            NSString * status = [json objectForKey:@"status"];
+            if ([status isEqualToString:@"success"]) {
+            
+            }
+        }
+    }
+
 }
 
 @end

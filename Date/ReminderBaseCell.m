@@ -104,17 +104,6 @@
 }
 
 - (IBAction)palyAudio:(UIButton *)sender {
-    if (NO == [_reminder.isRead integerValue]) {
-        [[ReminderManager defaultManager] updateReminderReadStateRequest:_reminder withReadState:YES];
-    }
-    
-    if ([[SoundManager defaultSoundManager] fileExistsAtPath:_reminder.audioUrl]) {
-        [self setAudioState:AudioStatePlaying];
-        self.labelAudioTime.text = [_reminder.audioTime stringValue];
-    }else {
-        [self setAudioState:AudioStateDownload];
-    }
-    
     if (self.delegate != nil && nil != sender) {
         if ([self.delegate respondsToSelector:@selector(clickAudioButton: withReminder:)]) {
             [self.delegate performSelector:@selector(clickAudioButton: withReminder:) withObject:_indexPath withObject:_reminder];
@@ -122,9 +111,25 @@
     }
     
     if (_audioState == AudioStatePlaying) {
-        [[SoundManager defaultSoundManager] playAudio:_reminder.audioUrl];
+        [[SoundManager defaultSoundManager] stopAudio];
+        [self setAudioState:AudioStateNormal];
     }else {
-        [[ReminderManager defaultManager] downloadAudioFileWithReminder:_reminder];
+        if (NO == [_reminder.isRead integerValue]) {
+            [[ReminderManager defaultManager] updateReminderReadStateRequest:_reminder withReadState:YES];
+        }
+        
+        if ([[SoundManager defaultSoundManager] fileExistsAtPath:_reminder.audioUrl]) {
+            [self setAudioState:AudioStatePlaying];
+            self.labelAudioTime.text = [_reminder.audioTime stringValue];
+        }else {
+            [self setAudioState:AudioStateDownload];
+        }
+        
+        if (_audioState == AudioStatePlaying) {
+            [[SoundManager defaultSoundManager] playAudio:_reminder.audioUrl];
+        }else {
+            [[ReminderManager defaultManager] downloadAudioFileWithReminder:_reminder];
+        }
     }
 }
 
