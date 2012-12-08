@@ -42,12 +42,14 @@ static HttpRequestManager * sHttpRequestManager;
 
 - (id)serializationJson:(NSData *)data {
     NSError * error;
-    id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
-    
-    if (nil == error) {
-        return json;
+    if (nil != data) {
+        id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error];
+        
+        if (nil == error) {
+            return json;
+        }
     }
-    
+   
     NSLog(@"serializationJson error = %@",error.description);
     return nil;
 }
@@ -81,6 +83,11 @@ static HttpRequestManager * sHttpRequestManager;
     id json = [self serializationJson:responseData];
     Reminder * reminder = [userInfo objectForKey:@"reminder"];
     [[ReminderManager defaultManager] handleUpdateReminderReadStateResponse:json withReminder:reminder];
+}
+
+- (void)updateDeviceTokenResponse:(NSData *)responseData {
+    id json = [self serializationJson:responseData];
+    [[UserManager defaultManager] handleUpdateDeviceTokenResponse:json];
 }
 
 /*
@@ -181,7 +188,7 @@ static HttpRequestManager * sHttpRequestManager;
     [request setPostValue:reminder.longitude forKey:@"longitude"];
     [request setPostValue:reminder.latitude forKey:@"latitude"];
     [request setPostValue:reminder.desc forKey:@"description"];
-    [request setTimeOutSeconds:20];
+    [request setTimeOutSeconds:10];
     [request setUserInfo:[NSDictionary dictionaryWithObject:@"newReminder" forKey:@"request"]];
     [_networkQueue addOperation:request];
     [_networkQueue go];
@@ -194,7 +201,7 @@ static HttpRequestManager * sHttpRequestManager;
     [request setPostValue:[UserManager defaultManager].userID forKey:@"userId"];
     [request setPostValue:timeline forKey:@"timeline"];
     
-    [request setTimeOutSeconds:20];
+    [request setTimeOutSeconds:10];
     [request setUserInfo:[NSDictionary dictionaryWithObject:@"remoteReminders" forKey:@"request"]];
     [_networkQueue addOperation:request];
     [_networkQueue go];
@@ -226,7 +233,7 @@ static HttpRequestManager * sHttpRequestManager;
         ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:url]];
         [request setPostValue:[UserManager defaultManager].userID forKey:@"userId"];
         [request setPostValue:param forKey:@"biFollower"];
-        [request setTimeOutSeconds:20];
+        [request setTimeOutSeconds:10];
         [request setUserInfo:[NSDictionary dictionaryWithObject:@"checkRegisteredFriends" forKey:@"request"]];
         [request setShouldContinueWhenAppEntersBackground:YES];
         [_networkQueue addOperation:request];
@@ -239,8 +246,20 @@ static HttpRequestManager * sHttpRequestManager;
     url = [NSString stringWithFormat:url,reminder.id,[UserManager defaultManager].userID,state];
     
     ASIHTTPRequest * request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
-    [request setTimeOutSeconds:20];
+    [request setTimeOutSeconds:10];
     [request setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"updateReminderReadState",@"request",reminder,@"reminder",nil]];
+    [_networkQueue addOperation:request];
+    [_networkQueue go];
+}
+
+- (void)updateDeviceTokenRequest:(NSString *)deviceToken {
+    NSString * url = [[self serverUrl] stringByAppendingString:kUpdateDeviceTokenParams];
+    url = [NSString stringWithFormat:url,[UserManager defaultManager].userID,deviceToken];
+    
+    NSURL * URL = [NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    ASIHTTPRequest * request = [ASIHTTPRequest requestWithURL:URL];
+    [request setTimeOutSeconds:10];
+    [request setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"updateDeviceToken",@"request",nil]];
     [_networkQueue addOperation:request];
     [_networkQueue go];
 }
@@ -249,13 +268,10 @@ static HttpRequestManager * sHttpRequestManager;
 - (void)requestComplete:(ASIHTTPRequest *)request {
     NSString * requestType = [request.userInfo objectForKey:@"request"];
     if ([requestType isEqualToString:@"register"]) {
-        NSLog(@"recive register response");
         [self handleRegisterResponse:[request responseData]];
     }else if ([requestType isEqualToString:@"newReminder"]) {
-        NSLog(@"recive newReminder response");
         [self handleNewReminderReponse:[request responseData]];
     }else if ([requestType isEqualToString:@"remoteReminders"]){
-        NSLog(@"recive remoteReminders response");
         [self handleRemoteRemindersReponse:[request responseData]];
     }else if ([requestType isEqualToString:@"downAudioFile"]) {
         [self handleDownAudioFileReponse:request.userInfo withErrorCode:[request responseStatusCode]];
@@ -263,11 +279,18 @@ static HttpRequestManager * sHttpRequestManager;
         [self handleCheckRegisteredFriendsReponse:[request responseData]];
     }else if ([requestType isEqualToString:@"updateReminderReadState"]) {
         [self handleUpdateReminderReadStateResponse:[request responseData] withUserInfo:request.userInfo];
+    }else if ([requestType isEqualToString:@"updateDeviceToken"]) {
+        [self updateDeviceTokenResponse:[request responseData]];
     }
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request {
-    NSLog(@"ASIHTTPRequest error:%@",request.error);
+    NSString * requestType = [request.userInfo objectForKey:@"request"];
+    if ([requestType isEqualToString:@"newReminder"]) {
+        [self handleNewReminderReponse:nil];
+    }else if ([requestType isEqualToString:@"updateDeviceToken"]) {
+        //NSString * error = request.error.description;
+    }
 }
 
 @end

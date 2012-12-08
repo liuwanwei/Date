@@ -155,6 +155,9 @@
                      }];
 }
 
+- (void)registerForRemoteNotification {
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge |UIRemoteNotificationTypeSound)];
+}
 
 #pragma 事件函数
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -171,7 +174,6 @@
 {
     [super viewDidLoad];
     self.title = @"最近提醒";
-    //self.tableView.clearsSelectionOnViewWillAppear = NO;
     [self initData];
     [self registerHandleMessage];
     if (NO == [_sinaWeiboManager.sinaWeibo isAuthValid]) {
@@ -179,6 +181,7 @@
     }else {
         [_sinaWeiboManager requestBilateralFriends];
         [[BilateralFriendManager defaultManager] checkRegisteredFriendsRequest];
+        [self registerForRemoteNotification];
     }
 }
 

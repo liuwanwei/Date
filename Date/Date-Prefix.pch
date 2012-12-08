@@ -42,6 +42,7 @@
 #define kGetRemindersParams @"date.php?m=reminder&f=getLatest&t=json"
 #define kCheckRegisteredFriendsParams @"date.php?m=user&f=checkRegisteredUser&t=json"
 #define kUpdateReminderReadStateParams @"date.php?m=reminder&f=mark&&reminderId=%@&userId=%@&state=%d&t=json"
+#define kUpdateDeviceTokenParams @"date.php?m=user&f=updateDeviceToken&userId=%@&deviceToken=%@&t=json"
 
 #define kBilateralFriendEntity @"BilateralFriend"
 #define kReminderEntity @"Reminder"
