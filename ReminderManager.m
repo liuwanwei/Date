@@ -279,9 +279,12 @@ static ReminderManager * sReminderManager;
 
 - (NSArray *)remindersExpired {
     NSDate * date = [NSDate date];
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate * startDate = [formatter dateFromString:[formatter stringFromDate:date]];
     NSArray * results = nil;
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"isBell = NO AND triggerTime < %@",date];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"isBell = NO AND triggerTime > %@ AND triggerTime < %@",startDate,date];
     NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"triggerTime" ascending:NO];
     NSArray * sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     

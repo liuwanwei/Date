@@ -7,7 +7,6 @@
 //
 
 #import "RemindersBaseViewController.h"
-#import "ReminderMapViewController.h"
 #import "ReminderDetailViewController.h"
 
 @interface RemindersBaseViewController () {
@@ -32,7 +31,6 @@
     if (nil != _curReminder && nil != _curIndexPath) {
         [self stopPlayingAudio];
         ReminderBaseCell * cell = (ReminderBaseCell *)[self.tableView cellForRowAtIndexPath:_curIndexPath];
-        cell.audioState = AudioStatePlaying;
         if (YES == result) {
             [cell palyAudio:nil];
         }

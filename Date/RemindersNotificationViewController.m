@@ -101,7 +101,7 @@
     cell.bilateralFriend = friend;
     cell.reminder = reminder;
     if (YES == _isAutoPlayAudio) {
-        cell.audioState = AudioStatePlaying;
+        //cell.audioState = AudioStatePlaying;
         [cell palyAudio:cell.btnAudio];
     }else {
         cell.audioState = AudioStateNormal;
