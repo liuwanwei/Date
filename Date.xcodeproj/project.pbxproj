@@ -751,7 +751,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Liu&Mao";
 			};
-			buildConfigurationList = 3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "date" */;
+			buildConfigurationList = 3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "Date" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1179,7 +1179,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "date" */ = {
+		3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "Date" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C13E89B164DF4DB006424A2 /* Debug */,
