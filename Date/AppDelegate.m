@@ -15,6 +15,8 @@
 #import "ReminderManager.h"
 #import "RemindersNotificationViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "ReminderDetailViewController.h"
+#import "BilateralFriendManager.h"
 
 @implementation AppDelegate
 
@@ -27,9 +29,10 @@
 
 #pragma 私有函数
 - (void)showRemindersNotificationViewControllerWithReminders:(NSArray *)reminders{
-    RemindersNotificationViewController * viewController = [[RemindersNotificationViewController alloc] initWithNibName:@"RemindersNotificationViewController" bundle:nil];
-    viewController.reminders = reminders;
-    
+    ReminderDetailViewController * viewController = [[ReminderDetailViewController alloc] initWithNibName:@"ReminderDetailViewController" bundle:nil];
+    viewController.reminder = [reminders objectAtIndex:0];
+    viewController.friend = [[BilateralFriendManager defaultManager] bilateralFriendWithUserID:viewController.reminder.userID];
+    viewController.detailViewShowMode = DeailViewShowModePresent;
     UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:viewController];
     [_navController presentViewController:nav animated:YES completion:nil];
 }

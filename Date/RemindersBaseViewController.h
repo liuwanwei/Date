@@ -10,6 +10,7 @@
 #import "ReminderManager.h"
 #import "ReminderBaseCell.h"
 #import "SoundManager.h"
+#import "ReminderMapViewController.h"
 
 @interface RemindersBaseViewController : UIViewController <UITableViewDelegate, UITableViewDataSource,ReminderManagerDelegate,ReminderCellDelegate,SoundManagerDelegate>
 
