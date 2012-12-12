@@ -12,6 +12,7 @@
 #import "ReminderManager.h"
 #import "ReminderMapViewController.h"
 #import "ReminderSendingViewController.h"
+#import "ReminderSettingAudioCell.h"
 
 @interface ReminderSettingViewController () {
     Reminder * _reminder;
@@ -113,12 +114,13 @@
     self.title = @"约定";
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.tableView.rowHeight = 44.0; 
     _reminder = [[ReminderManager defaultManager] reminder];
     [self initData];
     [self initPickerView];
     [self setReminderDate];
     
-    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc] initWithTitle:@"Send" style:UIBarButtonItemStyleBordered target:self action:@selector(chooseFriends)];
+    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc] initWithTitle:@"发送" style:UIBarButtonItemStyleBordered target:self action:@selector(chooseFriends)];
     self.navigationItem.rightBarButtonItem = rightItem;
 }
 
@@ -163,23 +165,42 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return 3;
 }
 
 #define IsZero(float) (float > - 0.000001 && float < 0.000001)
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString * CellIdentifier = @"Cell";
-    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
-    
-    if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
+    static NSString * CellIdentifier;
+    UITableViewCell * cell;
+    ReminderSettingAudioCell * audioCell;
+
+    if (0 == indexPath.row) {
+        CellIdentifier = @"ReminderSettingAudioCell";
+        audioCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (audioCell == nil) {
+            audioCell = [[ReminderSettingAudioCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            audioCell.delegate = self;
+        }
+        audioCell.labelTitle.text = @"内容";
+        audioCell.reminder = _reminder;
+        audioCell.indexPath = indexPath;
+        audioCell.audioState = AudioStateNormal;
+        cell = audioCell;
+        
+    }else {
+        CellIdentifier = @"Cell";
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        if (indexPath.row == 1) {
             cell.textLabel.text = @"标签";
-            cell.detailTextLabel.text = (_reminder.desc == nil ? @"未设置" : _reminder.desc);
+            if (nil == _reminder.desc) {
+                _reminder.desc = [_tags objectAtIndex:0];
+            }
+            cell.detailTextLabel.text =  _reminder.desc;
         }else {
             cell.textLabel.text = @"地点";
             if (_reminder.longitude.length == 0 || _reminder.latitude.length == 0) {
@@ -202,7 +223,7 @@
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0 && indexPath.row == 0) {
+    if (indexPath.section == 0 && indexPath.row == 1) {
 //        [_pickerView setHidden:!_pickerView.hidden];
         ChoiceViewController * choiceViewController = [[ChoiceViewController alloc] initWithStyle:UITableViewStyleGrouped];
         choiceViewController.choices = _tags;
@@ -212,9 +233,10 @@
         choiceViewController.delegate = self;
         choiceViewController.type = SingleChoice;
         choiceViewController.autoDisappear = YES;
+    
         [self.navigationController pushViewController:choiceViewController animated:YES];
     }
-    if (indexPath.section == 0 && indexPath.row == 1) {
+    if (indexPath.section == 0 && indexPath.row == 2) {
         ReminderMapViewController * controller = [[ReminderMapViewController alloc] initWithNibName:@"ReminderMapViewController" bundle:nil];
         controller.reminder = _reminder;
         controller.type = MapOperateTypeSet;

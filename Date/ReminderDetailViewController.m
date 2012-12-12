@@ -53,7 +53,12 @@
     }
     _dateFormatter = [[NSDateFormatter alloc] init];
     [_dateFormatter setDateFormat:@"MM-dd HH:mm"];
-    self.title = [NSString stringWithFormat:@"来自:%@", _friend.nickname];
+    if ([[_friend.userID stringValue] isEqualToString:[UserManager defaultManager].userID]) {
+        self.title = @"来自:我";
+    }else {
+        self.title = [NSString stringWithFormat:@"来自:%@", _friend.nickname];
+    }
+    
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.rowHeight = 44.0;
@@ -101,7 +106,6 @@
         audioCell.reminder = _reminder;
         audioCell.indexPath = indexPath;
         audioCell.audioState = AudioStateNormal;
-        [audioCell palyAudio:audioCell.btnAudio];
         cell = audioCell;
         
     }else {

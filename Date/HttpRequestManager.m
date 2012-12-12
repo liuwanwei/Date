@@ -90,6 +90,12 @@ static HttpRequestManager * sHttpRequestManager;
     [[UserManager defaultManager] handleUpdateDeviceTokenResponse:json];
 }
 
+- (void)handleDeleteReminderResponse:(NSData *)responseData withUserInfo:(NSDictionary *)userInfo {
+    id json = [self serializationJson:responseData];
+    Reminder * reminder = [userInfo objectForKey:@"reminder"];
+    [[ReminderManager defaultManager] handleDeleteReminderResponse:json withReminder:reminder];
+}
+
 /*
  按标准对好友数据进行格式化
  */
@@ -264,6 +270,19 @@ static HttpRequestManager * sHttpRequestManager;
     [_networkQueue go];
 }
 
+- (void)deleteReminderRequest:(Reminder *)reminder {
+    NSString * url = [[self serverUrl] stringByAppendingString:kDeleteReminderParams];
+    url = [NSString stringWithFormat:url,reminder.id];
+    
+    ASIHTTPRequest *request;
+    request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:url]];
+    [request setTimeOutSeconds:20];
+    [request setUserInfo:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"deleteReminder",@"request",reminder,@"reminder",nil]];
+    [_networkQueue addOperation:request];
+    [_networkQueue go];
+
+}
+
 #pragma AsiNetWorkQueue delegate
 - (void)requestComplete:(ASIHTTPRequest *)request {
     NSString * requestType = [request.userInfo objectForKey:@"request"];
@@ -281,6 +300,8 @@ static HttpRequestManager * sHttpRequestManager;
         [self handleUpdateReminderReadStateResponse:[request responseData] withUserInfo:request.userInfo];
     }else if ([requestType isEqualToString:@"updateDeviceToken"]) {
         [self updateDeviceTokenResponse:[request responseData]];
+    }else if ([requestType isEqualToString:@"deleteReminder"]) {
+        [self handleDeleteReminderResponse:[request responseData] withUserInfo:request.userInfo];
     }
 }
 
@@ -290,6 +311,8 @@ static HttpRequestManager * sHttpRequestManager;
         [self handleNewReminderReponse:nil];
     }else if ([requestType isEqualToString:@"updateDeviceToken"]) {
         //NSString * error = request.error.description;
+    }else if ([requestType isEqualToString:@"deleteReminder"]) {
+        [self handleDeleteReminderResponse:nil withUserInfo:request.userInfo];
     }
 }
 

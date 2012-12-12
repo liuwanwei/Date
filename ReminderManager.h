@@ -24,6 +24,8 @@ typedef enum {
 - (void)downloadAudioFileSuccess:(Reminder *)reminder;
 - (void)downloadAudioFileFailed:(Reminder *)reminder;
 - (void)updateReminderReadStateSuccess:(Reminder *)reminder;
+- (void)deleteReminderSuccess:(Reminder *)reminder;
+- (void)deleteReminderFailed;
 @end
 
 @interface ReminderManager : BaseManager
@@ -33,8 +35,10 @@ typedef enum {
 + (ReminderManager *)defaultManager;
 
 - (Reminder *)reminder;
+- (Reminder *)reminderWithId:(NSString *) reminderId;
 
 - (void)saveSentReminder:(Reminder *)reminder;
+- (void)deleteReminder:(Reminder *)reminder;
 
 - (NSMutableDictionary *)remindersWithId:(NSArray *) remindersId;
 - (NSArray *)remindersWithUserId:(NSNumber *)userId;
@@ -53,6 +57,9 @@ typedef enum {
 
 - (void)updateReminderReadStateRequest:(Reminder *)reminder withReadState:(BOOL)state;
 - (void)handleUpdateReminderReadStateResponse:(id)json withReminder:(Reminder *)reminder;
+
+- (void)deleteReminderRequest:(Reminder *)reminder;
+- (void)handleDeleteReminderResponse:(id)json withReminder:(Reminder *)reminder;
 
 - (void)addLocalNotificationWithReminder:(Reminder *)reminder withBilateralFriend:(BilateralFriend *)friend;
 - (void)cancelLocalNotificationWithReminder:(Reminder *)reminder;
