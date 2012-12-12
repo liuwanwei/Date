@@ -28,9 +28,9 @@
 @synthesize window = _window;
 
 #pragma 私有函数
-- (void)showRemindersNotificationViewControllerWithReminders:(NSArray *)reminders{
+- (void)showRemindersNotificationViewControllerWithReminders:(Reminder *)reminder{
     ReminderDetailViewController * viewController = [[ReminderDetailViewController alloc] initWithNibName:@"ReminderDetailViewController" bundle:nil];
-    viewController.reminder = [reminders objectAtIndex:0];
+    viewController.reminder = reminder;
     viewController.friend = [[BilateralFriendManager defaultManager] bilateralFriendWithUserID:viewController.reminder.userID];
     viewController.detailViewShowMode = DeailViewShowModePresent;
     UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:viewController];
@@ -40,7 +40,7 @@
 - (void)checkRemindersExpired {
     NSArray * reminders = [[ReminderManager defaultManager] remindersExpired];
     if (nil != reminders) {
-        [self showRemindersNotificationViewControllerWithReminders:reminders];
+        [self showRemindersNotificationViewControllerWithReminders:[reminders objectAtIndex:0]];
     }
 }
 
@@ -77,6 +77,12 @@
     [_menuViewController setVisible:NO];
     [self.window makeKeyAndVisible];
     
+    UILocalNotification *localNotif =
+    [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+    if (localNotif) {
+        //NSString * reminderId = [localNotif.userInfo objectForKey:@"key"];
+    }
+    
     return YES;
 }
 
@@ -86,7 +92,9 @@
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     
-    NSString * token = [NSString stringWithFormat:@"%@",deviceToken];
+    NSString * token = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
     [[UserManager defaultManager] updateDeviceTokenRequest:token];
 }
 
@@ -117,7 +125,7 @@
     [[SinaWeiboManager defaultManager].sinaWeibo applicationDidBecomeActive];
     [[ReminderManager defaultManager] getRemoteRemindersRequest];
     [self checkRemindersExpired];
-
+    //UIApplicationState state = application.applicationState;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
