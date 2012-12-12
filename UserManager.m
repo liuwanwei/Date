@@ -138,8 +138,9 @@ expirationDate == nil) {
     }
     
     [self storeUserData:screenName withImageUrl:imageUrl];
-    NSInteger userId = [[self userID] integerValue];
-    [[BilateralFriendManager defaultManager] newFriend:[NSNumber numberWithInteger:userId] withName:screenName withImageUrl:imageUrl withState:YES];
+    long long userId = [[self userID] longLongValue];
+
+    [[BilateralFriendManager defaultManager] newFriend:[NSNumber numberWithLongLong:userId] withName:screenName withImageUrl:imageUrl withState:YES];
     [self registerForRemoteNotification];
     return YES;
 }

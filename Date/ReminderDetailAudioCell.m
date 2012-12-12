@@ -12,6 +12,12 @@
 @synthesize labelDesc = _labelDesc;
 @synthesize labelTitle = _labelTitle;
 
+- (void)modifyReminderReadState{
+    if (nil == self.reminder.isRead || NO == [self.reminder.isRead integerValue]) {
+        [[ReminderManager defaultManager] modifyReminder:self.reminder withReadState:YES];
+    }
+}
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];

@@ -141,20 +141,6 @@ static ReminderManager * sReminderManager;
     }
 }
 
-- (Reminder *)reminderWithId:(NSString *) reminderId {
-    NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
-    
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"id = %@", reminderId];
-    request.predicate = predicate;
-    
-    NSArray * results = [self executeFetchRequest:request];
-    if (nil == results || 1 != results.count) {
-        return nil;
-    }else {
-        return [results objectAtIndex:0];
-    }
-}
-
 /*
  下载完音频数据后，修改数据库音频相关字段
  */
@@ -228,6 +214,11 @@ static ReminderManager * sReminderManager;
     NSNotification * notification = nil;
     notification = [NSNotification notificationWithName:kRemindesUpdateMessage object:nil];
     [[NSNotificationCenter defaultCenter] postNotification:notification];
+}
+
+- (void)deleteReminder:(Reminder *)reminder {
+    [self cancelLocalNotificationWithReminder:reminder];
+    [self deleteFromStore:reminder synchronized:YES];
 }
 
 - (NSMutableDictionary *)remindersWithId:(NSArray *) remindersId {
@@ -304,7 +295,17 @@ static ReminderManager * sReminderManager;
 }
 
 - (void)sendReminder:(Reminder *)reminder {
-    [[HttpRequestManager defaultManager] sendReminderRequest:reminder];
+    if ([[reminder.userID stringValue] isEqualToString:[UserManager defaultManager].userID]) {
+        NSString * reminderId = [[NSDate date] description];
+        if (self.delegate != nil) {
+            if ([self.delegate respondsToSelector:@selector(newReminderSuccess:)]) {
+                [self.delegate performSelector:@selector(newReminderSuccess:) withObject:reminderId];
+            }
+        }
+    }else {
+        [[HttpRequestManager defaultManager] sendReminderRequest:reminder];
+    }
+    
 }
 
 - (void)handleNewReminderResponse:(id)json {
@@ -401,6 +402,37 @@ static ReminderManager * sReminderManager;
     }
 }
 
+- (void)deleteReminderRequest:(Reminder *)reminder {
+    [[HttpRequestManager defaultManager] deleteReminderRequest:reminder];
+}
+
+- (void)handleDeleteReminderResponse:(id)json withReminder:(Reminder *)reminder {
+    BOOL success = NO;
+    if (nil != json) {
+        if ([json isKindOfClass:[NSDictionary class]]) {
+            NSString * status = [json objectForKey:@"status"];
+            if ([status isEqualToString:@"success"]) {
+                if (nil != reminder) {
+                    success = YES;
+                    if (self.delegate != nil) {
+                        if ([self.delegate respondsToSelector:@selector(deleteReminderSuccess:)]) {
+                            [self.delegate performSelector:@selector(deleteReminderSuccess:) withObject:reminder];
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    if (NO == success) {
+        if (self.delegate != nil) {
+            if ([self.delegate respondsToSelector:@selector(deleteReminderFailed)]) {
+                [self.delegate performSelector:@selector(deleteReminderFailed) withObject:nil];
+            }
+        }
+    }
+}
+
 - (void)addLocalNotificationWithReminder:(Reminder *)reminder withBilateralFriend:(BilateralFriend *)friend{
     if (nil == [self localNotification:reminder.id]) {
         NSString * body;
@@ -479,6 +511,20 @@ static ReminderManager * sReminderManager;
         return nil;
     }
     return results;
+}
+
+- (Reminder *)reminderWithId:(NSString *) reminderId {
+    NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
+    
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"id = %@", reminderId];
+    request.predicate = predicate;
+    
+    NSArray * results = [self executeFetchRequest:request];
+    if (nil == results || 1 != results.count) {
+        return nil;
+    }else {
+        return [results objectAtIndex:0];
+    }
 }
 
 @end

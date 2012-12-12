@@ -54,7 +54,12 @@
         
         _labelAudioTime.text = [_reminder.audioTime stringValue];
         
-        _labelNickname.text = _bilateralFriend.nickname;
+        if ([[_reminder.userID stringValue] isEqualToString:[UserManager defaultManager].userID]) {
+            _labelNickname.text = @"我";
+        }else {
+            _labelNickname.text = _bilateralFriend.nickname;
+        }
+        
     }
 }
 
