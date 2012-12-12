@@ -14,6 +14,7 @@ static SoundManager * sSoundManager;
 @interface SoundManager () {
     AVAudioRecorder * _recorder;
     AVAudioPlayer * _player;
+    NSDate * _startRecordDate;
 }
 
 @end
@@ -132,6 +133,7 @@ static SoundManager * sSoundManager;
     }
         
     _recorder = [[AVAudioRecorder alloc] initWithURL:_recordFileURL settings:[self setting] error:&error];
+    _startRecordDate = [NSDate date];
     [self showRecordingView];
     if(_recorder) {
         result = YES;
@@ -147,8 +149,9 @@ static SoundManager * sSoundManager;
 - (BOOL)stopRecord {
     BOOL result = NO;
     if (nil != _recorder) {
+        NSDate * endRecordDate = [NSDate date];
         [self closeRecordingView];
-        NSInteger diffTime = _recorder.currentTime;
+        NSTimeInterval diffTime = [endRecordDate timeIntervalSinceDate:_startRecordDate];
         if (diffTime < 0.5) {
             [_recorder stop];
             [_recorder deleteRecording];

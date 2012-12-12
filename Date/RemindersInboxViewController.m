@@ -13,6 +13,7 @@
 #import "OnlineFriendsRemindViewController.h"
 #import "AppDelegate.h"
 #import "ReminderSettingViewController.h"
+#import "MBProgressManager.h"
 
 @interface RemindersInboxViewController () {
     NSMutableDictionary * _group;
@@ -25,6 +26,7 @@
     UserManager * _userManager;
     LoginViewController * _loginViewController;
     
+    NSIndexPath * _curDeleteIndexPath;
 }
 
 @end
@@ -57,7 +59,6 @@
         NSString * key;
         for (Reminder * reminder in self.reminders) {
             key = [formatter stringFromDate:reminder.triggerTime];
-            // FIXME key怎么会有nil？
             if (nil != key) {
                 if (nil == [_group objectForKey:key]) {
                     reminders = [[NSMutableArray alloc] init];
@@ -79,7 +80,7 @@
 - (void)registerHandleMessage {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOAuthSuccessMessage:) name:kUserOAuthSuccessMessage object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOnlineFriendsMessage:) name:kOnlineFriendsMessage object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOnlineFriendsMessage:) name:kOnlineFriendsMessage object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRegisterUserMessage:) name:kGoRegisterUserMessage object:nil];
     
@@ -159,6 +160,10 @@
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge |UIRemoteNotificationTypeSound)];
 }
 
+- (void)removeHUD {
+    [[MBProgressManager defaultManager] removeHUD];
+}
+
 #pragma 事件函数
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -176,6 +181,7 @@
     self.title = @"最近提醒";
     [self initData];
     [self registerHandleMessage];
+    
     if (NO == [_sinaWeiboManager.sinaWeibo isAuthValid]) {
         [self showLoginViewController];
     }else {
@@ -248,6 +254,38 @@
     cell.reminder = reminder;
     cell.audioState = AudioStateNormal;
     return cell;
+}
+
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        _curDeleteIndexPath = indexPath;
+        Reminder * reminder = [[_group objectForKey:[_keys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+        if ([_userManager.userID isEqualToString:[reminder.userID stringValue]]) {
+            [self.reminderManager deleteReminder:reminder];
+            [[_group objectForKey:[_keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        }else {
+            [self.reminderManager deleteReminderRequest:reminder];
+            [[MBProgressManager defaultManager] showHUD:@"删除中"];
+        }
+        
+    }
+}
+
+#pragma mark - ReminderManager delegate
+- (void)deleteReminderSuccess:(Reminder *)reminder {
+    [self.reminderManager deleteReminder:reminder];
+    [[_group objectForKey:[_keys objectAtIndex:_curDeleteIndexPath.section]] removeObjectAtIndex:_curDeleteIndexPath.row];
+    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:_curDeleteIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+    
+    [[MBProgressManager defaultManager] removeHUD];
+}
+
+- (void)deleteReminderFailed {
+    [[MBProgressManager defaultManager] showHUD:@"删除失败"];
+    [self performSelector:@selector(removeHUD) withObject:self afterDelay:0.5];
 }
 
 @end

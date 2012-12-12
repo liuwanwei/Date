@@ -11,6 +11,7 @@
 #import "EGOImageView.h"
 #import "BilateralFriend.h"
 #import "MBProgressManager.h"
+#import "UserManager.h"
 
 @interface ReminderSendingViewController () {
     NSArray * _friends;
@@ -37,7 +38,11 @@
     if (_reminder.userID != 0) {
          _reminderManager.delegate = self;
         [_reminderManager sendReminder:_reminder];
-        [[MBProgressManager defaultManager] showHUD:@"发送中"];
+        if ([[_reminder.userID stringValue] isEqualToString:[UserManager defaultManager].userID ]) {
+            
+        }else {
+            [[MBProgressManager defaultManager] showHUD:@"发送中"];
+        }
     }
 }
 
@@ -47,7 +52,6 @@
     [[BilateralFriendManager defaultManager] modifyLastReminder:_reminder.id withUserId:_reminder.userID];
     
     [_reminderManager saveSentReminder:_reminder];
-    
 }
 
 - (void)showAlertView {
@@ -117,7 +121,12 @@
     }
     
     UILabel * nicknameLabel = (UILabel *)[cell viewWithTag:2];
-    nicknameLabel.text = friend.nickname;
+    if ([[friend.userID stringValue] isEqualToString:[UserManager defaultManager].userID ]) {
+        nicknameLabel.text = @"我";
+    }else {
+         nicknameLabel.text = friend.nickname;
+    }
+   
     
     return cell;
 }
@@ -137,15 +146,19 @@
     
     _reminder.userID = friend.userID;
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    [self showAlertView];
+    if (indexPath.row == 0) {
+        [self sendReminder];
+    }else {
+        [self showAlertView];
+    }
 }
 
 #pragma mark - ReminderManager delegate
 - (void)newReminderSuccess:(NSString *)reminderId {
     _reminderManager.delegate = nil;
-    [self saveSendReminder:reminderId];
     [[MBProgressManager defaultManager] removeHUD];
     [self.navigationController popToRootViewControllerAnimated:YES];
+    [self saveSendReminder:reminderId];
 }
 
 - (void)newReminderFailed {
