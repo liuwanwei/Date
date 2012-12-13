@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "HomeViewController.h"
-#import "RemindersInboxViewController.h"
 #import "UserManager.h"
 #import "SinaWeiboManager.h"
 #import "OnlineFriendsRemindViewController.h"
@@ -17,6 +16,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ReminderDetailViewController.h"
 #import "BilateralFriendManager.h"
+#import "RemindersInboxViewController.h"
 
 @implementation AppDelegate
 
@@ -26,6 +26,7 @@
 @synthesize navController = _navController;
 @synthesize menuViewController = _menuViewController;
 @synthesize window = _window;
+@synthesize homeViewController = _homeViewController;
 
 #pragma 私有函数
 - (void)showRemindersNotificationViewControllerWithReminders:(Reminder *)reminder{
@@ -65,10 +66,11 @@
     [[SinaWeiboManager defaultManager] initSinaWeibo];
     
     //HomeViewController * viewController = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
-    RemindersInboxViewController * viewController = [[RemindersInboxViewController alloc] initWithNibName:@"RemindersInboxViewController" bundle:nil];
-    _navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    _homeViewController = [[RemindersInboxViewController alloc] initWithNibName:@"RemindersInboxViewController" bundle:nil];
+    _navController = [[UINavigationController alloc] initWithRootViewController:_homeViewController];
     
     _menuViewController = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];
+    _menuViewController.view.frame = CGRectMake(0, 20, 320, 460);
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = _navController;

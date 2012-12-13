@@ -194,6 +194,7 @@ static HttpRequestManager * sHttpRequestManager;
     [request setPostValue:reminder.longitude forKey:@"longitude"];
     [request setPostValue:reminder.latitude forKey:@"latitude"];
     [request setPostValue:reminder.desc forKey:@"description"];
+    [request setPostValue:reminder.audioLength forKey:@"audioLength"];
     [request setTimeOutSeconds:10];
     [request setUserInfo:[NSDictionary dictionaryWithObject:@"newReminder" forKey:@"request"]];
     [_networkQueue addOperation:request];
@@ -289,6 +290,7 @@ static HttpRequestManager * sHttpRequestManager;
     if ([requestType isEqualToString:@"register"]) {
         [self handleRegisterResponse:[request responseData]];
     }else if ([requestType isEqualToString:@"newReminder"]) {
+        NSString * str = [request responseString];
         [self handleNewReminderReponse:[request responseData]];
     }else if ([requestType isEqualToString:@"remoteReminders"]){
         [self handleRemoteRemindersReponse:[request responseData]];

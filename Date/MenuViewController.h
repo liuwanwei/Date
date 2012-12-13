@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MenuViewController : UIViewController
+@interface MenuViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UIButton * btnServerMode;
+@property (weak, nonatomic) IBOutlet UITableView * tableView;
 
 - (IBAction)modifyServerMode:(id)sender;
 

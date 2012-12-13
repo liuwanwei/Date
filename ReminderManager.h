@@ -16,6 +16,17 @@ typedef enum {
     ReminderTypeSend
 }ReminderType;
 
+typedef enum {
+    ReminderStateUnFinish = 0,
+    ReminderStateFinish = 1
+}ReminderState;
+
+typedef enum {
+    AppBadgeModeBlank = 0,
+    AppBadgeModeToady = 1,
+    AppBadgeModeRecent
+}AppBadgeMode;
+
 @protocol ReminderManagerDelegate <NSObject>
 
 @optional
@@ -44,7 +55,9 @@ typedef enum {
 - (NSArray *)remindersWithUserId:(NSNumber *)userId;
 - (NSArray *)remindersExpired;
 - (NSArray *)allRemindersWithReimnderType:(ReminderType) type;
-- (NSArray *)recentReminders;
+- (NSArray *)recentUnFinishedReminders;
+- (NSArray *)todayUnFinishedReminders;
+- (NSArray *)historyReminders;
 
 - (void)sendReminder:(Reminder *)reminder;
 - (void)handleNewReminderResponse:(id)json;
@@ -66,5 +79,8 @@ typedef enum {
 
 - (void)modifyReminder:(Reminder *)reminder withReadState:(BOOL)isRead;
 - (void)modifyReminder:(Reminder *)reminder withBellState:(BOOL)isBell;
+- (void)modifyReminder:(Reminder *)reminder withState:(ReminderState)state;
 
+- (void)storeAppBadgeMode:(AppBadgeMode)mode;
+- (AppBadgeMode)appBadgeMode;
 @end

@@ -13,6 +13,8 @@
 @interface ReminderDetailViewController () {
     NSArray * _sections;
     NSDateFormatter * _dateFormatter;
+    UIButton * _btnFinish;
+    UIButton * _btnUnFinish;
 }
 
 @end
@@ -23,14 +25,51 @@
 @synthesize tableView = _tableView;
 @synthesize detailViewShowMode = _detailViewShowMode;
 
+#pragma 私有函数
+- (void)modifyReminderState {
+    [self.reminderManager modifyReminder:_reminder withState:ReminderStateFinish];
+    [self dismiss];
+}
+
+- (void)initTableFooterView {
+    UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 300, 100)];
+    if (_detailViewShowMode == DeailViewShowModePresent) {
+        _btnUnFinish = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        _btnUnFinish.layer.frame = CGRectMake(10, 15, 300, 44);
+        [_btnUnFinish setBackgroundImage:[UIImage imageNamed:@"buttonBg"] forState:UIControlStateNormal];
+        [_btnUnFinish setTitle:@"稍候完成" forState:UIControlStateNormal];
+        [_btnUnFinish setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_btnUnFinish addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+        [view addSubview:_btnUnFinish];
+    }
+    
+    _btnFinish = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _btnFinish.layer.frame = CGRectMake(10, 70, 300, 44);
+    [_btnFinish setTitle:@"已完成" forState:UIControlStateNormal];
+    [_btnFinish setBackgroundImage:[UIImage imageNamed:@"buttonBg"] forState:UIControlStateNormal];
+    [_btnFinish setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_btnFinish addTarget:self action:@selector(modifyReminderState) forControlEvents:UIControlEventTouchUpInside];
+    if (NO == [_reminder.isRead boolValue]) {
+        [_btnFinish setHidden:YES];
+    }
+    [view addSubview:_btnFinish];
+    
+    self.tableView.tableFooterView = view;
+}
+
 - (void)checkRemindersExpired {
      [[AppDelegate delegate] checkRemindersExpired];
 }
  
 - (void)dismiss {
     [self.reminderManager modifyReminder:_reminder withBellState:YES];
-    [self dismissViewControllerAnimated:YES completion:nil];
-    [self performSelector:@selector(checkRemindersExpired) withObject:self afterDelay:1.0];
+    if (_detailViewShowMode == DeailViewShowModePresent) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+        [self performSelector:@selector(checkRemindersExpired) withObject:self afterDelay:1.0];
+
+    }else {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -64,16 +103,18 @@
     self.tableView.rowHeight = 44.0;
     [self.tableView reloadData];
     
-    if (_detailViewShowMode  == DeailViewShowModePresent) {
-        UIBarButtonItem * leftItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismiss)];
-        self.navigationItem.leftBarButtonItem = leftItem;
-    }
+    [self initTableFooterView];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[SoundManager defaultSoundManager] stopAudio];
 }
 
 #pragma mark - Table view data source
@@ -106,8 +147,10 @@
         audioCell.reminder = _reminder;
         audioCell.indexPath = indexPath;
         audioCell.audioState = AudioStateNormal;
+        if (_detailViewShowMode == DeailViewShowModePresent) {
+            [audioCell palyAudio:audioCell.btnAudio];
+        }
         cell = audioCell;
-        
     }else {
         CellIdentifier = @"Cell";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -136,6 +179,12 @@
         UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
         [self presentViewController:nav animated:YES completion:nil];}
 
+}
+
+#pragma mark - ReminderManager Delegate
+- (void)updateReminderReadStateSuccess:(Reminder *)reminder {
+    [super updateReminderReadStateSuccess:reminder];
+    [_btnFinish setHidden:NO];
 }
     
 @end
