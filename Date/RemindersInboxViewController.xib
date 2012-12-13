@@ -67,9 +67,10 @@
 							<object class="IBUIButton" id="647981321">
 								<reference key="NSNextResponder" ref="969550597"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{67, 7}, {185, 30}}</string>
+								<string key="NSFrame">{{39, 5}, {240, 34}}</string>
 								<reference key="NSSuperview" ref="969550597"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -87,12 +88,12 @@
 									<bytes key="NSWhite">MC41AA</bytes>
 								</object>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
-									<int key="type">2</int>
-									<double key="pointSize">15</double>
+									<int key="type">1</int>
+									<double key="pointSize">16</double>
 								</object>
 								<object class="NSFont" key="IBUIFont">
-									<string key="NSName">Helvetica-Bold</string>
-									<double key="NSSize">15</double>
+									<string key="NSName">Helvetica</string>
+									<double key="NSSize">16</double>
 									<int key="NSfFlags">16</int>
 								</object>
 							</object>
@@ -108,11 +109,12 @@
 						<array class="NSMutableArray" key="IBUIItems">
 							<object class="IBUIBarButtonItem" id="754820268">
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<float key="IBUIWidth">55</float>
+								<float key="IBUIWidth">27</float>
 								<reference key="IBUIToolbar" ref="969550597"/>
 								<int key="IBUISystemItemIdentifier">6</int>
 							</object>
 							<object class="IBUIBarButtonItem" id="5961690">
+								<string key="IBUITitle">Item</string>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<reference key="IBUICustomView" ref="647981321"/>
 								<reference key="IBUIToolbar" ref="969550597"/>
@@ -213,8 +215,8 @@
 						<int key="objectID">1</int>
 						<reference key="object" ref="191373211"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="179121906"/>
 							<reference ref="969550597"/>
+							<reference ref="179121906"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
