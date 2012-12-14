@@ -185,10 +185,8 @@ typedef enum {
     
     NSDate * today = [NSDate date];
     NSDate * tomorrow;
-    NSTimeZone * timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd"];
-    [formatter setTimeZone:timeZone];
     today = [formatter dateFromString:[formatter stringFromDate:today]];
     tomorrow = [today dateByAddingTimeInterval:24*60*60];
     
@@ -554,10 +552,8 @@ typedef enum {
 
 - (NSArray *)recentUnFinishedReminders {
     NSDate * date = [NSDate date];
-    NSTimeZone * timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd"];
-    [formatter setTimeZone:timeZone];
     NSArray * results = nil;
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
     NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"triggerTime" ascending:YES];
@@ -576,10 +572,8 @@ typedef enum {
 - (NSArray *)todayUnFinishedReminders {
     NSDate * today = [NSDate date];
     NSDate * tomorrow;
-    NSTimeZone * timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd"];
-    [formatter setTimeZone:timeZone];
     today = [formatter dateFromString:[formatter stringFromDate:today]];
     tomorrow = [today dateByAddingTimeInterval:24*60*60];
     NSArray * results = nil;
@@ -599,10 +593,8 @@ typedef enum {
 
 - (NSArray *)historyReminders {
     NSDate * today = [NSDate date];
-    NSTimeZone * timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd"];
-    [formatter setTimeZone:timeZone];
     today = [formatter dateFromString:[formatter stringFromDate:today]];
     NSArray * results = nil;
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
@@ -637,6 +629,21 @@ typedef enum {
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:mode] forKey:@"AppBadgeMode"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
+    [self updateAppBadge];
+}
+
+- (AppBadgeMode)appBadgeMode {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber * mode = [defaults objectForKey:@"AppBadgeMode"];
+    if (mode == nil) {
+        [self storeAppBadgeMode:AppBadgeModeToady];
+        return AppBadgeModeToady;
+    }
+    return [mode integerValue];
+}
+
+- (void)updateAppBadge {
+    AppBadgeMode mode = [self appBadgeMode];
     NSInteger badgeSize;
     NSArray * reminders;
     if (AppBadgeModeToady == mode) {
@@ -649,18 +656,8 @@ typedef enum {
     }else {
         badgeSize = 0;
     }
- 
+    
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badgeSize];
-}
-
-- (AppBadgeMode)appBadgeMode {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSNumber * mode = [defaults objectForKey:@"AppBadgeMode"];
-    if (mode == nil) {
-        [self storeAppBadgeMode:AppBadgeModeToady];
-        return AppBadgeModeToady;
-    }
-    return [mode integerValue];
 }
 
 @end

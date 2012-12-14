@@ -83,4 +83,5 @@ typedef enum {
 
 - (void)storeAppBadgeMode:(AppBadgeMode)mode;
 - (AppBadgeMode)appBadgeMode;
+- (void)updateAppBadge;
 @end
