@@ -23,4 +23,6 @@
 
 - (NSString *)custumDateString:(NSString *)date;
 
+- (IBAction)leftBarBtnTapped:(id)sender;
+- (void)restoreViewLocation;
 @end

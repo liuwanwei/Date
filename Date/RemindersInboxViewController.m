@@ -11,9 +11,9 @@
 #import "SinaWeiboManager.h"
 #import "LoginViewController.h"
 #import "OnlineFriendsRemindViewController.h"
-#import "AppDelegate.h"
 #import "ReminderSettingViewController.h"
 #import "MBProgressManager.h"
+#import "AppDelegate.h"
 
 @interface RemindersInboxViewController () {
     NSMutableDictionary * _group;
@@ -32,8 +32,15 @@
 @end
 
 @implementation RemindersInboxViewController
+@synthesize dataType = _dataType;
 
 #pragma 私有函数
+
+- (void)initMenuView {
+    UIBarButtonItem * leftItem = [[UIBarButtonItem alloc] initWithTitle:@"菜单" style:UIBarButtonItemStylePlain target:self action:@selector(leftBarBtnTapped:)];
+        self.navigationItem.leftBarButtonItem = leftItem;
+}
+
 - (void)showLoginViewController {
     _loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
     [self presentViewController:_loginViewController animated:YES completion:nil];
@@ -43,37 +50,6 @@
     if (nil == [_usersIdDictionary objectForKey:[userId stringValue]]) {
         [_usersIdDictionary setValue:userId forKey:[userId stringValue]];
         [_usersIdArray addObject:userId];
-    }
-}
-
-- (void)initData {
-    self.reminders = [self.reminderManager recentReminders];
-    if (nil != self.reminders) {
-        _group = [[NSMutableDictionary alloc] initWithCapacity:0];
-        _keys = [[NSMutableArray alloc] initWithCapacity:0];
-        _usersIdArray = [[NSMutableArray alloc] initWithCapacity:0];
-        _usersIdDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
-        NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yy-MM-dd"];
-        NSMutableArray * reminders;
-        NSString * key;
-        for (Reminder * reminder in self.reminders) {
-            key = [formatter stringFromDate:reminder.triggerTime];
-            if (nil != key) {
-                if (nil == [_group objectForKey:key]) {
-                    reminders = [[NSMutableArray alloc] init];
-                    [reminders addObject:reminder];
-                    [_group setValue:reminders forKey:key];
-                    [_keys addObject:key];
-                }else {
-                    [reminders addObject:reminder];
-                }
-                
-                [self addUserId:reminder.userID];
-            }
-        }
-        _friends = [[BilateralFriendManager defaultManager] friendsWithId:_usersIdArray];
-        [self.tableView reloadData];
     }
 }
 
@@ -117,51 +93,59 @@
     [[AppDelegate delegate] checkRemindersExpired];
 }
 
-// move view to right side
-- (void)moveToRightSide {
-    [self animateHomeViewToSide:CGRectMake(250.0f,
-                                           self.navigationController.view.frame.origin.y,
-                                           self.navigationController.view.frame.size.width,
-                                           self.navigationController.view.frame.size.height)];
-}
-
-// animate home view to side rect
-- (void)animateHomeViewToSide:(CGRect)newViewRect {
-    [UIView animateWithDuration:0.2
-                     animations:^{
-                         self.navigationController.view.frame = newViewRect;
-                     }
-                     completion:^(BOOL finished){
-                         UIControl *overView = [[UIControl alloc] init];
-                         overView.tag = 10086;
-                         overView.backgroundColor = [UIColor clearColor];
-                         overView.frame = self.navigationController.view.frame;
-                         [overView addTarget:self action:@selector(restoreViewLocation) forControlEvents:UIControlEventTouchDown];
-                         [[[UIApplication sharedApplication] keyWindow] addSubview:overView];
-                     }];
-}
-
-// restore view location
-- (void)restoreViewLocation {
-    [UIView animateWithDuration:0.2
-                     animations:^{
-                         self.navigationController.view.frame = CGRectMake(0,
-                                                                           self.navigationController.view.frame.origin.y,
-                                                                           self.navigationController.view.frame.size.width,
-                                                                           self.navigationController.view.frame.size.height);
-                     }
-                     completion:^(BOOL finished){
-                         UIControl *overView = (UIControl *)[[[UIApplication sharedApplication] keyWindow] viewWithTag:10086];
-                         [overView removeFromSuperview];
-                     }];
-}
-
 - (void)registerForRemoteNotification {
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge |UIRemoteNotificationTypeSound)];
 }
 
 - (void)removeHUD {
     [[MBProgressManager defaultManager] removeHUD];
+}
+
+#pragma 类成员函数
+- (void)initData {
+    if (DataTypeToday == _dataType) {
+        self.title = @"今日提醒";
+        self.reminders = [self.reminderManager todayUnFinishedReminders];
+    }else if (DataTypeRecent == _dataType) {
+        self.title = @"近期提醒";
+        self.reminders = [self.reminderManager recentUnFinishedReminders];
+    }else if (DataTypeHistory == _dataType) {
+        self.title = @"收集箱";
+        self.reminders = [self.reminderManager historyReminders];
+    }
+    
+    if (nil != self.reminders) {
+        _group = [[NSMutableDictionary alloc] initWithCapacity:0];
+        _keys = [[NSMutableArray alloc] initWithCapacity:0];
+        _usersIdArray = [[NSMutableArray alloc] initWithCapacity:0];
+        _usersIdDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
+        NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yy-MM-dd"];
+        NSMutableArray * reminders;
+        NSString * key;
+        for (Reminder * reminder in self.reminders) {
+            key = [formatter stringFromDate:reminder.triggerTime];
+            if (nil != key) {
+                if (nil == [_group objectForKey:key]) {
+                    reminders = [[NSMutableArray alloc] init];
+                    [reminders addObject:reminder];
+                    [_group setValue:reminders forKey:key];
+                    [_keys addObject:key];
+                }else {
+                    [reminders addObject:reminder];
+                }
+                
+                [self addUserId:reminder.userID];
+            }
+        }
+        _friends = [[BilateralFriendManager defaultManager] friendsWithId:_usersIdArray];
+    }else {
+        _group = nil;
+        _keys = nil;
+        _usersIdArray = nil;
+        _usersIdDictionary = nil;
+    }
+    [self.tableView reloadData];
 }
 
 #pragma 事件函数
@@ -178,7 +162,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"最近提醒";
+    [self initMenuView];
+    _dataType = DataTypeToday;
     [self initData];
     [self registerHandleMessage];
     
@@ -210,12 +195,6 @@
         [self.navigationController pushViewController:controller animated:YES];
     }
 }
-
-- (IBAction)leftBarBtnTapped:(id)sender {
-    [[AppDelegate delegate] makeMenuViewVisible];
-    [self moveToRightSide];
-}
-
 
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -257,7 +236,7 @@
 }
 
 // Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+/*- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         _curDeleteIndexPath = indexPath;
@@ -272,7 +251,7 @@
         }
         
     }
-}
+}*/
 
 #pragma mark - ReminderManager delegate
 - (void)deleteReminderSuccess:(Reminder *)reminder {

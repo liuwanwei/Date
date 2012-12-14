@@ -16,7 +16,7 @@
 #pragma 私有函数
 - (void)modifyReminderBellState:(BOOL)isBell {
     [[ReminderManager defaultManager] modifyReminder:self.reminder withBellState:isBell];
-    if (YES == [self.reminder.isBell integerValue]) {
+    if (YES == [self.reminder.isAlarm integerValue]) {
         [self.labelTriggerDate setHidden:NO];
         [[ReminderManager defaultManager] addLocalNotificationWithReminder:self.reminder withBilateralFriend:self.bilateralFriend];
     }else {
@@ -60,7 +60,7 @@
 }
 
 - (IBAction)modifyBell:(UIButton *)sender {
-    if (YES == [self.reminder.isBell integerValue]) {
+    if (YES == [self.reminder.isAlarm integerValue]) {
         [self modifyReminderBellState:NO];
     }else {
         [self modifyReminderBellState:YES];

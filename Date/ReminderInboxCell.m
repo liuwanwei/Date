@@ -17,7 +17,7 @@
 - (void)modifyReminderReadState{
     if (nil == self.reminder.isRead || NO == [self.reminder.isRead integerValue]) {
         [[ReminderManager defaultManager] modifyReminder:self.reminder withReadState:YES];
-        if (YES == [self.reminder.isRead integerValue]) {
+        if (YES == [self.reminder.isRead boolValue]) {
             [_btnMark setHidden:YES];
         }
     }
@@ -47,7 +47,7 @@
         
         NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"HH:mm"];
-        self.labelSendDate.text = [formatter stringFromDate:reminer.sendTime];
+        self.labelSendDate.text = [formatter stringFromDate:reminer.createTime];
         
         if (nil != reminer.isRead && YES == [reminer.isRead integerValue]) {
             [_btnMark setHidden:YES];
@@ -55,7 +55,7 @@
             [_btnMark setHidden:NO];
         }
         
-        if ([reminer.isBell boolValue]) {
+        if (ReminderStateFinish == [reminer.state integerValue]) {
             self.labelTriggerDate.textColor = RGBColor(153,153,153);
             self.labelTriggerDate.font = [UIFont systemFontOfSize:14.0];
         }else{

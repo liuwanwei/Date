@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MenuViewController.h"
+@class RemindersInboxViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -19,6 +20,7 @@
 
 @property (strong, nonatomic) UINavigationController * navController;
 @property (strong, nonatomic) MenuViewController * menuViewController;
+@property (strong, nonatomic) RemindersInboxViewController * homeViewController;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
