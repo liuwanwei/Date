@@ -85,6 +85,8 @@
         //NSString * reminderId = [localNotif.userInfo objectForKey:@"key"];
     }
     
+    [[ReminderManager defaultManager] updateAppBadge];
+    
     return YES;
 }
 
