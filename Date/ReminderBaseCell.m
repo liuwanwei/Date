@@ -52,7 +52,7 @@
             [_image setImageURL:[NSURL URLWithString:[UserManager defaultManager].imageUrl]];
         }
         
-        _labelAudioTime.text = [_reminder.audioTime stringValue];
+        _labelAudioTime.text = [_reminder.audioLength stringValue];
         
         if ([[_reminder.userID stringValue] isEqualToString:[UserManager defaultManager].userID]) {
             _labelNickname.text = @"我";
@@ -125,7 +125,7 @@
         
         if ([[SoundManager defaultSoundManager] fileExistsAtPath:_reminder.audioUrl]) {
             [self setAudioState:AudioStatePlaying];
-            self.labelAudioTime.text = [_reminder.audioTime stringValue];
+            self.labelAudioTime.text = [_reminder.audioLength stringValue];
         }else {
             [self setAudioState:AudioStateDownload];
         }

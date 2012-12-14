@@ -8,6 +8,7 @@
 
 #import "RemindersBaseViewController.h"
 #import "ReminderDetailViewController.h"
+#import "AppDelegate.h"
 
 @interface RemindersBaseViewController () {
     SoundManager * _soundManager;
@@ -37,6 +38,30 @@
     }
 }
 
+// move view to right side
+- (void)moveToRightSide {
+    [self animateHomeViewToSide:CGRectMake(250.0f,
+                                           self.navigationController.view.frame.origin.y,
+                                           self.navigationController.view.frame.size.width,
+                                           self.navigationController.view.frame.size.height)];
+}
+
+// animate home view to side rect
+- (void)animateHomeViewToSide:(CGRect)newViewRect {
+    [UIView animateWithDuration:0.2
+                     animations:^{
+                         self.navigationController.view.frame = newViewRect;
+                     }
+                     completion:^(BOOL finished){
+                         UIControl *overView = [[UIControl alloc] init];
+                         overView.tag = 10086;
+                         overView.backgroundColor = [UIColor clearColor];
+                         overView.frame = self.navigationController.view.frame;
+                         [overView addTarget:self action:@selector(restoreViewLocation) forControlEvents:UIControlEventTouchDown];
+                         [[[UIApplication sharedApplication] keyWindow] addSubview:overView];
+                     }];
+}
+
 #pragma 类成员函数
 - (NSString *)custumDateString:(NSString *)date {
     NSString * dateString;
@@ -58,9 +83,30 @@
     }else if (diffDay == 1) {
         dateString = @"明天";
     }else {
-        dateString = @"明天过后";
+        dateString = date;
     }
     return dateString;
+}
+
+
+// restore view location
+- (void)restoreViewLocation {
+    [UIView animateWithDuration:0.2
+                     animations:^{
+                         self.navigationController.view.frame = CGRectMake(0,
+                                                                           self.navigationController.view.frame.origin.y,
+                                                                           self.navigationController.view.frame.size.width,
+                                                                           self.navigationController.view.frame.size.height);
+                     }
+                     completion:^(BOOL finished){
+                         UIControl *overView = (UIControl *)[[[UIApplication sharedApplication] keyWindow] viewWithTag:10086];
+                         [overView removeFromSuperview];
+                     }];
+}
+
+- (IBAction)leftBarBtnTapped:(id)sender {
+    [[AppDelegate delegate] makeMenuViewVisible];
+    [self moveToRightSide];
 }
 
 #pragma 事件函数

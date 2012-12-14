@@ -10,8 +10,14 @@
 #import "LMLibrary.h"
 #import "UserManager.h"
 #import "SoundManager.h"
+#import "AppDelegate.h"
 
 static ReminderManager * sReminderManager;
+
+typedef enum {
+    BadgeOperateAdd = 0,
+    BadgeOperateSub
+}BadgeOperate;
 
 @implementation ReminderManager
 @synthesize delegate = _delegate;
@@ -98,31 +104,32 @@ static ReminderManager * sReminderManager;
                         reminder.desc = [object objectForKey:@"description"];
                         reminder.userID = [numberFormatter numberFromString:[object objectForKey:@"senderId"]];
                         reminder.triggerTime = [dateFormatter dateFromString:[object objectForKey:@"triggerTime"]];
-                        reminder.sendTime = [dateFormatter dateFromString:[object objectForKey:@"createTime"]];
+                        reminder.createTime = [dateFormatter dateFromString:[object objectForKey:@"createTime"]];
                         reminder.latitude = [object objectForKey:@"latitude"];
                         reminder.longitude = [object objectForKey:@"longitude"];
                         reminder.type = [NSNumber numberWithInteger:ReminderTypeReceive];
                         reminder.isRead = [numberFormatter numberFromString:[object objectForKey:@"state"]];
+                        reminder.audioLength = [numberFormatter numberFromString:[object objectForKey:@"audioLength"]];
                         
                         if (YES == [reminder.isRead boolValue]) {
                             if ([nowDate compare:reminder.triggerTime] == NSOrderedDescending) {
                                 //过期
-                                reminder.isBell = [NSNumber numberWithBool:YES];
+                                reminder.isAlarm = [NSNumber numberWithBool:YES];
                             }else {
                                 //未过期
                                 isBell = YES;
-                                reminder.isBell = [NSNumber numberWithBool:NO];
+                                reminder.isAlarm = [NSNumber numberWithBool:NO];
                             }
                         }else {
                             if ([nowDate compare:reminder.triggerTime] == NSOrderedAscending) {
                                 // 未过期
                                 isBell = YES;
                             }
-                            reminder.isBell = [NSNumber numberWithBool:NO];
+                            reminder.isAlarm = [NSNumber numberWithBool:NO];
                         }
                         
                         [self synchroniseToStore];
-                        
+                        [self appBadgeNumberWith:reminder.triggerTime withOperate:BadgeOperateAdd];
                         [[BilateralFriendManager defaultManager] modifyLastReminder:reminder.id withUserId:reminder.userID];
                         
                         if (NO == [reminder.isRead boolValue])  {
@@ -146,7 +153,7 @@ static ReminderManager * sReminderManager;
  */
 - (void)modifyReminderAudioUrl:(NSString *)path withAudioTime:(NSInteger)time withReminder:(Reminder *)reminder{
     reminder.audioUrl = path;
-    reminder.audioTime = [NSNumber numberWithInteger:time];
+    //reminder.audioLength = [NSNumber numberWithInteger:time];
     [self synchroniseToStore];
 }
 
@@ -173,6 +180,43 @@ static ReminderManager * sReminderManager;
     return localNotification;
 }
 
+- (void)appBadgeNumberWith:(NSDate *)triggerTime withOperate:(BadgeOperate)operate{
+    AppBadgeMode mode = [self appBadgeMode];
+    
+    NSDate * today = [NSDate date];
+    NSDate * tomorrow;
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    today = [formatter dateFromString:[formatter stringFromDate:today]];
+    tomorrow = [today dateByAddingTimeInterval:24*60*60];
+    
+    NSInteger badgeSize = 0;
+    badgeSize = [UIApplication sharedApplication].applicationIconBadgeNumber;
+    BOOL sign = NO;
+    if (AppBadgeModeToady == mode) {
+        if ([triggerTime compare:today] == NSOrderedDescending &&
+            [triggerTime compare:tomorrow] == NSOrderedAscending) {
+            sign = YES;
+        }
+    }else if (AppBadgeModeRecent == mode) {
+        if ([triggerTime compare:today] == NSOrderedDescending) {
+            sign = YES;
+            badgeSize += 1;
+        }
+    }
+    
+    if (YES == sign) {
+        if (operate == BadgeOperateAdd) {
+            badgeSize += 1;
+        }else {
+            badgeSize -= 1;
+        }
+        
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badgeSize];
+    }
+    
+}
+
 #pragma 静态函数
 + (ReminderManager *)defaultManager {
     if (nil == sReminderManager) {
@@ -185,11 +229,11 @@ static ReminderManager * sReminderManager;
 #pragma 类成员函数
 - (void)saveSentReminder:(Reminder *)reminder {
     if ([[reminder.userID stringValue] isEqualToString:[UserManager defaultManager].userID] ) {
-        reminder.isBell = [NSNumber numberWithBool:NO];
+        reminder.isAlarm = [NSNumber numberWithBool:NO];
         reminder.type = [NSNumber numberWithInteger:ReminderTypeReceive];
         [self addLocalNotificationWithReminder:reminder withBilateralFriend:nil];
     }else {
-        reminder.isBell = [NSNumber numberWithBool:YES];
+        reminder.isAlarm = [NSNumber numberWithBool:YES];
         reminder.type = [NSNumber numberWithInteger:ReminderTypeSend];
     }
     reminder.isRead = [NSNumber numberWithBool:YES];
@@ -198,15 +242,15 @@ static ReminderManager * sReminderManager;
     newReminder.audioUrl = reminder.audioUrl;
     newReminder.desc = reminder.desc;
     newReminder.id = reminder.id;
-    newReminder.isBell = reminder.isBell;
+    newReminder.isAlarm = reminder.isAlarm;
     newReminder.isRead = reminder.isRead;
     newReminder.latitude = reminder.latitude;
     newReminder.longitude = reminder.longitude;
-    newReminder.sendTime = reminder.sendTime;
+    newReminder.createTime = reminder.createTime;
     newReminder.triggerTime = reminder.triggerTime;
     newReminder.type = reminder.type;
     newReminder.userID = reminder.userID;
-    newReminder.audioTime = reminder.audioTime;
+    newReminder.audioLength = reminder.audioLength;
     
     if (! [self synchroniseToStore]) {
         return;
@@ -275,7 +319,7 @@ static ReminderManager * sReminderManager;
     NSDate * startDate = [formatter dateFromString:[formatter stringFromDate:date]];
     NSArray * results = nil;
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"isBell = NO AND triggerTime > %@ AND triggerTime < %@",startDate,date];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"isAlarm = NO AND triggerTime > %@ AND triggerTime < %@",startDate,date];
     NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"triggerTime" ascending:NO];
     NSArray * sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     
@@ -297,6 +341,7 @@ static ReminderManager * sReminderManager;
 - (void)sendReminder:(Reminder *)reminder {
     if ([[reminder.userID stringValue] isEqualToString:[UserManager defaultManager].userID]) {
         NSString * reminderId = [[NSDate date] description];
+        [self appBadgeNumberWith:reminder.triggerTime withOperate:BadgeOperateAdd];
         if (self.delegate != nil) {
             if ([self.delegate respondsToSelector:@selector(newReminderSuccess:)]) {
                 [self.delegate performSelector:@selector(newReminderSuccess:) withObject:reminderId];
@@ -365,8 +410,8 @@ static ReminderManager * sReminderManager;
     Reminder * reminder = [userInfo objectForKey:@"reminder"];
     if (200 == code) {
         NSString * audioPath = [userInfo objectForKey:@"destinationPath"];
-        NSInteger audioTime = [[SoundManager defaultSoundManager] audioTime:audioPath];
-        [self modifyReminderAudioUrl:audioPath withAudioTime:audioTime withReminder:reminder];
+        //NSInteger audioTime = [[SoundManager defaultSoundManager] audioTime:audioPath];
+        [self modifyReminderAudioUrl:audioPath withAudioTime:0 withReminder:reminder];
         if (self.delegate != nil) {
             if ([self.delegate respondsToSelector:@selector(downloadAudioFileSuccess:)]) {
                 [self.delegate performSelector:@selector(downloadAudioFileSuccess:) withObject:reminder];
@@ -474,8 +519,19 @@ static ReminderManager * sReminderManager;
 }
 
 - (void)modifyReminder:(Reminder *)reminder withBellState:(BOOL)isBell {
-    reminder.isBell = [NSNumber numberWithBool:isBell];
+    reminder.isAlarm = [NSNumber numberWithBool:isBell];
     [self synchroniseToStore];
+}
+
+- (void)modifyReminder:(Reminder *)reminder withState:(ReminderState)state {
+    reminder.state = [NSNumber numberWithInteger:state];
+    [self synchroniseToStore];
+    [self cancelLocalNotificationWithReminder:reminder];
+    [self appBadgeNumberWith:reminder.triggerTime withOperate:BadgeOperateSub];
+    
+    NSNotification * notification = nil;
+    notification = [NSNotification notificationWithName:kRemindesUpdateMessage object:nil];
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
 - (NSArray *)allRemindersWithReimnderType:(ReminderType)type {
@@ -494,14 +550,56 @@ static ReminderManager * sReminderManager;
     return results;
 }
 
-- (NSArray *)recentReminders {
+- (NSArray *)recentUnFinishedReminders {
     NSDate * date = [NSDate date];
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd"];
     NSArray * results = nil;
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
     NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"triggerTime" ascending:YES];
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"type = %d AND triggerTime >= %@",ReminderTypeReceive,[formatter dateFromString:[formatter stringFromDate:date]]];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"state = 0 AND type = %d AND triggerTime >= %@",ReminderTypeReceive,[formatter dateFromString:[formatter stringFromDate:date]]];
+    NSArray * sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    request.sortDescriptors = sortDescriptors;
+    request.predicate = predicate;
+    results = [self executeFetchRequest:request];
+    
+    if (nil == results || results.count == 0) {
+        return nil;
+    }
+    return results;
+}
+
+- (NSArray *)todayUnFinishedReminders {
+    NSDate * today = [NSDate date];
+    NSDate * tomorrow;
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    today = [formatter dateFromString:[formatter stringFromDate:today]];
+    tomorrow = [today dateByAddingTimeInterval:24*60*60];
+    NSArray * results = nil;
+    NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
+    NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"triggerTime" ascending:YES];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"state = 0 AND type = %d AND triggerTime >= %@ AND triggerTime < %@",ReminderTypeReceive,today,tomorrow];
+    NSArray * sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    request.sortDescriptors = sortDescriptors;
+    request.predicate = predicate;
+    results = [self executeFetchRequest:request];
+    
+    if (nil == results || results.count == 0) {
+        return nil;
+    }
+    return results;
+}
+
+- (NSArray *)historyReminders {
+    NSDate * today = [NSDate date];
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    today = [formatter dateFromString:[formatter stringFromDate:today]];
+    NSArray * results = nil;
+    NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
+    NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"triggerTime" ascending:NO];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"(type = %d AND triggerTime < %@) OR (type = %d AND triggerTime >= %@ AND state = 1)",ReminderTypeReceive,today,ReminderTypeReceive,today];
     NSArray * sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     request.sortDescriptors = sortDescriptors;
     request.predicate = predicate;
@@ -525,6 +623,41 @@ static ReminderManager * sReminderManager;
     }else {
         return [results objectAtIndex:0];
     }
+}
+
+- (void)storeAppBadgeMode:(AppBadgeMode)mode {
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:mode] forKey:@"AppBadgeMode"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    [self updateAppBadge];
+}
+
+- (AppBadgeMode)appBadgeMode {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSNumber * mode = [defaults objectForKey:@"AppBadgeMode"];
+    if (mode == nil) {
+        [self storeAppBadgeMode:AppBadgeModeToady];
+        return AppBadgeModeToady;
+    }
+    return [mode integerValue];
+}
+
+- (void)updateAppBadge {
+    AppBadgeMode mode = [self appBadgeMode];
+    NSInteger badgeSize;
+    NSArray * reminders;
+    if (AppBadgeModeToady == mode) {
+        reminders = [self todayUnFinishedReminders];
+    }else if (AppBadgeModeRecent == mode){
+        reminders = [self recentUnFinishedReminders];
+    }
+    if (nil != reminders) {
+        badgeSize = [reminders count];
+    }else {
+        badgeSize = 0;
+    }
+    
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badgeSize];
 }
 
 @end

@@ -194,6 +194,7 @@ static HttpRequestManager * sHttpRequestManager;
     [request setPostValue:reminder.longitude forKey:@"longitude"];
     [request setPostValue:reminder.latitude forKey:@"latitude"];
     [request setPostValue:reminder.desc forKey:@"description"];
+    [request setPostValue:reminder.audioLength forKey:@"audioLength"];
     [request setTimeOutSeconds:10];
     [request setUserInfo:[NSDictionary dictionaryWithObject:@"newReminder" forKey:@"request"]];
     [_networkQueue addOperation:request];

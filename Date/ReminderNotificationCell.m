@@ -15,7 +15,7 @@
 - (void)modifyReminderReadState{
     if (nil == self.reminder.isRead || NO == [self.reminder.isRead integerValue]) {
         [[ReminderManager defaultManager] modifyReminder:self.reminder withReadState:YES];
-        if (YES == [self.reminder.isRead integerValue]) {
+        if (YES == [self.reminder.isRead boolValue]) {
             [_btnMark setHidden:YES];
         }
     }
@@ -45,7 +45,7 @@
     
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yy-MM HH:mm"];
-    self.labelSendDate.text = [formatter stringFromDate:reminder.sendTime];
+    self.labelSendDate.text = [formatter stringFromDate:reminder.createTime];
     
     if (nil != reminder.isRead && YES == [reminder.isRead integerValue]) {
         [_btnMark setHidden:YES];

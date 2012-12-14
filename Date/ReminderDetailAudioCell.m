@@ -13,7 +13,7 @@
 @synthesize labelTitle = _labelTitle;
 
 - (void)modifyReminderReadState{
-    if (nil == self.reminder.isRead || NO == [self.reminder.isRead integerValue]) {
+    if (nil == self.reminder.isRead || NO == [self.reminder.isRead boolValue]) {
         [[ReminderManager defaultManager] modifyReminder:self.reminder withReadState:YES];
     }
 }
