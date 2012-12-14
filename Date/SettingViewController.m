@@ -18,7 +18,7 @@
 @implementation SettingViewController
 
 - (void)initMenuView {
-    UIBarButtonItem * leftItem = [[UIBarButtonItem alloc] initWithTitle:@"菜单" style:UIBarButtonItemStyleDone target:self action:@selector(leftBarBtnTapped:)];
+    UIBarButtonItem * leftItem = [[UIBarButtonItem alloc] initWithTitle:@"菜单" style:UIBarButtonItemStylePlain target:self action:@selector(leftBarBtnTapped:)];
     self.navigationItem.leftBarButtonItem = leftItem;
 }
 
