@@ -290,7 +290,6 @@ static HttpRequestManager * sHttpRequestManager;
     if ([requestType isEqualToString:@"register"]) {
         [self handleRegisterResponse:[request responseData]];
     }else if ([requestType isEqualToString:@"newReminder"]) {
-        NSString * str = [request responseString];
         [self handleNewReminderReponse:[request responseData]];
     }else if ([requestType isEqualToString:@"remoteReminders"]){
         [self handleRemoteRemindersReponse:[request responseData]];
