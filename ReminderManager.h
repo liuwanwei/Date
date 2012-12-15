@@ -58,6 +58,7 @@ typedef enum {
 - (NSArray *)recentUnFinishedReminders;
 - (NSArray *)todayUnFinishedReminders;
 - (NSArray *)historyReminders;
+- (NSArray *)collectingBoxReminders;
 
 - (void)sendReminder:(Reminder *)reminder;
 - (void)handleNewReminderResponse:(id)json;

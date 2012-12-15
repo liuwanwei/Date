@@ -20,6 +20,7 @@
     NSArray * _days;
     NSMutableArray * _hours;
     NSMutableArray * _minutes;
+    BOOL _setTime;
 }
 
 @end
@@ -38,7 +39,7 @@
 }
 
 - (void)initData {
-    _tags = [[NSArray alloc] initWithObjects:@"不要忘记买", @"不要忘记带", @"不要忘记做",@"奇思妙想", nil];
+    _tags = [[NSArray alloc] initWithObjects:@"不要忘记做", @"不要忘记带", @"不要忘记买",@"奇思妙想", nil];
     
     _days = [[NSArray alloc] initWithObjects:@"今天",@"明天",@"后天", nil];
     
@@ -58,6 +59,8 @@
     SoundManager * manager = [SoundManager defaultSoundManager];
     _reminder.audioUrl = [manager.recordFileURL relativePath];
     _reminder.audioLength = [NSNumber numberWithInteger:manager.currentRecordTime];
+
+    _setTime = YES;
 }
 
 - (void)initPickerView {
@@ -165,7 +168,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return 4;
 }
 
 #define IsZero(float) (float > - 0.000001 && float < 0.000001)
@@ -201,7 +204,18 @@
                 _reminder.desc = [_tags objectAtIndex:0];
             }
             cell.detailTextLabel.text =  _reminder.desc;
-        }else {
+        }else if (indexPath.row == 2) {
+            ReminderSettingTimeCell * timeCell;
+            CellIdentifier = @"ReminderSettingTimeCell";
+            timeCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+            if (timeCell == nil) {
+                timeCell = [[ReminderSettingTimeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                timeCell.delegate = self;
+            }
+            timeCell.labelTitle.text = @"时间";
+            cell = timeCell;
+            
+        }else if (indexPath.row == 3){
             cell.textLabel.text = @"地点";
             if (_reminder.longitude.length == 0 || _reminder.latitude.length == 0) {
                 cell.detailTextLabel.text = @"未设置";
@@ -277,5 +291,16 @@
 //    
 //    [cell.detailTextLabel setText:[self tiggerDate]];
     [self setReminderDate];
+}
+
+#pragma mark - ReminderSettingTimeCell Delegate
+- (void)valueChangedWithSwitch:(UISwitch *)sender {
+     [_pickerView setHidden:!_pickerView.hidden];
+    _setTime = !_setTime;
+    if (YES == _setTime) {
+        [self setReminderDate];
+    }else {
+        _reminder.triggerTime = nil;
+    }
 }
 @end

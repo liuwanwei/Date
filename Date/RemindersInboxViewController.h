@@ -10,8 +10,9 @@
 #import "RemindersBaseViewController.h"
 
 typedef enum {
-    DataTypeToday = 0,
-    DataTypeRecent = 1,
+    DataTypeCollectingBox = 0,
+    DataTypeToday = 1,
+    DataTypeRecent = 2,
     DataTypeHistory
 }DataType;
 
