@@ -52,6 +52,8 @@
 		3C1CB07616797B2A0025BDB2 /* buttonrBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C1CB07416797B2A0025BDB2 /* buttonrBg@2x.png */; };
 		3C1CB07A1679BA770025BDB2 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C1CB0781679BA760025BDB2 /* SettingViewController.m */; };
 		3C1CB07B1679BA770025BDB2 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C1CB0791679BA770025BDB2 /* SettingViewController.xib */; };
+		3C1CB07E167AFABE0025BDB2 /* ReminderSettingTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C1CB07D167AFABE0025BDB2 /* ReminderSettingTimeCell.m */; };
+		3C1CB080167AFAD60025BDB2 /* ReminderSettingTimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C1CB07F167AFAD60025BDB2 /* ReminderSettingTimeCell.xib */; };
 		3C1D19E71677702700524F2C /* ReminderSettingAudioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C1D19E61677702700524F2C /* ReminderSettingAudioCell.m */; };
 		3C1D19E91677703800524F2C /* ReminderSettingAudioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C1D19E81677703800524F2C /* ReminderSettingAudioCell.xib */; };
 		3C23E8AC1669A1A20098149A /* ReminderNotificationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C23E8AB1669A1A20098149A /* ReminderNotificationCell.m */; };
@@ -259,6 +261,9 @@
 		3C1CB0771679BA760025BDB2 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		3C1CB0781679BA760025BDB2 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		3C1CB0791679BA770025BDB2 /* SettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingViewController.xib; sourceTree = "<group>"; };
+		3C1CB07C167AFABE0025BDB2 /* ReminderSettingTimeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderSettingTimeCell.h; sourceTree = "<group>"; };
+		3C1CB07D167AFABE0025BDB2 /* ReminderSettingTimeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderSettingTimeCell.m; sourceTree = "<group>"; };
+		3C1CB07F167AFAD60025BDB2 /* ReminderSettingTimeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderSettingTimeCell.xib; sourceTree = "<group>"; };
 		3C1D19E51677702700524F2C /* ReminderSettingAudioCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderSettingAudioCell.h; sourceTree = "<group>"; };
 		3C1D19E61677702700524F2C /* ReminderSettingAudioCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderSettingAudioCell.m; sourceTree = "<group>"; };
 		3C1D19E81677703800524F2C /* ReminderSettingAudioCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderSettingAudioCell.xib; sourceTree = "<group>"; };
@@ -517,6 +522,7 @@
 				3C984EDF166C90D4005AA529 /* FriendReminderSenderCell.xib */,
 				3C34992F166F1062001012B6 /* ReminderInboxCell.xib */,
 				3C838F301675D5B700A85826 /* ReminderDetailAudioCell.xib */,
+				3C1CB07F167AFAD60025BDB2 /* ReminderSettingTimeCell.xib */,
 			);
 			name = cell;
 			sourceTree = "<group>";
@@ -545,6 +551,8 @@
 				3C34992D166EFC25001012B6 /* ReminderInboxCell.m */,
 				3C838F2D1675D59100A85826 /* ReminderDetailAudioCell.h */,
 				3C838F2E1675D59100A85826 /* ReminderDetailAudioCell.m */,
+				3C1CB07C167AFABE0025BDB2 /* ReminderSettingTimeCell.h */,
+				3C1CB07D167AFABE0025BDB2 /* ReminderSettingTimeCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -929,6 +937,7 @@
 				3C1CB07516797B2A0025BDB2 /* buttonBg.png in Resources */,
 				3C1CB07616797B2A0025BDB2 /* buttonrBg@2x.png in Resources */,
 				3C1CB07B1679BA770025BDB2 /* SettingViewController.xib in Resources */,
+				3C1CB080167AFAD60025BDB2 /* ReminderSettingTimeCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -994,6 +1003,7 @@
 				3C1D19E71677702700524F2C /* ReminderSettingAudioCell.m in Sources */,
 				3C1CB072167966990025BDB2 /* Reminder.m in Sources */,
 				3C1CB07A1679BA770025BDB2 /* SettingViewController.m in Sources */,
+				3C1CB07E167AFABE0025BDB2 /* ReminderSettingTimeCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
