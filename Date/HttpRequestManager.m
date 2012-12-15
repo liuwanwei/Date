@@ -189,7 +189,14 @@ static HttpRequestManager * sHttpRequestManager;
     NSTimeZone * timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
     [formatter setTimeZone:timeZone];
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSString * triggerTime = [formatter stringFromDate:reminder.triggerTime];
+    NSString * triggerTime;
+    if (nil != reminder.triggerTime) {
+        triggerTime = [formatter stringFromDate:reminder.triggerTime];
+        [request setPostValue:@"0" forKey:@"state"];
+    }else {
+        triggerTime = [formatter stringFromDate:[NSDate date]];
+        [request setPostValue:@"1" forKey:@"state"];
+    }
     [request setPostValue:triggerTime forKey:@"triggerTime"];
     [request setPostValue:reminder.longitude forKey:@"longitude"];
     [request setPostValue:reminder.latitude forKey:@"latitude"];

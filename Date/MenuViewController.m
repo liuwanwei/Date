@@ -52,7 +52,7 @@
 {
     [super viewDidLoad];
     [self initServerMode];
-    _rows = [[NSArray alloc] initWithObjects:@"今日提醒",@"近期提醒",@"收集箱",@"设置", nil];
+    _rows = [[NSArray alloc] initWithObjects:@"收集箱",@"今日提醒",@"近期提醒",@"历史",@"设置", nil];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     // Do any additional setup after loading the view from its nib.
@@ -105,12 +105,14 @@
         _settingViewController = nil;
     }
     if (0 == indexPath.row) {
-        [AppDelegate delegate].homeViewController.dataType = DataTypeToday;
+        [AppDelegate delegate].homeViewController.dataType = DataTypeCollectingBox;
     }else if (1 == indexPath.row) {
-        [AppDelegate delegate].homeViewController.dataType = DataTypeRecent;
+        [AppDelegate delegate].homeViewController.dataType = DataTypeToday;
     }else if (2 == indexPath.row) {
-        [AppDelegate delegate].homeViewController.dataType = DataTypeHistory;
+        [AppDelegate delegate].homeViewController.dataType = DataTypeRecent;
     }else if (3 == indexPath.row) {
+         [AppDelegate delegate].homeViewController.dataType = DataTypeHistory;
+    }else if (4 == indexPath.row) {
         if (_settingViewController == nil) {
             _settingViewController = [[SettingViewController alloc] initWithNibName:@"SettingViewController" bundle:nil];
         }
@@ -118,7 +120,7 @@
         [[AppDelegate delegate].navController pushViewController:_settingViewController animated:NO];
     }
     
-    if (indexPath.row <= 2) {
+    if (indexPath.row <= 3) {
         [[AppDelegate delegate].homeViewController initData];
     }
     [[AppDelegate delegate].homeViewController restoreViewLocation];

@@ -109,8 +109,11 @@
     }else if (DataTypeRecent == _dataType) {
         self.title = @"近期提醒";
         self.reminders = [self.reminderManager recentUnFinishedReminders];
-    }else if (DataTypeHistory == _dataType) {
+    }else if (DataTypeCollectingBox == _dataType) {
         self.title = @"收集箱";
+        self.reminders = [self.reminderManager collectingBoxReminders];
+    }else if (DataTypeHistory == _dataType) {
+        self.title = @"历史";
         self.reminders = [self.reminderManager historyReminders];
     }
     
@@ -124,7 +127,12 @@
         NSMutableArray * reminders;
         NSString * key;
         for (Reminder * reminder in self.reminders) {
-            key = [formatter stringFromDate:reminder.triggerTime];
+            if (nil == reminder.triggerTime) {
+                key = [formatter stringFromDate:reminder.createTime];
+            }else {
+                key = [formatter stringFromDate:reminder.triggerTime];
+            }
+            
             if (nil != key) {
                 if (nil == [_group objectForKey:key]) {
                     reminders = [[NSMutableArray alloc] init];

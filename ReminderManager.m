@@ -93,55 +93,68 @@ typedef enum {
     NSTimeZone * timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
     [dateFormatter setTimeZone:timeZone];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        for (id object in data) {
-            isBell = NO;
-            if ([object isKindOfClass:[NSDictionary class]]) {
-                NSString * reminderId = [object objectForKey:@"id"];
-                    if (nil == [self reminderWithId:reminderId]) {
-                        reminder = (Reminder *)[NSEntityDescription insertNewObjectForEntityForName:kReminderEntity inManagedObjectContext:self.managedObjectContext];
-                        reminder.id = [object objectForKey:@"id"];
-                        reminder.audioUrl = [object objectForKey:@"audio"];
-                        reminder.desc = [object objectForKey:@"description"];
-                        reminder.userID = [numberFormatter numberFromString:[object objectForKey:@"senderId"]];
-                        reminder.triggerTime = [dateFormatter dateFromString:[object objectForKey:@"triggerTime"]];
-                        reminder.createTime = [dateFormatter dateFromString:[object objectForKey:@"createTime"]];
-                        reminder.latitude = [object objectForKey:@"latitude"];
-                        reminder.longitude = [object objectForKey:@"longitude"];
-                        reminder.type = [NSNumber numberWithInteger:ReminderTypeReceive];
-                        reminder.isRead = [numberFormatter numberFromString:[object objectForKey:@"state"]];
-                        reminder.audioLength = [numberFormatter numberFromString:[object objectForKey:@"audioLength"]];
+    NSString * state;
+    NSString * reminderId;
+    for (id object in data) {
+        isBell = NO;
+        if ([object isKindOfClass:[NSDictionary class]]) {
+            reminderId = [object objectForKey:@"id"];
+            if (nil == [self reminderWithId:reminderId]) {
+                reminder = (Reminder *)[NSEntityDescription insertNewObjectForEntityForName:kReminderEntity inManagedObjectContext:self.managedObjectContext];
+                reminder.id = [object objectForKey:@"id"];
+                reminder.audioUrl = [object objectForKey:@"audio"];
+                reminder.desc = [object objectForKey:@"description"];
+                reminder.userID = [numberFormatter numberFromString:[object objectForKey:@"senderId"]];
+                reminder.createTime = [dateFormatter dateFromString:[object objectForKey:@"createTime"]];
+                reminder.latitude = [object objectForKey:@"latitude"];
+                reminder.longitude = [object objectForKey:@"longitude"];
+                reminder.type = [NSNumber numberWithInteger:ReminderTypeReceive];
+                //reminder.isRead = [numberFormatter numberFromString:[object objectForKey:@"state"]];
+                state = [object objectForKey:@"state"];
+                reminder.audioLength = [numberFormatter numberFromString:[object objectForKey:@"audioLength"]];
                         
-                        if (YES == [reminder.isRead boolValue]) {
-                            if ([nowDate compare:reminder.triggerTime] == NSOrderedDescending) {
-                                //过期
-                                reminder.isAlarm = [NSNumber numberWithBool:YES];
-                            }else {
-                                //未过期
-                                isBell = YES;
-                                reminder.isAlarm = [NSNumber numberWithBool:NO];
-                            }
-                        }else {
-                            if ([nowDate compare:reminder.triggerTime] == NSOrderedAscending) {
-                                // 未过期
-                                isBell = YES;
-                            }
-                            reminder.isAlarm = [NSNumber numberWithBool:NO];
-                        }
+                /*if (YES == [reminder.isRead boolValue]) {
+                    if ([nowDate compare:reminder.triggerTime] == NSOrderedDescending) {
+                        //过期
+                        reminder.isAlarm = [NSNumber numberWithBool:YES];
+                    }else {
+                        //未过期
+                        isBell = YES;
+                        reminder.isAlarm = [NSNumber numberWithBool:NO];
+                    }
+                }else {
+                    if ([nowDate compare:reminder.triggerTime] == NSOrderedAscending) {
+                        // 未过期
+                        isBell = YES;
+                    }
+                    reminder.isAlarm = [NSNumber numberWithBool:NO];
+                }*/
+                
+                if ([state isEqualToString:@"1"]) {
+                    reminder.triggerTime = nil;
+                }else {
+                    reminder.triggerTime = [dateFormatter dateFromString:[object objectForKey:@"triggerTime"]];
+                    if ([nowDate compare:reminder.triggerTime] == NSOrderedAscending) {
+                        isBell = YES;
+                    }
+                    reminder.isAlarm = [NSNumber numberWithBool:NO];
+                    [self appBadgeNumberWith:reminder.triggerTime withOperate:BadgeOperateAdd];
+                }
                         
-                        [self synchroniseToStore];
-                        [self appBadgeNumberWith:reminder.triggerTime withOperate:BadgeOperateAdd];
-                        [[BilateralFriendManager defaultManager] modifyLastReminder:reminder.id withUserId:reminder.userID];
+                [self synchroniseToStore];
+                [[BilateralFriendManager defaultManager] modifyLastReminder:reminder.id withUserId:reminder.userID];
                         
-                        if (NO == [reminder.isRead boolValue])  {
-                             [[BilateralFriendManager defaultManager] modifyUnReadRemindersSizeWithUserId: reminder.userID withOperateType:OperateTypeAdd];
-                        }
+                if (NO == [reminder.isRead boolValue])  {
+                    [[BilateralFriendManager defaultManager] modifyUnReadRemindersSizeWithUserId: reminder.userID withOperateType:OperateTypeAdd];
+                }
                        
-                        if (YES == isBell) {
-                            friend = [[BilateralFriendManager defaultManager]bilateralFriendWithUserID:reminder.userID];
-                            [self addLocalNotificationWithReminder:reminder withBilateralFriend:friend];
-                        }
+                if (YES == isBell) {
+                    friend = [[BilateralFriendManager defaultManager]bilateralFriendWithUserID:reminder.userID];
+                    [self addLocalNotificationWithReminder:reminder withBilateralFriend:friend];
+                }
             }
         }
+        
         NSNotification * notification = nil;
         notification = [NSNotification notificationWithName:kRemindesUpdateMessage object:nil];
         [[NSNotificationCenter defaultCenter] postNotification:notification];
@@ -600,6 +613,26 @@ typedef enum {
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
     NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"triggerTime" ascending:NO];
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"(type = %d AND triggerTime < %@) OR (type = %d AND triggerTime >= %@ AND state = 1)",ReminderTypeReceive,today,ReminderTypeReceive,today];
+    NSArray * sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    request.sortDescriptors = sortDescriptors;
+    request.predicate = predicate;
+    results = [self executeFetchRequest:request];
+    
+    if (nil == results || results.count == 0) {
+        return nil;
+    }
+    return results;
+}
+
+- (NSArray *)collectingBoxReminders {
+    NSDate * today = [NSDate date];
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    today = [formatter dateFromString:[formatter stringFromDate:today]];
+    NSArray * results = nil;
+    NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
+    NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createTime" ascending:NO];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"type = %d AND triggerTime = null",ReminderTypeReceive];
     NSArray * sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     request.sortDescriptors = sortDescriptors;
     request.predicate = predicate;
