@@ -39,7 +39,7 @@
 }
 
 - (void)initData {
-    _tags = [[NSArray alloc] initWithObjects:@"不要忘记做", @"不要忘记带", @"不要忘记买",@"奇思妙想", nil];
+    _tags = [[NSArray alloc] initWithObjects:@"记得做", @"记得带", @"记得买",@"记一下", nil];
     
     _days = [[NSArray alloc] initWithObjects:@"今天",@"明天",@"后天", nil];
     
