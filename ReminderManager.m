@@ -355,6 +355,12 @@ typedef enum {
     if ([[reminder.userID stringValue] isEqualToString:[UserManager defaultManager].userID]) {
         NSString * reminderId = [[NSDate date] description];
         [self appBadgeNumberWith:reminder.triggerTime withOperate:BadgeOperateAdd];
+        
+        reminder.id = reminderId;
+        reminder.createTime = [NSDate date];
+        [[BilateralFriendManager defaultManager] modifyLastReminder:reminder.id withUserId:reminder.userID];
+        [self saveSentReminder:reminder];
+        
         if (self.delegate != nil) {
             if ([self.delegate respondsToSelector:@selector(newReminderSuccess:)]) {
                 [self.delegate performSelector:@selector(newReminderSuccess:) withObject:reminderId];

@@ -21,6 +21,7 @@
     NSMutableArray * _hours;
     NSMutableArray * _minutes;
     BOOL _setTime;
+    BOOL _sending;
 }
 
 @end
@@ -39,7 +40,7 @@
 }
 
 - (void)initData {
-    _tags = [[NSArray alloc] initWithObjects:@"不要忘记做", @"不要忘记带", @"不要忘记买",@"奇思妙想", nil];
+    _tags = [[NSArray alloc] initWithObjects:@"记得做", @"记得带", @"记得买",@"记一下", nil];
     
     _days = [[NSArray alloc] initWithObjects:@"今天",@"明天",@"后天", nil];
     
@@ -61,6 +62,7 @@
     _reminder.audioLength = [NSNumber numberWithInteger:manager.currentRecordTime];
 
     _setTime = YES;
+    _sending = YES;
 }
 
 - (void)initPickerView {
@@ -93,9 +95,17 @@
 }
 
 - (void)chooseFriends {
-    ReminderSendingViewController * controller = [[ReminderSendingViewController alloc] initWithNibName:@"ReminderSendingViewController" bundle:nil];
-    controller.reminder = _reminder;
-    [self.navigationController pushViewController:controller animated:YES];
+    if (_sending) {
+        /* sending 发送给特定对象 */
+        ReminderSendingViewController * controller = [[ReminderSendingViewController alloc] initWithNibName:@"ReminderSendingViewController" bundle:nil];
+        controller.reminder = _reminder;
+        [self.navigationController pushViewController:controller animated:YES];
+    }else{
+        /* collecting 收集 */
+        _reminder.userID = [NSNumber numberWithInteger:[[[UserManager defaultManager] userID] integerValue] ];
+        [[ReminderManager defaultManager] sendReminder:_reminder];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
 }
 
 - (NSString *)tiggerDate {
@@ -168,7 +178,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    return 3;
 }
 
 #define IsZero(float) (float > - 0.000001 && float < 0.000001)
@@ -250,13 +260,14 @@
     
         [self.navigationController pushViewController:choiceViewController animated:YES];
     }
-    if (indexPath.section == 0 && indexPath.row == 2) {
-        ReminderMapViewController * controller = [[ReminderMapViewController alloc] initWithNibName:@"ReminderMapViewController" bundle:nil];
-        controller.reminder = _reminder;
-        controller.type = MapOperateTypeSet;
-        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
-        [self presentViewController:nav animated:YES completion:nil];
-    }
+    
+//    if (indexPath.section == 0 && indexPath.row == 2) {
+//        ReminderMapViewController * controller = [[ReminderMapViewController alloc] initWithNibName:@"ReminderMapViewController" bundle:nil];
+//        controller.reminder = _reminder;
+//        controller.type = MapOperateTypeSet;
+//        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
+//        [self presentViewController:nav animated:YES completion:nil];
+//    }
 }
 
 #pragma  mark - PickerView data source
@@ -295,6 +306,14 @@
 
 #pragma mark - ReminderSettingTimeCell Delegate
 - (void)valueChangedWithSwitch:(UISwitch *)sender {
+    if (_pickerView.hidden) {
+        _sending = YES;
+        self.navigationItem.rightBarButtonItem.title = @"发送";
+    }else{
+        _sending = NO;
+        self.navigationItem.rightBarButtonItem.title = @"收集";
+    }
+    
      [_pickerView setHidden:!_pickerView.hidden];
     _setTime = !_setTime;
     if (YES == _setTime) {
