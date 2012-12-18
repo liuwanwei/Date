@@ -15,6 +15,7 @@
 @interface MenuViewController () {
     ServerMode _serverMode;
     NSArray * _rows;
+    NSArray * _rowImages;
     SettingViewController * _settingViewController;
 }
 
@@ -52,7 +53,9 @@
 {
     [super viewDidLoad];
     [self initServerMode];
-    _rows = [[NSArray alloc] initWithObjects:@"收集箱",@"今日提醒",@"近期提醒",@"历史",@"设置", nil];
+    _rows = [[NSArray alloc] initWithObjects:@"今日提醒",@"近期提醒",@"历史", nil];
+    _rowImages = [[NSArray alloc] initWithObjects:@"today", @"recently", @"history", nil];
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     // Do any additional setup after loading the view from its nib.
@@ -77,12 +80,28 @@
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _rows.count;
+    if (section == 0) {
+        return 1;
+    }else if (section == 1){
+        return _rows.count;
+    }else{
+        return 1;
+    }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
+    if (section == 0) {
+        return @"收集";
+    }else if (section == 1){
+        return @"提醒";
+    }else{
+        return @"设置";
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -91,8 +110,18 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
+
+    UIImage * image = nil;
+    if (indexPath.section == 0) {
+        cell.textLabel.text = @"收集";
+    }else if (indexPath.section == 1){
+        cell.textLabel.text = [_rows objectAtIndex:indexPath.row];
+//        image = [UIImage imageNamed:[_rowImages objectAtIndex:indexPath.row]];
+    }else if (indexPath.section == 2){
+        cell.textLabel.text = @"设置";
+    }
     
-    cell.textLabel.text = [_rows objectAtIndex:indexPath.row];
+    cell.imageView.image = image;
     return cell;
 }
 
@@ -104,25 +133,26 @@
         [[AppDelegate delegate].navController popToRootViewControllerAnimated:NO];
         _settingViewController = nil;
     }
-    if (0 == indexPath.row) {
+    
+    if (0 == indexPath.section && 0 == indexPath.row) {
         [AppDelegate delegate].homeViewController.dataType = DataTypeCollectingBox;
-    }else if (1 == indexPath.row) {
-        [AppDelegate delegate].homeViewController.dataType = DataTypeToday;
-    }else if (2 == indexPath.row) {
-        [AppDelegate delegate].homeViewController.dataType = DataTypeRecent;
-    }else if (3 == indexPath.row) {
-         [AppDelegate delegate].homeViewController.dataType = DataTypeHistory;
-    }else if (4 == indexPath.row) {
+    }else if (1 == indexPath.section) {
+        uint row = indexPath.row;
+        uint types[] = {DataTypeToday, DataTypeRecent, DataTypeHistory};
+        [AppDelegate delegate].homeViewController.dataType = types[row];
+    }else if (2 == indexPath.section){
         if (_settingViewController == nil) {
             _settingViewController = [[SettingViewController alloc] initWithNibName:@"SettingViewController" bundle:nil];
         }
         
         [[AppDelegate delegate].navController pushViewController:_settingViewController animated:NO];
+
     }
     
-    if (indexPath.row <= 3) {
+    if (indexPath.section == 0 || indexPath.section == 1) {
         [[AppDelegate delegate].homeViewController initData];
     }
+    
     [[AppDelegate delegate].homeViewController restoreViewLocation];
 }
 

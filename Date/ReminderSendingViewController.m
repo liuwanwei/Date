@@ -158,7 +158,7 @@
     _reminderManager.delegate = nil;
     [[MBProgressManager defaultManager] removeHUD];
     [self.navigationController popToRootViewControllerAnimated:YES];
-    [self saveSendReminder:reminderId];
+//    [self saveSendReminder:reminderId]; move to ReminderManager::sendReminder.不跟界面绑定。
 }
 
 - (void)newReminderFailed {

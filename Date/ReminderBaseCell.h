@@ -29,6 +29,7 @@ typedef enum {
 @interface ReminderBaseCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet EGOImageView * image;
+@property (weak, nonatomic) IBOutlet UILabel * labelDescription;
 @property (weak, nonatomic) IBOutlet UILabel * labelTriggerDate;
 @property (weak, nonatomic) IBOutlet UIButton * btnAudio;
 @property (weak, nonatomic) IBOutlet UIButton * btnMap;

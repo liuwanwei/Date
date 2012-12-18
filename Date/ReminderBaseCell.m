@@ -17,6 +17,7 @@
 
 @implementation ReminderBaseCell
 
+@synthesize labelDescription = _labelDescription;
 @synthesize btnAudio = _btnAudio;
 @synthesize btnMap = _btnMap;
 @synthesize image = _image;
@@ -59,6 +60,8 @@
         }else {
             _labelNickname.text = _bilateralFriend.nickname;
         }
+        
+        _labelDescription.text = _reminder.desc;
         
     }
 }
