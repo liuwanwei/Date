@@ -38,6 +38,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView * indicatorView;
 @property (weak, nonatomic) IBOutlet UILabel * labelSendDate;
 @property (weak, nonatomic) IBOutlet UILabel * labelAudioTime;
+@property (weak, nonatomic) IBOutlet UIButton * btnFinished;
 
 @property (weak, nonatomic) Reminder * reminder;
 @property (weak, nonatomic) BilateralFriend * bilateralFriend;
@@ -49,6 +50,7 @@ typedef enum {
 
 - (IBAction)palyAudio:(UIButton *)sender;
 - (IBAction)showMap:(UIButton *)sender;
+- (IBAction)finish:(UIButton *)sender;
 
 - (void)modifyReminderReadState;
 @end

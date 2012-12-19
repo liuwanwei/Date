@@ -35,17 +35,17 @@
     UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 300, 100)];
     if (_detailViewShowMode == DeailViewShowModePresent) {
         _btnUnFinish = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        _btnUnFinish.layer.frame = CGRectMake(10, 15, 300, 44);
+        _btnUnFinish.layer.frame = CGRectMake(50, 15, 100, 44);
         [_btnUnFinish setBackgroundImage:[UIImage imageNamed:@"buttonBg"] forState:UIControlStateNormal];
-        [_btnUnFinish setTitle:@"稍候完成" forState:UIControlStateNormal];
+        [_btnUnFinish setTitle:@"稍候" forState:UIControlStateNormal];
         [_btnUnFinish setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_btnUnFinish addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
         [view addSubview:_btnUnFinish];
     }
     
     _btnFinish = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    _btnFinish.layer.frame = CGRectMake(10, 70, 300, 44);
-    [_btnFinish setTitle:@"已完成" forState:UIControlStateNormal];
+    _btnFinish.layer.frame = CGRectMake(170, 15, 100, 44);
+    [_btnFinish setTitle:@"完成" forState:UIControlStateNormal];
     [_btnFinish setBackgroundImage:[UIImage imageNamed:@"buttonBg"] forState:UIControlStateNormal];
     [_btnFinish setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_btnFinish addTarget:self action:@selector(modifyReminderState) forControlEvents:UIControlEventTouchUpInside];
@@ -85,9 +85,9 @@
     [super viewDidLoad];
     if (nil != _reminder) {
         if (nil == _reminder.longitude || [_reminder.longitude isEqualToString:@"0"]) {
-            _sections = [[NSArray alloc] initWithObjects:@"内容", @"闹铃时间",nil];
+            _sections = [[NSArray alloc] initWithObjects:@"内容", @"时间",nil];
         }else {
-            _sections = [[NSArray alloc] initWithObjects:@"内容", @"闹铃时间",@"地图",nil];
+            _sections = [[NSArray alloc] initWithObjects:@"内容", @"时间",@"地图",nil];
         }
     }
     _dateFormatter = [[NSDateFormatter alloc] init];

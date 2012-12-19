@@ -200,6 +200,7 @@
     SoundManager * manager = [SoundManager defaultSoundManager];
     if (YES == [manager stopRecord]) {
         ReminderSettingViewController * controller = [[ReminderSettingViewController alloc] initWithNibName:@"ReminderSettingViewController" bundle:nil];
+        controller.settingMode = SettingModeNew;
         [self.navigationController pushViewController:controller animated:YES];
     }
 }
@@ -242,6 +243,7 @@
     cell.audioState = AudioStateNormal;
     return cell;
 }
+
 
 // Override to support editing the table view.
 /*- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath

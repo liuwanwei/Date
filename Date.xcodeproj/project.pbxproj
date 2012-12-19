@@ -117,6 +117,10 @@
 		3CE0AC581650D79F004B785A /* SinaWeiboManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE0AC571650D79F004B785A /* SinaWeiboManager.m */; };
 		3CE0AC5E1650F521004B785A /* BilateralFriendManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE0AC5D1650F521004B785A /* BilateralFriendManager.m */; };
 		3CE0AC6D1650FA8D004B785A /* libLMLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CE0AC6A1650FA76004B785A /* libLMLibrary.a */; };
+		3CE850A116803DA50025ECA3 /* checkboxCompleted.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CE8509D16803DA50025ECA3 /* checkboxCompleted.png */; };
+		3CE850A216803DA50025ECA3 /* checkboxCompleted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CE8509E16803DA50025ECA3 /* checkboxCompleted@2x.png */; };
+		3CE850A316803DA50025ECA3 /* checkboxOri.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CE8509F16803DA50025ECA3 /* checkboxOri.png */; };
+		3CE850A416803DA50025ECA3 /* checkboxOri@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CE850A016803DA50025ECA3 /* checkboxOri@2x.png */; };
 		3CEFEC4616521FE3005BF516 /* HttpRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CEFEC4516521FE3005BF516 /* HttpRequestManager.m */; };
 		3CF017E1165B500E00F83814 /* ReminderSendingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CF017DF165B500E00F83814 /* ReminderSendingViewController.m */; };
 		3CF017E2165B500E00F83814 /* ReminderSendingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CF017E0165B500E00F83814 /* ReminderSendingViewController.xib */; };
@@ -348,6 +352,10 @@
 		3CE0AC5C1650F521004B785A /* BilateralFriendManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BilateralFriendManager.h; sourceTree = "<group>"; };
 		3CE0AC5D1650F521004B785A /* BilateralFriendManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BilateralFriendManager.m; sourceTree = "<group>"; };
 		3CE0AC621650FA75004B785A /* LMLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LMLibrary.xcodeproj; path = ../LMLibrary/LMLibrary.xcodeproj; sourceTree = "<group>"; };
+		3CE8509D16803DA50025ECA3 /* checkboxCompleted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkboxCompleted.png; path = Resources/images/checkboxCompleted.png; sourceTree = "<group>"; };
+		3CE8509E16803DA50025ECA3 /* checkboxCompleted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "checkboxCompleted@2x.png"; path = "Resources/images/checkboxCompleted@2x.png"; sourceTree = "<group>"; };
+		3CE8509F16803DA50025ECA3 /* checkboxOri.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkboxOri.png; path = Resources/images/checkboxOri.png; sourceTree = "<group>"; };
+		3CE850A016803DA50025ECA3 /* checkboxOri@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "checkboxOri@2x.png"; path = "Resources/images/checkboxOri@2x.png"; sourceTree = "<group>"; };
 		3CEFEC4416521FE3005BF516 /* HttpRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestManager.h; sourceTree = "<group>"; };
 		3CEFEC4516521FE3005BF516 /* HttpRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpRequestManager.m; sourceTree = "<group>"; };
 		3CF017DE165B500D00F83814 /* ReminderSendingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderSendingViewController.h; sourceTree = "<group>"; };
@@ -589,6 +597,10 @@
 		3CE0ABF916507EA2004B785A /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3CE8509D16803DA50025ECA3 /* checkboxCompleted.png */,
+				3CE8509E16803DA50025ECA3 /* checkboxCompleted@2x.png */,
+				3CE8509F16803DA50025ECA3 /* checkboxOri.png */,
+				3CE850A016803DA50025ECA3 /* checkboxOri@2x.png */,
 				3C1CB07316797B2A0025BDB2 /* buttonBg.png */,
 				3C1CB07416797B2A0025BDB2 /* buttonrBg@2x.png */,
 				3C984EC5166C83CD005AA529 /* btnClock.png */,
@@ -793,7 +805,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Liu&Mao";
 			};
-			buildConfigurationList = 3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "Date" */;
+			buildConfigurationList = 3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "date" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -938,6 +950,10 @@
 				3C1CB07616797B2A0025BDB2 /* buttonrBg@2x.png in Resources */,
 				3C1CB07B1679BA770025BDB2 /* SettingViewController.xib in Resources */,
 				3C1CB080167AFAD60025BDB2 /* ReminderSettingTimeCell.xib in Resources */,
+				3CE850A116803DA50025ECA3 /* checkboxCompleted.png in Resources */,
+				3CE850A216803DA50025ECA3 /* checkboxCompleted@2x.png in Resources */,
+				3CE850A316803DA50025ECA3 /* checkboxOri.png in Resources */,
+				3CE850A416803DA50025ECA3 /* checkboxOri@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1230,7 +1246,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "Date" */ = {
+		3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "date" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C13E89B164DF4DB006424A2 /* Debug */,

@@ -8,6 +8,7 @@
 
 #import "RemindersBaseViewController.h"
 #import "ReminderDetailViewController.h"
+#import "ReminderSettingViewController.h"
 #import "AppDelegate.h"
 
 @interface RemindersBaseViewController () {
@@ -162,9 +163,9 @@
 {
     ReminderBaseCell * cell = (ReminderBaseCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     
-    ReminderDetailViewController * controller = [[ReminderDetailViewController alloc] initWithNibName:@"ReminderDetailViewController" bundle:nil];
+    ReminderSettingViewController * controller = [[ReminderSettingViewController alloc] initWithNibName:@"ReminderSettingViewController" bundle:nil];
     controller.reminder = cell.reminder;
-    controller.friend = cell.bilateralFriend;
+    controller.settingMode = SettingModeModify;
     [self.navigationController pushViewController:controller animated:YES];
 }
 
