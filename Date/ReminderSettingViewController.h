@@ -11,10 +11,18 @@
 #import "RemindersBaseViewController.h"
 #import "ReminderSettingTimeCell.h"
 
+typedef enum {
+    SettingModeNew = 0,
+    SettingModeModify
+}SettingMode;
+
 @interface ReminderSettingViewController : RemindersBaseViewController <UITableViewDelegate, UITableViewDataSource,UIPickerViewDelegate,UIPickerViewDataSource, ChoiceViewDelegate,ReminderSettingTimeCellDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView * tableView;
 @property (weak, nonatomic) IBOutlet UIPickerView * pickerView;
+
+@property (strong, nonatomic)  Reminder * reminder;
+@property (nonatomic) SettingMode settingMode;
 
 - (IBAction)startRecord:(id)sender;
 - (IBAction)stopRecord:(id)sender;

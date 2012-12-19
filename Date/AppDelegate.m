@@ -85,8 +85,6 @@
         //NSString * reminderId = [localNotif.userInfo objectForKey:@"key"];
     }
     
-    [[ReminderManager defaultManager] updateAppBadge];
-    
     return YES;
 }
 
@@ -129,6 +127,7 @@
     [[SinaWeiboManager defaultManager].sinaWeibo applicationDidBecomeActive];
     [[ReminderManager defaultManager] getRemoteRemindersRequest];
     [self checkRemindersExpired];
+    [[ReminderManager defaultManager] updateAppBadge];
     //UIApplicationState state = application.applicationState;
 }
 

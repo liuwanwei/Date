@@ -278,6 +278,39 @@ typedef enum {
     [self deleteFromStore:reminder synchronized:YES];
 }
 
+- (void)modifyReminder:(Reminder *)reminder withTriggerTime:(NSDate *)triggerTime withDesc:(NSString *)desc {
+    if (nil != reminder) {
+        reminder.desc = desc;
+        BOOL sign = NO;
+        if (nil == reminder.triggerTime || [reminder.triggerTime compare:triggerTime] != NSOrderedSame) {
+            sign = YES;
+            reminder.isAlarm = [NSNumber numberWithBool:NO];
+            reminder.triggerTime = triggerTime;
+        }
+        
+        if (! [self synchroniseToStore]) {
+            return;
+        }
+
+        if (YES == sign) {
+            [self cancelLocalNotificationWithReminder:reminder];
+            if ([[reminder.userID stringValue] isEqualToString:[UserManager defaultManager].userID] ) {
+                [[ReminderManager defaultManager] addLocalNotificationWithReminder:reminder withBilateralFriend:nil];
+            }else {
+                BilateralFriend * friend = [[BilateralFriendManager defaultManager]bilateralFriendWithUserID:reminder.userID];
+                [[ReminderManager defaultManager] addLocalNotificationWithReminder:reminder withBilateralFriend:friend];
+            }
+            
+            [self updateAppBadge];
+        }
+
+        NSNotification * notification = nil;
+        notification = [NSNotification notificationWithName:kRemindesUpdateMessage object:nil];
+        [[NSNotificationCenter defaultCenter] postNotification:notification];
+
+    }
+}
+
 - (NSMutableDictionary *)remindersWithId:(NSArray *) remindersId {
     NSMutableDictionary * results = nil;
     if (nil == remindersId) {
@@ -327,12 +360,12 @@ typedef enum {
 
 - (NSArray *)remindersExpired {
     NSDate * date = [NSDate date];
-    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd"];
-    NSDate * startDate = [formatter dateFromString:[formatter stringFromDate:date]];
+    //NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    //[formatter setDateFormat:@"yyyy-MM-dd"];
+    //NSDate * startDate = [formatter dateFromString:[formatter stringFromDate:date]];
     NSArray * results = nil;
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"isAlarm = NO AND triggerTime > %@ AND triggerTime < %@",startDate,date];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"isAlarm = NO AND triggerTime < %@",date];
     NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"triggerTime" ascending:NO];
     NSArray * sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     

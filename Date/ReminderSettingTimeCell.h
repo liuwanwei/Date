@@ -18,8 +18,10 @@
 
 @property (weak, nonatomic) IBOutlet UILabel * labelTitle;
 @property (weak, nonatomic) IBOutlet UISwitch * switchTime;
+@property (weak, nonatomic) IBOutlet UILabel * labelTriggerTime;
 
 @property (weak, nonatomic) id<ReminderSettingTimeCellDelegate> delegate;
+@property (weak, nonatomic) NSDate * triggerTime;
 
 - (IBAction)valueChanged:(UISwitch *)sender;
 @end

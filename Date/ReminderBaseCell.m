@@ -31,6 +31,7 @@
 @synthesize labelSendDate = _labelSendDate;
 @synthesize labelNickname = _labelNickname;
 @synthesize labelAudioTime = _labelAudioTime;
+@synthesize btnFinished = _btnFinished;
 
 - (void)setReminder:(Reminder *)reminer {
     if (nil != reminer) {
@@ -146,6 +147,12 @@
         if ([self.delegate respondsToSelector:@selector(clickMapButton: withReminder:)]) {
             [self.delegate performSelector:@selector(clickMapButton: withReminder:) withObject:_indexPath withObject:_reminder];
         }
+    }
+}
+
+- (IBAction)finish:(UIButton *)sender {
+    if ([_reminder.state integerValue] == ReminderStateUnFinish) {
+        [[ReminderManager defaultManager] modifyReminder:_reminder withState:ReminderStateFinish];
     }
 }
 

@@ -15,13 +15,15 @@
 #import "ReminderSettingAudioCell.h"
 
 @interface ReminderSettingViewController () {
-    Reminder * _reminder;
     NSArray * _tags;
     NSArray * _days;
     NSMutableArray * _hours;
     NSMutableArray * _minutes;
     BOOL _setTime;
     BOOL _sending;
+    UIButton * _btnFinish;
+    UIButton * _btnUnFinish;
+    NSDate * _triggerTime;
 }
 
 @end
@@ -29,6 +31,8 @@
 @implementation ReminderSettingViewController
 @synthesize tableView = _tableView;
 @synthesize pickerView = _pickerView;
+@synthesize settingMode = _settingMode;
+@synthesize reminder = _reminder;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -57,11 +61,20 @@
         [_hours addObject:[NSString stringWithFormat:@"%02d", i]];
     }
     
-    SoundManager * manager = [SoundManager defaultSoundManager];
-    _reminder.audioUrl = [manager.recordFileURL relativePath];
-    _reminder.audioLength = [NSNumber numberWithInteger:manager.currentRecordTime];
+    if (SettingModeNew == _settingMode) {
+        SoundManager * manager = [SoundManager defaultSoundManager];
+        _reminder.audioUrl = [manager.recordFileURL relativePath];
+        _reminder.audioLength = [NSNumber numberWithInteger:manager.currentRecordTime];
+    }
+    
+    if (SettingModeNew == _settingMode) {
+        _setTime = YES;
+       
+    }else {
+        _setTime = NO;
+        _triggerTime = _reminder.triggerTime;
+    }
 
-    _setTime = YES;
     _sending = YES;
 }
 
@@ -69,7 +82,6 @@
     NSDate * now = [NSDate date];
     self.pickerView.delegate = self;
     self.pickerView.dataSource = self;
-    [self.pickerView setHidden:NO];
     
     [_pickerView selectRow:1 inComponent:0 animated:NO];
     NSDateFormatter * hour = [[NSDateFormatter alloc] init];
@@ -80,6 +92,10 @@
     [hour setDateFormat:@"mm"];
     currentDateStr = [hour stringFromDate:now];
     [_pickerView selectRow:6 inComponent:2 animated:NO];
+    
+    if (SettingModeModify == _settingMode) {
+         [self.pickerView setHidden:YES];
+    }
 }
 
 - (void)setReminderDate {
@@ -91,10 +107,12 @@
     triggerDate = [triggerDate dateByAddingTimeInterval:24*60*60*[_pickerView selectedRowInComponent:0]];
     triggerDate = [triggerDate dateByAddingTimeInterval:[_pickerView selectedRowInComponent:1]*60*60];
     triggerDate = [triggerDate dateByAddingTimeInterval:[_pickerView selectedRowInComponent:2]*5*60];
-    _reminder.triggerTime = triggerDate;
+    //_reminder.triggerTime = triggerDate;
+   _triggerTime = triggerDate;
 }
 
 - (void)chooseFriends {
+    _reminder.triggerTime = _triggerTime;
     if (_sending) {
         /* sending 发送给特定对象 */
         ReminderSendingViewController * controller = [[ReminderSendingViewController alloc] initWithNibName:@"ReminderSendingViewController" bundle:nil];
@@ -102,10 +120,15 @@
         [self.navigationController pushViewController:controller animated:YES];
     }else{
         /* collecting 收集 */
-        _reminder.userID = [NSNumber numberWithInteger:[[[UserManager defaultManager] userID] integerValue] ];
+        _reminder.userID = [NSNumber numberWithLongLong:[[[UserManager defaultManager] userID] longLongValue] ];
         [[ReminderManager defaultManager] sendReminder:_reminder];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }
+}
+
+- (void)modifyReminder {
+    [[ReminderManager defaultManager] modifyReminder:_reminder withTriggerTime:_triggerTime withDesc:_reminder.desc];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (NSString *)tiggerDate {
@@ -127,13 +150,21 @@
     self.title = @"约定";
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    self.tableView.rowHeight = 44.0; 
-    _reminder = [[ReminderManager defaultManager] reminder];
+    self.tableView.rowHeight = 44.0;
+    if (SettingModeNew == _settingMode) {
+         _reminder = [[ReminderManager defaultManager] reminder];
+        [self setReminderDate];
+    }
     [self initData];
     [self initPickerView];
-    [self setReminderDate];
     
-    UIBarButtonItem * rightItem = [[UIBarButtonItem alloc] initWithTitle:@"发送" style:UIBarButtonItemStyleBordered target:self action:@selector(chooseFriends)];
+    UIBarButtonItem * rightItem;
+    if (SettingModeNew == _settingMode) {
+        rightItem = [[UIBarButtonItem alloc] initWithTitle:@"发送" style:UIBarButtonItemStyleBordered target:self action:@selector(chooseFriends)];
+    }else {
+        rightItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(modifyReminder)];
+    }
+   
     self.navigationItem.rightBarButtonItem = rightItem;
 }
 
@@ -223,6 +254,10 @@
                 timeCell.delegate = self;
             }
             timeCell.labelTitle.text = @"时间";
+            if (SettingModeModify == _settingMode) {
+                timeCell.triggerTime = _reminder.triggerTime;
+
+            }
             cell = timeCell;
             
         }else if (indexPath.row == 3){
@@ -308,10 +343,20 @@
 - (void)valueChangedWithSwitch:(UISwitch *)sender {
     if (_pickerView.hidden) {
         _sending = YES;
-        self.navigationItem.rightBarButtonItem.title = @"发送";
+        if (SettingModeNew == _settingMode) {
+            self.navigationItem.rightBarButtonItem.title = @"发送";
+        }else {
+            self.navigationItem.rightBarButtonItem.title = @"保存";
+        }
+        
     }else{
         _sending = NO;
-        self.navigationItem.rightBarButtonItem.title = @"收集";
+        if (SettingModeNew == _settingMode) {
+             self.navigationItem.rightBarButtonItem.title = @"收集";
+        }else {
+             self.navigationItem.rightBarButtonItem.title = @"保存";
+        }
+       
     }
     
      [_pickerView setHidden:!_pickerView.hidden];
@@ -319,7 +364,13 @@
     if (YES == _setTime) {
         [self setReminderDate];
     }else {
-        _reminder.triggerTime = nil;
+        //_reminder.triggerTime = nil;
+        if (SettingModeNew == _settingMode) {
+            _triggerTime = nil;
+        }else {
+            _triggerTime = _reminder.triggerTime;
+        }
+      
     }
 }
 @end

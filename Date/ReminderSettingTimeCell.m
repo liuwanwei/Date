@@ -12,6 +12,8 @@
 @synthesize labelTitle = _labelTitle;
 @synthesize switchTime = _switchTime;
 @synthesize delegate = _delegate;
+@synthesize triggerTime = _triggerTime;
+@synthesize labelTriggerTime = _labelTriggerTime;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -35,6 +37,18 @@
         if ([self.delegate respondsToSelector:@selector(valueChangedWithSwitch:)]) {
             [self.delegate performSelector:@selector(valueChangedWithSwitch:) withObject:sender];
         }
+    }
+}
+
+- (void)setTriggerTime:(NSDate *)triggerTime {
+    if (nil == triggerTime) {
+        [_switchTime setOn:NO];
+        _labelTriggerTime.text = @"";
+    }else {
+        NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"MM-dd HH:mm"];
+        _labelTriggerTime.text = [dateFormatter stringFromDate:triggerTime];
+        [_switchTime setOn:NO];
     }
 }
 
