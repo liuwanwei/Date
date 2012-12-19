@@ -50,6 +50,7 @@ typedef enum {
 
 - (void)saveSentReminder:(Reminder *)reminder;
 - (void)deleteReminder:(Reminder *)reminder;
+- (void)modifyReminder:(Reminder *)reminder withTriggerTime:(NSDate *)triggerTime withDesc:(NSString *)desc;
 
 - (NSMutableDictionary *)remindersWithId:(NSArray *) remindersId;
 - (NSArray *)remindersWithUserId:(NSNumber *)userId;

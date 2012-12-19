@@ -51,16 +51,20 @@
         
         if (nil != reminer.isRead && YES == [reminer.isRead integerValue]) {
             [_btnMark setHidden:YES];
+            [self.btnFinished setHidden:NO];
         }else {
             [_btnMark setHidden:NO];
+            [self.btnFinished setHidden:YES];
         }
         
         if (ReminderStateFinish == [reminer.state integerValue]) {
             self.labelTriggerDate.textColor = RGBColor(153,153,153);
             self.labelTriggerDate.font = [UIFont systemFontOfSize:14.0];
+            [self.btnFinished setBackgroundImage:[UIImage imageNamed:@"checkboxCompleted"] forState:UIControlStateNormal];
         }else{
             self.labelTriggerDate.textColor = RGBColor(0,0,0);
             self.labelTriggerDate.font = [UIFont boldSystemFontOfSize:14.0];
+            [self.btnFinished setBackgroundImage:[UIImage imageNamed:@"checkboxOri"] forState:UIControlStateNormal];
         }
 //        if (YES == [reminer.isBell boolValue]) {
 //            [_labelBellSign setHidden:NO];
