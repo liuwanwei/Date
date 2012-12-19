@@ -41,11 +41,6 @@
         self.navigationItem.leftBarButtonItem = leftItem;
 }
 
-- (void)showLoginViewController {
-    _loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
-    [self presentViewController:_loginViewController animated:YES completion:nil];
-}
-
 - (void)addUserId:(NSNumber *)userId {
     if (nil == [_usersIdDictionary objectForKey:[userId stringValue]]) {
         [_usersIdDictionary setValue:userId forKey:[userId stringValue]];
@@ -102,6 +97,11 @@
 }
 
 #pragma 类成员函数
+- (void)showLoginViewController {
+    _loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+    [self presentViewController:_loginViewController animated:YES completion:nil];
+}
+
 - (void)initData {
     if (DataTypeToday == _dataType) {
         self.title = @"今日提醒";
@@ -176,7 +176,7 @@
     [self registerHandleMessage];
     
     if (NO == [_sinaWeiboManager.sinaWeibo isAuthValid]) {
-        [self showLoginViewController];
+        //[self showLoginViewController];
     }else {
         [_sinaWeiboManager requestBilateralFriends];
         [[BilateralFriendManager defaultManager] checkRegisteredFriendsRequest];

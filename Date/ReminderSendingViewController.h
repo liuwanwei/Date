@@ -16,5 +16,6 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell * friendCell;
 
 @property (weak, nonatomic) Reminder * reminder;
+@property (weak, nonatomic) NSDate * triggerTime;
 
 @end

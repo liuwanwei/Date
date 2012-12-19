@@ -74,7 +74,12 @@ expirationDate == nil) {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDictionary * userAuthData = [defaults objectForKey:@"SinaWeiboAuthData"];
 
-    return [userAuthData objectForKey:@"UserIDKey"];
+    NSString * userId = [userAuthData objectForKey:@"UserIDKey"];
+    if (nil == userId) {
+        return @"0";
+    }
+    
+    return userId;
 }
 
 - (NSString *)accessToken {

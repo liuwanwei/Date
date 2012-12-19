@@ -7,6 +7,7 @@
 //
 
 #import "SettingViewController.h"
+#import "ReminderManager.h"
 
 @interface SettingViewController () {
     NSArray * _appBadgeSignRows;
@@ -16,6 +17,7 @@
 @end
 
 @implementation SettingViewController
+@synthesize tableView = _tableView;
 
 - (void)initMenuView {
     UIBarButtonItem * leftItem = [[UIBarButtonItem alloc] initWithTitle:@"菜单" style:UIBarButtonItemStylePlain target:self action:@selector(leftBarBtnTapped:)];
@@ -39,7 +41,9 @@
     _appBadgeSignRows = [[NSArray alloc] initWithObjects:@"不显示",@"今日提醒",@"近期提醒", nil];
     self.navigationController.navigationItem.hidesBackButton = YES;
     [self initMenuView];
-    _appBadgeMode = [self.reminderManager appBadgeMode];
+    _appBadgeMode = [[ReminderManager defaultManager] appBadgeMode];
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -92,7 +96,7 @@
     
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
     _appBadgeMode = indexPath.row;
-    [self.reminderManager storeAppBadgeMode:_appBadgeMode];
+    [[ReminderManager defaultManager] storeAppBadgeMode:_appBadgeMode];
 }
 
 @end

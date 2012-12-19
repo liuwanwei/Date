@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "RemindersBaseViewController.h"
 
-@interface SettingViewController : RemindersBaseViewController
+@interface SettingViewController : BaseViewController<UITableViewDelegate, UITableViewDataSource>
+
+@property (weak, nonatomic) IBOutlet UITableView * tableView;
 
 @end

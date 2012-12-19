@@ -25,6 +25,7 @@
 @synthesize tableView = _tableView;
 @synthesize friendCell = _friendCell;
 @synthesize reminder = _reminder;
+@synthesize triggerTime = _triggerTime;
 
 #pragma 私有函数
 - (void)initData {
