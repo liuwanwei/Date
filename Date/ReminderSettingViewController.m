@@ -87,7 +87,6 @@
 
 - (void)initNavBar {
     UIBarButtonItem * leftItem;
-    
     leftItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(dismiss)];
     
     self.navigationItem.leftBarButtonItem = leftItem;
@@ -126,9 +125,9 @@
     self.tableView.rowHeight = 44.0;
     if (SettingModeNew == _settingMode) {
         _reminder = [[ReminderManager defaultManager] reminder];
+        [self initNavBar];
     }
     [self initData];
-    [self initNavBar];
     _isLogin = [[SinaWeiboManager defaultManager].sinaWeibo isLoggedIn];
     _isAuthValid = [[SinaWeiboManager defaultManager].sinaWeibo isAuthValid];
     [self initTableFooterView];
