@@ -12,6 +12,7 @@
 #import "BilateralFriend.h"
 #import "MBProgressManager.h"
 #import "UserManager.h"
+#import "ReminderSettingViewController.h"
 
 @interface ReminderSendingViewController () {
     NSArray * _friends;
@@ -25,9 +26,13 @@
 @synthesize tableView = _tableView;
 @synthesize friendCell = _friendCell;
 @synthesize reminder = _reminder;
+@synthesize triggerTime = _triggerTime;
+@synthesize parentController = _parentController;
 
 #pragma 私有函数
 - (void)initData {
+    _reminderManager = [ReminderManager defaultManager];
+    _selectedRow = -1;
     _friends = [[BilateralFriendManager defaultManager] allOnlineFriends];
     if (nil != _friends) {
         [self.tableView reloadData];
@@ -76,16 +81,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _reminderManager = [ReminderManager defaultManager];
-    _selectedRow = -1;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.rowHeight = 60.0;
     NSLog(@"%@", [EGOImageView class]);
     self.title = @"发送对象";
     [self initData];
-    //UIBarButtonItem * rightItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(sendReminder)];
-    //self.navigationItem.rightBarButtonItem = rightItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -122,35 +123,46 @@
     
     UILabel * nicknameLabel = (UILabel *)[cell viewWithTag:2];
     if ([[friend.userID stringValue] isEqualToString:[UserManager defaultManager].userID ]) {
-        nicknameLabel.text = @"我";
+        nicknameLabel.text = @"自己";
     }else {
-         nicknameLabel.text = friend.nickname;
+        nicknameLabel.text = friend.nickname;
+    }
+    
+    if ([friend.userID isEqualToNumber:_reminder.userID]) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
    
-    
     return cell;
 }
 
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
+    /*UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
     if (_selectedRow != -1) {
         NSIndexPath * path =  [NSIndexPath indexPathForRow:_selectedRow inSection:0];
         UITableViewCell * selectedCell = [tableView cellForRowAtIndexPath:path];
         selectedCell.accessoryType = UITableViewCellAccessoryNone;
+    }*/
+    
+    //_selectedRow = indexPath.row;
+    BilateralFriend * friend = [_friends objectAtIndex:indexPath.row];
+    _reminder.userID = friend.userID;
+    if ([[friend.userID stringValue] isEqualToString:[UserManager defaultManager].userID ]) {
+        _parentController.receiver = @"自己";
+    }else {
+        _parentController.receiver = friend.nickname;
     }
     
-    _selectedRow = indexPath.row;
-    BilateralFriend * friend = [_friends objectAtIndex:indexPath.row];
-    
-    _reminder.userID = friend.userID;
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    [_parentController updateReceiverCell];
+    [self.navigationController popViewControllerAnimated:YES];
+
+    /*cell.accessoryType = UITableViewCellAccessoryCheckmark;
     if (indexPath.row == 0) {
         [self sendReminder];
     }else {
         [self showAlertView];
-    }
+    }*/
 }
 
 #pragma mark - ReminderManager delegate

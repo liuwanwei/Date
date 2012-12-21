@@ -24,5 +24,6 @@ typedef enum {
 - (IBAction)stopRecord:(id)sender;
 
 - (void)initData;
+- (void)showLoginViewController;
 
 @end

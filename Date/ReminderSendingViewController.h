@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Reminder.h"
 #import "ReminderManager.h"
+#import "ReminderSettingViewController.h"
 
 @interface ReminderSendingViewController : UIViewController <UITableViewDelegate, UITableViewDataSource,ReminderManagerDelegate,UIAlertViewDelegate>
 
@@ -16,5 +17,8 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell * friendCell;
 
 @property (weak, nonatomic) Reminder * reminder;
+@property (weak, nonatomic) NSDate * triggerTime;
+
+@property (weak, nonatomic) ReminderSettingViewController * parentController;
 
 @end

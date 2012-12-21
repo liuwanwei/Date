@@ -11,8 +11,9 @@
 #import "ReminderBaseCell.h"
 #import "SoundManager.h"
 #import "ReminderMapViewController.h"
+#import "BaseViewController.h"
 
-@interface RemindersBaseViewController : UIViewController <UITableViewDelegate, UITableViewDataSource,ReminderManagerDelegate,ReminderCellDelegate,SoundManagerDelegate>
+@interface RemindersBaseViewController : BaseViewController <UITableViewDelegate, UITableViewDataSource,ReminderManagerDelegate,ReminderCellDelegate,SoundManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView * tableView;
 
@@ -23,6 +24,4 @@
 
 - (NSString *)custumDateString:(NSString *)date;
 
-- (IBAction)leftBarBtnTapped:(id)sender;
-- (void)restoreViewLocation;
 @end

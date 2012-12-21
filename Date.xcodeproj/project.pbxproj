@@ -64,6 +64,9 @@
 		3C28DA8F16538347009A661E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C28DA8E16538347009A661E /* CFNetwork.framework */; };
 		3C28DA911653838B009A661E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C28DA901653838B009A661E /* SystemConfiguration.framework */; };
 		3C28DA93165383BC009A661E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C28DA92165383BC009A661E /* MobileCoreServices.framework */; };
+		3C31566116819CFA00C1E42C /* btnTimeDeleteOri.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C31565F16819CFA00C1E42C /* btnTimeDeleteOri.png */; };
+		3C31566216819CFA00C1E42C /* btnTimeDeleteOri@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C31566016819CFA00C1E42C /* btnTimeDeleteOri@2x.png */; };
+		3C3156651681AE4100C1E42C /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3156641681AE4000C1E42C /* BaseViewController.m */; };
 		3C3354FB167307CC006E1331 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3354FA167307CC006E1331 /* libxml2.dylib */; };
 		3C34992A166EEF62001012B6 /* RemindersInboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C349928166EEF62001012B6 /* RemindersInboxViewController.m */; };
 		3C34992B166EEF62001012B6 /* RemindersInboxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C349929166EEF62001012B6 /* RemindersInboxViewController.xib */; };
@@ -282,6 +285,10 @@
 		3C28DA8E16538347009A661E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		3C28DA901653838B009A661E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3C28DA92165383BC009A661E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		3C31565F16819CFA00C1E42C /* btnTimeDeleteOri.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btnTimeDeleteOri.png; path = Resources/images/btnTimeDeleteOri.png; sourceTree = "<group>"; };
+		3C31566016819CFA00C1E42C /* btnTimeDeleteOri@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btnTimeDeleteOri@2x.png"; path = "Resources/images/btnTimeDeleteOri@2x.png"; sourceTree = "<group>"; };
+		3C3156631681AE4000C1E42C /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
+		3C3156641681AE4000C1E42C /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		3C3354FA167307CC006E1331 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		3C349927166EEF62001012B6 /* RemindersInboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemindersInboxViewController.h; sourceTree = "<group>"; };
 		3C349928166EEF62001012B6 /* RemindersInboxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemindersInboxViewController.m; sourceTree = "<group>"; };
@@ -597,6 +604,8 @@
 		3CE0ABF916507EA2004B785A /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3C31565F16819CFA00C1E42C /* btnTimeDeleteOri.png */,
+				3C31566016819CFA00C1E42C /* btnTimeDeleteOri@2x.png */,
 				3CE8509D16803DA50025ECA3 /* checkboxCompleted.png */,
 				3CE8509E16803DA50025ECA3 /* checkboxCompleted@2x.png */,
 				3CE8509F16803DA50025ECA3 /* checkboxOri.png */,
@@ -690,6 +699,8 @@
 				3C3499371670509D001012B6 /* ReminderDetailViewController.m */,
 				3C1CB0771679BA760025BDB2 /* SettingViewController.h */,
 				3C1CB0781679BA760025BDB2 /* SettingViewController.m */,
+				3C3156631681AE4000C1E42C /* BaseViewController.h */,
+				3C3156641681AE4000C1E42C /* BaseViewController.m */,
 			);
 			name = Class;
 			sourceTree = "<group>";
@@ -954,6 +965,8 @@
 				3CE850A216803DA50025ECA3 /* checkboxCompleted@2x.png in Resources */,
 				3CE850A316803DA50025ECA3 /* checkboxOri.png in Resources */,
 				3CE850A416803DA50025ECA3 /* checkboxOri@2x.png in Resources */,
+				3C31566116819CFA00C1E42C /* btnTimeDeleteOri.png in Resources */,
+				3C31566216819CFA00C1E42C /* btnTimeDeleteOri@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1020,6 +1033,7 @@
 				3C1CB072167966990025BDB2 /* Reminder.m in Sources */,
 				3C1CB07A1679BA770025BDB2 /* SettingViewController.m in Sources */,
 				3C1CB07E167AFABE0025BDB2 /* ReminderSettingTimeCell.m in Sources */,
+				3C3156651681AE4100C1E42C /* BaseViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
