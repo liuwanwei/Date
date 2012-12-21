@@ -67,8 +67,8 @@ expirationDate == nil) {
 }
 
 - (void)removeUserAuthData {
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SinaWeiboAuthData"];
-    [self removeUserData];
+    //[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SinaWeiboAuthData"];
+    //[self removeUserData];
 }
 
 - (NSString *)userID {
