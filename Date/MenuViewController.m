@@ -11,12 +11,15 @@
 #import "AppDelegate.h"
 #import "RemindersInboxViewController.h"
 #import "SettingViewController.h"
+#import "SinaWeiboManager.h"
+#import "LoginViewController.h"
 
 @interface MenuViewController () {
     ServerMode _serverMode;
     NSArray * _rows;
     NSArray * _rowImages;
     SettingViewController * _settingViewController;
+    LoginViewController * _loginViewController;
 }
 
 @end
@@ -25,9 +28,19 @@
 @synthesize btnServerMode = _btnServerMode;
 @synthesize tableView = _tableView;
 
+#pragma 私有函数
+- (BOOL)isLogin {
+    return [[SinaWeiboManager defaultManager].sinaWeibo isLoggedIn];
+}
+
+- (BOOL)isAuthValid {
+    return [[SinaWeiboManager defaultManager].sinaWeibo isAuthValid];
+}
+
 #pragma 类成员函数
 - (void)setVisible:(BOOL)visible {
     self.view.hidden = !visible;
+    [self.tableView reloadData];
 }
 
 - (void)initServerMode {
@@ -59,6 +72,10 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     // Do any additional setup after loading the view from its nib.
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -108,7 +125,7 @@
     static NSString * CellIdentifier = @"Cell";
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
 
     UIImage * image = nil;
@@ -118,7 +135,18 @@
         cell.textLabel.text = [_rows objectAtIndex:indexPath.row];
 //        image = [UIImage imageNamed:[_rowImages objectAtIndex:indexPath.row]];
     }else if (indexPath.section == 2){
-        cell.textLabel.text = @"设置";
+        if (indexPath.row == 0) {
+            cell.textLabel.text = @"设置";
+        }else {
+            cell.textLabel.text = @"新浪微博绑定";
+            if (NO == [self isLogin]) {
+                cell.detailTextLabel.text = @"未绑定";
+            }else if (NO == [self isAuthValid]) {
+                cell.detailTextLabel.text = @"已过期";
+            }else {
+                cell.detailTextLabel.text = @"已绑定";
+            }
+        }
     }
     
     cell.imageView.image = image;
@@ -141,12 +169,17 @@
         uint types[] = {DataTypeToday, DataTypeRecent, DataTypeHistory};
         [AppDelegate delegate].homeViewController.dataType = types[row];
     }else if (2 == indexPath.section){
-        if (_settingViewController == nil) {
-            _settingViewController = [[SettingViewController alloc] initWithNibName:@"SettingViewController" bundle:nil];
+        if (0 == indexPath.row) {
+            if (_settingViewController == nil) {
+                _settingViewController = [[SettingViewController alloc] initWithNibName:@"SettingViewController" bundle:nil];
+            }
+            
+            [[AppDelegate delegate].navController pushViewController:_settingViewController animated:NO];
+        }else {
+            if (NO == [self isAuthValid]) {
+                [[AppDelegate delegate].homeViewController showLoginViewController];
+            }
         }
-        
-        [[AppDelegate delegate].navController pushViewController:_settingViewController animated:NO];
-
     }
     
     if (indexPath.section == 0 || indexPath.section == 1) {

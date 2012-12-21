@@ -41,11 +41,6 @@
         self.navigationItem.leftBarButtonItem = leftItem;
 }
 
-- (void)showLoginViewController {
-    _loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
-    [self presentViewController:_loginViewController animated:YES completion:nil];
-}
-
 - (void)addUserId:(NSNumber *)userId {
     if (nil == [_usersIdDictionary objectForKey:[userId stringValue]]) {
         [_usersIdDictionary setValue:userId forKey:[userId stringValue]];
@@ -54,7 +49,8 @@
 }
 
 - (void)registerHandleMessage {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOAuthSuccessMessage:) name:kUserOAuthSuccessMessage object:nil];
+    
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOAuthSuccessMessage:) name:kUserOAuthSuccessMessage object:nil];
     
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOnlineFriendsMessage:) name:kOnlineFriendsMessage object:nil];
     
@@ -102,6 +98,11 @@
 }
 
 #pragma 类成员函数
+- (void)showLoginViewController {
+    _loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
+    [self presentViewController:_loginViewController animated:YES completion:nil];
+}
+
 - (void)initData {
     if (DataTypeToday == _dataType) {
         self.title = @"今日提醒";
@@ -176,7 +177,7 @@
     [self registerHandleMessage];
     
     if (NO == [_sinaWeiboManager.sinaWeibo isAuthValid]) {
-        [self showLoginViewController];
+        //[self showLoginViewController];
     }else {
         [_sinaWeiboManager requestBilateralFriends];
         [[BilateralFriendManager defaultManager] checkRegisteredFriendsRequest];
@@ -201,7 +202,9 @@
     if (YES == [manager stopRecord]) {
         ReminderSettingViewController * controller = [[ReminderSettingViewController alloc] initWithNibName:@"ReminderSettingViewController" bundle:nil];
         controller.settingMode = SettingModeNew;
-        [self.navigationController pushViewController:controller animated:YES];
+        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
+
+        [self.navigationController presentViewController:nav animated:YES completion:nil];
     }
 }
 
@@ -246,7 +249,7 @@
 
 
 // Override to support editing the table view.
-/*- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         _curDeleteIndexPath = indexPath;
@@ -261,7 +264,7 @@
         }
         
     }
-}*/
+}
 
 #pragma mark - ReminderManager delegate
 - (void)deleteReminderSuccess:(Reminder *)reminder {

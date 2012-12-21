@@ -67,14 +67,20 @@ expirationDate == nil) {
 }
 
 - (void)removeUserAuthData {
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SinaWeiboAuthData"];
+    //[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SinaWeiboAuthData"];
+    //[self removeUserData];
 }
 
 - (NSString *)userID {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDictionary * userAuthData = [defaults objectForKey:@"SinaWeiboAuthData"];
 
-    return [userAuthData objectForKey:@"UserIDKey"];
+    NSString * userId = [userAuthData objectForKey:@"UserIDKey"];
+    if (nil == userId) {
+        return @"0";
+    }
+    
+    return userId;
 }
 
 - (NSString *)accessToken {

@@ -13,17 +13,17 @@
 #import "ReminderMapViewController.h"
 #import "ReminderSendingViewController.h"
 #import "ReminderSettingAudioCell.h"
+#import "SinaWeiboManager.h"
+#import "MBProgressManager.h"
+#import "AppDelegate.h"
+#import "RemindersInboxViewController.h"
 
 @interface ReminderSettingViewController () {
     NSArray * _tags;
-    NSArray * _days;
-    NSMutableArray * _hours;
-    NSMutableArray * _minutes;
-    BOOL _setTime;
-    BOOL _sending;
-    UIButton * _btnFinish;
-    UIButton * _btnUnFinish;
     NSDate * _triggerTime;
+    BOOL _isSpread;
+    BOOL _isLogin;
+    BOOL _isAuthValid;
 }
 
 @end
@@ -33,7 +33,80 @@
 @synthesize pickerView = _pickerView;
 @synthesize settingMode = _settingMode;
 @synthesize reminder = _reminder;
+@synthesize receiver = _receiver;
 
+#pragma 私有函数
+- (void)initTableFooterView {
+    UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 300, 100)];
+    UIButton * btnSave;
+    btnSave = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    btnSave.layer.frame = CGRectMake(10, 15, 300, 44);
+    [btnSave setBackgroundImage:[UIImage imageNamed:@"buttonBg"] forState:UIControlStateNormal];
+    [btnSave setTitle:@"保存" forState:UIControlStateNormal];
+    [btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [btnSave addTarget:self action:@selector(saveReminder) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:btnSave];
+    
+    self.tableView.tableFooterView = view;
+}
+
+- (void)saveReminder {
+    self.reminderManager.delegate = self;
+    if (SettingModeNew == _settingMode) {
+        _reminder.triggerTime = _triggerTime;
+        if (![[_reminder.userID stringValue] isEqualToString:[UserManager defaultManager].userID ]) {
+            [[MBProgressManager defaultManager] showHUD:@"发送中"];
+        }
+        [[ReminderManager defaultManager] sendReminder:_reminder];
+        
+    }else {
+        [[ReminderManager defaultManager] modifyReminder:_reminder withTriggerTime:_triggerTime withDesc:_reminder.desc];
+    }
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+
+}
+
+- (void)initData {
+    _tags = [[NSArray alloc] initWithObjects:@"记得做", @"记得带", @"记得买",@"记一下", nil];
+    
+    if (SettingModeNew == _settingMode) {
+        SoundManager * manager = [SoundManager defaultSoundManager];
+        _reminder.audioUrl = [manager.recordFileURL relativePath];
+        _reminder.audioLength = [NSNumber numberWithInteger:manager.currentRecordTime];
+    }
+    
+    if (SettingModeNew == _settingMode) {
+        _reminder.userID = [NSNumber numberWithLongLong:[[[UserManager defaultManager] userID] longLongValue]];
+        _receiver = @"自己";
+        
+    }else {
+        _triggerTime = _reminder.triggerTime;
+    }
+}
+
+- (void)initNavBar {
+    UIBarButtonItem * leftItem;
+    leftItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(dismiss)];
+    
+    self.navigationItem.leftBarButtonItem = leftItem;
+}
+
+- (void)dismiss {
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)removeHUD {
+    [[MBProgressManager defaultManager] removeHUD];
+}
+
+#pragma 类成员函数
+- (void)updateReceiverCell {
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:3 inSection:0];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+#pragma 事件函数
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -43,107 +116,6 @@
     return self;
 }
 
-- (void)initData {
-    _tags = [[NSArray alloc] initWithObjects:@"记得做", @"记得带", @"记得买",@"记一下", nil];
-    
-    _days = [[NSArray alloc] initWithObjects:@"今天",@"明天",@"后天", nil];
-    
-    _minutes = [[NSMutableArray alloc] init];
-    int step = 5;
-    for(int i = 0; i < 60 ; i ++){
-        if (i % step == 0) {
-            [_minutes addObject:[NSString stringWithFormat:@"%02d", i]];
-        }
-    }
-    
-    _hours = [[NSMutableArray alloc] init];
-    for (int i = 0; i < 24; i ++) {
-        [_hours addObject:[NSString stringWithFormat:@"%02d", i]];
-    }
-    
-    if (SettingModeNew == _settingMode) {
-        SoundManager * manager = [SoundManager defaultSoundManager];
-        _reminder.audioUrl = [manager.recordFileURL relativePath];
-        _reminder.audioLength = [NSNumber numberWithInteger:manager.currentRecordTime];
-    }
-    
-    if (SettingModeNew == _settingMode) {
-        _setTime = YES;
-       
-    }else {
-        _setTime = NO;
-        _triggerTime = _reminder.triggerTime;
-    }
-
-    _sending = YES;
-}
-
-- (void)initPickerView {
-    NSDate * now = [NSDate date];
-    self.pickerView.delegate = self;
-    self.pickerView.dataSource = self;
-    
-    [_pickerView selectRow:1 inComponent:0 animated:NO];
-    NSDateFormatter * hour = [[NSDateFormatter alloc] init];
-    [hour setDateFormat:@"HH"];
-    NSString * currentDateStr = [hour stringFromDate:now];
-    NSInteger hourIndex = [currentDateStr integerValue];
-    [_pickerView selectRow:hourIndex inComponent:1 animated:NO];
-    [hour setDateFormat:@"mm"];
-    currentDateStr = [hour stringFromDate:now];
-    [_pickerView selectRow:6 inComponent:2 animated:NO];
-    
-    if (SettingModeModify == _settingMode) {
-         [self.pickerView setHidden:YES];
-    }
-}
-
-- (void)setReminderDate {
-    NSDate * now = [NSDate date];
-    NSDateFormatter * hour = [[NSDateFormatter alloc] init];
-    [hour setDateFormat:@"yyyy-MM-dd 00:00:00"];
-    NSString * strTriggerDate = [hour stringFromDate:now];
-    NSDate * triggerDate = [hour dateFromString:strTriggerDate];
-    triggerDate = [triggerDate dateByAddingTimeInterval:24*60*60*[_pickerView selectedRowInComponent:0]];
-    triggerDate = [triggerDate dateByAddingTimeInterval:[_pickerView selectedRowInComponent:1]*60*60];
-    triggerDate = [triggerDate dateByAddingTimeInterval:[_pickerView selectedRowInComponent:2]*5*60];
-    //_reminder.triggerTime = triggerDate;
-   _triggerTime = triggerDate;
-}
-
-- (void)chooseFriends {
-    _reminder.triggerTime = _triggerTime;
-    if (_sending) {
-        /* sending 发送给特定对象 */
-        ReminderSendingViewController * controller = [[ReminderSendingViewController alloc] initWithNibName:@"ReminderSendingViewController" bundle:nil];
-        controller.reminder = _reminder;
-        [self.navigationController pushViewController:controller animated:YES];
-    }else{
-        /* collecting 收集 */
-        _reminder.userID = [NSNumber numberWithLongLong:[[[UserManager defaultManager] userID] longLongValue] ];
-        [[ReminderManager defaultManager] sendReminder:_reminder];
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }
-}
-
-- (void)modifyReminder {
-    [[ReminderManager defaultManager] modifyReminder:_reminder withTriggerTime:_triggerTime withDesc:_reminder.desc];
-    [self.navigationController popToRootViewControllerAnimated:YES];
-}
-
-- (NSString *)tiggerDate {
-    NSString * date;
-    date = [_days objectAtIndex:[_pickerView selectedRowInComponent:0]];
-    date = [date stringByAppendingString:@"  "];
-    date = [date stringByAppendingString:[_hours objectAtIndex:[_pickerView selectedRowInComponent:1]]];
-    date = [date stringByAppendingString:@"点"];
-    date = [date stringByAppendingString:@"  "];
-    date = [date stringByAppendingString:[_minutes objectAtIndex:[_pickerView selectedRowInComponent:2]]];
-    date = [date stringByAppendingString:@"分"];
-    return date;
-}
-
-#pragma 事件函数
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -152,53 +124,24 @@
     self.tableView.delegate = self;
     self.tableView.rowHeight = 44.0;
     if (SettingModeNew == _settingMode) {
-         _reminder = [[ReminderManager defaultManager] reminder];
-        [self setReminderDate];
+        _reminder = [[ReminderManager defaultManager] reminder];
+        [self initNavBar];
     }
     [self initData];
-    [self initPickerView];
-    
-    UIBarButtonItem * rightItem;
-    if (SettingModeNew == _settingMode) {
-        rightItem = [[UIBarButtonItem alloc] initWithTitle:@"发送" style:UIBarButtonItemStyleBordered target:self action:@selector(chooseFriends)];
-    }else {
-        rightItem = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(modifyReminder)];
-    }
-   
-    self.navigationItem.rightBarButtonItem = rightItem;
+    _isLogin = [[SinaWeiboManager defaultManager].sinaWeibo isLoggedIn];
+    _isAuthValid = [[SinaWeiboManager defaultManager].sinaWeibo isAuthValid];
+    [self initTableFooterView];
+    [self.tableView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (IBAction)startRecord:(id)sender {
-    SoundManager * manager = [SoundManager defaultSoundManager];
-    manager.view.frame = CGRectMake(50.0, 100.0, manager.view.frame.size.width, manager.view.frame.size.height);
-    [self.view addSubview:manager.view];
-    [manager startRecord];
-}
-
-- (IBAction)stopRecord:(id)sender {
-    SoundManager * manager = [SoundManager defaultSoundManager];
-    [manager.view removeFromSuperview];
-    if (YES == [manager stopRecord]) {
-        SoundManager * manager = [SoundManager defaultSoundManager];
-        _reminder.audioUrl = [manager.recordFileURL relativePath];
-        _reminder.audioLength = [NSNumber numberWithInteger:manager.currentRecordTime];
-    }
-}
-
-- (IBAction)playRecord:(id)sender {
-    SoundManager * manager = [SoundManager defaultSoundManager];
-    [manager playRecording];
 }
 
 #pragma mark - Table view data source
@@ -209,7 +152,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    if (SettingModeModify == _settingMode) {
+        return 3;
+    }
+    
+    return 4;
 }
 
 #define IsZero(float) (float > - 0.000001 && float < 0.000001)
@@ -254,19 +201,21 @@
                 timeCell.delegate = self;
             }
             timeCell.labelTitle.text = @"时间";
-            if (SettingModeModify == _settingMode) {
-                timeCell.triggerTime = _reminder.triggerTime;
-
-            }
+            timeCell.triggerTime = _triggerTime;
             cell = timeCell;
-            
         }else if (indexPath.row == 3){
-            cell.textLabel.text = @"地点";
+            cell.textLabel.text = @"发送给";
+            cell.detailTextLabel.text = _receiver;
+            if (NO == _isLogin) {
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            }
+            
+            /*cell.textLabel.text = @"地点";
             if (_reminder.longitude.length == 0 || _reminder.latitude.length == 0) {
                 cell.detailTextLabel.text = @"未设置";
             }else{
                 cell.detailTextLabel.text = @"已设置";
-            }
+            }*/
         }
     }
     
@@ -275,7 +224,6 @@
 
 #pragma mark - ChoiceViewDelegate
 -(void)choiceViewController:(ChoiceViewController *)choiceViewController gotChoice:(NSArray *)choices{
-//    choiceViewController.currentChoices = choices;
     _reminder.desc = [choices objectAtIndex:0];
 }
 
@@ -294,83 +242,77 @@
         choiceViewController.autoDisappear = YES;
     
         [self.navigationController pushViewController:choiceViewController animated:YES];
+    }else if (indexPath.row == 2) {
+        _isSpread = !_isSpread;
+        
+      [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        ReminderSettingTimeCell * timeCell = (ReminderSettingTimeCell *)[tableView cellForRowAtIndexPath:indexPath];
+        if (_isSpread == NO) {
+            if (nil != _triggerTime) {
+                timeCell.accessoryType = UITableViewCellAccessoryNone;
+            }else {
+                timeCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            }
+         
+            [timeCell.pickerView setHidden:YES];
+        }else {
+            [timeCell.pickerView setHidden:NO];
+            timeCell.accessoryType = UITableViewCellAccessoryNone;
+        }
+    }else if (indexPath.row == 3 && YES == _isLogin) {
+        ReminderSendingViewController * controller = [[ReminderSendingViewController alloc] initWithNibName:@"ReminderSendingViewController" bundle:nil];
+        _reminder.triggerTime =  _triggerTime;
+        controller.reminder = _reminder;
+        controller.parentController = self;
+        [self.navigationController pushViewController:controller animated:YES];
+    }
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row == 2) {
+        if (NO == _isSpread){
+            return 44.0f;
+        }else {
+            return 275.0f;
+        }
     }
     
-//    if (indexPath.section == 0 && indexPath.row == 2) {
-//        ReminderMapViewController * controller = [[ReminderMapViewController alloc] initWithNibName:@"ReminderMapViewController" bundle:nil];
-//        controller.reminder = _reminder;
-//        controller.type = MapOperateTypeSet;
-//        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
-//        [self presentViewController:nav animated:YES completion:nil];
-//    }
+    return 44.0f;
 }
 
-#pragma  mark - PickerView data source
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 3;
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    if (component == 0) {
-        return _days.count;
-    }else if(component == 1){
-        return _hours.count;
+- (void)triggerTimeChanged:(NSDate *)triggerTime {
+    _triggerTime = triggerTime;
+    if (nil == _triggerTime) {
+        self.navigationItem.rightBarButtonItem.title = @"收集";
     }else {
-        return _minutes.count;
+        self.navigationItem.rightBarButtonItem.title = @"保存";
     }
 }
 
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    if(component == 0){
-        return [_days objectAtIndex:row];
-    }else if(component == 1) {
-        return [_hours objectAtIndex:row];
-    }else {
-        return [_minutes objectAtIndex:row];
-    }
-}
-
-#pragma  mark - PickerView Delegate
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-//    NSIndexPath * tableRow =  [NSIndexPath indexPathForRow:0 inSection:0];
-//    UITableViewCell * cell = [_tableView cellForRowAtIndexPath:tableRow];
-//    
-//    [cell.detailTextLabel setText:[self tiggerDate]];
-    [self setReminderDate];
-}
-
-#pragma mark - ReminderSettingTimeCell Delegate
-- (void)valueChangedWithSwitch:(UISwitch *)sender {
-    if (_pickerView.hidden) {
-        _sending = YES;
-        if (SettingModeNew == _settingMode) {
-            self.navigationItem.rightBarButtonItem.title = @"发送";
-        }else {
-            self.navigationItem.rightBarButtonItem.title = @"保存";
+#pragma mark - ReminderManager delegate
+- (void)newReminderSuccess:(NSString *)reminderId {
+    self.reminderManager.delegate = nil;
+    [[MBProgressManager defaultManager] removeHUD];
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+        if ([[_reminder.userID stringValue] isEqualToString:[UserManager defaultManager].userID ]) {
+            if (nil == _reminder.triggerTime) {
+                [AppDelegate delegate].homeViewController.dataType = DataTypeCollectingBox;
+            }else {
+                [AppDelegate delegate].homeViewController.dataType = DataTypeRecent;
+            }
+            
+            [[AppDelegate delegate].homeViewController initData];
+            [[AppDelegate delegate] checkRemindersExpired];
         }
         
-    }else{
-        _sending = NO;
-        if (SettingModeNew == _settingMode) {
-             self.navigationItem.rightBarButtonItem.title = @"收集";
-        }else {
-             self.navigationItem.rightBarButtonItem.title = @"保存";
-        }
-       
-    }
-    
-     [_pickerView setHidden:!_pickerView.hidden];
-    _setTime = !_setTime;
-    if (YES == _setTime) {
-        [self setReminderDate];
-    }else {
-        //_reminder.triggerTime = nil;
-        if (SettingModeNew == _settingMode) {
-            _triggerTime = nil;
-        }else {
-            _triggerTime = _reminder.triggerTime;
-        }
-      
-    }
+    }];
+    //    [self saveSendReminder:reminderId]; move to ReminderManager::sendReminder.不跟界面绑定。
+}
+
+- (void)newReminderFailed {
+    NSLog(@"newReminderFailed");
+    [[MBProgressManager defaultManager] showHUD:@"发送失败"];
+    [self performSelector:@selector(removeHUD) withObject:self afterDelay:0.5];
 }
 @end
