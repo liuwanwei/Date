@@ -14,10 +14,12 @@
 #import "ReminderSendingViewController.h"
 #import "ReminderSettingAudioCell.h"
 #import "SinaWeiboManager.h"
+#import "MBProgressManager.h"
+#import "AppDelegate.h"
+#import "RemindersInboxViewController.h"
 
 @interface ReminderSettingViewController () {
     NSArray * _tags;
-    BOOL _sending;
     NSDate * _triggerTime;
     BOOL _isSpread;
     BOOL _isLogin;
@@ -31,14 +33,38 @@
 @synthesize pickerView = _pickerView;
 @synthesize settingMode = _settingMode;
 @synthesize reminder = _reminder;
+@synthesize receiver = _receiver;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
+#pragma 私有函数
+- (void)initTableFooterView {
+    UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 300, 100)];
+    UIButton * btnSave;
+    btnSave = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    btnSave.layer.frame = CGRectMake(10, 15, 300, 44);
+    [btnSave setBackgroundImage:[UIImage imageNamed:@"buttonBg"] forState:UIControlStateNormal];
+    [btnSave setTitle:@"保存" forState:UIControlStateNormal];
+    [btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [btnSave addTarget:self action:@selector(saveReminder) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:btnSave];
+    
+    self.tableView.tableFooterView = view;
+}
+
+- (void)saveReminder {
+    self.reminderManager.delegate = self;
+    if (SettingModeNew == _settingMode) {
+        _reminder.triggerTime = _triggerTime;
+        if (![[_reminder.userID stringValue] isEqualToString:[UserManager defaultManager].userID ]) {
+            [[MBProgressManager defaultManager] showHUD:@"发送中"];
+        }
+        [[ReminderManager defaultManager] sendReminder:_reminder];
+        
+    }else {
+        [[ReminderManager defaultManager] modifyReminder:_reminder withTriggerTime:_triggerTime withDesc:_reminder.desc];
     }
-    return self;
+    
+    [self.navigationController popToRootViewControllerAnimated:YES];
+
 }
 
 - (void)initData {
@@ -51,44 +77,46 @@
     }
     
     if (SettingModeNew == _settingMode) {
+        _reminder.userID = [NSNumber numberWithLongLong:[[[UserManager defaultManager] userID] longLongValue]];
+        _receiver = @"自己";
         
     }else {
         _triggerTime = _reminder.triggerTime;
     }
-
-    _sending = YES;
 }
 
-
-- (void)chooseFriends {
-    _reminder.triggerTime = _triggerTime;
-    if (_sending) {
-        /* sending 发送给特定对象 */
-        ReminderSendingViewController * controller = [[ReminderSendingViewController alloc] initWithNibName:@"ReminderSendingViewController" bundle:nil];
-        controller.reminder = _reminder;
-        [self.navigationController pushViewController:controller animated:YES];
-    }else{
-        /* collecting 收集 */
-        _reminder.userID = [NSNumber numberWithLongLong:[[[UserManager defaultManager] userID] longLongValue] ];
-        [[ReminderManager defaultManager] sendReminder:_reminder];
-        [self.navigationController popToRootViewControllerAnimated:YES];
-    }
+- (void)initNavBar {
+    UIBarButtonItem * leftItem;
+    
+    leftItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(dismiss)];
+    
+    self.navigationItem.leftBarButtonItem = leftItem;
 }
 
-- (void)modifyReminder {
-    if (SettingModeNew == _settingMode) {
-        _reminder.userID = [NSNumber numberWithLongLong:[[[UserManager defaultManager] userID] longLongValue] ];
-        _reminder.triggerTime = _triggerTime;
-        [[ReminderManager defaultManager] sendReminder:_reminder];
+- (void)dismiss {
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
 
-    }else {
-        [[ReminderManager defaultManager] modifyReminder:_reminder withTriggerTime:_triggerTime withDesc:_reminder.desc];
-    }
-  
-    [self.navigationController popToRootViewControllerAnimated:YES];
+- (void)removeHUD {
+    [[MBProgressManager defaultManager] removeHUD];
+}
+
+#pragma 类成员函数
+- (void)updateReceiverCell {
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:3 inSection:0];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 #pragma 事件函数
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -100,20 +128,10 @@
         _reminder = [[ReminderManager defaultManager] reminder];
     }
     [self initData];
-    
-    UIBarButtonItem * rightItem;
-    NSString * title;
-    if (nil == _triggerTime) {
-        title = @"收集";
-    }else {
-        title = @"保存";
-    }
-    rightItem = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStyleBordered target:self action:@selector(modifyReminder)];
-   
-    self.navigationItem.rightBarButtonItem = rightItem;
-    
+    [self initNavBar];
     _isLogin = [[SinaWeiboManager defaultManager].sinaWeibo isLoggedIn];
     _isAuthValid = [[SinaWeiboManager defaultManager].sinaWeibo isAuthValid];
+    [self initTableFooterView];
     [self.tableView reloadData];
 }
 
@@ -136,8 +154,6 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (SettingModeModify == _settingMode) {
-        return 3;
-    }else if (NO == _isLogin) {
         return 3;
     }
     
@@ -186,17 +202,15 @@
                 timeCell.delegate = self;
             }
             timeCell.labelTitle.text = @"时间";
-            if (SettingModeModify == _settingMode) {
-                timeCell.triggerTime = _triggerTime;
-
-            }
+            timeCell.triggerTime = _triggerTime;
             cell = timeCell;
-            
         }else if (indexPath.row == 3){
             cell.textLabel.text = @"发送给";
-            if (NO == _isAuthValid) {
-                cell.detailTextLabel.text = @"已过期";
+            cell.detailTextLabel.text = _receiver;
+            if (NO == _isLogin) {
+                cell.accessoryType = UITableViewCellAccessoryNone;
             }
+            
             /*cell.textLabel.text = @"地点";
             if (_reminder.longitude.length == 0 || _reminder.latitude.length == 0) {
                 cell.detailTextLabel.text = @"未设置";
@@ -235,14 +249,22 @@
       [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         ReminderSettingTimeCell * timeCell = (ReminderSettingTimeCell *)[tableView cellForRowAtIndexPath:indexPath];
         if (_isSpread == NO) {
+            if (nil != _triggerTime) {
+                timeCell.accessoryType = UITableViewCellAccessoryNone;
+            }else {
+                timeCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            }
+         
             [timeCell.pickerView setHidden:YES];
         }else {
             [timeCell.pickerView setHidden:NO];
+            timeCell.accessoryType = UITableViewCellAccessoryNone;
         }
-    }else if (indexPath.row == 3) {
+    }else if (indexPath.row == 3 && YES == _isLogin) {
         ReminderSendingViewController * controller = [[ReminderSendingViewController alloc] initWithNibName:@"ReminderSendingViewController" bundle:nil];
         _reminder.triggerTime =  _triggerTime;
         controller.reminder = _reminder;
+        controller.parentController = self;
         [self.navigationController pushViewController:controller animated:YES];
     }
 }
@@ -269,4 +291,29 @@
     }
 }
 
+#pragma mark - ReminderManager delegate
+- (void)newReminderSuccess:(NSString *)reminderId {
+    self.reminderManager.delegate = nil;
+    [[MBProgressManager defaultManager] removeHUD];
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+        if ([[_reminder.userID stringValue] isEqualToString:[UserManager defaultManager].userID ]) {
+            if (nil == _reminder.triggerTime) {
+                [AppDelegate delegate].homeViewController.dataType = DataTypeCollectingBox;
+            }else {
+                [AppDelegate delegate].homeViewController.dataType = DataTypeRecent;
+            }
+            
+            [[AppDelegate delegate].homeViewController initData];
+            [[AppDelegate delegate] checkRemindersExpired];
+        }
+        
+    }];
+    //    [self saveSendReminder:reminderId]; move to ReminderManager::sendReminder.不跟界面绑定。
+}
+
+- (void)newReminderFailed {
+    NSLog(@"newReminderFailed");
+    [[MBProgressManager defaultManager] showHUD:@"发送失败"];
+    [self performSelector:@selector(removeHUD) withObject:self afterDelay:0.5];
+}
 @end

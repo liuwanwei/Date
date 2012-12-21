@@ -107,7 +107,7 @@
     }else if (section == 1){
         return _rows.count;
     }else{
-        return 2;
+        return 1;
     }
 }
 

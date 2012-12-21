@@ -23,6 +23,7 @@
 @synthesize triggerTime = _triggerTime;
 @synthesize labelTriggerTime = _labelTriggerTime;
 @synthesize pickerView = _pickerView;
+@synthesize btnClearTime = _btnClearTime;
 
 #pragma 私有函数
 - (void)initData {
@@ -103,11 +104,14 @@
     if (nil == triggerTime) {
         [_switchTime setOn:NO];
         _labelTriggerTime.text = @"";
+        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        [_btnClearTime setHidden:YES];
     }else {
         NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"MM-dd HH:mm"];
         _labelTriggerTime.text = [dateFormatter stringFromDate:triggerTime];
         [_switchTime setOn:NO];
+        [_btnClearTime setHidden:NO];
     }
 }
 

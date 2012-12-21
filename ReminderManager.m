@@ -276,6 +276,7 @@ typedef enum {
 - (void)deleteReminder:(Reminder *)reminder {
     [self cancelLocalNotificationWithReminder:reminder];
     [self deleteFromStore:reminder synchronized:YES];
+    [self updateAppBadge];
 }
 
 - (void)modifyReminder:(Reminder *)reminder withTriggerTime:(NSDate *)triggerTime withDesc:(NSString *)desc {

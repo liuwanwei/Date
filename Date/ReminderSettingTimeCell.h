@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UISwitch * switchTime;
 @property (weak, nonatomic) IBOutlet UILabel * labelTriggerTime;
 @property (weak, nonatomic) IBOutlet UIPickerView * pickerView;
+@property (weak, nonatomic) IBOutlet UIButton * btnClearTime;
 
 @property (weak, nonatomic) id<ReminderSettingTimeCellDelegate> delegate;
 @property (strong, nonatomic) NSDate * triggerTime;

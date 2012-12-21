@@ -49,7 +49,8 @@
 }
 
 - (void)registerHandleMessage {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOAuthSuccessMessage:) name:kUserOAuthSuccessMessage object:nil];
+    
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOAuthSuccessMessage:) name:kUserOAuthSuccessMessage object:nil];
     
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOnlineFriendsMessage:) name:kOnlineFriendsMessage object:nil];
     
@@ -201,7 +202,9 @@
     if (YES == [manager stopRecord]) {
         ReminderSettingViewController * controller = [[ReminderSettingViewController alloc] initWithNibName:@"ReminderSettingViewController" bundle:nil];
         controller.settingMode = SettingModeNew;
-        [self.navigationController pushViewController:controller animated:YES];
+        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
+
+        [self.navigationController presentViewController:nav animated:YES completion:nil];
     }
 }
 
@@ -246,7 +249,7 @@
 
 
 // Override to support editing the table view.
-/*- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         _curDeleteIndexPath = indexPath;
@@ -261,7 +264,7 @@
         }
         
     }
-}*/
+}
 
 #pragma mark - ReminderManager delegate
 - (void)deleteReminderSuccess:(Reminder *)reminder {

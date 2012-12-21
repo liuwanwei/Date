@@ -16,12 +16,15 @@ typedef enum {
     SettingModeModify
 }SettingMode;
 
-@interface ReminderSettingViewController : RemindersBaseViewController <UITableViewDelegate, UITableViewDataSource, ChoiceViewDelegate,ReminderSettingTimeCellDelegate>
+@interface ReminderSettingViewController : RemindersBaseViewController <UITableViewDelegate, UITableViewDataSource, ChoiceViewDelegate,ReminderSettingTimeCellDelegate,ReminderManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView * tableView;
 @property (weak, nonatomic) IBOutlet UIPickerView * pickerView;
 
-@property (strong, nonatomic)  Reminder * reminder;
+@property (strong, nonatomic) Reminder * reminder;
 @property (nonatomic) SettingMode settingMode;
+@property (strong, nonatomic) NSString * receiver;
+
+- (void)updateReceiverCell;
 
 @end
