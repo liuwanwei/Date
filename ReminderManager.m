@@ -652,7 +652,7 @@ typedef enum {
     NSArray * results = nil;
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
     NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"triggerTime" ascending:NO];
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"(type = %d AND triggerTime < %@) OR (type = %d AND triggerTime >= %@ AND state = 1)",ReminderTypeReceive,today,ReminderTypeReceive,today];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"(type = %d AND triggerTime < %@) OR (type = %d AND triggerTime >= %@ AND state = 1) OR (type = %d AND triggerTime = null AND state = 1)",ReminderTypeReceive,today,ReminderTypeReceive,today,ReminderTypeReceive];
     NSArray * sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     request.sortDescriptors = sortDescriptors;
     request.predicate = predicate;
@@ -672,7 +672,7 @@ typedef enum {
     NSArray * results = nil;
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
     NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createTime" ascending:NO];
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"type = %d AND triggerTime = null",ReminderTypeReceive];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"type = %d AND triggerTime = null AND state = 0",ReminderTypeReceive];
     NSArray * sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     request.sortDescriptors = sortDescriptors;
     request.predicate = predicate;
