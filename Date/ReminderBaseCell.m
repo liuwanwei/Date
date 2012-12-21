@@ -48,18 +48,18 @@
         
         if ([_reminder.type integerValue] == ReminderTypeReceive) {
             if (nil != _bilateralFriend) {
-                [_image setImageURL:[NSURL URLWithString:_bilateralFriend.imageUrl]];
+                //[_image setImageURL:[NSURL URLWithString:_bilateralFriend.imageUrl]];
                 if ([[_reminder.userID stringValue] isEqualToString:[UserManager defaultManager].userID]) {
                     _labelNickname.text = @"我";
                 }else {
                     _labelNickname.text = _bilateralFriend.nickname;
                 }
             }else {
-                [_image setImageURL:[NSURL URLWithString:[UserManager defaultManager].imageUrl]];
+                //[_image setImageURL:[NSURL URLWithString:[UserManager defaultManager].imageUrl]];
                 _labelNickname.text = @"我";
             }
         }else  {
-            [_image setImageURL:[NSURL URLWithString:[UserManager defaultManager].imageUrl]];
+            //[_image setImageURL:[NSURL URLWithString:[UserManager defaultManager].imageUrl]];
         }
         
         _labelAudioTime.text = [_reminder.audioLength stringValue];
