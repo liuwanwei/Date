@@ -225,6 +225,9 @@
 #pragma mark - ChoiceViewDelegate
 -(void)choiceViewController:(ChoiceViewController *)choiceViewController gotChoice:(NSArray *)choices{
     _reminder.desc = [choices objectAtIndex:0];
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    
 }
 
 #pragma mark - Table view delegate

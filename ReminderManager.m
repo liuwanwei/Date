@@ -142,10 +142,10 @@ typedef enum {
                 }
                         
                 [self synchroniseToStore];
-                [[BilateralFriendManager defaultManager] modifyLastReminder:reminder.id withUserId:reminder.userID];
+                //[[BilateralFriendManager defaultManager] modifyLastReminder:reminder.id withUserId:reminder.userID];
                         
                 if (NO == [reminder.isRead boolValue])  {
-                    [[BilateralFriendManager defaultManager] modifyUnReadRemindersSizeWithUserId: reminder.userID withOperateType:OperateTypeAdd];
+                    //[[BilateralFriendManager defaultManager] modifyUnReadRemindersSizeWithUserId: reminder.userID withOperateType:OperateTypeAdd];
                 }
                        
                 if (YES == isBell) {
@@ -283,7 +283,9 @@ typedef enum {
     if (nil != reminder) {
         reminder.desc = desc;
         BOOL sign = NO;
-        if (nil == reminder.triggerTime || [reminder.triggerTime compare:triggerTime] != NSOrderedSame) {
+        if ((nil == reminder.triggerTime && nil != triggerTime) ||
+            (nil != reminder.triggerTime && nil == triggerTime) ||
+            ([reminder.triggerTime compare:triggerTime] != NSOrderedSame)) {
             sign = YES;
             reminder.isAlarm = [NSNumber numberWithBool:NO];
             reminder.triggerTime = triggerTime;
@@ -392,7 +394,7 @@ typedef enum {
         
         reminder.id = reminderId;
         reminder.createTime = [NSDate date];
-        [[BilateralFriendManager defaultManager] modifyLastReminder:reminder.id withUserId:reminder.userID];
+        //[[BilateralFriendManager defaultManager] modifyLastReminder:reminder.id withUserId:reminder.userID];
         [self saveSentReminder:reminder];
         
         if (self.delegate != nil) {
@@ -545,7 +547,8 @@ typedef enum {
         UILocalNotification * newNotification = [[UILocalNotification alloc] init];
         newNotification.fireDate = reminder.triggerTime;
         newNotification.alertBody = body;
-        newNotification.soundName = UILocalNotificationDefaultSoundName;
+        //newNotification.soundName = UILocalNotificationDefaultSoundName;
+        newNotification.soundName = @"cat.wav";
         newNotification.alertAction = @"查看应用";
         newNotification.timeZone=[NSTimeZone defaultTimeZone];
         newNotification.userInfo = [NSDictionary dictionaryWithObject:reminder.id forKey:@"key"];
@@ -564,7 +567,7 @@ typedef enum {
     reminder.isRead = [NSNumber numberWithBool:isRead];
     [self synchroniseToStore];
     if (YES == isRead) {
-        [[BilateralFriendManager defaultManager] modifyUnReadRemindersSizeWithUserId:reminder.userID withOperateType:OperateTypeSub];
+        //[[BilateralFriendManager defaultManager] modifyUnReadRemindersSizeWithUserId:reminder.userID withOperateType:OperateTypeSub];
     }
     NSNotification * notification = nil;
     notification = [NSNotification notificationWithName:kRemindesUpdateMessage object:nil];

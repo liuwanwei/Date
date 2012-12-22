@@ -69,9 +69,7 @@
 }
 
 - (void)setBilateralFriend:(BilateralFriend *)bilateralFriend {
-    if (nil != bilateralFriend) {
-        _bilateralFriend = bilateralFriend;
-    }
+    _bilateralFriend = bilateralFriend;
 }
 
 - (void)setAudioState:(AudioState)audioState {

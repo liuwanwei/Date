@@ -23,7 +23,7 @@ typedef enum {
 
 @property (strong, nonatomic) Reminder * reminder;
 @property (nonatomic) SettingMode settingMode;
-@property (strong, nonatomic) NSString * receiver;
+@property (weak, nonatomic) NSString * receiver;
 
 - (void)updateReceiverCell;
 

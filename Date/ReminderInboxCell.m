@@ -45,9 +45,9 @@
         
         [super setReminder:reminer];
         
-        NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"HH:mm"];
-        self.labelSendDate.text = [formatter stringFromDate:reminer.createTime];
+        //NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+        //[formatter setDateFormat:@"HH:mm"];
+        //self.labelSendDate.text = [formatter stringFromDate:reminer.createTime];
         
         if (nil != reminer.isRead && YES == [reminer.isRead integerValue]) {
             [_btnMark setHidden:YES];
