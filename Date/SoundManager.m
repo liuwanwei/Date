@@ -15,6 +15,8 @@ static SoundManager * sSoundManager;
     AVAudioRecorder * _recorder;
     AVAudioPlayer * _player;
     NSDate * _startRecordDate;
+    NSInteger _recordLength;
+    NSTimer * _timer;
 }
 
 @end
@@ -111,6 +113,28 @@ static SoundManager * sSoundManager;
     return fileName;
 }
 
+- (void)checkRecordLength {
+    if (_recordLength > 30) {
+        [self stopTimer];
+        [self stopRecord];
+    }
+    
+    _recordLength++;
+}
+
+- (void)startTimer {
+    [self stopTimer];
+    _recordLength = 0;
+    _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(checkRecordLength) userInfo:nil repeats:YES];
+}
+
+- (void)stopTimer {
+    if (nil != _timer) {
+        [_timer invalidate];
+        _timer = nil;
+    }
+}
+
 #pragma 类成员函数
 - (BOOL)startRecord {
     BOOL result = NO;
@@ -137,6 +161,7 @@ static SoundManager * sSoundManager;
     [self showRecordingView];
     if(_recorder) {
         result = YES;
+        [self startTimer];
         [_recorder record];
     }
     else {
@@ -148,6 +173,7 @@ static SoundManager * sSoundManager;
 
 - (BOOL)stopRecord {
     BOOL result = NO;
+    [self stopTimer];
     if (nil != _recorder) {
         NSDate * endRecordDate = [NSDate date];
         [self closeRecordingView];
@@ -162,6 +188,8 @@ static SoundManager * sSoundManager;
             _currentRecordTime = _recorder.currentTime + 1;
             [self performSelector:@selector(realStopReocrd) withObject:self afterDelay:1.0];
         }
+    }else {
+        result = YES;
     }
     
     return result;

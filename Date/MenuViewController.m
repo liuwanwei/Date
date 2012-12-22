@@ -40,7 +40,6 @@
 #pragma 类成员函数
 - (void)setVisible:(BOOL)visible {
     self.view.hidden = !visible;
-    [self.tableView reloadData];
 }
 
 - (void)initServerMode {

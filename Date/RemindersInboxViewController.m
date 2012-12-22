@@ -154,6 +154,7 @@
         _usersIdArray = nil;
         _usersIdDictionary = nil;
     }
+    
     [self.tableView reloadData];
 }
 
@@ -254,7 +255,9 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         _curDeleteIndexPath = indexPath;
         Reminder * reminder = [[_group objectForKey:[_keys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
-        if ([_userManager.userID isEqualToString:[reminder.userID stringValue]]) {
+        NSString * userId = [reminder.userID stringValue];
+        if ([userId isEqualToString:@"0"] ||
+            [_userManager.userID isEqualToString:userId]) {
             [self.reminderManager deleteReminder:reminder];
             [[_group objectForKey:[_keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];

@@ -54,7 +54,7 @@
 - (void)saveSendReminder:(NSString *)reminderId {
     _reminder.id = reminderId;
     _reminder.createTime = [NSDate date];
-    [[BilateralFriendManager defaultManager] modifyLastReminder:_reminder.id withUserId:_reminder.userID];
+    //[[BilateralFriendManager defaultManager] modifyLastReminder:_reminder.id withUserId:_reminder.userID];
     
     [_reminderManager saveSentReminder:_reminder];
 }
