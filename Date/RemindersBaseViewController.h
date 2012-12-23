@@ -18,7 +18,7 @@
 @property (weak, nonatomic) IBOutlet UITableView * tableView;
 
 @property (weak, nonatomic) ReminderManager * reminderManager;
-@property (strong, nonatomic) NSArray * reminders;
+@property (weak, nonatomic) NSArray * reminders;
 @property (weak, nonatomic) Reminder * curReminder;
 @property (strong, nonatomic) NSIndexPath * curIndexPath;
 
