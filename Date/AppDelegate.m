@@ -15,6 +15,7 @@
 #import "RemindersNotificationViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "ReminderDetailViewController.h"
+#import "TextReminderDetailViewController.h"
 #import "BilateralFriendManager.h"
 #import "RemindersInboxViewController.h"
 
@@ -30,7 +31,13 @@
 
 #pragma 私有函数
 - (void)showRemindersNotificationViewControllerWithReminders:(Reminder *)reminder{
-    ReminderDetailViewController * viewController = [[ReminderDetailViewController alloc] initWithNibName:@"ReminderDetailViewController" bundle:nil];
+    ReminderDetailViewController * viewController;
+    if (nil == reminder.audioUrl || [reminder.audioUrl isEqualToString:@""]) {
+         viewController = [[TextReminderDetailViewController alloc] initWithNibName:@"TextReminderDetailViewController" bundle:nil];
+    }else {
+         viewController = [[ReminderDetailViewController alloc] initWithNibName:@"ReminderDetailViewController" bundle:nil];
+    }
+   
     viewController.reminder = reminder;
     viewController.friend = [[BilateralFriendManager defaultManager] bilateralFriendWithUserID:viewController.reminder.userID];
     viewController.detailViewShowMode = DeailViewShowModePresent;

@@ -62,6 +62,16 @@
             //[_image setImageURL:[NSURL URLWithString:[UserManager defaultManager].imageUrl]];
         }
         
+        if (nil == _reminder.audioUrl || [_reminder.audioUrl isEqualToString:@""]) {
+            [_btnAudio setHidden:YES];
+            [_labelAudioTime setHidden:YES];
+            [_indicatorView setHidden:YES];
+        }else {
+            [_btnAudio setHidden:NO];
+            [_labelAudioTime setHidden:NO];
+            [_indicatorView setHidden:NO];
+        }
+        
         _labelAudioTime.text = [_reminder.audioLength stringValue];
         _labelDescription.text = _reminder.desc;
         

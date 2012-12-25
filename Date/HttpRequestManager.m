@@ -184,7 +184,9 @@ static HttpRequestManager * sHttpRequestManager;
     ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:url]];
     [request setPostValue:[UserManager defaultManager].userID forKey:@"senderId"];
     [request setPostValue:[reminder.userID stringValue] forKey:@"targetId"];
-    [request setFile:reminder.audioUrl forKey:@"audio"];
+    if (nil != reminder.audioUrl && ![reminder.audioUrl isEqualToString:@""]) {
+        [request setFile:reminder.audioUrl forKey:@"audio"];
+    }
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
     NSTimeZone * timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
     [formatter setTimeZone:timeZone];

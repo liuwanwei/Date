@@ -25,8 +25,16 @@
 
 #pragma 私有函数
 - (void)initMenuView {
-    UIBarButtonItem * leftItem = [[UIBarButtonItem alloc] initWithTitle:@"菜单" style:UIBarButtonItemStylePlain target:self action:@selector(leftBarBtnTapped:)];
-    self.navigationItem.leftBarButtonItem = leftItem;
+    UIButton * leftButton;
+    UIBarButtonItem * item;
+    
+    leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
+    [leftButton setImage:[UIImage imageNamed:@"navi_menuleft_up"] forState:UIControlStateNormal];
+    [leftButton setImage:[UIImage imageNamed:@"navi_menuleft_down"] forState:UIControlStateHighlighted];
+    [leftButton addTarget:self action:@selector(leftBarBtnTapped:) forControlEvents:UIControlEventTouchUpInside];
+    item = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    
+    self.navigationItem.leftBarButtonItem = item;
 }
 
 - (void)initData {
@@ -79,8 +87,8 @@
     [super viewDidLoad];
     self.tableView.rowHeight = 44;
     self.title = @"设置";
-    [self initData];
     [self initMenuView];
+    [self initData];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.navigationController.navigationItem.hidesBackButton = YES;

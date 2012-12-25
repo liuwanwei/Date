@@ -48,7 +48,7 @@
     self.pickerView.delegate = self;
     self.pickerView.dataSource = self;
     
-    [_pickerView selectRow:1 inComponent:0 animated:NO];
+    [_pickerView selectRow:0 inComponent:0 animated:NO];
     NSDateFormatter * hour = [[NSDateFormatter alloc] init];
     [hour setDateFormat:@"HH"];
     NSString * currentDateStr = [hour stringFromDate:now];

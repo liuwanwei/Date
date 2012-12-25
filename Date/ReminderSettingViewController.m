@@ -12,18 +12,13 @@
 #import "ReminderManager.h"
 #import "ReminderMapViewController.h"
 #import "ReminderSendingViewController.h"
-#import "ReminderSettingAudioCell.h"
 #import "SinaWeiboManager.h"
 #import "MBProgressManager.h"
 #import "AppDelegate.h"
 #import "RemindersInboxViewController.h"
 
 @interface ReminderSettingViewController () {
-    NSArray * _tags;
-    NSDate * _triggerTime;
-    BOOL _isSpread;
-    BOOL _isLogin;
-    BOOL _isAuthValid;
+
 }
 
 @end
@@ -34,6 +29,11 @@
 @synthesize settingMode = _settingMode;
 @synthesize reminder = _reminder;
 @synthesize receiver = _receiver;
+@synthesize desc = _desc;
+@synthesize triggerTime = _triggerTime;
+@synthesize isLogin = _isLogin;
+@synthesize isAuthValid = _isAuthValid;
+@synthesize isSpread = _isSpread;
 
 #pragma 私有函数
 - (void)initTableFooterView {
@@ -67,24 +67,6 @@
 
 }
 
-- (void)initData {
-    _tags = [[NSArray alloc] initWithObjects:@"记得做", @"记得带", @"记得买",@"记一下", nil];
-    
-    if (SettingModeNew == _settingMode) {
-        SoundManager * manager = [SoundManager defaultSoundManager];
-        _reminder.audioUrl = [manager.recordFileURL relativePath];
-        _reminder.audioLength = [NSNumber numberWithInteger:manager.currentRecordTime];
-    }
-    
-    if (SettingModeNew == _settingMode) {
-        _reminder.userID = [NSNumber numberWithLongLong:[[[UserManager defaultManager] userID] longLongValue]];
-        _receiver = @"自己";
-        
-    }else {
-        _triggerTime = _reminder.triggerTime;
-    }
-}
-
 - (void)initNavBar {
     UIBarButtonItem * leftItem;
     leftItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(dismiss)];
@@ -102,8 +84,43 @@
 
 #pragma 类成员函数
 - (void)updateReceiverCell {
-    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:3 inSection:0];
+}
+
+- (void)initData {
+    if (SettingModeNew == _settingMode) {
+        _reminder = [[ReminderManager defaultManager] reminder];
+        _reminder.userID = [NSNumber numberWithLongLong:[[[UserManager defaultManager] userID] longLongValue]];
+        _receiver = @"自己";
+    }else {
+        _triggerTime = _reminder.triggerTime;
+    }
+}
+
+- (void)clickTrigeerTimeRow:(NSIndexPath *)indexPath {
+    self.isSpread = !self.isSpread;
+    
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    ReminderSettingTimeCell * timeCell = (ReminderSettingTimeCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    if (self.isSpread == NO) {
+        if (nil != _triggerTime) {
+            timeCell.accessoryType = UITableViewCellAccessoryNone;
+        }else {
+            timeCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        
+        [timeCell.pickerView setHidden:YES];
+    }else {
+        [timeCell.pickerView setHidden:NO];
+        timeCell.accessoryType = UITableViewCellAccessoryNone;
+    }
+}
+
+- (void)clickSendRow {
+    ReminderSendingViewController * controller = [[ReminderSendingViewController alloc] initWithNibName:@"ReminderSendingViewController" bundle:nil];
+    _reminder.triggerTime =  _triggerTime;
+    controller.reminder = _reminder;
+    controller.parentController = self;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 #pragma 事件函数
@@ -120,18 +137,13 @@
 {
     [super viewDidLoad];
     self.title = @"约定";
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-    self.tableView.rowHeight = 44.0;
     if (SettingModeNew == _settingMode) {
-        _reminder = [[ReminderManager defaultManager] reminder];
         [self initNavBar];
     }
     [self initData];
     _isLogin = [[SinaWeiboManager defaultManager].sinaWeibo isLoggedIn];
     _isAuthValid = [[SinaWeiboManager defaultManager].sinaWeibo isAuthValid];
     [self initTableFooterView];
-    [self.tableView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -150,77 +162,7 @@
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    if (SettingModeModify == _settingMode) {
-        return 3;
-    }
-    
-    return 4;
-}
-
 #define IsZero(float) (float > - 0.000001 && float < 0.000001)
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString * CellIdentifier;
-    UITableViewCell * cell;
-    ReminderSettingAudioCell * audioCell;
-
-    if (0 == indexPath.row) {
-        CellIdentifier = @"ReminderSettingAudioCell";
-        audioCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (audioCell == nil) {
-            audioCell = [[ReminderSettingAudioCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-            audioCell.delegate = self;
-        }
-        audioCell.labelTitle.text = @"内容";
-        audioCell.reminder = _reminder;
-        audioCell.indexPath = indexPath;
-        audioCell.audioState = AudioStateNormal;
-        cell = audioCell;
-        
-    }else {
-        CellIdentifier = @"Cell";
-        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }
-        if (indexPath.row == 1) {
-            cell.textLabel.text = @"标签";
-            if (nil == _reminder.desc) {
-                _reminder.desc = [_tags objectAtIndex:0];
-            }
-            cell.detailTextLabel.text =  _reminder.desc;
-        }else if (indexPath.row == 2) {
-            ReminderSettingTimeCell * timeCell;
-            CellIdentifier = @"ReminderSettingTimeCell";
-            timeCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-            if (timeCell == nil) {
-                timeCell = [[ReminderSettingTimeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-                timeCell.delegate = self;
-            }
-            timeCell.labelTitle.text = @"时间";
-            timeCell.triggerTime = _triggerTime;
-            cell = timeCell;
-        }else if (indexPath.row == 3){
-            cell.textLabel.text = @"发送给";
-            cell.detailTextLabel.text = _receiver;
-            if (NO == _isLogin) {
-                cell.accessoryType = UITableViewCellAccessoryNone;
-            }
-            
-            /*cell.textLabel.text = @"地点";
-            if (_reminder.longitude.length == 0 || _reminder.latitude.length == 0) {
-                cell.detailTextLabel.text = @"未设置";
-            }else{
-                cell.detailTextLabel.text = @"已设置";
-            }*/
-        }
-    }
-    
-    return cell;
-}
 
 #pragma mark - ChoiceViewDelegate
 -(void)choiceViewController:(ChoiceViewController *)choiceViewController gotChoice:(NSArray *)choices{
@@ -228,60 +170,6 @@
     NSIndexPath * indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     
-}
-
-#pragma mark - Table view delegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.section == 0 && indexPath.row == 1) {
-//        [_pickerView setHidden:!_pickerView.hidden];
-        ChoiceViewController * choiceViewController = [[ChoiceViewController alloc] initWithStyle:UITableViewStyleGrouped];
-        choiceViewController.choices = _tags;
-        if (_reminder.desc != nil) {
-            choiceViewController.currentChoices = [NSArray arrayWithObject:_reminder.desc];
-        }
-        choiceViewController.delegate = self;
-        choiceViewController.type = SingleChoice;
-        choiceViewController.autoDisappear = YES;
-    
-        [self.navigationController pushViewController:choiceViewController animated:YES];
-    }else if (indexPath.row == 2) {
-        _isSpread = !_isSpread;
-        
-      [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        ReminderSettingTimeCell * timeCell = (ReminderSettingTimeCell *)[tableView cellForRowAtIndexPath:indexPath];
-        if (_isSpread == NO) {
-            if (nil != _triggerTime) {
-                timeCell.accessoryType = UITableViewCellAccessoryNone;
-            }else {
-                timeCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            }
-         
-            [timeCell.pickerView setHidden:YES];
-        }else {
-            [timeCell.pickerView setHidden:NO];
-            timeCell.accessoryType = UITableViewCellAccessoryNone;
-        }
-    }else if (indexPath.row == 3 && YES == _isLogin) {
-        ReminderSendingViewController * controller = [[ReminderSendingViewController alloc] initWithNibName:@"ReminderSendingViewController" bundle:nil];
-        _reminder.triggerTime =  _triggerTime;
-        controller.reminder = _reminder;
-        controller.parentController = self;
-        [self.navigationController pushViewController:controller animated:YES];
-    }
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row == 2) {
-        if (NO == _isSpread){
-            return 44.0f;
-        }else {
-            return 275.0f;
-        }
-    }
-    
-    return 44.0f;
 }
 
 - (void)triggerTimeChanged:(NSDate *)triggerTime {

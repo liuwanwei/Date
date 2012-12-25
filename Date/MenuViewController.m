@@ -65,7 +65,7 @@
 {
     [super viewDidLoad];
     [self initServerMode];
-    _rows = [[NSArray alloc] initWithObjects:@"今日提醒",@"近期提醒",@"历史", nil];
+    _rows = [[NSArray alloc] initWithObjects:@"今日提醒",@"所有提醒",@"历史", nil];
     _rowImages = [[NSArray alloc] initWithObjects:@"today", @"recently", @"history", nil];
     
     self.tableView.delegate = self;
@@ -129,7 +129,7 @@
 
     UIImage * image = nil;
     if (indexPath.section == 0) {
-        cell.textLabel.text = @"收集";
+        cell.textLabel.text = @"收集箱";
     }else if (indexPath.section == 1){
         cell.textLabel.text = [_rows objectAtIndex:indexPath.row];
 //        image = [UIImage imageNamed:[_rowImages objectAtIndex:indexPath.row]];

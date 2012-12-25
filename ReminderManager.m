@@ -534,7 +534,7 @@ typedef enum {
 }
 
 - (void)addLocalNotificationWithReminder:(Reminder *)reminder withBilateralFriend:(BilateralFriend *)friend{
-    if (nil == [self localNotification:reminder.id]) {
+    if (nil == [self localNotification:reminder.id] && nil != reminder.triggerTime) {
         NSString * body;
         if (nil == friend) {
             body = @"您自己的提醒";
@@ -547,7 +547,6 @@ typedef enum {
         UILocalNotification * newNotification = [[UILocalNotification alloc] init];
         newNotification.fireDate = reminder.triggerTime;
         newNotification.alertBody = body;
-        //newNotification.soundName = UILocalNotificationDefaultSoundName;
         newNotification.soundName = @"cat.wav";
         newNotification.alertAction = @"查看应用";
         newNotification.timeZone=[NSTimeZone defaultTimeZone];

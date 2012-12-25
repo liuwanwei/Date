@@ -22,9 +22,16 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIPickerView * pickerView;
 
 @property (strong, nonatomic) Reminder * reminder;
+@property (strong, nonatomic) NSString * desc;
 @property (nonatomic) SettingMode settingMode;
 @property (weak, nonatomic) NSString * receiver;
+@property (strong, nonatomic) NSDate * triggerTime;
+@property (nonatomic) BOOL isLogin;
+@property (nonatomic) BOOL isAuthValid;
+@property (nonatomic) BOOL isSpread;
 
 - (void)updateReceiverCell;
-
+- (void)initData;
+- (void)clickTrigeerTimeRow:(NSIndexPath *)indexPath;
+- (void)clickSendRow;
 @end

@@ -11,7 +11,8 @@
 #import "SinaWeiboManager.h"
 #import "LoginViewController.h"
 #import "OnlineFriendsRemindViewController.h"
-#import "ReminderSettingViewController.h"
+#import "AudioReminderSettingViewController.h"
+#import "TextReminderSettingViewController.h"
 #import "MBProgressManager.h"
 #import "AppDelegate.h"
 
@@ -27,18 +28,30 @@
     LoginViewController * _loginViewController;
     
     NSIndexPath * _curDeleteIndexPath;
+    InfoMode _infoMode;
 }
 
 @end
 
 @implementation RemindersInboxViewController
 @synthesize dataType = _dataType;
+@synthesize btnAudio = _btnAudio;
+@synthesize btnMode = _btnMode;
+@synthesize txtDesc = _txtDesc;
+@synthesize toolbar = _toolbar;
 
 #pragma 私有函数
-
 - (void)initMenuView {
-    UIBarButtonItem * leftItem = [[UIBarButtonItem alloc] initWithTitle:@"菜单" style:UIBarButtonItemStylePlain target:self action:@selector(leftBarBtnTapped:)];
-        self.navigationItem.leftBarButtonItem = leftItem;
+    UIButton * leftButton;
+    UIBarButtonItem * item;
+    
+    leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
+    [leftButton setImage:[UIImage imageNamed:@"navi_menuleft_up"] forState:UIControlStateNormal];
+    [leftButton setImage:[UIImage imageNamed:@"navi_menuleft_down"] forState:UIControlStateHighlighted];
+    [leftButton addTarget:self action:@selector(leftBarBtnTapped:) forControlEvents:UIControlEventTouchUpInside];
+    item = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    
+    self.navigationItem.leftBarButtonItem = item;
 }
 
 - (void)addUserId:(NSNumber *)userId {
@@ -53,10 +66,23 @@
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOAuthSuccessMessage:) name:kUserOAuthSuccessMessage object:nil];
     
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOnlineFriendsMessage:) name:kOnlineFriendsMessage object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification 
+                                               object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRegisterUserMessage:) name:kGoRegisterUserMessage object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleRegisterUserMessage:) name:kGoRegisterUserMessage
+                                               object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRemindersUpdateMessage:) name:kRemindesUpdateMessage object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleRemindersUpdateMessage:) name:kRemindesUpdateMessage
+                                               object:nil];
 }
 
 /*
@@ -89,12 +115,106 @@
     [[AppDelegate delegate] checkRemindersExpired];
 }
 
+//Code from Brett Schumann
+-(void) keyboardWillShow:(NSNotification *)note{
+    // get keyboard size and loctaion
+    CGRect keyboardBounds;
+    [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
+    NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+    
+    // Need to translate the bounds to account for rotation.
+    keyboardBounds = [self.view convertRect:keyboardBounds toView:nil];
+    
+    // get a rect for the textView frame
+    CGRect containerFrame = _toolbar.frame;
+    containerFrame.origin.y = self.view.bounds.size.height - (keyboardBounds.size.height + containerFrame.size.height);
+    // animations settings
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:[duration doubleValue]];
+    [UIView setAnimationCurve:[curve intValue]];
+    
+    // set views with new info
+    _toolbar.frame = containerFrame;
+    
+    // commit animations
+    [UIView commitAnimations];
+    
+    UIControl *overView = [[UIControl alloc] init];
+    overView.tag = 10086;
+    overView.backgroundColor = [UIColor clearColor];
+    overView.frame = CGRectMake(0, 44, 320, containerFrame.origin.y);
+    [overView addTarget:self action:@selector(restoreView) forControlEvents:UIControlEventTouchDown];
+    [[[UIApplication sharedApplication] keyWindow] addSubview:overView];
+}
+
+-(void) keyboardWillHide:(NSNotification *)note{
+    NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+    
+    // get a rect for the textView frame
+    CGRect containerFrame = _toolbar.frame;
+    containerFrame.origin.y = self.view.bounds.size.height - containerFrame.size.height;
+    
+    // animations settings
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:[duration doubleValue]];
+    [UIView setAnimationCurve:[curve intValue]];
+    
+    // set views with new info
+    _toolbar.frame = containerFrame;
+    
+    // commit animations
+    [UIView commitAnimations];
+}
+
+- (void)restoreView {
+    UIControl *overView = (UIControl *)[[[UIApplication sharedApplication] keyWindow] viewWithTag:10086];
+    [overView removeFromSuperview];
+    [_txtDesc resignFirstResponder];
+}
+
 - (void)registerForRemoteNotification {
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge |UIRemoteNotificationTypeSound)];
 }
 
 - (void)removeHUD {
     [[MBProgressManager defaultManager] removeHUD];
+}
+
+- (void)setInfoMode:(InfoMode)mode {
+    _infoMode = mode;
+    if (InfoModeAudio == _infoMode) {
+        [_btnMode setImage:[UIImage imageNamed:@"feeddetail_toolbar_text_btn"] forState:UIControlStateNormal];
+        [_btnMode setImage:[UIImage imageNamed:@"feeddetail_toolbar_text_btn_h"] forState:UIControlStateHighlighted];
+
+        [_txtDesc resignFirstResponder];
+        _btnAudio.frame = CGRectMake(_btnAudio.frame.origin.x, _btnAudio.frame.origin.y, 240, _btnAudio.frame.size.height);
+        _txtDesc.frame = CGRectMake(_txtDesc.frame.origin.x, _txtDesc.frame.origin.y, 0, _txtDesc.frame.size.height);
+    }else {
+        [_btnMode setImage:[UIImage imageNamed:@"feeddetail_toolbar_phone_btn"] forState:UIControlStateNormal];
+        [_btnMode setImage:[UIImage imageNamed:@"feeddetail_toolbar_phone_btn_h"] forState:UIControlStateHighlighted];
+        [_txtDesc becomeFirstResponder];
+        _txtDesc.frame = CGRectMake(_txtDesc.frame.origin.x, _txtDesc.frame.origin.y, 240, _txtDesc.frame.size.height);
+        _btnAudio.frame = CGRectMake(_btnAudio.frame.origin.x, _btnAudio.frame.origin.y, 0, _btnAudio.frame.size.height);
+    }
+}
+
+- (void)showAudioReminderSettingController {
+    AudioReminderSettingViewController * controller = [[AudioReminderSettingViewController alloc] initWithNibName:@"AudioReminderSettingViewController" bundle:nil];
+    controller.settingMode = SettingModeNew;
+    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
+    [self.navigationController presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)showTextReminderSettingController {
+    TextReminderSettingViewController * controller = [[TextReminderSettingViewController alloc] initWithNibName:@"TextReminderSettingViewController" bundle:nil];
+    controller.settingMode = SettingModeNew;
+    controller.desc = _txtDesc.text;
+    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
+    [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
 
 #pragma 类成员函数
@@ -119,6 +239,8 @@
     }
     
     if (nil != self.reminders) {
+        _group = nil;
+        _keys = nil;
         _group = [[NSMutableDictionary alloc] initWithCapacity:0];
         _keys = [[NSMutableArray alloc] initWithCapacity:0];
         _usersIdArray = [[NSMutableArray alloc] initWithCapacity:0];
@@ -151,10 +273,11 @@
     }else {
         _group = nil;
         _keys = nil;
-        _usersIdArray = nil;
-        _usersIdDictionary = nil;
     }
     
+    _usersIdArray = nil;
+    _usersIdDictionary = nil;
+    self.reminders = nil;
     [self.tableView reloadData];
 }
 
@@ -172,14 +295,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self initMenuView];
     _dataType = DataTypeToday;
+    _txtDesc.delegate = self;
+    [self initMenuView];
+    [self setInfoMode:InfoModeAudio];
     [self initData];
     [self registerHandleMessage];
     
-    if (NO == [_sinaWeiboManager.sinaWeibo isAuthValid]) {
-        //[self showLoginViewController];
-    }else {
+    if (YES == [_sinaWeiboManager.sinaWeibo isAuthValid]) {
         [_sinaWeiboManager requestBilateralFriends];
         [[BilateralFriendManager defaultManager] checkRegisteredFriendsRequest];
         [self registerForRemoteNotification];
@@ -201,11 +324,15 @@
 - (IBAction)stopRecord:(id)sender {
     SoundManager * manager = [SoundManager defaultSoundManager];
     if (YES == [manager stopRecord]) {
-        ReminderSettingViewController * controller = [[ReminderSettingViewController alloc] initWithNibName:@"ReminderSettingViewController" bundle:nil];
-        controller.settingMode = SettingModeNew;
-        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
+        [self showAudioReminderSettingController];
+    }
+}
 
-        [self.navigationController presentViewController:nav animated:YES completion:nil];
+- (IBAction)changeInfoMode:(UIButton *)sender {
+    if (InfoModeAudio == _infoMode) {
+        [self setInfoMode:InfoModeText];
+    }else {
+        [self setInfoMode:InfoModeAudio];
     }
 }
 
@@ -269,6 +396,12 @@
     }
 }
 
+#pragma mark - Table view delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [super tableView:tableView didSelectRowAtIndexPath:indexPath];
+}
+
 #pragma mark - ReminderManager delegate
 - (void)deleteReminderSuccess:(Reminder *)reminder {
     [self.reminderManager deleteReminder:reminder];
@@ -281,6 +414,14 @@
 - (void)deleteReminderFailed {
     [[MBProgressManager defaultManager] showHUD:@"删除失败"];
     [self performSelector:@selector(removeHUD) withObject:self afterDelay:0.5];
+}
+
+#pragma mark - UITextFiled delegte 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [_txtDesc resignFirstResponder];
+    [self showTextReminderSettingController];
+    _txtDesc.text = @"";
+    return YES;
 }
 
 @end

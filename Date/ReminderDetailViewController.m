@@ -11,8 +11,6 @@
 #import "AppDelegate.h"
 
 @interface ReminderDetailViewController () {
-    NSArray * _sections;
-    NSDateFormatter * _dateFormatter;
     UIButton * _btnFinish;
     UIButton * _btnUnFinish;
 }
@@ -24,6 +22,8 @@
 @synthesize friend = _friend;
 @synthesize tableView = _tableView;
 @synthesize detailViewShowMode = _detailViewShowMode;
+@synthesize sections = _sections;
+@synthesize dateFormatter = _dateFormatter;
 
 #pragma 私有函数
 - (void)modifyReminderState {

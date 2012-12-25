@@ -39,13 +39,13 @@ static SoundManager * sSoundManager;
 
 - (id)init {
     if (self = [super init]) {
-        [[NSBundle mainBundle] loadNibNamed:@"RecordView" owner:self options:nil];
+        //[[NSBundle mainBundle] loadNibNamed:@"RecordView" owner:self options:nil];
         if (nil != _view) {
-            _view.layer.masksToBounds = NO;
-            _view.layer.cornerRadius = 8.0f;
-            _viewWarning.layer.masksToBounds = NO;
-            _viewWarning.layer.cornerRadius = 8.0f;
-            [self initImageView];
+            //_view.layer.masksToBounds = NO;
+            //_view.layer.cornerRadius = 8.0f;
+            //_viewWarning.layer.masksToBounds = NO;
+            //_viewWarning.layer.cornerRadius = 8.0f;
+            //[self initImageView];
         }
     }
     
@@ -65,6 +65,11 @@ static SoundManager * sSoundManager;
 }
 
 - (void)initImageView {
+    [[NSBundle mainBundle] loadNibNamed:@"RecordView" owner:self options:nil];
+    _view.layer.masksToBounds = NO;
+    _view.layer.cornerRadius = 8.0f;
+    _viewWarning.layer.masksToBounds = NO;
+    _viewWarning.layer.cornerRadius = 8.0f;
     if (nil != _imageView) {
         self.imageView.animationImages = [NSArray arrayWithObjects:
                                           [UIImage imageNamed:@"recordingSignal001"],
@@ -91,10 +96,14 @@ static SoundManager * sSoundManager;
 
 - (void)closeWaringView {
     [_viewWarning removeFromSuperview];
+    _view = nil;
+    _viewWarning = nil;
+    _imageView = nil;
 }
 
 - (void)showRecordingView {
     if (nil != _parentView) {
+        [self initImageView];
         [_imageView startAnimating];
         _view.frame = CGRectMake(50.0, 100.0, _view.frame.size.width,_view.frame.size.height);
         [_parentView addSubview:_view];
@@ -198,6 +207,9 @@ static SoundManager * sSoundManager;
 - (void)realStopReocrd {
     [_recorder stop];
     _recorder = nil;
+    _view = nil;
+    _viewWarning = nil;
+    _imageView = nil;
 }
 
 - (BOOL)playRecording {

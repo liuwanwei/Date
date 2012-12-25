@@ -79,6 +79,26 @@
 		3C40DE4316670F41005627C9 /* RemindersNotificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C40DE4116670F41005627C9 /* RemindersNotificationViewController.xib */; };
 		3C838F2F1675D59100A85826 /* ReminderDetailAudioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C838F2E1675D59100A85826 /* ReminderDetailAudioCell.m */; };
 		3C838F311675D5B700A85826 /* ReminderDetailAudioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C838F301675D5B700A85826 /* ReminderDetailAudioCell.xib */; };
+		3C9384931688292D00DA6412 /* TextReminderSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9384911688292D00DA6412 /* TextReminderSettingViewController.m */; };
+		3C9384941688292D00DA6412 /* TextReminderSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9384921688292D00DA6412 /* TextReminderSettingViewController.xib */; };
+		3C93849816882BD800DA6412 /* AudioReminderSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C93849616882BD800DA6412 /* AudioReminderSettingViewController.m */; };
+		3C93849916882BD800DA6412 /* AudioReminderSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C93849716882BD800DA6412 /* AudioReminderSettingViewController.xib */; };
+		3C93849C1688537500DA6412 /* ReminderSettingDescCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C93849B1688537500DA6412 /* ReminderSettingDescCell.m */; };
+		3C93849E1688539000DA6412 /* ReminderSettingDescCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C93849D1688539000DA6412 /* ReminderSettingDescCell.xib */; };
+		3C9384A61689328D00DA6412 /* TextReminderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9384A41689328A00DA6412 /* TextReminderDetailViewController.m */; };
+		3C9384A71689328D00DA6412 /* TextReminderDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9384A51689328C00DA6412 /* TextReminderDetailViewController.xib */; };
+		3C9384B416893C7B00DA6412 /* feeddetail_toolbar_phone_btn_h.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C9384A816893C7B00DA6412 /* feeddetail_toolbar_phone_btn_h.png */; };
+		3C9384B516893C7B00DA6412 /* feeddetail_toolbar_phone_btn_h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C9384A916893C7B00DA6412 /* feeddetail_toolbar_phone_btn_h@2x.png */; };
+		3C9384B616893C7B00DA6412 /* feeddetail_toolbar_phone_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C9384AA16893C7B00DA6412 /* feeddetail_toolbar_phone_btn.png */; };
+		3C9384B716893C7B00DA6412 /* feeddetail_toolbar_phone_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C9384AB16893C7B00DA6412 /* feeddetail_toolbar_phone_btn@2x.png */; };
+		3C9384B816893C7B00DA6412 /* feeddetail_toolbar_text_btn_h.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C9384AC16893C7B00DA6412 /* feeddetail_toolbar_text_btn_h.png */; };
+		3C9384B916893C7B00DA6412 /* feeddetail_toolbar_text_btn_h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C9384AD16893C7B00DA6412 /* feeddetail_toolbar_text_btn_h@2x.png */; };
+		3C9384BA16893C7B00DA6412 /* feeddetail_toolbar_text_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C9384AE16893C7B00DA6412 /* feeddetail_toolbar_text_btn.png */; };
+		3C9384BB16893C7B00DA6412 /* feeddetail_toolbar_text_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C9384AF16893C7B00DA6412 /* feeddetail_toolbar_text_btn@2x.png */; };
+		3C9384BC16893C7B00DA6412 /* navi_menuleft_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C9384B016893C7B00DA6412 /* navi_menuleft_down.png */; };
+		3C9384BD16893C7B00DA6412 /* navi_menuleft_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C9384B116893C7B00DA6412 /* navi_menuleft_down@2x.png */; };
+		3C9384BE16893C7B00DA6412 /* navi_menuleft_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C9384B216893C7B00DA6412 /* navi_menuleft_up.png */; };
+		3C9384BF16893C7B00DA6412 /* navi_menuleft_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C9384B316893C7B00DA6412 /* navi_menuleft_up@2x.png */; };
 		3C984EBF166C53C4005AA529 /* blueDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C984EBD166C53C4005AA529 /* blueDot.png */; };
 		3C984EC0166C53C4005AA529 /* blueDot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C984EBE166C53C4005AA529 /* blueDot@2x.png */; };
 		3C984EC2166C59AF005AA529 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C984EC1166C59AF005AA529 /* icon@2x.png */; };
@@ -307,6 +327,30 @@
 		3C838F2D1675D59100A85826 /* ReminderDetailAudioCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderDetailAudioCell.h; sourceTree = "<group>"; };
 		3C838F2E1675D59100A85826 /* ReminderDetailAudioCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderDetailAudioCell.m; sourceTree = "<group>"; };
 		3C838F301675D5B700A85826 /* ReminderDetailAudioCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderDetailAudioCell.xib; sourceTree = "<group>"; };
+		3C9384901688292D00DA6412 /* TextReminderSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextReminderSettingViewController.h; sourceTree = "<group>"; };
+		3C9384911688292D00DA6412 /* TextReminderSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextReminderSettingViewController.m; sourceTree = "<group>"; };
+		3C9384921688292D00DA6412 /* TextReminderSettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextReminderSettingViewController.xib; sourceTree = "<group>"; };
+		3C93849516882BD800DA6412 /* AudioReminderSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioReminderSettingViewController.h; sourceTree = "<group>"; };
+		3C93849616882BD800DA6412 /* AudioReminderSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioReminderSettingViewController.m; sourceTree = "<group>"; };
+		3C93849716882BD800DA6412 /* AudioReminderSettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioReminderSettingViewController.xib; sourceTree = "<group>"; };
+		3C93849A1688537500DA6412 /* ReminderSettingDescCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderSettingDescCell.h; sourceTree = "<group>"; };
+		3C93849B1688537500DA6412 /* ReminderSettingDescCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderSettingDescCell.m; sourceTree = "<group>"; };
+		3C93849D1688539000DA6412 /* ReminderSettingDescCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderSettingDescCell.xib; sourceTree = "<group>"; };
+		3C9384A31689328A00DA6412 /* TextReminderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextReminderDetailViewController.h; sourceTree = "<group>"; };
+		3C9384A41689328A00DA6412 /* TextReminderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextReminderDetailViewController.m; sourceTree = "<group>"; };
+		3C9384A51689328C00DA6412 /* TextReminderDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextReminderDetailViewController.xib; sourceTree = "<group>"; };
+		3C9384A816893C7B00DA6412 /* feeddetail_toolbar_phone_btn_h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = feeddetail_toolbar_phone_btn_h.png; path = Resources/images/feeddetail_toolbar_phone_btn_h.png; sourceTree = "<group>"; };
+		3C9384A916893C7B00DA6412 /* feeddetail_toolbar_phone_btn_h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "feeddetail_toolbar_phone_btn_h@2x.png"; path = "Resources/images/feeddetail_toolbar_phone_btn_h@2x.png"; sourceTree = "<group>"; };
+		3C9384AA16893C7B00DA6412 /* feeddetail_toolbar_phone_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = feeddetail_toolbar_phone_btn.png; path = Resources/images/feeddetail_toolbar_phone_btn.png; sourceTree = "<group>"; };
+		3C9384AB16893C7B00DA6412 /* feeddetail_toolbar_phone_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "feeddetail_toolbar_phone_btn@2x.png"; path = "Resources/images/feeddetail_toolbar_phone_btn@2x.png"; sourceTree = "<group>"; };
+		3C9384AC16893C7B00DA6412 /* feeddetail_toolbar_text_btn_h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = feeddetail_toolbar_text_btn_h.png; path = Resources/images/feeddetail_toolbar_text_btn_h.png; sourceTree = "<group>"; };
+		3C9384AD16893C7B00DA6412 /* feeddetail_toolbar_text_btn_h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "feeddetail_toolbar_text_btn_h@2x.png"; path = "Resources/images/feeddetail_toolbar_text_btn_h@2x.png"; sourceTree = "<group>"; };
+		3C9384AE16893C7B00DA6412 /* feeddetail_toolbar_text_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = feeddetail_toolbar_text_btn.png; path = Resources/images/feeddetail_toolbar_text_btn.png; sourceTree = "<group>"; };
+		3C9384AF16893C7B00DA6412 /* feeddetail_toolbar_text_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "feeddetail_toolbar_text_btn@2x.png"; path = "Resources/images/feeddetail_toolbar_text_btn@2x.png"; sourceTree = "<group>"; };
+		3C9384B016893C7B00DA6412 /* navi_menuleft_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = navi_menuleft_down.png; path = Resources/images/navi_menuleft_down.png; sourceTree = "<group>"; };
+		3C9384B116893C7B00DA6412 /* navi_menuleft_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "navi_menuleft_down@2x.png"; path = "Resources/images/navi_menuleft_down@2x.png"; sourceTree = "<group>"; };
+		3C9384B216893C7B00DA6412 /* navi_menuleft_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = navi_menuleft_up.png; path = Resources/images/navi_menuleft_up.png; sourceTree = "<group>"; };
+		3C9384B316893C7B00DA6412 /* navi_menuleft_up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "navi_menuleft_up@2x.png"; path = "Resources/images/navi_menuleft_up@2x.png"; sourceTree = "<group>"; };
 		3C984EBD166C53C4005AA529 /* blueDot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blueDot.png; path = Resources/images/blueDot.png; sourceTree = "<group>"; };
 		3C984EBE166C53C4005AA529 /* blueDot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blueDot@2x.png"; path = "Resources/images/blueDot@2x.png"; sourceTree = "<group>"; };
 		3C984EC1166C59AF005AA529 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "Resources/images/icon@2x.png"; sourceTree = "<group>"; };
@@ -538,6 +582,7 @@
 				3C34992F166F1062001012B6 /* ReminderInboxCell.xib */,
 				3C838F301675D5B700A85826 /* ReminderDetailAudioCell.xib */,
 				3C1CB07F167AFAD60025BDB2 /* ReminderSettingTimeCell.xib */,
+				3C93849D1688539000DA6412 /* ReminderSettingDescCell.xib */,
 			);
 			name = cell;
 			sourceTree = "<group>";
@@ -568,6 +613,8 @@
 				3C838F2E1675D59100A85826 /* ReminderDetailAudioCell.m */,
 				3C1CB07C167AFABE0025BDB2 /* ReminderSettingTimeCell.h */,
 				3C1CB07D167AFABE0025BDB2 /* ReminderSettingTimeCell.m */,
+				3C93849A1688537500DA6412 /* ReminderSettingDescCell.h */,
+				3C93849B1688537500DA6412 /* ReminderSettingDescCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -604,6 +651,18 @@
 		3CE0ABF916507EA2004B785A /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3C9384A816893C7B00DA6412 /* feeddetail_toolbar_phone_btn_h.png */,
+				3C9384A916893C7B00DA6412 /* feeddetail_toolbar_phone_btn_h@2x.png */,
+				3C9384AA16893C7B00DA6412 /* feeddetail_toolbar_phone_btn.png */,
+				3C9384AB16893C7B00DA6412 /* feeddetail_toolbar_phone_btn@2x.png */,
+				3C9384AC16893C7B00DA6412 /* feeddetail_toolbar_text_btn_h.png */,
+				3C9384AD16893C7B00DA6412 /* feeddetail_toolbar_text_btn_h@2x.png */,
+				3C9384AE16893C7B00DA6412 /* feeddetail_toolbar_text_btn.png */,
+				3C9384AF16893C7B00DA6412 /* feeddetail_toolbar_text_btn@2x.png */,
+				3C9384B016893C7B00DA6412 /* navi_menuleft_down.png */,
+				3C9384B116893C7B00DA6412 /* navi_menuleft_down@2x.png */,
+				3C9384B216893C7B00DA6412 /* navi_menuleft_up.png */,
+				3C9384B316893C7B00DA6412 /* navi_menuleft_up@2x.png */,
 				3C31565F16819CFA00C1E42C /* btnTimeDeleteOri.png */,
 				3C31566016819CFA00C1E42C /* btnTimeDeleteOri@2x.png */,
 				3CE8509D16803DA50025ECA3 /* checkboxCompleted.png */,
@@ -652,6 +711,9 @@
 		3CE0ABFA16507EA9004B785A /* xib */ = {
 			isa = PBXGroup;
 			children = (
+				3C9384A51689328C00DA6412 /* TextReminderDetailViewController.xib */,
+				3C93849716882BD800DA6412 /* AudioReminderSettingViewController.xib */,
+				3C9384921688292D00DA6412 /* TextReminderSettingViewController.xib */,
 				3C1CB0791679BA770025BDB2 /* SettingViewController.xib */,
 				3C3499381670509E001012B6 /* ReminderDetailViewController.xib */,
 				3C349929166EEF62001012B6 /* RemindersInboxViewController.xib */,
@@ -689,18 +751,24 @@
 				3CB275121654EAF400FAEF1F /* OnlineFriendsRemindViewController.m */,
 				3C044CC9165A0E1B000551C5 /* ReminderSettingViewController.h */,
 				3C044CCA165A0E1B000551C5 /* ReminderSettingViewController.m */,
+				3C9384901688292D00DA6412 /* TextReminderSettingViewController.h */,
+				3C9384911688292D00DA6412 /* TextReminderSettingViewController.m */,
+				3C93849516882BD800DA6412 /* AudioReminderSettingViewController.h */,
+				3C93849616882BD800DA6412 /* AudioReminderSettingViewController.m */,
 				3C044CD6165A8C57000551C5 /* ReminderMapViewController.h */,
 				3C044CD7165A8C58000551C5 /* ReminderMapViewController.m */,
 				3CF017DE165B500D00F83814 /* ReminderSendingViewController.h */,
 				3CF017DF165B500E00F83814 /* ReminderSendingViewController.m */,
 				3CC9CE20165F730100E7E9D9 /* FriendRemindersViewController.h */,
 				3CC9CE21165F730100E7E9D9 /* FriendRemindersViewController.m */,
-				3C3499361670509C001012B6 /* ReminderDetailViewController.h */,
-				3C3499371670509D001012B6 /* ReminderDetailViewController.m */,
 				3C1CB0771679BA760025BDB2 /* SettingViewController.h */,
 				3C1CB0781679BA760025BDB2 /* SettingViewController.m */,
 				3C3156631681AE4000C1E42C /* BaseViewController.h */,
 				3C3156641681AE4000C1E42C /* BaseViewController.m */,
+				3C3499361670509C001012B6 /* ReminderDetailViewController.h */,
+				3C3499371670509D001012B6 /* ReminderDetailViewController.m */,
+				3C9384A31689328A00DA6412 /* TextReminderDetailViewController.h */,
+				3C9384A41689328A00DA6412 /* TextReminderDetailViewController.m */,
 			);
 			name = Class;
 			sourceTree = "<group>";
@@ -967,6 +1035,22 @@
 				3CE850A416803DA50025ECA3 /* checkboxOri@2x.png in Resources */,
 				3C31566116819CFA00C1E42C /* btnTimeDeleteOri.png in Resources */,
 				3C31566216819CFA00C1E42C /* btnTimeDeleteOri@2x.png in Resources */,
+				3C9384941688292D00DA6412 /* TextReminderSettingViewController.xib in Resources */,
+				3C93849916882BD800DA6412 /* AudioReminderSettingViewController.xib in Resources */,
+				3C93849E1688539000DA6412 /* ReminderSettingDescCell.xib in Resources */,
+				3C9384A71689328D00DA6412 /* TextReminderDetailViewController.xib in Resources */,
+				3C9384B416893C7B00DA6412 /* feeddetail_toolbar_phone_btn_h.png in Resources */,
+				3C9384B516893C7B00DA6412 /* feeddetail_toolbar_phone_btn_h@2x.png in Resources */,
+				3C9384B616893C7B00DA6412 /* feeddetail_toolbar_phone_btn.png in Resources */,
+				3C9384B716893C7B00DA6412 /* feeddetail_toolbar_phone_btn@2x.png in Resources */,
+				3C9384B816893C7B00DA6412 /* feeddetail_toolbar_text_btn_h.png in Resources */,
+				3C9384B916893C7B00DA6412 /* feeddetail_toolbar_text_btn_h@2x.png in Resources */,
+				3C9384BA16893C7B00DA6412 /* feeddetail_toolbar_text_btn.png in Resources */,
+				3C9384BB16893C7B00DA6412 /* feeddetail_toolbar_text_btn@2x.png in Resources */,
+				3C9384BC16893C7B00DA6412 /* navi_menuleft_down.png in Resources */,
+				3C9384BD16893C7B00DA6412 /* navi_menuleft_down@2x.png in Resources */,
+				3C9384BE16893C7B00DA6412 /* navi_menuleft_up.png in Resources */,
+				3C9384BF16893C7B00DA6412 /* navi_menuleft_up@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1034,6 +1118,10 @@
 				3C1CB07A1679BA770025BDB2 /* SettingViewController.m in Sources */,
 				3C1CB07E167AFABE0025BDB2 /* ReminderSettingTimeCell.m in Sources */,
 				3C3156651681AE4100C1E42C /* BaseViewController.m in Sources */,
+				3C9384931688292D00DA6412 /* TextReminderSettingViewController.m in Sources */,
+				3C93849816882BD800DA6412 /* AudioReminderSettingViewController.m in Sources */,
+				3C93849C1688537500DA6412 /* ReminderSettingDescCell.m in Sources */,
+				3C9384A61689328D00DA6412 /* TextReminderDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

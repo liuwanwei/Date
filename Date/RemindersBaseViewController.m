@@ -8,7 +8,8 @@
 
 #import "RemindersBaseViewController.h"
 #import "ReminderDetailViewController.h"
-#import "ReminderSettingViewController.h"
+#import "AudioReminderSettingViewController.h"
+#import "TextReminderSettingViewController.h"
 #import "AppDelegate.h"
 
 @interface RemindersBaseViewController () {
@@ -116,9 +117,17 @@
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ReminderBaseCell * cell = (ReminderBaseCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    ReminderSettingViewController * controller = [[ReminderSettingViewController alloc] initWithNibName:@"ReminderSettingViewController" bundle:nil];
+    ReminderBaseCell * cell = (ReminderBaseCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    NSString * audioPath = cell.reminder.audioUrl;
+    ReminderSettingViewController * controller;
+    if (nil == audioPath || [audioPath isEqualToString:@""]) {
+        controller = [[TextReminderSettingViewController alloc] initWithNibName:@"TextReminderSettingViewController" bundle:nil];
+    }else {
+        controller = [[AudioReminderSettingViewController alloc] initWithNibName:@"AudioReminderSettingViewController" bundle:nil];
+    }
+
     controller.reminder = cell.reminder;
     controller.settingMode = SettingModeModify;
     [self.navigationController pushViewController:controller animated:YES];

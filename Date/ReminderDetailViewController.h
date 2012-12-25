@@ -21,5 +21,7 @@ typedef  enum {
 @property (strong, nonatomic) BilateralFriend * friend;
 @property (weak, nonatomic) IBOutlet UITableView * tableView;
 @property (nonatomic) NSInteger detailViewShowMode;
+@property (strong, nonatomic) NSArray * sections;
+@property (strong, nonatomic)  NSDateFormatter * dateFormatter;
 
 @end
