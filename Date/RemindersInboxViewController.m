@@ -17,8 +17,6 @@
 #import "AppDelegate.h"
 
 @interface RemindersInboxViewController () {
-    NSMutableDictionary * _group;
-    NSMutableArray * _keys;
     NSMutableArray * _usersIdArray;
     NSMutableDictionary * _usersIdDictionary;
     NSDictionary * _friends;
@@ -217,6 +215,23 @@
     [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
 
+- (void)reloadData {
+    [self.tableView reloadData];
+}
+
+- (void)clearGroup {
+    NSArray * keys = [self.group allKeys];
+    NSArray * reminders;
+    for (NSString * key in keys) {
+        reminders = [self.group objectForKey:key];
+        if ([reminders count] == 0) {
+            [self.group removeObjectForKey:key];
+            return;
+        }
+    }
+    
+}
+
 #pragma 类成员函数
 - (void)showLoginViewController {
     _loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
@@ -228,7 +243,7 @@
         self.title = @"今日提醒";
         self.reminders = [self.reminderManager todayUnFinishedReminders];
     }else if (DataTypeRecent == _dataType) {
-        self.title = @"近期提醒";
+        self.title = @"所有提醒";
         self.reminders = [self.reminderManager recentUnFinishedReminders];
     }else if (DataTypeCollectingBox == _dataType) {
         self.title = @"收集箱";
@@ -239,10 +254,10 @@
     }
     
     if (nil != self.reminders) {
-        _group = nil;
-        _keys = nil;
-        _group = [[NSMutableDictionary alloc] initWithCapacity:0];
-        _keys = [[NSMutableArray alloc] initWithCapacity:0];
+        self.group = nil;
+        self.keys = nil;
+        self.group = [[NSMutableDictionary alloc] initWithCapacity:0];
+        self.keys = [[NSMutableArray alloc] initWithCapacity:0];
         _usersIdArray = [[NSMutableArray alloc] initWithCapacity:0];
         _usersIdDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
         NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
@@ -257,11 +272,11 @@
             }
             
             if (nil != key) {
-                if (nil == [_group objectForKey:key]) {
+                if (nil == [self.group objectForKey:key]) {
                     reminders = [[NSMutableArray alloc] init];
                     [reminders addObject:reminder];
-                    [_group setValue:reminders forKey:key];
-                    [_keys addObject:key];
+                    [self.group setValue:reminders forKey:key];
+                    [self.keys addObject:key];
                 }else {
                     [reminders addObject:reminder];
                 }
@@ -271,8 +286,8 @@
         }
         _friends = [[BilateralFriendManager defaultManager] friendsWithId:_usersIdArray];
     }else {
-        _group = nil;
-        _keys = nil;
+        self.group = nil;
+        self.keys = nil;
     }
     
     _usersIdArray = nil;
@@ -339,19 +354,23 @@
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (nil != _group) {
-        return [_group count];
+    if (nil != self.group) {
+        return [self.group count];
     }
     return 0;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return  [self custumDateString:[_keys objectAtIndex:section]];
+    if (DataTypeToday != _dataType) {
+        return  [self custumDateString:[self.keys objectAtIndex:section]];
+    }
+    
+    return nil;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSArray * reminders = [_group objectForKey:[_keys objectAtIndex:section]];
+    NSArray * reminders = [self.group objectForKey:[self.keys objectAtIndex:section]];
     if (nil != reminders) {
         return [reminders count];
     }
@@ -359,7 +378,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Reminder * reminder = [[_group objectForKey:[_keys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+    Reminder * reminder = [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
     static NSString * CellIdentifier = @"ReminderInboxCell";
     ReminderInboxCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -381,13 +400,15 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         _curDeleteIndexPath = indexPath;
-        Reminder * reminder = [[_group objectForKey:[_keys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+        Reminder * reminder = [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
         NSString * userId = [reminder.userID stringValue];
         if ([userId isEqualToString:@"0"] ||
             [_userManager.userID isEqualToString:userId]) {
             [self.reminderManager deleteReminder:reminder];
-            [[_group objectForKey:[_keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
+            [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [self clearGroup];
+            [self performSelector:@selector(reloadData) withObject:self afterDelay:0.2];
         }else {
             [self.reminderManager deleteReminderRequest:reminder];
             [[MBProgressManager defaultManager] showHUD:@"删除中"];
@@ -405,10 +426,12 @@
 #pragma mark - ReminderManager delegate
 - (void)deleteReminderSuccess:(Reminder *)reminder {
     [self.reminderManager deleteReminder:reminder];
-    [[_group objectForKey:[_keys objectAtIndex:_curDeleteIndexPath.section]] removeObjectAtIndex:_curDeleteIndexPath.row];
+    [[self.group objectForKey:[self.keys objectAtIndex:_curDeleteIndexPath.section]] removeObjectAtIndex:_curDeleteIndexPath.row];
     [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:_curDeleteIndexPath] withRowAnimation:UITableViewRowAnimationFade];
     
     [[MBProgressManager defaultManager] removeHUD];
+    [self clearGroup];
+    [self performSelector:@selector(reloadData) withObject:self afterDelay:0.2];
 }
 
 - (void)deleteReminderFailed {
@@ -422,6 +445,15 @@
     [self showTextReminderSettingController];
     _txtDesc.text = @"";
     return YES;
+}
+
+#pragma mark - FriendReminderCell Delegate
+- (void)clickFinishButton:(NSIndexPath *)indexPath withReminder:(Reminder *)reminder {
+    [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
+    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    [self clearGroup];
+    
+    [self performSelector:@selector(reloadData) withObject:self afterDelay:0.2];
 }
 
 @end

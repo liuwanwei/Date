@@ -583,10 +583,6 @@ typedef enum {
     [self synchroniseToStore];
     [self cancelLocalNotificationWithReminder:reminder];
     [self appBadgeNumberWith:reminder.triggerTime withOperate:BadgeOperateSub];
-    
-    NSNotification * notification = nil;
-    notification = [NSNotification notificationWithName:kRemindesUpdateMessage object:nil];
-    [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 
 - (NSArray *)allRemindersWithReimnderType:(ReminderType)type {

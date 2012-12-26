@@ -162,6 +162,11 @@
 - (IBAction)finish:(UIButton *)sender {
     if ([_reminder.state integerValue] == ReminderStateUnFinish) {
         [[ReminderManager defaultManager] modifyReminder:_reminder withState:ReminderStateFinish];
+        if (self.delegate != nil) {
+            if ([self.delegate respondsToSelector:@selector(clickFinishButton: withReminder:)]) {
+                [self.delegate performSelector:@selector(clickFinishButton: withReminder:) withObject:_indexPath withObject:_reminder];
+            }
+        }
     }
 }
 

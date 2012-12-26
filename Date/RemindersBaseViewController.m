@@ -22,6 +22,8 @@
 @synthesize tableView = _tableView;
 @synthesize reminderManager = _reminderManager;
 @synthesize reminders = _reminders;
+@synthesize group = _group;
+@synthesize keys = _keys;
 
 #pragma 私有函数
 - (void)stopPlayingAudio {

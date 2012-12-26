@@ -21,7 +21,8 @@
 @property (weak, nonatomic) NSArray * reminders;
 @property (weak, nonatomic) Reminder * curReminder;
 @property (strong, nonatomic) NSIndexPath * curIndexPath;
+@property (strong, nonatomic) NSMutableDictionary * group;
+@property (strong, nonatomic) NSMutableArray * keys;
 
 - (NSString *)custumDateString:(NSString *)date;
-
 @end

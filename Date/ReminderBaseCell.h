@@ -24,6 +24,7 @@ typedef enum {
 @optional
 - (void)clickAudioButton:(NSIndexPath *)indexPath withReminder:(Reminder *)reminder;
 - (void)clickMapButton:(NSIndexPath *)indexPath withReminder:(Reminder *)reminder;
+- (void)clickFinishButton:(NSIndexPath *)indexPath withReminder:(Reminder *)reminder;
 @end
 
 @interface ReminderBaseCell : UITableViewCell
