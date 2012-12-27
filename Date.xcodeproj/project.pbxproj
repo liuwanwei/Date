@@ -75,6 +75,13 @@
 		3C3499391670509E001012B6 /* ReminderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3499371670509D001012B6 /* ReminderDetailViewController.m */; };
 		3C34993A1670509E001012B6 /* ReminderDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C3499381670509E001012B6 /* ReminderDetailViewController.xib */; };
 		3C3BE6AC168975440052A8C5 /* sidebar_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3BE6AB168975440052A8C5 /* sidebar_background@2x.png */; };
+		3C3BE6B4168A83F40052A8C5 /* ReminderTimeSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3BE6B2168A83F40052A8C5 /* ReminderTimeSettingViewController.m */; };
+		3C3BE6B5168A83F40052A8C5 /* ReminderTimeSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C3BE6B3168A83F40052A8C5 /* ReminderTimeSettingViewController.xib */; };
+		3C3BE6B8168AA9E10052A8C5 /* feeddetail_toolbar_audio_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3BE6B6168AA9E10052A8C5 /* feeddetail_toolbar_audio_btn.png */; };
+		3C3BE6B9168AA9E10052A8C5 /* feeddetail_toolbar_audio_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3BE6B7168AA9E10052A8C5 /* feeddetail_toolbar_audio_btn@2x.png */; };
+		3C3BE6BD168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3BE6BA168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg.png */; };
+		3C3BE6BE168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3BE6BB168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg@2x.png */; };
+		3C3BE6BF168ADAEC0052A8C5 /* sidebar_separate_light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3BE6BC168ADAEC0052A8C5 /* sidebar_separate_light@2x.png */; };
 		3C40DE3E1666ED4A005627C9 /* BilateralFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C40DE3D1666ED49005627C9 /* BilateralFriend.m */; };
 		3C40DE4216670F41005627C9 /* RemindersNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C40DE4016670F41005627C9 /* RemindersNotificationViewController.m */; };
 		3C40DE4316670F41005627C9 /* RemindersNotificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C40DE4116670F41005627C9 /* RemindersNotificationViewController.xib */; };
@@ -321,6 +328,14 @@
 		3C3499371670509D001012B6 /* ReminderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderDetailViewController.m; sourceTree = "<group>"; };
 		3C3499381670509E001012B6 /* ReminderDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderDetailViewController.xib; sourceTree = "<group>"; };
 		3C3BE6AB168975440052A8C5 /* sidebar_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sidebar_background@2x.png"; path = "Resources/images/sidebar_background@2x.png"; sourceTree = "<group>"; };
+		3C3BE6B1168A83F40052A8C5 /* ReminderTimeSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderTimeSettingViewController.h; sourceTree = "<group>"; };
+		3C3BE6B2168A83F40052A8C5 /* ReminderTimeSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderTimeSettingViewController.m; sourceTree = "<group>"; };
+		3C3BE6B3168A83F40052A8C5 /* ReminderTimeSettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderTimeSettingViewController.xib; sourceTree = "<group>"; };
+		3C3BE6B6168AA9E10052A8C5 /* feeddetail_toolbar_audio_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = feeddetail_toolbar_audio_btn.png; path = Resources/images/feeddetail_toolbar_audio_btn.png; sourceTree = "<group>"; };
+		3C3BE6B7168AA9E10052A8C5 /* feeddetail_toolbar_audio_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "feeddetail_toolbar_audio_btn@2x.png"; path = "Resources/images/feeddetail_toolbar_audio_btn@2x.png"; sourceTree = "<group>"; };
+		3C3BE6BA168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sidebar_cellhighlighted_bg.png; path = Resources/images/sidebar_cellhighlighted_bg.png; sourceTree = "<group>"; };
+		3C3BE6BB168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sidebar_cellhighlighted_bg@2x.png"; path = "Resources/images/sidebar_cellhighlighted_bg@2x.png"; sourceTree = "<group>"; };
+		3C3BE6BC168ADAEC0052A8C5 /* sidebar_separate_light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sidebar_separate_light@2x.png"; path = "Resources/images/sidebar_separate_light@2x.png"; sourceTree = "<group>"; };
 		3C40DE3C1666ED49005627C9 /* BilateralFriend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BilateralFriend.h; sourceTree = "<group>"; };
 		3C40DE3D1666ED49005627C9 /* BilateralFriend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BilateralFriend.m; sourceTree = "<group>"; };
 		3C40DE3F16670F41005627C9 /* RemindersNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemindersNotificationViewController.h; sourceTree = "<group>"; };
@@ -653,6 +668,11 @@
 		3CE0ABF916507EA2004B785A /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3C3BE6BA168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg.png */,
+				3C3BE6BB168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg@2x.png */,
+				3C3BE6BC168ADAEC0052A8C5 /* sidebar_separate_light@2x.png */,
+				3C3BE6B6168AA9E10052A8C5 /* feeddetail_toolbar_audio_btn.png */,
+				3C3BE6B7168AA9E10052A8C5 /* feeddetail_toolbar_audio_btn@2x.png */,
 				3C3BE6AB168975440052A8C5 /* sidebar_background@2x.png */,
 				3C9384A816893C7B00DA6412 /* feeddetail_toolbar_phone_btn_h.png */,
 				3C9384A916893C7B00DA6412 /* feeddetail_toolbar_phone_btn_h@2x.png */,
@@ -714,6 +734,7 @@
 		3CE0ABFA16507EA9004B785A /* xib */ = {
 			isa = PBXGroup;
 			children = (
+				3C3BE6B3168A83F40052A8C5 /* ReminderTimeSettingViewController.xib */,
 				3C9384A51689328C00DA6412 /* TextReminderDetailViewController.xib */,
 				3C93849716882BD800DA6412 /* AudioReminderSettingViewController.xib */,
 				3C9384921688292D00DA6412 /* TextReminderSettingViewController.xib */,
@@ -772,6 +793,8 @@
 				3C3499371670509D001012B6 /* ReminderDetailViewController.m */,
 				3C9384A31689328A00DA6412 /* TextReminderDetailViewController.h */,
 				3C9384A41689328A00DA6412 /* TextReminderDetailViewController.m */,
+				3C3BE6B1168A83F40052A8C5 /* ReminderTimeSettingViewController.h */,
+				3C3BE6B2168A83F40052A8C5 /* ReminderTimeSettingViewController.m */,
 			);
 			name = Class;
 			sourceTree = "<group>";
@@ -1055,6 +1078,12 @@
 				3C9384BE16893C7B00DA6412 /* navi_menuleft_up.png in Resources */,
 				3C9384BF16893C7B00DA6412 /* navi_menuleft_up@2x.png in Resources */,
 				3C3BE6AC168975440052A8C5 /* sidebar_background@2x.png in Resources */,
+				3C3BE6B5168A83F40052A8C5 /* ReminderTimeSettingViewController.xib in Resources */,
+				3C3BE6B8168AA9E10052A8C5 /* feeddetail_toolbar_audio_btn.png in Resources */,
+				3C3BE6B9168AA9E10052A8C5 /* feeddetail_toolbar_audio_btn@2x.png in Resources */,
+				3C3BE6BD168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg.png in Resources */,
+				3C3BE6BE168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg@2x.png in Resources */,
+				3C3BE6BF168ADAEC0052A8C5 /* sidebar_separate_light@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1126,6 +1155,7 @@
 				3C93849816882BD800DA6412 /* AudioReminderSettingViewController.m in Sources */,
 				3C93849C1688537500DA6412 /* ReminderSettingDescCell.m in Sources */,
 				3C9384A61689328D00DA6412 /* TextReminderDetailViewController.m in Sources */,
+				3C3BE6B4168A83F40052A8C5 /* ReminderTimeSettingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

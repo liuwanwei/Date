@@ -25,4 +25,6 @@
 @property (strong, nonatomic) NSMutableArray * keys;
 
 - (NSString *)custumDateString:(NSString *)date;
+- (NSString *)custumDayString:(NSDate *)date;
+- (NSString *)custumDateTimeString:(NSDate *)date;
 @end

@@ -13,7 +13,8 @@
 
 typedef enum {
     SettingModeNew = 0,
-    SettingModeModify
+    SettingModeModify = 1,
+    SettingModeShow
 }SettingMode;
 
 @interface ReminderSettingViewController : RemindersBaseViewController <UITableViewDelegate, UITableViewDataSource, ChoiceViewDelegate,ReminderSettingTimeCellDelegate,ReminderManagerDelegate>
@@ -31,7 +32,9 @@ typedef enum {
 @property (nonatomic) BOOL isSpread;
 
 - (void)updateReceiverCell;
+- (void)updateTriggerTimeCell;
 - (void)initData;
+- (NSString *)stringTriggerTime;
 - (void)clickTrigeerTimeRow:(NSIndexPath *)indexPath;
 - (void)clickSendRow;
 @end

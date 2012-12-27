@@ -24,6 +24,7 @@
 @synthesize detailViewShowMode = _detailViewShowMode;
 @synthesize sections = _sections;
 @synthesize dateFormatter = _dateFormatter;
+@synthesize parentController = _parentController;
 
 #pragma 私有函数
 - (void)modifyReminderState {
@@ -63,6 +64,7 @@
  
 - (void)dismiss {
     [self.reminderManager modifyReminder:_reminder withBellState:YES];
+    [_parentController initData];
     if (_detailViewShowMode == DeailViewShowModePresent) {
         [self dismissViewControllerAnimated:YES completion:nil];
         [self performSelector:@selector(checkRemindersExpired) withObject:self afterDelay:1.0];

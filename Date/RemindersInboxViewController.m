@@ -37,6 +37,7 @@
 @synthesize btnMode = _btnMode;
 @synthesize txtDesc = _txtDesc;
 @synthesize toolbar = _toolbar;
+@synthesize toolbarView = _toolbarView;
 
 #pragma 私有函数
 - (void)initMenuView {
@@ -148,6 +149,7 @@
 }
 
 -(void) keyboardWillHide:(NSNotification *)note{
+    [self restoreView];
     NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
     
@@ -222,12 +224,15 @@
 - (void)clearGroup {
     NSArray * keys = [self.group allKeys];
     NSArray * reminders;
+    NSInteger index = 0;
     for (NSString * key in keys) {
         reminders = [self.group objectForKey:key];
         if ([reminders count] == 0) {
             [self.group removeObjectForKey:key];
+            [self.keys removeObjectAtIndex:index];
             return;
         }
+        index++;
     }
     
 }
@@ -316,7 +321,7 @@
     [self setInfoMode:InfoModeAudio];
     [self initData];
     [self registerHandleMessage];
-    
+    _toolbarView.frame = CGRectMake(0, 0, _toolbarView.frame.size.width, _toolbarView.frame.size.height);
     if (YES == [_sinaWeiboManager.sinaWeibo isAuthValid]) {
         [_sinaWeiboManager requestBilateralFriends];
         [[BilateralFriendManager defaultManager] checkRegisteredFriendsRequest];
@@ -418,9 +423,28 @@
 }
 
 #pragma mark - Table view delegate
+#pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [super tableView:tableView didSelectRowAtIndexPath:indexPath];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    ReminderBaseCell * cell = (ReminderBaseCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    NSString * audioPath = cell.reminder.audioUrl;
+    ReminderSettingViewController * controller;
+    if (nil == audioPath || [audioPath isEqualToString:@""]) {
+        controller = [[TextReminderSettingViewController alloc] initWithNibName:@"TextReminderSettingViewController" bundle:nil];
+    }else {
+        controller = [[AudioReminderSettingViewController alloc] initWithNibName:@"AudioReminderSettingViewController" bundle:nil];
+    }
+    
+    controller.reminder = cell.reminder;
+    if (DataTypeHistory == _dataType) {
+        controller.settingMode = SettingModeShow;
+    }else {
+        controller.settingMode = SettingModeModify;
+    }
+    
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 #pragma mark - ReminderManager delegate
@@ -441,6 +465,7 @@
 
 #pragma mark - UITextFiled delegte 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self restoreView];
     [_txtDesc resignFirstResponder];
     [self showTextReminderSettingController];
     _txtDesc.text = @"";

@@ -58,19 +58,26 @@
         }
         
         if (ReminderStateFinish == [reminer.state integerValue]) {
-            self.labelTriggerDate.textColor = RGBColor(153,153,153);
-            self.labelTriggerDate.font = [UIFont systemFontOfSize:14.0];
             [self.btnFinished setBackgroundImage:[UIImage imageNamed:@"checkboxCompleted"] forState:UIControlStateNormal];
         }else{
-            self.labelTriggerDate.textColor = RGBColor(0,0,0);
-            self.labelTriggerDate.font = [UIFont boldSystemFontOfSize:14.0];
             [self.btnFinished setBackgroundImage:[UIImage imageNamed:@"checkboxOri"] forState:UIControlStateNormal];
         }
-//        if (YES == [reminer.isBell boolValue]) {
-//            [_labelBellSign setHidden:NO];
-//        }else {
-//            [_labelBellSign setHidden:YES];
-//        }
+        
+        if (nil != reminer.triggerTime) {
+            NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"HH:mm"];
+
+            if (YES == [reminer.isAlarm boolValue]) {
+                self.labelTriggerDate.textColor = RGBColor(153,153,153);
+                self.labelTriggerDate.font = [UIFont systemFontOfSize:14.0];
+            }else {
+                self.labelTriggerDate.textColor = RGBColor(0,0,0);
+                self.labelTriggerDate.font = [UIFont systemFontOfSize:14.0];
+            }
+            self.labelTriggerDate.text =[formatter stringFromDate:reminer.triggerTime];
+        }else {
+            self.labelTriggerDate.text = @"";
+        }
     }
 }
 

@@ -194,10 +194,11 @@ static HttpRequestManager * sHttpRequestManager;
     NSString * triggerTime;
     if (nil != reminder.triggerTime) {
         triggerTime = [formatter stringFromDate:reminder.triggerTime];
-        [request setPostValue:@"0" forKey:@"state"];
+        //[request setPostValue:@"0" forKey:@"state"];
     }else {
-        triggerTime = [formatter stringFromDate:[NSDate date]];
-        [request setPostValue:@"1" forKey:@"state"];
+        //triggerTime = [formatter stringFromDate:[NSDate date]];
+        //[request setPostValue:@"1" forKey:@"state"];
+        triggerTime = @"0";
     }
     [request setPostValue:triggerTime forKey:@"triggerTime"];
     [request setPostValue:reminder.longitude forKey:@"longitude"];

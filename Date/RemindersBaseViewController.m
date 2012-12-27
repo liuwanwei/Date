@@ -62,10 +62,48 @@
         dateString = @"今天";
     }else if (diffDay == 1) {
         dateString = @"明天";
+    }else if (diffDay == -1) {
+        dateString = @"昨天";
     }else {
         dateString = date;
     }
     return dateString;
+}
+
+- (NSString *)custumDayString:(NSDate *)date {
+    NSString * dateString;
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yy-MM-dd"];
+    
+    NSDate * nowDate = [NSDate date];
+    NSCalendar * calendar = [NSCalendar currentCalendar];
+    NSUInteger unitFlags = NSDayCalendarUnit;
+    
+    //取相距时间额
+    NSDateComponents * cps = [calendar components:unitFlags fromDate:nowDate  toDate:date  options:0];
+    NSInteger diffDay  = [cps day];
+    if (diffDay == 0) {
+        dateString = @"今天";
+    }else if (diffDay == 1) {
+        dateString = @"明天";
+    }else if (diffDay == 2) {
+        dateString = @"后天";
+    }else if (diffDay == -1) {
+        dateString = @"昨天";
+    }else {
+        dateString = [formatter stringFromDate:date];
+    }
+    return dateString;
+}
+
+- (NSString *)custumDateTimeString:(NSDate *)date {
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    NSString * datetimeString = [self custumDayString:date];
+    [formatter setDateFormat:@"HH:mm"];
+    datetimeString = [datetimeString stringByAppendingString:@" "];
+    datetimeString = [datetimeString stringByAppendingString:[formatter stringFromDate:date]];
+    
+    return datetimeString;
 }
 
 #pragma 事件函数
@@ -115,25 +153,6 @@
 {
     return _reminders.count;
 }*/
-
-#pragma mark - Table view delegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    ReminderBaseCell * cell = (ReminderBaseCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    NSString * audioPath = cell.reminder.audioUrl;
-    ReminderSettingViewController * controller;
-    if (nil == audioPath || [audioPath isEqualToString:@""]) {
-        controller = [[TextReminderSettingViewController alloc] initWithNibName:@"TextReminderSettingViewController" bundle:nil];
-    }else {
-        controller = [[AudioReminderSettingViewController alloc] initWithNibName:@"AudioReminderSettingViewController" bundle:nil];
-    }
-
-    controller.reminder = cell.reminder;
-    controller.settingMode = SettingModeModify;
-    [self.navigationController pushViewController:controller animated:YES];
-}
 
 #pragma mark - SoundManager Delegate
 - (void)audioPlayerDidFinishPlaying {

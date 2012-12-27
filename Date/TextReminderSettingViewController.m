@@ -30,6 +30,11 @@
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
+- (void)updateTriggerTimeCell {
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -102,31 +107,25 @@
         }
         
         cell = descCell;
-    }else if (indexPath.row == 1) {
-        ReminderSettingTimeCell * timeCell;
-        CellIdentifier = @"ReminderSettingTimeCell";
-        timeCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (timeCell == nil) {
-            timeCell = [[ReminderSettingTimeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-            timeCell.delegate = self;
-        }
-        timeCell.labelTitle.text = @"时间";
-        timeCell.triggerTime = self.triggerTime;
-        cell = timeCell;
-    }else if (indexPath.row == 2){
+    }else {
         CellIdentifier = @"Cell";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
-        cell.textLabel.text = @"发送给";
-        cell.detailTextLabel.text = self.receiver;
-        if (NO == self.isLogin) {
-            cell.accessoryType = UITableViewCellAccessoryNone;
+        if (indexPath.row == 1) {
+            cell.textLabel.text = @"提醒时间";
+            cell.detailTextLabel.text = [self stringTriggerTime];
+        }else if (indexPath.row == 2){
+            cell.textLabel.text = @"发送给";
+            cell.detailTextLabel.text = self.receiver;
+            if (NO == self.isLogin) {
+                cell.accessoryType = UITableViewCellAccessoryNone;
+            }
         }
-    }
-    
+
+    }    
     return cell;
 }
 

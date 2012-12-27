@@ -41,6 +41,7 @@
     viewController.reminder = reminder;
     viewController.friend = [[BilateralFriendManager defaultManager] bilateralFriendWithUserID:viewController.reminder.userID];
     viewController.detailViewShowMode = DeailViewShowModePresent;
+    viewController.parentController = _homeViewController;
     UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:viewController];
     [_navController presentViewController:nav animated:YES completion:nil];
 }

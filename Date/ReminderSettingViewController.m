@@ -16,6 +16,7 @@
 #import "MBProgressManager.h"
 #import "AppDelegate.h"
 #import "RemindersInboxViewController.h"
+#import "ReminderTimeSettingViewController.h"
 
 @interface ReminderSettingViewController () {
 
@@ -86,6 +87,9 @@
 - (void)updateReceiverCell {
 }
 
+- (void)updateTriggerTimeCell {
+}
+
 - (void)initData {
     if (SettingModeNew == _settingMode) {
         _reminder = [[ReminderManager defaultManager] reminder];
@@ -97,7 +101,7 @@
 }
 
 - (void)clickTrigeerTimeRow:(NSIndexPath *)indexPath {
-    self.isSpread = !self.isSpread;
+    /*self.isSpread = !self.isSpread;
     
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     ReminderSettingTimeCell * timeCell = (ReminderSettingTimeCell *)[self.tableView cellForRowAtIndexPath:indexPath];
@@ -112,7 +116,12 @@
     }else {
         [timeCell.pickerView setHidden:NO];
         timeCell.accessoryType = UITableViewCellAccessoryNone;
-    }
+    }*/
+    
+    ReminderTimeSettingViewController * controller = [[ReminderTimeSettingViewController alloc] initWithNibName:@"ReminderTimeSettingViewController" bundle:nil];
+    controller.title = @"设置时间";
+    controller.parentContoller = self;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)clickSendRow {
@@ -121,6 +130,13 @@
     controller.reminder = _reminder;
     controller.parentController = self;
     [self.navigationController pushViewController:controller animated:YES];
+}
+
+- (NSString *)stringTriggerTime {
+    if (nil != _triggerTime) {
+        return [self custumDateTimeString:_triggerTime];
+    }
+    return @"";
 }
 
 #pragma 事件函数

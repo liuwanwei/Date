@@ -66,7 +66,7 @@ typedef enum {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString * timeline = [defaults objectForKey:kRemoteRemindersUpdateTimeline];
     if (nil == timeline) {
-        timeline = [self timeline];
+        timeline = @"0";
     }
     return timeline;
 }
@@ -84,6 +84,9 @@ typedef enum {
  新加reminder表数据的同时，修改BilateralFriend表
  */
 - (void)saveRemotesReminders:(NSArray *)data {
+    if ([data count] > 0) {
+         [self saveTimeline];
+    }
     BOOL isBell;
     Reminder * reminder;
     BilateralFriend * friend;
@@ -93,7 +96,8 @@ typedef enum {
     NSTimeZone * timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
     [dateFormatter setTimeZone:timeZone];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSString * state;
+    //NSString * state;
+    NSString * triggerTime;
     NSString * reminderId;
     for (id object in data) {
         isBell = NO;
@@ -109,8 +113,9 @@ typedef enum {
                 reminder.latitude = [object objectForKey:@"latitude"];
                 reminder.longitude = [object objectForKey:@"longitude"];
                 reminder.type = [NSNumber numberWithInteger:ReminderTypeReceive];
+                reminder.isRead = [NSNumber numberWithBool:YES];
                 //reminder.isRead = [numberFormatter numberFromString:[object objectForKey:@"state"]];
-                state = [object objectForKey:@"state"];
+                //state = [object objectForKey:@"state"];
                 reminder.audioLength = [numberFormatter numberFromString:[object objectForKey:@"audioLength"]];
                         
                 /*if (YES == [reminder.isRead boolValue]) {
@@ -130,14 +135,19 @@ typedef enum {
                     reminder.isAlarm = [NSNumber numberWithBool:NO];
                 }*/
                 
-                if ([state isEqualToString:@"1"]) {
+                //if ([state isEqualToString:@"1"]) {
+                triggerTime = [object objectForKey:@"triggerTime"];
+                if ([triggerTime isEqualToString:@"0"]) {
                     reminder.triggerTime = nil;
                 }else {
-                    reminder.triggerTime = [dateFormatter dateFromString:[object objectForKey:@"triggerTime"]];
+                    reminder.triggerTime = [dateFormatter dateFromString:triggerTime];
                     if ([nowDate compare:reminder.triggerTime] == NSOrderedAscending) {
                         isBell = YES;
+                        reminder.isAlarm = [NSNumber numberWithBool:NO];
+                    }else {
+                        reminder.isAlarm = [NSNumber numberWithBool:YES];
                     }
-                    reminder.isAlarm = [NSNumber numberWithBool:NO];
+                    
                     [self appBadgeNumberWith:reminder.triggerTime withOperate:BadgeOperateAdd];
                 }
                         
@@ -580,6 +590,7 @@ typedef enum {
 
 - (void)modifyReminder:(Reminder *)reminder withState:(ReminderState)state {
     reminder.state = [NSNumber numberWithInteger:state];
+    reminder.isAlarm = [NSNumber numberWithBool:YES];
     [self synchroniseToStore];
     [self cancelLocalNotificationWithReminder:reminder];
     [self appBadgeNumberWith:reminder.triggerTime withOperate:BadgeOperateSub];

@@ -28,6 +28,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIButton * btnAudio;
 @property (weak, nonatomic) IBOutlet UITextField  * txtDesc;
 @property (weak, nonatomic) IBOutlet UIToolbar * toolbar;
+@property (weak, nonatomic) IBOutlet UIView * toolbarView;
 
 - (IBAction)startRecord:(id)sender;
 - (IBAction)stopRecord:(id)sender;

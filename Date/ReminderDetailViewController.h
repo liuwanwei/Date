@@ -10,6 +10,7 @@
 #import "Reminder.h"
 #import "BilateralFriend.h"
 #import "RemindersBaseViewController.h"
+#import "RemindersInboxViewController.h"
 
 typedef  enum {
     DeailViewShowModePush = 0,
@@ -23,5 +24,6 @@ typedef  enum {
 @property (nonatomic) NSInteger detailViewShowMode;
 @property (strong, nonatomic) NSArray * sections;
 @property (strong, nonatomic)  NSDateFormatter * dateFormatter;
+@property (weak, nonatomic) RemindersInboxViewController * parentController;
 
 @end

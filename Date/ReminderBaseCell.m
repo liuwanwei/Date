@@ -36,10 +36,7 @@
 - (void)setReminder:(Reminder *)reminer {
     if (nil != reminer) {
         _reminder = reminer;
-        NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"HH:mm"];
-        _labelTriggerDate.text =[formatter stringFromDate:reminer.triggerTime];
-        
+                
         if (nil == _reminder.longitude || [_reminder.longitude isEqualToString:@"0"]) {
             [_btnMap setHidden:YES];
         }else {
@@ -70,9 +67,9 @@
             [_btnAudio setHidden:NO];
             [_labelAudioTime setHidden:NO];
             [_indicatorView setHidden:NO];
+            _labelAudioTime.text = [_reminder.audioLength stringValue];
         }
         
-        _labelAudioTime.text = [_reminder.audioLength stringValue];
         _labelDescription.text = _reminder.desc;
         
     }

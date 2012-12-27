@@ -13,6 +13,7 @@
 #import "SettingViewController.h"
 #import "SinaWeiboManager.h"
 #import "LoginViewController.h"
+#import "LMLibrary.h"
 
 @interface MenuViewController () {
     ServerMode _serverMode;
@@ -71,6 +72,7 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 50.0;
+    //[self.tableView setSeparatorColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"sidebar_separate_light"]]];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"sidebar_background"]];
     // Do any additional setup after loading the view from its nib.
@@ -99,56 +101,64 @@
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    //return 3;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) {
+    /*if (section == 0) {
         return 1;
     }else if (section == 1){
         return _rows.count;
     }else{
         return 1;
-    }
+    }*/
+    return 5;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    if (section == 0) {
+    /*if (section == 0) {
         return @"收集";
     }else if (section == 1){
         return @"提醒";
     }else{
         return @"设置";
-    }
+    }*/
+    return @"";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString * CellIdentifier = @"Cell";
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UIImageView * separatorView;
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
+        cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+        cell.selectedBackgroundView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"sidebar_cellhighlighted_bg"]];
+        cell.textLabel.highlightedTextColor = RGBColor(56,57,61);
+        cell.textLabel.textColor = RGBColor(56,57,61);
+        cell.textLabel.font =  [UIFont systemFontOfSize:17.0];
+        
+        separatorView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sidebar_separate_light"]];
+        separatorView.frame = CGRectMake(2, 49, 200, 1);
+        [cell addSubview:separatorView];
     }
 
     UIImage * image = nil;
-    if (indexPath.section == 0) {
+    if (indexPath.row == 0) {
         cell.textLabel.text = @"收集箱";
-    }else if (indexPath.section == 1){
-        cell.textLabel.text = [_rows objectAtIndex:indexPath.row];
+        //[separatorView setHidden:YES];
+    }//else if (indexPath.section == 1){
+        //cell.textLabel.text = [_rows objectAtIndex:indexPath.row];
 //        image = [UIImage imageNamed:[_rowImages objectAtIndex:indexPath.row]];
-    }else if (indexPath.section == 2){
-        if (indexPath.row == 0) {
+    else if (indexPath.row == 4){
+        //if (indexPath.row == 0) {
             cell.textLabel.text = @"设置";
-        }else {
-            cell.textLabel.text = @"新浪微博绑定";
-            if (NO == [self isLogin]) {
-                cell.detailTextLabel.text = @"未绑定";
-            }else if (NO == [self isAuthValid]) {
-                cell.detailTextLabel.text = @"已过期";
-            }else {
-                cell.detailTextLabel.text = @"已绑定";
-            }
-        }
+            [separatorView setHidden:YES];
+        //}
+    }else {
+        cell.textLabel.text = [_rows objectAtIndex:indexPath.row - 1];
     }
     
     cell.imageView.image = image;
@@ -159,32 +169,28 @@
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    BOOL update = NO;
     if (nil != _settingViewController) {
         [[AppDelegate delegate].navController popToRootViewControllerAnimated:NO];
         _settingViewController = nil;
     }
     
-    if (0 == indexPath.section && 0 == indexPath.row) {
+    if (0 == indexPath.row) {
+        update = YES;
         [AppDelegate delegate].homeViewController.dataType = DataTypeCollectingBox;
-    }else if (1 == indexPath.section) {
-        uint row = indexPath.row;
+    }else if (4 == indexPath.row){
+        if (_settingViewController == nil) {
+            _settingViewController = [[SettingViewController alloc] initWithNibName:@"SettingViewController" bundle:nil];
+        }
+        [[AppDelegate delegate].navController pushViewController:_settingViewController animated:NO];
+    }else {
+        update = YES;
+        uint row = indexPath.row - 1;
         uint types[] = {DataTypeToday, DataTypeRecent, DataTypeHistory};
         [AppDelegate delegate].homeViewController.dataType = types[row];
-    }else if (2 == indexPath.section){
-        if (0 == indexPath.row) {
-            if (_settingViewController == nil) {
-                _settingViewController = [[SettingViewController alloc] initWithNibName:@"SettingViewController" bundle:nil];
-            }
-            
-            [[AppDelegate delegate].navController pushViewController:_settingViewController animated:NO];
-        }else {
-            if (NO == [self isAuthValid]) {
-                [[AppDelegate delegate].homeViewController showLoginViewController];
-            }
-        }
     }
     
-    if (indexPath.section == 0 || indexPath.section == 1) {
+    if (YES == update) {
         [[AppDelegate delegate].homeViewController initData];
     }
     
