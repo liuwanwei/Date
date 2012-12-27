@@ -136,7 +136,11 @@
     if (nil != _triggerTime) {
         return [self custumDateTimeString:_triggerTime];
     }
-    return @"";
+    return @"未设置";
+}
+
+- (void)back {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma 事件函数
@@ -155,6 +159,8 @@
     self.title = @"约定";
     if (SettingModeNew == _settingMode) {
         [self initNavBar];
+    }else {
+        [[AppDelegate delegate] initNavleftBarItemWithController:self withAction:@selector(back)];
     }
     [self initData];
     _isLogin = [[SinaWeiboManager defaultManager].sinaWeibo isLoggedIn];

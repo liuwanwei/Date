@@ -76,7 +76,9 @@
             }
             self.labelTriggerDate.text =[formatter stringFromDate:reminer.triggerTime];
         }else {
-            self.labelTriggerDate.text = @"";
+            self.labelTriggerDate.textColor = RGBColor(153,153,153);
+            self.labelTriggerDate.font = [UIFont systemFontOfSize:14.0];
+            self.labelTriggerDate.text = @"未设置";
         }
     }
 }

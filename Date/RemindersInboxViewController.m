@@ -367,7 +367,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (DataTypeToday != _dataType) {
-        return  [self custumDateString:[self.keys objectAtIndex:section]];
+        return  [self custumDateString:[self.keys objectAtIndex:section] withShowDate:YES];
     }
     
     return nil;

@@ -68,6 +68,23 @@
     return delegate;
 }
 
+- (void)initNavleftBarItemWithController:(UIViewController *)controller withAction:(SEL)action{
+    if (action != nil) {
+        controller.navigationItem.hidesBackButton = YES;
+        UIButton *leftButton;
+        UIBarButtonItem * item;
+        
+        leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        [leftButton setImage:[UIImage imageNamed:@"backNavigationBar"] forState:UIControlStateNormal];
+        [leftButton addTarget:controller action:action forControlEvents:UIControlEventTouchUpInside];
+        item = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+        
+        controller.navigationItem.leftBarButtonItem = item;
+    }else {
+        controller.navigationItem.leftBarButtonItem = nil;
+    }
+}
+
 #pragma 事件函数
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

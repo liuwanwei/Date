@@ -7,6 +7,8 @@
 //
 
 #import "ReminderTimeSettingViewController.h"
+#import "LMLibrary.h"
+#import "AppDelegate.h"
 
 @interface ReminderTimeSettingViewController () {
     NSArray * _days;
@@ -20,6 +22,12 @@
 @synthesize tableView = _tableView;
 @synthesize pickerView = _pickerView;
 @synthesize parentContoller = _parentContoller;
+@synthesize datePick = _datePick;
+@synthesize labelDay = _labelDay;
+@synthesize labelDate = _labelDate;
+@synthesize labelTime = _labelTime;
+@synthesize btnClear = _btnClear;
+@synthesize btnSet = _btnSet;
 
 #pragma 私有函数
 - (void)initData {
@@ -40,7 +48,7 @@
 }
 
 - (void)initPickerView {
-    self.pickerView.delegate = self;
+    /*self.pickerView.delegate = self;
     self.pickerView.dataSource = self;
     NSDateFormatter * hour = [[NSDateFormatter alloc] init];
     NSString * currentDateStr;
@@ -73,7 +81,38 @@
         currentDateStr = [hour stringFromDate:_parentContoller.triggerTime];
         minute = [currentDateStr integerValue];
         [_pickerView selectRow:minute/5 inComponent:2 animated:NO];
+    }*/
+    _datePick.minimumDate = [NSDate date];
+    if (nil != _parentContoller.triggerTime) {
+        [_datePick setDate:_parentContoller.triggerTime];
     }
+}
+
+- (void)initLabelView {
+    NSDate * date;
+    if (nil != _parentContoller.triggerTime) {
+        date = _parentContoller.triggerTime;
+    }else {
+        date = [NSDate date];
+    }
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yy-MM-dd"];
+    NSString * day = [formatter stringFromDate:date];
+    _labelDay.text = [_parentContoller custumDateString:day withShowDate:NO];
+    _labelDate.text = day;
+    [formatter setDateFormat:@"HH:mm"];
+    _labelTime.text = [formatter stringFromDate:date];
+}
+
+- (void)initBtnView {
+    CALayer * btnLayer = [_btnSet layer];
+    [btnLayer setBorderWidth:1.0];
+    [btnLayer setBorderColor:RGBColor(153,153,153).CGColor];
+    [btnLayer setOpacity:0.5];
+    btnLayer = [_btnClear layer];
+    [btnLayer setBorderWidth:1.0];
+    [btnLayer setBorderColor:RGBColor(153,153,153).CGColor];
+    [btnLayer setOpacity:0.5];
 }
 
 - (void)tiggerTime {
@@ -86,6 +125,10 @@
     triggerDate = [triggerDate dateByAddingTimeInterval:[_pickerView selectedRowInComponent:1]*60*60];
     triggerDate = [triggerDate dateByAddingTimeInterval:[_pickerView selectedRowInComponent:2]*5*60];
     _parentContoller.triggerTime = triggerDate;
+}
+
+- (void)back {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma 事件函数
@@ -103,8 +146,11 @@
     [super viewDidLoad];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    [self initData];
+    //[self initData];
+    [self initLabelView];
     [self initPickerView];
+    [self initBtnView];
+    [[AppDelegate delegate] initNavleftBarItemWithController:self withAction:@selector(back)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -116,6 +162,16 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [_parentContoller updateTriggerTimeCell];
+}
+
+- (IBAction)clickClear:(id)sender {
+    _parentContoller.triggerTime = nil;
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)clickSet:(id)sender {
+    _parentContoller.triggerTime = _datePick.date;
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Table view data source

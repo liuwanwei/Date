@@ -13,6 +13,7 @@
 #import "MBProgressManager.h"
 #import "UserManager.h"
 #import "ReminderSettingViewController.h"
+#import "AppDelegate.h"
 
 @interface ReminderSendingViewController () {
     NSArray * _friends;
@@ -68,6 +69,10 @@
     [[MBProgressManager defaultManager] removeHUD];
 }
 
+- (void)back {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma 事件函数
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -87,6 +92,7 @@
     NSLog(@"%@", [EGOImageView class]);
     self.title = @"发送对象";
     [self initData];
+    [[AppDelegate delegate] initNavleftBarItemWithController:self withAction:@selector(back)];
 }
 
 - (void)didReceiveMemoryWarning

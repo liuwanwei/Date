@@ -89,31 +89,30 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString * CellIdentifier;
     UITableViewCell * cell;
+    CellIdentifier = @"Cell";
+    cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
+    }
     
     if (0 == indexPath.row) {
-        ReminderSettingDescCell * descCell;
-        CellIdentifier = @"ReminderSettingDescCell";
+        /*ReminderSettingDescCell * descCell;
+        //CellIdentifier = @"ReminderSettingDescCell";
         descCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (descCell == nil) {
             descCell = [[ReminderSettingDescCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        }
-        descCell.labelTitle.text = @"内容";
-        descCell.labelDesc.text = self.reminder.desc;
+        }*/
+        cell.textLabel.text = @"内容";
+        cell.detailTextLabel.numberOfLines = 0;
+        cell.detailTextLabel.text = self.reminder.desc;
         if (_labelSize.height > 44) {
-            descCell.labelDesc.textAlignment = NSTextAlignmentLeft;
-            [descCell.labelDesc sizeToFit];
+            cell.detailTextLabel.textAlignment = NSTextAlignmentLeft;
+            [cell.detailTextLabel sizeToFit];
         }else {
-            descCell.labelDesc.textAlignment = NSTextAlignmentRight;
+            cell.detailTextLabel.textAlignment = NSTextAlignmentRight;
         }
-        
-        cell = descCell;
     }else {
-        CellIdentifier = @"Cell";
-        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }
+       cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         if (indexPath.row == 1) {
             cell.textLabel.text = @"提醒时间";
             cell.detailTextLabel.text = [self stringTriggerTime];

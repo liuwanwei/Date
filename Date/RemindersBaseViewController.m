@@ -43,7 +43,7 @@
 }
 
 #pragma 类成员函数
-- (NSString *)custumDateString:(NSString *)date {
+- (NSString *)custumDateString:(NSString *)date withShowDate:(BOOL)show{
     NSString * dateString;
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yy-MM-dd"];
@@ -65,7 +65,11 @@
     }else if (diffDay == -1) {
         dateString = @"昨天";
     }else {
-        dateString = date;
+        if (YES == show) {
+              dateString = date;
+        }else {
+            dateString = @"日期";
+        }
     }
     return dateString;
 }
@@ -76,6 +80,8 @@
     [formatter setDateFormat:@"yy-MM-dd"];
     
     NSDate * nowDate = [NSDate date];
+    nowDate = [formatter dateFromString:[formatter stringFromDate:nowDate]];
+    date = [formatter dateFromString:[formatter stringFromDate:date]]; 
     NSCalendar * calendar = [NSCalendar currentCalendar];
     NSUInteger unitFlags = NSDayCalendarUnit;
     
