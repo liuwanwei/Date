@@ -91,6 +91,8 @@
 		3C40DE3E1666ED4A005627C9 /* BilateralFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C40DE3D1666ED49005627C9 /* BilateralFriend.m */; };
 		3C40DE4216670F41005627C9 /* RemindersNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C40DE4016670F41005627C9 /* RemindersNotificationViewController.m */; };
 		3C40DE4316670F41005627C9 /* RemindersNotificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C40DE4116670F41005627C9 /* RemindersNotificationViewController.xib */; };
+		3C417A14168D57F6003FFB1C /* smallButtonBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C417A12168D57F6003FFB1C /* smallButtonBg.png */; };
+		3C417A15168D57F6003FFB1C /* smallButtonBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C417A13168D57F6003FFB1C /* smallButtonBg@2x.png */; };
 		3C838F2F1675D59100A85826 /* ReminderDetailAudioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C838F2E1675D59100A85826 /* ReminderDetailAudioCell.m */; };
 		3C838F311675D5B700A85826 /* ReminderDetailAudioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C838F301675D5B700A85826 /* ReminderDetailAudioCell.xib */; };
 		3C9384931688292D00DA6412 /* TextReminderSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9384911688292D00DA6412 /* TextReminderSettingViewController.m */; };
@@ -355,6 +357,8 @@
 		3C40DE3F16670F41005627C9 /* RemindersNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemindersNotificationViewController.h; sourceTree = "<group>"; };
 		3C40DE4016670F41005627C9 /* RemindersNotificationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemindersNotificationViewController.m; sourceTree = "<group>"; };
 		3C40DE4116670F41005627C9 /* RemindersNotificationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemindersNotificationViewController.xib; sourceTree = "<group>"; };
+		3C417A12168D57F6003FFB1C /* smallButtonBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = smallButtonBg.png; path = Resources/images/smallButtonBg.png; sourceTree = "<group>"; };
+		3C417A13168D57F6003FFB1C /* smallButtonBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "smallButtonBg@2x.png"; path = "Resources/images/smallButtonBg@2x.png"; sourceTree = "<group>"; };
 		3C838F2D1675D59100A85826 /* ReminderDetailAudioCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderDetailAudioCell.h; sourceTree = "<group>"; };
 		3C838F2E1675D59100A85826 /* ReminderDetailAudioCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderDetailAudioCell.m; sourceTree = "<group>"; };
 		3C838F301675D5B700A85826 /* ReminderDetailAudioCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderDetailAudioCell.xib; sourceTree = "<group>"; };
@@ -682,6 +686,8 @@
 		3CE0ABF916507EA2004B785A /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3C417A12168D57F6003FFB1C /* smallButtonBg.png */,
+				3C417A13168D57F6003FFB1C /* smallButtonBg@2x.png */,
 				3C3BE6DE168C236A0052A8C5 /* backNavigationBar.png */,
 				3C3BE6DF168C236A0052A8C5 /* backNavigationBar@2x.png */,
 				3C3BE6C8168BF7B70052A8C5 /* big-approve.png */,
@@ -1111,6 +1117,8 @@
 				3C3BE6CF168BF7B70052A8C5 /* big-cancel@2x.png in Resources */,
 				3C3BE6E0168C236A0052A8C5 /* backNavigationBar.png in Resources */,
 				3C3BE6E1168C236A0052A8C5 /* backNavigationBar@2x.png in Resources */,
+				3C417A14168D57F6003FFB1C /* smallButtonBg.png in Resources */,
+				3C417A15168D57F6003FFB1C /* smallButtonBg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

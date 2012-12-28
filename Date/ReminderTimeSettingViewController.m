@@ -149,7 +149,7 @@
     //[self initData];
     [self initLabelView];
     [self initPickerView];
-    [self initBtnView];
+//    [self initBtnView];
     [[AppDelegate delegate] initNavleftBarItemWithController:self withAction:@selector(back)];
 }
 

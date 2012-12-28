@@ -19,7 +19,7 @@
 #import "ReminderTimeSettingViewController.h"
 
 @interface ReminderSettingViewController () {
-
+    UIButton * _btnSave;
 }
 
 @end
@@ -39,14 +39,13 @@
 #pragma 私有函数
 - (void)initTableFooterView {
     UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 300, 100)];
-    UIButton * btnSave;
-    btnSave = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    btnSave.layer.frame = CGRectMake(10, 15, 300, 44);
-    [btnSave setBackgroundImage:[UIImage imageNamed:@"buttonBg"] forState:UIControlStateNormal];
-    [btnSave setTitle:@"保存" forState:UIControlStateNormal];
-    [btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [btnSave addTarget:self action:@selector(saveReminder) forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:btnSave];
+    _btnSave = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _btnSave.layer.frame = CGRectMake(10, 15, 300, 44);
+    [_btnSave setBackgroundImage:[UIImage imageNamed:@"buttonBg"] forState:UIControlStateNormal];
+    [_btnSave setTitle:@"加入收集" forState:UIControlStateNormal];
+    [_btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_btnSave addTarget:self action:@selector(saveReminder) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:_btnSave];
     
     self.tableView.tableFooterView = view;
 }
@@ -156,10 +155,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"约定";
     if (SettingModeNew == _settingMode) {
+        self.title = @"新建提醒";
         [self initNavBar];
     }else {
+        if (SettingModeModify == _settingMode) {
+            self.title = @"修改提醒";
+        }else {
+            self.title = @"查看提醒";
+        }
         [[AppDelegate delegate] initNavleftBarItemWithController:self withAction:@selector(back)];
     }
     [self initData];

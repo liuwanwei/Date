@@ -55,11 +55,11 @@
 
 #pragma 类成员函数
 - (void)makeMenuViewVisible {
-    _navController.view.layer.shadowColor = [UIColor blackColor].CGColor;
+    /*_navController.view.layer.shadowColor = [UIColor blackColor].CGColor;
     _navController.view.layer.shadowOpacity = 0.4f;
     _navController.view.layer.shadowOffset = CGSizeMake(-12.0, 1.0f);
     _navController.view.layer.shadowRadius = 7.0f;
-    _navController.view.layer.masksToBounds = NO;
+    _navController.view.layer.masksToBounds = NO;*/
     [_menuViewController setVisible:YES];
 }
 

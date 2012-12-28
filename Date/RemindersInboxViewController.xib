@@ -72,7 +72,7 @@
 									<object class="IBUIButton" id="166551394">
 										<reference key="NSNextResponder" ref="490004793"/>
 										<int key="NSvFlags">292</int>
-										<string key="NSFrame">{{-16, -4}, {45, 38}}</string>
+										<string key="NSFrame">{{-8, -4}, {45, 38}}</string>
 										<reference key="NSSuperview" ref="490004793"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="158775931"/>
@@ -147,6 +147,7 @@
 										<int key="IBUIContentVerticalAlignment">0</int>
 										<string key="IBUIText"/>
 										<int key="IBUIBorderStyle">3</int>
+										<string key="IBUIPlaceholder">请加入提醒内容</string>
 										<object class="NSColor" key="IBUITextColor">
 											<int key="NSColorSpace">3</int>
 											<bytes key="NSWhite">MAA</bytes>

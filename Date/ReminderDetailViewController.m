@@ -36,24 +36,24 @@
     UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 300, 100)];
     if (_detailViewShowMode == DeailViewShowModePresent) {
         _btnUnFinish = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        _btnUnFinish.layer.frame = CGRectMake(50, 15, 100, 44);
+        _btnUnFinish.layer.frame = CGRectMake(10, 15, 300, 44);
         [_btnUnFinish setBackgroundImage:[UIImage imageNamed:@"buttonBg"] forState:UIControlStateNormal];
-        [_btnUnFinish setTitle:@"稍候" forState:UIControlStateNormal];
+        [_btnUnFinish setTitle:@"知道了" forState:UIControlStateNormal];
         [_btnUnFinish setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_btnUnFinish addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
         [view addSubview:_btnUnFinish];
     }
-    
-    _btnFinish = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    _btnFinish.layer.frame = CGRectMake(170, 15, 100, 44);
-    [_btnFinish setTitle:@"完成" forState:UIControlStateNormal];
-    [_btnFinish setBackgroundImage:[UIImage imageNamed:@"buttonBg"] forState:UIControlStateNormal];
-    [_btnFinish setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_btnFinish addTarget:self action:@selector(modifyReminderState) forControlEvents:UIControlEventTouchUpInside];
-    if (NO == [_reminder.isRead boolValue]) {
-        [_btnFinish setHidden:YES];
-    }
-    [view addSubview:_btnFinish];
+//    
+//    _btnFinish = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//    _btnFinish.layer.frame = CGRectMake(170, 15, 100, 44);
+//    [_btnFinish setTitle:@"完成" forState:UIControlStateNormal];
+//    [_btnFinish setBackgroundImage:[UIImage imageNamed:@"buttonBg"] forState:UIControlStateNormal];
+//    [_btnFinish setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [_btnFinish addTarget:self action:@selector(modifyReminderState) forControlEvents:UIControlEventTouchUpInside];
+//    if (NO == [_reminder.isRead boolValue]) {
+//        [_btnFinish setHidden:YES];
+//    }
+//    [view addSubview:_btnFinish];
     
     self.tableView.tableFooterView = view;
 }

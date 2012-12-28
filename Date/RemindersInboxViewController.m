@@ -27,6 +27,7 @@
     
     NSIndexPath * _curDeleteIndexPath;
     InfoMode _infoMode;
+    NSString * _context;
 }
 
 @end
@@ -189,7 +190,7 @@
     if (InfoModeAudio == _infoMode) {
         [_btnMode setImage:[UIImage imageNamed:@"feeddetail_toolbar_text_btn"] forState:UIControlStateNormal];
         [_btnMode setImage:[UIImage imageNamed:@"feeddetail_toolbar_text_btn_h"] forState:UIControlStateHighlighted];
-
+        _txtDesc.text = @"";
         [_txtDesc resignFirstResponder];
         _btnAudio.frame = CGRectMake(_btnAudio.frame.origin.x, _btnAudio.frame.origin.y, 240, _btnAudio.frame.size.height);
         _txtDesc.frame = CGRectMake(_txtDesc.frame.origin.x, _txtDesc.frame.origin.y, 0, _txtDesc.frame.size.height);
@@ -212,7 +213,7 @@
 - (void)showTextReminderSettingController {
     TextReminderSettingViewController * controller = [[TextReminderSettingViewController alloc] initWithNibName:@"TextReminderSettingViewController" bundle:nil];
     controller.settingMode = SettingModeNew;
-    controller.desc = _txtDesc.text;
+    controller.desc = _context;
     UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
     [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
@@ -465,10 +466,10 @@
 
 #pragma mark - UITextFiled delegte 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    _context = _txtDesc.text;
     [self restoreView];
-    [_txtDesc resignFirstResponder];
+    [self changeInfoMode:nil];
     [self showTextReminderSettingController];
-    _txtDesc.text = @"";
     return YES;
 }
 

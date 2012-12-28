@@ -7,6 +7,7 @@
 //
 
 #import "TextReminderDetailViewController.h"
+#import "LMLibrary.h"
 
 @interface TextReminderDetailViewController () {
     CGSize _labelSize;
@@ -59,15 +60,15 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
     if (0 == indexPath.section) {
-        cell.textLabel.text = @"内容";
-        cell.detailTextLabel.text = self.reminder.desc;
-        cell.detailTextLabel.numberOfLines = 0;
+        
+        cell.textLabel.numberOfLines = 0;
+        cell.textLabel.textColor = RGBColor(56, 57, 61);
+        cell.textLabel.font = [UIFont systemFontOfSize:17.0];
+        cell.textLabel.text = self.reminder.desc;
         if (_labelSize.height > 44) {
-            cell.detailTextLabel.textAlignment = NSTextAlignmentLeft;
-            [cell.detailTextLabel sizeToFit];
-        }else {
-            cell.detailTextLabel.textAlignment = NSTextAlignmentRight;
+            [cell.textLabel sizeToFit];
         }
+
         
     }else {
         cell.textLabel.text = [self.sections objectAtIndex:indexPath.section];

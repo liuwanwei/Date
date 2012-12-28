@@ -141,7 +141,7 @@
         cell.textLabel.font =  [UIFont systemFontOfSize:17.0];
         
         separatorView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sidebar_separate_light"]];
-        separatorView.frame = CGRectMake(2, 49, 200, 1);
+        separatorView.frame = CGRectMake(2, 49, 210, 1);
         [cell addSubview:separatorView];
     }
 
@@ -158,6 +158,9 @@
             [separatorView setHidden:YES];
         //}
     }else {
+        if (indexPath.row != 3) {
+            [separatorView setHidden:YES];
+        }
         cell.textLabel.text = [_rows objectAtIndex:indexPath.row - 1];
     }
     

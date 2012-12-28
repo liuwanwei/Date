@@ -8,6 +8,7 @@
 
 #import "TextReminderSettingViewController.h"
 #import "ReminderSettingDescCell.h"
+#import "LMLibrary.h"
 
 @interface TextReminderSettingViewController () {
     CGSize _labelSize;
@@ -96,20 +97,12 @@
     }
     
     if (0 == indexPath.row) {
-        /*ReminderSettingDescCell * descCell;
-        //CellIdentifier = @"ReminderSettingDescCell";
-        descCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-        if (descCell == nil) {
-            descCell = [[ReminderSettingDescCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        }*/
-        cell.textLabel.text = @"内容";
-        cell.detailTextLabel.numberOfLines = 0;
-        cell.detailTextLabel.text = self.reminder.desc;
+        cell.textLabel.numberOfLines = 0;
+        cell.textLabel.textColor = RGBColor(56, 57, 61);
+        cell.textLabel.font = [UIFont systemFontOfSize:17.0];
+        cell.textLabel.text = self.reminder.desc;
         if (_labelSize.height > 44) {
-            cell.detailTextLabel.textAlignment = NSTextAlignmentLeft;
-            [cell.detailTextLabel sizeToFit];
-        }else {
-            cell.detailTextLabel.textAlignment = NSTextAlignmentRight;
+            [cell.textLabel sizeToFit];
         }
     }else {
        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
