@@ -44,7 +44,7 @@
     if (_reminder.userID != 0) {
          _reminderManager.delegate = self;
         [_reminderManager sendReminder:_reminder];
-        if ([[_reminder.userID stringValue] isEqualToString:[UserManager defaultManager].userID ]) {
+        if ([[_reminder.userID stringValue] isEqualToString:[UserManager defaultManager].oneselfId ]) {
             
         }else {
             [[MBProgressManager defaultManager] showHUD:@"发送中"];
@@ -128,7 +128,7 @@
     }
     
     UILabel * nicknameLabel = (UILabel *)[cell viewWithTag:2];
-    if ([[friend.userID stringValue] isEqualToString:[UserManager defaultManager].userID ]) {
+    if ([[friend.userID stringValue] isEqualToString:[UserManager defaultManager].oneselfId ]) {
         nicknameLabel.text = @"自己";
     }else {
         nicknameLabel.text = friend.nickname;
@@ -154,7 +154,7 @@
     //_selectedRow = indexPath.row;
     BilateralFriend * friend = [_friends objectAtIndex:indexPath.row];
     _reminder.userID = friend.userID;
-    if ([[friend.userID stringValue] isEqualToString:[UserManager defaultManager].userID ]) {
+    if ([[friend.userID stringValue] isEqualToString:[UserManager defaultManager].oneselfId ]) {
         _parentController.receiver = @"自己";
     }else {
         _parentController.receiver = friend.nickname;

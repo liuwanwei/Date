@@ -251,7 +251,7 @@ typedef enum {
 
 #pragma 类成员函数
 - (void)saveSentReminder:(Reminder *)reminder {
-    if ([[reminder.userID stringValue] isEqualToString:[UserManager defaultManager].userID] ) {
+    if ([[reminder.userID stringValue] isEqualToString:[UserManager defaultManager].oneselfId] ) {
         reminder.isAlarm = [NSNumber numberWithBool:NO];
         reminder.type = [NSNumber numberWithInteger:ReminderTypeReceive];
         [self addLocalNotificationWithReminder:reminder withBilateralFriend:nil];
@@ -307,7 +307,7 @@ typedef enum {
 
         if (YES == sign) {
             [self cancelLocalNotificationWithReminder:reminder];
-            if ([[reminder.userID stringValue] isEqualToString:[UserManager defaultManager].userID] ) {
+            if ([[reminder.userID stringValue] isEqualToString:[UserManager defaultManager].oneselfId] ) {
                 [[ReminderManager defaultManager] addLocalNotificationWithReminder:reminder withBilateralFriend:nil];
             }else {
                 BilateralFriend * friend = [[BilateralFriendManager defaultManager]bilateralFriendWithUserID:reminder.userID];
@@ -398,7 +398,7 @@ typedef enum {
 }
 
 - (void)sendReminder:(Reminder *)reminder {
-    if ([[reminder.userID stringValue] isEqualToString:[UserManager defaultManager].userID]) {
+    if ([[reminder.userID stringValue] isEqualToString:[UserManager defaultManager].oneselfId]) {
         NSString * reminderId = [[NSDate date] description];
         [self appBadgeNumberWith:reminder.triggerTime withOperate:BadgeOperateAdd];
         
@@ -548,7 +548,7 @@ typedef enum {
         NSString * body;
         if (nil == friend) {
             body = @"您自己的提醒";
-        }else if ([[friend.userID stringValue] isEqualToString:[UserManager defaultManager].userID]) {
+        }else if ([[friend.userID stringValue] isEqualToString:[UserManager defaultManager].oneselfId]) {
              body = @"您自己的提醒";
         }else {
             body = [friend.nickname stringByAppendingString:@" 提醒你"];  

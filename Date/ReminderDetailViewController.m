@@ -94,7 +94,7 @@
     }
     _dateFormatter = [[NSDateFormatter alloc] init];
     [_dateFormatter setDateFormat:@"MM-dd HH:mm"];
-    if (nil == _friend || [[_friend.userID stringValue] isEqualToString:[UserManager defaultManager].userID]) {
+    if (nil == _friend || [[_friend.userID stringValue] isEqualToString:[UserManager defaultManager].oneselfId]) {
         self.title = @"来自:我";
     }else {
         self.title = [NSString stringWithFormat:@"来自:%@", _friend.nickname];

@@ -34,7 +34,7 @@ static SinaWeiboManager * sWeiboManager;
 
 # pragma 私有函数
 - (BOOL)checkUpdateCycle {
-    BOOL result = YES;
+    BOOL result = NO;
     NSDate * now = [NSDate date];
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSDate * updateDate = [defaults objectForKey:kSinaWeiboBilateralFriendsUpdateDate];

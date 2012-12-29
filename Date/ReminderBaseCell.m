@@ -43,20 +43,10 @@
             [_btnMap setHidden:NO];
         }
         
-        if ([_reminder.type integerValue] == ReminderTypeReceive) {
-            if (nil != _bilateralFriend) {
-                //[_image setImageURL:[NSURL URLWithString:_bilateralFriend.imageUrl]];
-                if ([[_reminder.userID stringValue] isEqualToString:[UserManager defaultManager].userID]) {
-                    _labelNickname.text = @"我";
-                }else {
-                    _labelNickname.text = _bilateralFriend.nickname;
-                }
-            }else {
-                //[_image setImageURL:[NSURL URLWithString:[UserManager defaultManager].imageUrl]];
-                _labelNickname.text = @"我";
-            }
-        }else  {
-            //[_image setImageURL:[NSURL URLWithString:[UserManager defaultManager].imageUrl]];
+        if ([[_reminder.userID stringValue] isEqualToString:[UserManager defaultManager].oneselfId] || nil == _bilateralFriend) {
+            _labelNickname.text = @"我";
+        }else if (nil != _bilateralFriend) {
+                _labelNickname.text = _bilateralFriend.nickname;
         }
         
         if (nil == _reminder.audioUrl || [_reminder.audioUrl isEqualToString:@""]) {

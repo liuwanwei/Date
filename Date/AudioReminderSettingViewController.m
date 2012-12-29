@@ -65,6 +65,8 @@
 {
     if (SettingModeModify == self.settingMode) {
         return 3;
+    }else if (SettingModeShow == self.settingMode) {
+        return 3;
     }
     
     return 4;
@@ -106,7 +108,11 @@
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
+        }
+        if (self.settingMode != SettingModeShow) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }else {
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         if (indexPath.row == 1) {
             cell.textLabel.text = @"标签";
@@ -115,16 +121,6 @@
             }
             cell.detailTextLabel.text =  self.reminder.desc;
         }else if (indexPath.row == 2) {
-            /*ReminderSettingTimeCell * timeCell;
-            CellIdentifier = @"ReminderSettingTimeCell";
-            timeCell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-            if (timeCell == nil) {
-                timeCell = [[ReminderSettingTimeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-                timeCell.delegate = self;
-            }
-            timeCell.labelTitle.text = @"时间";
-            timeCell.triggerTime = self.triggerTime;
-            cell = timeCell;*/
             cell.textLabel.text = @"提醒时间";
             cell.detailTextLabel.text = [self stringTriggerTime];
         }else if (indexPath.row == 3){
@@ -149,6 +145,9 @@
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.settingMode == SettingModeShow) {
+        return;
+    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0 && indexPath.row == 1) {
         ChoiceViewController * choiceViewController = [[ChoiceViewController alloc] initWithStyle:UITableViewStyleGrouped];

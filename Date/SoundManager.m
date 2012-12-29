@@ -41,13 +41,7 @@ static SoundManager * sSoundManager;
     if (self = [super init]) {
         [[NSBundle mainBundle] loadNibNamed:@"RecordView" owner:self options:nil];
         if (nil != _view) {
-            _view.layer.masksToBounds = NO;
-            _view.layer.cornerRadius = 8.0f;
-            _view.layer.shouldRasterize = YES;
             _view.frame = CGRectMake(50.0, 100.0, _view.frame.size.width,_view.frame.size.height);
-            _viewWarning.layer.masksToBounds = NO;
-            _viewWarning.layer.cornerRadius = 8.0f;
-            _viewWarning.layer.shouldRasterize = YES;
             _viewWarning.frame = CGRectMake(50.0, 150.0, _viewWarning.frame.size.width,_viewWarning.frame.size.height);
             [self initImageView];
         }

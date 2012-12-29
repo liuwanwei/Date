@@ -64,6 +64,8 @@
 {
     if (SettingModeModify == self.settingMode) {
         return 2;
+    }else if (self.settingMode == SettingModeShow) {
+        return 2;
     }
     
     return 3;
@@ -105,7 +107,12 @@
             [cell.textLabel sizeToFit];
         }
     }else {
-       cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        if (self.settingMode != SettingModeShow) {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }else {
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+       
         if (indexPath.row == 1) {
             cell.textLabel.text = @"提醒时间";
             cell.detailTextLabel.text = [self stringTriggerTime];
@@ -124,6 +131,9 @@
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.settingMode == SettingModeShow) {
+        return;
+    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0 && indexPath.row == 1) {
         [self clickTrigeerTimeRow:indexPath];
