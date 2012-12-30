@@ -40,6 +40,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UILabel * labelSendDate;
 @property (weak, nonatomic) IBOutlet UILabel * labelAudioTime;
 @property (weak, nonatomic) IBOutlet UIButton * btnFinished;
+@property (weak, nonatomic) IBOutlet UILabel * labelDay;
 
 @property (weak, nonatomic) Reminder * reminder;
 @property (weak, nonatomic) BilateralFriend * bilateralFriend;
@@ -48,6 +49,9 @@ typedef enum {
 @property (nonatomic) AudioState audioState;
 
 @property (weak, nonatomic) id<ReminderCellDelegate> delegate;
+
+@property (nonatomic) BOOL showFrom;
+@property (nonatomic) BOOL showDay;
 
 - (IBAction)palyAudio:(UIButton *)sender;
 - (IBAction)showMap:(UIButton *)sender;

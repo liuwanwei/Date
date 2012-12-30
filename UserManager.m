@@ -165,4 +165,13 @@ expirationDate == nil) {
 
 }
 
+- (BOOL)isOneself:(NSString *)userId {
+    BOOL result = NO;
+    if ([userId isEqualToString:_oneselfId] || [userId isEqualToString:[self userID]]) {
+        result = YES;
+    }
+    
+    return result;
+}
+
 @end

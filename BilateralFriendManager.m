@@ -31,7 +31,7 @@ static BilateralFriendManager * sBilateralFriendManager;
     NSArray * results = nil;
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kBilateralFriendEntity];
     
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"isOnLine = 0"];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"isOnLine = NO"];
     request.predicate = predicate;
     
     results = [self executeFetchRequest:request];
@@ -41,7 +41,7 @@ static BilateralFriendManager * sBilateralFriendManager;
 
 // 查询指定usersID的不在线好友
 - (NSArray *)notOnlineFriendsWithUserID:(NSString *) usersID {
-    NSString * param = [NSString stringWithFormat:@"isOnline = 0 AND (%@)", usersID];
+    NSString * param = [NSString stringWithFormat:@"isOnline = NO AND (%@)", usersID];
 
     NSArray * results = nil;
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kBilateralFriendEntity];
@@ -122,6 +122,10 @@ static BilateralFriendManager * sBilateralFriendManager;
     return friend;
 }
 
+- (void)deleteFriend:(BilateralFriend *)friend {
+    [self deleteFromStore:friend synchronized:YES];
+}
+
 /*
  1 解析来自新浪微博返回的用户信息JSON数据
  2 并存储在数据库中
@@ -170,7 +174,7 @@ static BilateralFriendManager * sBilateralFriendManager;
 
 - (NSArray *)allOnlineFriends {
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kBilateralFriendEntity];
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"isOnline != NO"];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"isOnline == YES"];
     request.predicate = predicate;
     NSArray * results = [self executeFetchRequest:request];
     if (nil == results || 0 == results.count) {

@@ -22,6 +22,8 @@ typedef enum {
 - (BOOL)analyzeData:(NSArray *)data;
 - (BilateralFriend *)newFriend:(NSNumber *)userID withName:(NSString *)name withImageUrl:(NSString *)imageUrl withState:(BOOL)state;
 
+- (void)deleteFriend:(BilateralFriend *)friend;
+
 - (NSArray *)allFriendsID;
 - (NSArray *)newOnlineFriends;
 - (NSArray *)haveReminderFriends;

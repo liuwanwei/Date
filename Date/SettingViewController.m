@@ -10,6 +10,7 @@
 #import "ReminderManager.h"
 #import "SinaWeiboManager.h"
 #import "UserManager.h"
+#import "BilateralFriendManager.h"
 
 @interface SettingViewController () {
     NSArray * _appBadgeSignRows;
@@ -149,6 +150,8 @@
             
             if (NO == [self isAuthValid]) {
                 cell.detailTextLabel.text = @"过期";
+            }else {
+                cell.detailTextLabel.text = @"已绑定";
             }
         }else {
             cell.textLabel.text = [_appSnsInfo objectAtIndex:0];
@@ -160,16 +163,28 @@
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
     }else if (2 == indexPath.section) {
-        cell.textLabel.text = @"退出";
+        cell.textLabel.text = @"解除绑定";
     }
     
     return cell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    if (section == 0) {
+        return @"绑定账号后，就可以向互相关注的好友发送闹铃提醒";
+    }
+    
+    return @"";
 }
 
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (0 == indexPath.section) {
+        if (YES == [self isAuthValid]) {
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            return;
+        }
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOAuthSuccessMessage:) name:kUserOAuthSuccessMessage object:nil];
         [[SinaWeiboManager defaultManager].sinaWeibo logIn];
     }else if (1 == indexPath.section) {
@@ -181,6 +196,13 @@
         _appBadgeMode = indexPath.row;
         [[ReminderManager defaultManager] storeAppBadgeMode:_appBadgeMode];
     }else if (2 == indexPath.section) {
+        long long userId = [[SinaWeiboManager defaultManager].sinaWeibo.userID longLongValue];
+        BilateralFriend * friend = [[BilateralFriendManager defaultManager]
+                                    bilateralFriendWithUserID:[NSNumber numberWithLongLong:userId]];
+        if (nil != friend) {
+            [[BilateralFriendManager defaultManager] deleteFriend:friend];
+        }
+        
         [[SinaWeiboManager defaultManager].sinaWeibo logOut];
         [self updateSinaRow];
     }

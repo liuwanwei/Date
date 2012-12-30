@@ -66,7 +66,7 @@
 {
     [super viewDidLoad];
     [self initServerMode];
-    _rows = [[NSArray alloc] initWithObjects:@"今日提醒",@"所有提醒",@"历史", nil];
+    _rows = [[NSArray alloc] initWithObjects:@"今日提醒",@"所有提醒",@"已完成", nil];
     _rowImages = [[NSArray alloc] initWithObjects:@"today", @"recently", @"history", nil];
     
     self.tableView.delegate = self;

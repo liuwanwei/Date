@@ -20,6 +20,7 @@
 
 @interface ReminderSettingViewController () {
     UIButton * _btnSave;
+    UserManager * _userManager;
 }
 
 @end
@@ -55,7 +56,8 @@
     self.reminderManager.delegate = self;
     if (SettingModeNew == _settingMode) {
         _reminder.triggerTime = _triggerTime;
-        if (![[_reminder.userID stringValue] isEqualToString:[UserManager defaultManager].oneselfId ]) {
+        if (NO == [_userManager isOneself:[_reminder.userID stringValue]] &&
+            nil != _reminder.triggerTime) {
             [[MBProgressManager defaultManager] showHUD:@"发送中"];
         }
         [[ReminderManager defaultManager] sendReminder:_reminder];
@@ -76,7 +78,9 @@
 }
 
 - (void)dismiss {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController dismissViewControllerAnimated:YES completion:^ {
+        [[AppDelegate delegate] checkRemindersExpired];
+    }];
 }
 
 - (void)removeHUD {
@@ -91,6 +95,7 @@
 }
 
 - (void)initData {
+    _userManager = [UserManager defaultManager];
     if (SettingModeNew == _settingMode) {
         _reminder = [[ReminderManager defaultManager] reminder];
         _reminder.userID = [NSNumber numberWithLongLong:[[UserManager defaultManager].oneselfId longLongValue]];
@@ -134,7 +139,16 @@
 
 - (NSString *)stringTriggerTime {
     if (nil != _triggerTime) {
-        [_btnSave setTitle:@"加入提醒" forState:UIControlStateNormal];
+        if (_settingMode == SettingModeModify) {
+            [_btnSave setTitle:@"加入提醒" forState:UIControlStateNormal];
+        }else {
+            if (YES == [[UserManager defaultManager] isOneself:[_reminder.userID stringValue]] ) {
+                [_btnSave setTitle:@"加入提醒" forState:UIControlStateNormal];
+            }else {
+                [_btnSave setTitle:@"发送提醒" forState:UIControlStateNormal];
+            }
+        }
+        
         return [self custumDateTimeString:_triggerTime];
     }
     [_btnSave setTitle:@"加入收集" forState:UIControlStateNormal];
@@ -207,7 +221,8 @@
     self.reminderManager.delegate = nil;
     [[MBProgressManager defaultManager] removeHUD];
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
-        if ([[_reminder.userID stringValue] isEqualToString:[UserManager defaultManager].oneselfId ]) {
+        if (YES == [_userManager isOneself:[_reminder.userID stringValue]] ||
+            nil == _reminder.triggerTime) {
             if (nil == _reminder.triggerTime) {
                 [AppDelegate delegate].homeViewController.dataType = DataTypeCollectingBox;
             }else {

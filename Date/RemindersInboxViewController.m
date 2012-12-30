@@ -220,6 +220,9 @@
 
 - (void)reloadData {
     [self.tableView reloadData];
+    if ([self.group count] == 0) {
+        [self.tableView setHidden:YES];
+    }
 }
 
 - (void)clearGroup {
@@ -245,6 +248,8 @@
 }
 
 - (void)initData {
+    [_toolbar setHidden:NO];
+    self.tableView.frame =CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width,self.view.frame.size.height - _toolbar.frame.size.height);
     if (DataTypeToday == _dataType) {
         self.title = @"今日提醒";
         self.reminders = [self.reminderManager todayUnFinishedReminders];
@@ -255,11 +260,14 @@
         self.title = @"收集箱";
         self.reminders = [self.reminderManager collectingBoxReminders];
     }else if (DataTypeHistory == _dataType) {
-        self.title = @"历史";
+        self.title = @"已完成";
+        [_toolbar setHidden:YES];
+        self.tableView.frame =CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width,self.view.frame.size.height);
         self.reminders = [self.reminderManager historyReminders];
     }
     
     if (nil != self.reminders) {
+        [self.tableView setHidden:NO];
         self.group = nil;
         self.keys = nil;
         self.group = [[NSMutableDictionary alloc] initWithCapacity:0];
@@ -292,6 +300,7 @@
         }
         _friends = [[BilateralFriendManager defaultManager] friendsWithId:_usersIdArray];
     }else {
+        [self.tableView setHidden:YES];
         self.group = nil;
         self.keys = nil;
     }
@@ -393,6 +402,16 @@
     }
     
     BilateralFriend * friend = [_friends objectForKey:reminder.userID];
+    if (_dataType == DataTypeCollectingBox) {
+        cell.showFrom = NO;
+    }else {
+        cell.showFrom = YES;
+    }
+    if (_dataType == DataTypeHistory) {
+        cell.showDay = NO;
+    }else {
+        cell.showDay = YES;
+    }
     cell.indexPath = indexPath;
     cell.bilateralFriend = friend;
     cell.reminder = reminder;

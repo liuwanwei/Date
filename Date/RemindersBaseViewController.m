@@ -128,7 +128,7 @@
     [super viewDidLoad];
     self.tableView.delegate = self;
     self.tableView.dataSource  = self;
-    self.tableView.rowHeight = 60.0;
+    self.tableView.rowHeight = 71.0;
 }
 
 - (void)didReceiveMemoryWarning
@@ -163,6 +163,10 @@
 #pragma mark - SoundManager Delegate
 - (void)audioPlayerDidFinishPlaying {
     [self stopPlayingAudio];
+}
+
+- (void)alarmPlayerDidFinishPlaying {
+     [[AppDelegate delegate] checkRemindersExpired];
 }
 
 #pragma mark - FriendReminderCell Delegate

@@ -114,7 +114,8 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-    [self checkRemindersExpired];
+    [[SoundManager defaultSoundManager] playAlarmVoice];
+    //[self checkRemindersExpired];
 }
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
