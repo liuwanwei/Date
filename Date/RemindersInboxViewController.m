@@ -46,8 +46,8 @@
     UIBarButtonItem * item;
     
     leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
-    [leftButton setImage:[UIImage imageNamed:@"navi_menuleft_up"] forState:UIControlStateNormal];
-    [leftButton setImage:[UIImage imageNamed:@"navi_menuleft_down"] forState:UIControlStateHighlighted];
+    [leftButton setImage:[UIImage imageNamed:@"leftMenuUp"] forState:UIControlStateNormal];
+    [leftButton setImage:[UIImage imageNamed:@"leftMenuDown"] forState:UIControlStateHighlighted];
     [leftButton addTarget:self action:@selector(leftBarBtnTapped:) forControlEvents:UIControlEventTouchUpInside];
     item = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     
