@@ -14,6 +14,7 @@ static SoundManager * sSoundManager;
 @interface SoundManager () {
     AVAudioRecorder * _recorder;
     AVAudioPlayer * _player;
+    AVAudioPlayer * _alarmPlayer;
     NSDate * _startRecordDate;
     NSInteger _recordLength;
     NSTimer * _timer;
@@ -41,10 +42,8 @@ static SoundManager * sSoundManager;
     if (self = [super init]) {
         [[NSBundle mainBundle] loadNibNamed:@"RecordView" owner:self options:nil];
         if (nil != _view) {
-            _view.layer.masksToBounds = NO;
-            _view.layer.cornerRadius = 8.0f;
-            _viewWarning.layer.masksToBounds = NO;
-            _viewWarning.layer.cornerRadius = 8.0f;
+            _view.frame = CGRectMake(50.0, 100.0, _view.frame.size.width,_view.frame.size.height);
+            _viewWarning.frame = CGRectMake(50.0, 150.0, _viewWarning.frame.size.width,_viewWarning.frame.size.height);
             [self initImageView];
         }
     }
@@ -82,7 +81,6 @@ static SoundManager * sSoundManager;
 
 - (void)showWaringView {
     if (nil != _parentView) {
-        _viewWarning.frame = CGRectMake(50.0, 150.0, _viewWarning.frame.size.width,_viewWarning.frame.size.height);
         [_parentView addSubview:_viewWarning];
         
         [self performSelector:@selector(closeWaringView) withObject:self afterDelay:0.5];
@@ -96,7 +94,6 @@ static SoundManager * sSoundManager;
 - (void)showRecordingView {
     if (nil != _parentView) {
         [_imageView startAnimating];
-        _view.frame = CGRectMake(50.0, 100.0, _view.frame.size.width,_view.frame.size.height);
         [_parentView addSubview:_view];
     }
 }
@@ -260,6 +257,30 @@ static SoundManager * sSoundManager;
     return result;
 }
 
+- (void)playAlarmVoice {
+    NSURL *url = [[NSBundle mainBundle] URLForResource: @"cat"
+                                         withExtension: @"wav"];
+    NSError  *error;
+    AVAudioSession * session = [AVAudioSession sharedInstance];
+    [session setCategory:AVAudioSessionCategoryPlayback error:&error];
+    
+    if(session == nil) {
+        NSLog(@"Error creating session: %@", [error description]);
+        return ;
+    }else {
+        [session setActive:YES error:nil];
+    }
+    _alarmPlayer  = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+    _alarmPlayer.numberOfLoops  = 0;
+    _alarmPlayer.volume = 1.0;
+    _alarmPlayer.delegate = self;
+    if  (_player == nil)
+        NSLog(@"播放失败");
+    else
+        [_alarmPlayer prepareToPlay];
+        [_alarmPlayer play];
+}
+
 - (void)stopAudio {
     if (nil != _player) {
         [_player stop];
@@ -301,13 +322,22 @@ static SoundManager * sSoundManager;
 
 #pragma AVAudioPlayerDelegate
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
-    _player = nil;
-    if (self.delegate != nil) {
-        if ([self.delegate respondsToSelector:@selector(audioPlayerDidFinishPlaying)]) {
-            [self.delegate performSelector:@selector(audioPlayerDidFinishPlaying) withObject:nil];
+    if (_alarmPlayer == player) {
+        _alarmPlayer = nil;
+        if (self.delegate != nil) {
+            if ([self.delegate respondsToSelector:@selector(alarmPlayerDidFinishPlaying)]) {
+                [self.delegate performSelector:@selector(alarmPlayerDidFinishPlaying) withObject:nil];
+            }
         }
+    }else {
+        _player = nil;
+        if (self.delegate != nil) {
+            if ([self.delegate respondsToSelector:@selector(audioPlayerDidFinishPlaying)]) {
+                [self.delegate performSelector:@selector(audioPlayerDidFinishPlaying) withObject:nil];
+            }
+        }
+  
     }
-
 }
 
 @end

@@ -11,13 +11,12 @@
 #import "SinaWeiboManager.h"
 #import "LoginViewController.h"
 #import "OnlineFriendsRemindViewController.h"
-#import "ReminderSettingViewController.h"
+#import "AudioReminderSettingViewController.h"
+#import "TextReminderSettingViewController.h"
 #import "MBProgressManager.h"
 #import "AppDelegate.h"
 
 @interface RemindersInboxViewController () {
-    NSMutableDictionary * _group;
-    NSMutableArray * _keys;
     NSMutableArray * _usersIdArray;
     NSMutableDictionary * _usersIdDictionary;
     NSDictionary * _friends;
@@ -27,18 +26,32 @@
     LoginViewController * _loginViewController;
     
     NSIndexPath * _curDeleteIndexPath;
+    InfoMode _infoMode;
+    NSString * _context;
 }
 
 @end
 
 @implementation RemindersInboxViewController
 @synthesize dataType = _dataType;
+@synthesize btnAudio = _btnAudio;
+@synthesize btnMode = _btnMode;
+@synthesize txtDesc = _txtDesc;
+@synthesize toolbar = _toolbar;
+@synthesize toolbarView = _toolbarView;
 
 #pragma 私有函数
-
 - (void)initMenuView {
-    UIBarButtonItem * leftItem = [[UIBarButtonItem alloc] initWithTitle:@"菜单" style:UIBarButtonItemStylePlain target:self action:@selector(leftBarBtnTapped:)];
-        self.navigationItem.leftBarButtonItem = leftItem;
+    UIButton * leftButton;
+    UIBarButtonItem * item;
+    
+    leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
+    [leftButton setImage:[UIImage imageNamed:@"navi_menuleft_up"] forState:UIControlStateNormal];
+    [leftButton setImage:[UIImage imageNamed:@"navi_menuleft_down"] forState:UIControlStateHighlighted];
+    [leftButton addTarget:self action:@selector(leftBarBtnTapped:) forControlEvents:UIControlEventTouchUpInside];
+    item = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    
+    self.navigationItem.leftBarButtonItem = item;
 }
 
 - (void)addUserId:(NSNumber *)userId {
@@ -53,10 +66,23 @@
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOAuthSuccessMessage:) name:kUserOAuthSuccessMessage object:nil];
     
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOnlineFriendsMessage:) name:kOnlineFriendsMessage object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification 
+                                               object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRegisterUserMessage:) name:kGoRegisterUserMessage object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleRegisterUserMessage:) name:kGoRegisterUserMessage
+                                               object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleRemindersUpdateMessage:) name:kRemindesUpdateMessage object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleRemindersUpdateMessage:) name:kRemindesUpdateMessage
+                                               object:nil];
 }
 
 /*
@@ -89,12 +115,130 @@
     [[AppDelegate delegate] checkRemindersExpired];
 }
 
+//Code from Brett Schumann
+-(void) keyboardWillShow:(NSNotification *)note{
+    // get keyboard size and loctaion
+    CGRect keyboardBounds;
+    [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
+    NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+    
+    // Need to translate the bounds to account for rotation.
+    keyboardBounds = [self.view convertRect:keyboardBounds toView:nil];
+    
+    // get a rect for the textView frame
+    CGRect containerFrame = _toolbar.frame;
+    containerFrame.origin.y = self.view.bounds.size.height - (keyboardBounds.size.height + containerFrame.size.height);
+    // animations settings
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:[duration doubleValue]];
+    [UIView setAnimationCurve:[curve intValue]];
+    
+    // set views with new info
+    _toolbar.frame = containerFrame;
+    
+    // commit animations
+    [UIView commitAnimations];
+    
+    UIControl *overView = [[UIControl alloc] init];
+    overView.tag = 10086;
+    overView.backgroundColor = [UIColor clearColor];
+    overView.frame = CGRectMake(0, 44, 320, containerFrame.origin.y);
+    [overView addTarget:self action:@selector(restoreView) forControlEvents:UIControlEventTouchDown];
+    [[[UIApplication sharedApplication] keyWindow] addSubview:overView];
+}
+
+-(void) keyboardWillHide:(NSNotification *)note{
+    [self restoreView];
+    NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
+    
+    // get a rect for the textView frame
+    CGRect containerFrame = _toolbar.frame;
+    containerFrame.origin.y = self.view.bounds.size.height - containerFrame.size.height;
+    
+    // animations settings
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:[duration doubleValue]];
+    [UIView setAnimationCurve:[curve intValue]];
+    
+    // set views with new info
+    _toolbar.frame = containerFrame;
+    
+    // commit animations
+    [UIView commitAnimations];
+}
+
+- (void)restoreView {
+    UIControl *overView = (UIControl *)[[[UIApplication sharedApplication] keyWindow] viewWithTag:10086];
+    [overView removeFromSuperview];
+    [_txtDesc resignFirstResponder];
+}
+
 - (void)registerForRemoteNotification {
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge |UIRemoteNotificationTypeSound)];
 }
 
 - (void)removeHUD {
     [[MBProgressManager defaultManager] removeHUD];
+}
+
+- (void)setInfoMode:(InfoMode)mode {
+    _infoMode = mode;
+    if (InfoModeAudio == _infoMode) {
+        [_btnMode setImage:[UIImage imageNamed:@"feeddetail_toolbar_text_btn"] forState:UIControlStateNormal];
+        [_btnMode setImage:[UIImage imageNamed:@"feeddetail_toolbar_text_btn_h"] forState:UIControlStateHighlighted];
+        _txtDesc.text = @"";
+        [_txtDesc resignFirstResponder];
+        _btnAudio.frame = CGRectMake(_btnAudio.frame.origin.x, _btnAudio.frame.origin.y, 240, _btnAudio.frame.size.height);
+        _txtDesc.frame = CGRectMake(_txtDesc.frame.origin.x, _txtDesc.frame.origin.y, 0, _txtDesc.frame.size.height);
+    }else {
+        [_btnMode setImage:[UIImage imageNamed:@"feeddetail_toolbar_phone_btn"] forState:UIControlStateNormal];
+        [_btnMode setImage:[UIImage imageNamed:@"feeddetail_toolbar_phone_btn_h"] forState:UIControlStateHighlighted];
+        [_txtDesc becomeFirstResponder];
+        _txtDesc.frame = CGRectMake(_txtDesc.frame.origin.x, _txtDesc.frame.origin.y, 240, _txtDesc.frame.size.height);
+        _btnAudio.frame = CGRectMake(_btnAudio.frame.origin.x, _btnAudio.frame.origin.y, 0, _btnAudio.frame.size.height);
+    }
+}
+
+- (void)showAudioReminderSettingController {
+    AudioReminderSettingViewController * controller = [[AudioReminderSettingViewController alloc] initWithNibName:@"AudioReminderSettingViewController" bundle:nil];
+    controller.settingMode = SettingModeNew;
+    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
+    [self.navigationController presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)showTextReminderSettingController {
+    TextReminderSettingViewController * controller = [[TextReminderSettingViewController alloc] initWithNibName:@"TextReminderSettingViewController" bundle:nil];
+    controller.settingMode = SettingModeNew;
+    controller.desc = _context;
+    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
+    [self.navigationController presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)reloadData {
+    [self.tableView reloadData];
+    if ([self.group count] == 0) {
+        [self.tableView setHidden:YES];
+    }
+}
+
+- (void)clearGroup {
+    NSArray * keys = [self.group allKeys];
+    NSArray * reminders;
+    NSInteger index = 0;
+    for (NSString * key in keys) {
+        reminders = [self.group objectForKey:key];
+        if ([reminders count] == 0) {
+            [self.group removeObjectForKey:key];
+            [self.keys removeObjectAtIndex:index];
+            return;
+        }
+        index++;
+    }
+    
 }
 
 #pragma 类成员函数
@@ -104,23 +248,30 @@
 }
 
 - (void)initData {
+    [_toolbar setHidden:NO];
+    self.tableView.frame =CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width,self.view.frame.size.height - _toolbar.frame.size.height);
     if (DataTypeToday == _dataType) {
         self.title = @"今日提醒";
         self.reminders = [self.reminderManager todayUnFinishedReminders];
     }else if (DataTypeRecent == _dataType) {
-        self.title = @"近期提醒";
+        self.title = @"所有提醒";
         self.reminders = [self.reminderManager recentUnFinishedReminders];
     }else if (DataTypeCollectingBox == _dataType) {
         self.title = @"收集箱";
         self.reminders = [self.reminderManager collectingBoxReminders];
     }else if (DataTypeHistory == _dataType) {
-        self.title = @"历史";
+        self.title = @"已完成";
+        [_toolbar setHidden:YES];
+        self.tableView.frame =CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width,self.view.frame.size.height);
         self.reminders = [self.reminderManager historyReminders];
     }
     
     if (nil != self.reminders) {
-        _group = [[NSMutableDictionary alloc] initWithCapacity:0];
-        _keys = [[NSMutableArray alloc] initWithCapacity:0];
+        [self.tableView setHidden:NO];
+        self.group = nil;
+        self.keys = nil;
+        self.group = [[NSMutableDictionary alloc] initWithCapacity:0];
+        self.keys = [[NSMutableArray alloc] initWithCapacity:0];
         _usersIdArray = [[NSMutableArray alloc] initWithCapacity:0];
         _usersIdDictionary = [[NSMutableDictionary alloc] initWithCapacity:0];
         NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
@@ -135,11 +286,11 @@
             }
             
             if (nil != key) {
-                if (nil == [_group objectForKey:key]) {
+                if (nil == [self.group objectForKey:key]) {
                     reminders = [[NSMutableArray alloc] init];
                     [reminders addObject:reminder];
-                    [_group setValue:reminders forKey:key];
-                    [_keys addObject:key];
+                    [self.group setValue:reminders forKey:key];
+                    [self.keys addObject:key];
                 }else {
                     [reminders addObject:reminder];
                 }
@@ -149,12 +300,14 @@
         }
         _friends = [[BilateralFriendManager defaultManager] friendsWithId:_usersIdArray];
     }else {
-        _group = nil;
-        _keys = nil;
-        _usersIdArray = nil;
-        _usersIdDictionary = nil;
+        [self.tableView setHidden:YES];
+        self.group = nil;
+        self.keys = nil;
     }
     
+    _usersIdArray = nil;
+    _usersIdDictionary = nil;
+    self.reminders = nil;
     [self.tableView reloadData];
 }
 
@@ -172,14 +325,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self initMenuView];
     _dataType = DataTypeToday;
+    _txtDesc.delegate = self;
+    [self initMenuView];
+    [self setInfoMode:InfoModeAudio];
     [self initData];
     [self registerHandleMessage];
-    
-    if (NO == [_sinaWeiboManager.sinaWeibo isAuthValid]) {
-        //[self showLoginViewController];
-    }else {
+    _toolbarView.frame = CGRectMake(0, 0, _toolbarView.frame.size.width, _toolbarView.frame.size.height);
+    if (YES == [_sinaWeiboManager.sinaWeibo isAuthValid]) {
         [_sinaWeiboManager requestBilateralFriends];
         [[BilateralFriendManager defaultManager] checkRegisteredFriendsRequest];
         [self registerForRemoteNotification];
@@ -201,30 +354,38 @@
 - (IBAction)stopRecord:(id)sender {
     SoundManager * manager = [SoundManager defaultSoundManager];
     if (YES == [manager stopRecord]) {
-        ReminderSettingViewController * controller = [[ReminderSettingViewController alloc] initWithNibName:@"ReminderSettingViewController" bundle:nil];
-        controller.settingMode = SettingModeNew;
-        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
+        [self showAudioReminderSettingController];
+    }
+}
 
-        [self.navigationController presentViewController:nav animated:YES completion:nil];
+- (IBAction)changeInfoMode:(UIButton *)sender {
+    if (InfoModeAudio == _infoMode) {
+        [self setInfoMode:InfoModeText];
+    }else {
+        [self setInfoMode:InfoModeAudio];
     }
 }
 
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (nil != _group) {
-        return [_group count];
+    if (nil != self.group) {
+        return [self.group count];
     }
     return 0;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return  [self custumDateString:[_keys objectAtIndex:section]];
+    if (DataTypeToday != _dataType) {
+        return  [self custumDateString:[self.keys objectAtIndex:section] withShowDate:YES];
+    }
+    
+    return nil;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSArray * reminders = [_group objectForKey:[_keys objectAtIndex:section]];
+    NSArray * reminders = [self.group objectForKey:[self.keys objectAtIndex:section]];
     if (nil != reminders) {
         return [reminders count];
     }
@@ -232,7 +393,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Reminder * reminder = [[_group objectForKey:[_keys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+    Reminder * reminder = [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
     static NSString * CellIdentifier = @"ReminderInboxCell";
     ReminderInboxCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
@@ -241,6 +402,16 @@
     }
     
     BilateralFriend * friend = [_friends objectForKey:reminder.userID];
+    if (_dataType == DataTypeCollectingBox) {
+        cell.showFrom = NO;
+    }else {
+        cell.showFrom = YES;
+    }
+    if (_dataType == DataTypeHistory) {
+        cell.showDay = NO;
+    }else {
+        cell.showDay = YES;
+    }
     cell.indexPath = indexPath;
     cell.bilateralFriend = friend;
     cell.reminder = reminder;
@@ -254,13 +425,15 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         _curDeleteIndexPath = indexPath;
-        Reminder * reminder = [[_group objectForKey:[_keys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+        Reminder * reminder = [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
         NSString * userId = [reminder.userID stringValue];
         if ([userId isEqualToString:@"0"] ||
             [_userManager.userID isEqualToString:userId]) {
             [self.reminderManager deleteReminder:reminder];
-            [[_group objectForKey:[_keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
+            [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [self clearGroup];
+            [self performSelector:@selector(reloadData) withObject:self afterDelay:0.2];
         }else {
             [self.reminderManager deleteReminderRequest:reminder];
             [[MBProgressManager defaultManager] showHUD:@"删除中"];
@@ -269,18 +442,63 @@
     }
 }
 
+#pragma mark - Table view delegate
+#pragma mark - Table view delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    ReminderBaseCell * cell = (ReminderBaseCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    NSString * audioPath = cell.reminder.audioUrl;
+    ReminderSettingViewController * controller;
+    if (nil == audioPath || [audioPath isEqualToString:@""]) {
+        controller = [[TextReminderSettingViewController alloc] initWithNibName:@"TextReminderSettingViewController" bundle:nil];
+    }else {
+        controller = [[AudioReminderSettingViewController alloc] initWithNibName:@"AudioReminderSettingViewController" bundle:nil];
+    }
+    
+    controller.reminder = cell.reminder;
+    if (DataTypeHistory == _dataType) {
+        controller.settingMode = SettingModeShow;
+    }else {
+        controller.settingMode = SettingModeModify;
+    }
+    
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
 #pragma mark - ReminderManager delegate
 - (void)deleteReminderSuccess:(Reminder *)reminder {
     [self.reminderManager deleteReminder:reminder];
-    [[_group objectForKey:[_keys objectAtIndex:_curDeleteIndexPath.section]] removeObjectAtIndex:_curDeleteIndexPath.row];
+    [[self.group objectForKey:[self.keys objectAtIndex:_curDeleteIndexPath.section]] removeObjectAtIndex:_curDeleteIndexPath.row];
     [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:_curDeleteIndexPath] withRowAnimation:UITableViewRowAnimationFade];
     
     [[MBProgressManager defaultManager] removeHUD];
+    [self clearGroup];
+    [self performSelector:@selector(reloadData) withObject:self afterDelay:0.2];
 }
 
 - (void)deleteReminderFailed {
     [[MBProgressManager defaultManager] showHUD:@"删除失败"];
     [self performSelector:@selector(removeHUD) withObject:self afterDelay:0.5];
+}
+
+#pragma mark - UITextFiled delegte 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    _context = _txtDesc.text;
+    [self restoreView];
+    [self changeInfoMode:nil];
+    [self showTextReminderSettingController];
+    return YES;
+}
+
+#pragma mark - FriendReminderCell Delegate
+- (void)clickFinishButton:(NSIndexPath *)indexPath withReminder:(Reminder *)reminder {
+    [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
+    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    [self clearGroup];
+    
+    [self performSelector:@selector(reloadData) withObject:self afterDelay:0.2];
 }
 
 @end

@@ -9,6 +9,8 @@
 #import "ReminderBaseCell.h"
 #import "SoundManager.h"
 
+#define LeftMargin  13
+
 @interface ReminderBaseCell () {
 
 }
@@ -32,37 +34,103 @@
 @synthesize labelNickname = _labelNickname;
 @synthesize labelAudioTime = _labelAudioTime;
 @synthesize btnFinished = _btnFinished;
+@synthesize showFrom = _showFrom;
+@synthesize labelDay = _labelDay;
+@synthesize showDay = _showDay;
+
+- (NSString *)custumDayString:(NSDate *)date {
+    NSString * dateString = @"" ;
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MM-dd"];
+    
+    NSDate * nowDate = [NSDate date];
+    nowDate = [formatter dateFromString:[formatter stringFromDate:nowDate]];
+    date = [formatter dateFromString:[formatter stringFromDate:date]];
+    NSCalendar * calendar = [NSCalendar currentCalendar];
+    NSUInteger unitFlags = NSDayCalendarUnit;
+    
+    //取相距时间额
+    NSDateComponents * cps = [calendar components:unitFlags fromDate:nowDate  toDate:date  options:0];
+    NSInteger diffDay  = [cps day];
+    if (diffDay == 0) {
+        dateString = @"";
+    }else if (diffDay == 1) {
+        dateString = @"";
+    }else if (diffDay == 2) {
+        dateString = @"";
+    }else if (diffDay == -1) {
+        
+        dateString = @"(昨天) ";
+    }else {
+        dateString = [dateString stringByAppendingString:@"("];
+        dateString = [dateString stringByAppendingString:[formatter stringFromDate:date]];
+        dateString = [dateString stringByAppendingString:@")"];
+    }
+    return dateString;
+}
 
 - (void)setReminder:(Reminder *)reminer {
     if (nil != reminer) {
         _reminder = reminer;
-        NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"HH:mm"];
-        _labelTriggerDate.text =[formatter stringFromDate:reminer.triggerTime];
-        
+                
         if (nil == _reminder.longitude || [_reminder.longitude isEqualToString:@"0"]) {
             [_btnMap setHidden:YES];
         }else {
             [_btnMap setHidden:NO];
         }
         
-        if ([_reminder.type integerValue] == ReminderTypeReceive) {
-            if (nil != _bilateralFriend) {
-                //[_image setImageURL:[NSURL URLWithString:_bilateralFriend.imageUrl]];
-                if ([[_reminder.userID stringValue] isEqualToString:[UserManager defaultManager].userID]) {
-                    _labelNickname.text = @"我";
-                }else {
-                    _labelNickname.text = _bilateralFriend.nickname;
-                }
+        if (YES == _showFrom) {
+            NSString * from = @"来自:";
+            if ([[UserManager defaultManager] isOneself:[_reminder.userID stringValue]]) {
+                from = [from stringByAppendingString:@"我"];
+            }else if (nil != _bilateralFriend) {
+                from = [from stringByAppendingString:_bilateralFriend.nickname];
             }else {
-                //[_image setImageURL:[NSURL URLWithString:[UserManager defaultManager].imageUrl]];
-                _labelNickname.text = @"我";
+                from = [from stringByAppendingString:[_reminder.userID stringValue]];
             }
-        }else  {
-            //[_image setImageURL:[NSURL URLWithString:[UserManager defaultManager].imageUrl]];
+            
+            _labelNickname.text = from;
+            [_labelNickname setHidden:NO];
+        }else {
+            [_labelNickname setHidden:YES];
         }
         
-        _labelAudioTime.text = [_reminder.audioLength stringValue];
+        if (NO == _showDay) {
+            _labelTriggerDate.frame = CGRectMake(LeftMargin, _labelTriggerDate.frame.origin.y, _labelTriggerDate.frame.size.width, _labelTriggerDate.frame.size.height);
+            _labelDay.frame = CGRectMake(_labelDay.frame.origin.x, _labelDay.frame.origin.y, 0, _labelDay.frame.size.height);
+            _labelNickname.frame = CGRectMake(74, _labelNickname.frame.origin.y, _labelNickname.frame.size.width, _labelNickname.frame.size.height);
+            _labelDescription.frame =  CGRectMake(LeftMargin, _labelDescription.frame.origin.y, _labelDescription.frame.size.width, _labelDescription.frame.size.height);
+
+        }else {
+            _labelTriggerDate.frame = CGRectMake(42, _labelTriggerDate.frame.origin.y, _labelTriggerDate.frame.size.width, _labelTriggerDate.frame.size.height);
+            _labelDescription.frame =  CGRectMake(45, _labelDescription.frame.origin.y, _labelDescription.frame.size.width, _labelDescription.frame.size.height);
+            if (nil != reminer.triggerTime) {
+                NSString * day = [self custumDayString:reminer.triggerTime];
+                if ([day isEqualToString:@""]) {
+                    _labelDay.frame = CGRectMake(100, _labelDay.frame.origin.y, 0, _labelDay.frame.size.height);
+                    _labelNickname.frame = CGRectMake(_labelDay.frame.origin.x, _labelNickname.frame.origin.y, _labelNickname.frame.size.width + 42, _labelNickname.frame.size.height);
+                }else {
+                    _labelDay.frame = CGRectMake(100, _labelDay.frame.origin.y, 42, _labelDay.frame.size.height);
+                    _labelNickname.frame = CGRectMake(_labelDay.frame.origin.x + 42, _labelNickname.frame.origin.y, _labelNickname.frame.size.width, _labelNickname.frame.size.height);
+                }
+            }else {
+                _labelDay.frame = CGRectMake(_labelDay.frame.origin.x, _labelDay.frame.origin.y, 0, _labelDay.frame.size.height);
+                _labelNickname.frame = CGRectMake(_labelDay.frame.origin.x, _labelNickname.frame.origin.y, _labelNickname.frame.size.width + 42, _labelNickname.frame.size.height);
+            }
+        }
+        
+        
+        if (nil == _reminder.audioUrl || [_reminder.audioUrl isEqualToString:@""]) {
+            [_btnAudio setHidden:YES];
+            [_labelAudioTime setHidden:YES];
+            [_indicatorView setHidden:YES];
+        }else {
+            [_btnAudio setHidden:NO];
+            [_labelAudioTime setHidden:NO];
+            [_indicatorView setHidden:NO];
+            _labelAudioTime.text = [_reminder.audioLength stringValue];
+        }
+        
         _labelDescription.text = _reminder.desc;
         
     }
@@ -152,6 +220,11 @@
 - (IBAction)finish:(UIButton *)sender {
     if ([_reminder.state integerValue] == ReminderStateUnFinish) {
         [[ReminderManager defaultManager] modifyReminder:_reminder withState:ReminderStateFinish];
+        if (self.delegate != nil) {
+            if ([self.delegate respondsToSelector:@selector(clickFinishButton: withReminder:)]) {
+                [self.delegate performSelector:@selector(clickFinishButton: withReminder:) withObject:_indexPath withObject:_reminder];
+            }
+        }
     }
 }
 

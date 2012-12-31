@@ -8,7 +8,8 @@
 
 #import "RemindersBaseViewController.h"
 #import "ReminderDetailViewController.h"
-#import "ReminderSettingViewController.h"
+#import "AudioReminderSettingViewController.h"
+#import "TextReminderSettingViewController.h"
 #import "AppDelegate.h"
 
 @interface RemindersBaseViewController () {
@@ -21,6 +22,8 @@
 @synthesize tableView = _tableView;
 @synthesize reminderManager = _reminderManager;
 @synthesize reminders = _reminders;
+@synthesize group = _group;
+@synthesize keys = _keys;
 
 #pragma 私有函数
 - (void)stopPlayingAudio {
@@ -40,7 +43,7 @@
 }
 
 #pragma 类成员函数
-- (NSString *)custumDateString:(NSString *)date {
+- (NSString *)custumDateString:(NSString *)date withShowDate:(BOOL)show{
     NSString * dateString;
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yy-MM-dd"];
@@ -59,10 +62,54 @@
         dateString = @"今天";
     }else if (diffDay == 1) {
         dateString = @"明天";
+    }else if (diffDay == -1) {
+        dateString = @"昨天";
     }else {
-        dateString = date;
+        if (YES == show) {
+              dateString = date;
+        }else {
+            dateString = @"日期";
+        }
     }
     return dateString;
+}
+
+- (NSString *)custumDayString:(NSDate *)date {
+    NSString * dateString;
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yy-MM-dd"];
+    
+    NSDate * nowDate = [NSDate date];
+    nowDate = [formatter dateFromString:[formatter stringFromDate:nowDate]];
+    date = [formatter dateFromString:[formatter stringFromDate:date]]; 
+    NSCalendar * calendar = [NSCalendar currentCalendar];
+    NSUInteger unitFlags = NSDayCalendarUnit;
+    
+    //取相距时间额
+    NSDateComponents * cps = [calendar components:unitFlags fromDate:nowDate  toDate:date  options:0];
+    NSInteger diffDay  = [cps day];
+    if (diffDay == 0) {
+        dateString = @"今天";
+    }else if (diffDay == 1) {
+        dateString = @"明天";
+    }else if (diffDay == 2) {
+        dateString = @"后天";
+    }else if (diffDay == -1) {
+        dateString = @"昨天";
+    }else {
+        dateString = [formatter stringFromDate:date];
+    }
+    return dateString;
+}
+
+- (NSString *)custumDateTimeString:(NSDate *)date {
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    NSString * datetimeString = [self custumDayString:date];
+    [formatter setDateFormat:@"HH:mm"];
+    datetimeString = [datetimeString stringByAppendingString:@" "];
+    datetimeString = [datetimeString stringByAppendingString:[formatter stringFromDate:date]];
+    
+    return datetimeString;
 }
 
 #pragma 事件函数
@@ -81,7 +128,7 @@
     [super viewDidLoad];
     self.tableView.delegate = self;
     self.tableView.dataSource  = self;
-    self.tableView.rowHeight = 60.0;
+    self.tableView.rowHeight = 71.0;
 }
 
 - (void)didReceiveMemoryWarning
@@ -113,20 +160,13 @@
     return _reminders.count;
 }*/
 
-#pragma mark - Table view delegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    ReminderBaseCell * cell = (ReminderBaseCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    
-    ReminderSettingViewController * controller = [[ReminderSettingViewController alloc] initWithNibName:@"ReminderSettingViewController" bundle:nil];
-    controller.reminder = cell.reminder;
-    controller.settingMode = SettingModeModify;
-    [self.navigationController pushViewController:controller animated:YES];
-}
-
 #pragma mark - SoundManager Delegate
 - (void)audioPlayerDidFinishPlaying {
     [self stopPlayingAudio];
+}
+
+- (void)alarmPlayerDidFinishPlaying {
+     [[AppDelegate delegate] checkRemindersExpired];
 }
 
 #pragma mark - FriendReminderCell Delegate

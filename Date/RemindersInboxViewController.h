@@ -16,12 +16,24 @@ typedef enum {
     DataTypeHistory
 }DataType;
 
-@interface RemindersInboxViewController : RemindersBaseViewController
+typedef enum {
+    InfoModeAudio = 0,
+    InfoModeText
+}InfoMode;
+
+@interface RemindersInboxViewController : RemindersBaseViewController<UITextFieldDelegate>
 
 @property (nonatomic) DataType dataType;
+@property (weak, nonatomic) IBOutlet UIButton * btnMode;
+@property (weak, nonatomic) IBOutlet UIButton * btnAudio;
+@property (weak, nonatomic) IBOutlet UITextField  * txtDesc;
+@property (weak, nonatomic) IBOutlet UIToolbar * toolbar;
+@property (weak, nonatomic) IBOutlet UIView * toolbarView;
 
 - (IBAction)startRecord:(id)sender;
 - (IBAction)stopRecord:(id)sender;
+
+- (IBAction)changeInfoMode:(UIButton *)sender;
 
 - (void)initData;
 - (void)showLoginViewController;

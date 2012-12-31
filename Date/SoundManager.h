@@ -10,10 +10,15 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <AVFoundation/AVFoundation.h>
 
+typedef enum {
+    VoiceTypeAlarm = 0,
+    VoiceTypeReminder
+}VoiceType;
 
 @protocol SoundManagerDelegate <NSObject>
 
 @optional
+- (void)alarmPlayerDidFinishPlaying;
 - (void)audioPlayerDidFinishPlaying;
 - (void)audioPlayerDidStopPlaying;
 @end
@@ -38,6 +43,8 @@
 
 - (BOOL)playAudio:(NSString *)path;
 - (void)stopAudio;
+
+- (void)playAlarmVoice;
 
 - (NSInteger)audioTime:(NSString *)path;
 

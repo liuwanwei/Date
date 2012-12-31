@@ -184,7 +184,9 @@ static HttpRequestManager * sHttpRequestManager;
     ASIFormDataRequest * request = [ASIFormDataRequest requestWithURL:[NSURL URLWithString:url]];
     [request setPostValue:[UserManager defaultManager].userID forKey:@"senderId"];
     [request setPostValue:[reminder.userID stringValue] forKey:@"targetId"];
-    [request setFile:reminder.audioUrl forKey:@"audio"];
+    if (nil != reminder.audioUrl && ![reminder.audioUrl isEqualToString:@""]) {
+        [request setFile:reminder.audioUrl forKey:@"audio"];
+    }
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
     NSTimeZone * timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
     [formatter setTimeZone:timeZone];
@@ -192,10 +194,11 @@ static HttpRequestManager * sHttpRequestManager;
     NSString * triggerTime;
     if (nil != reminder.triggerTime) {
         triggerTime = [formatter stringFromDate:reminder.triggerTime];
-        [request setPostValue:@"0" forKey:@"state"];
+        //[request setPostValue:@"0" forKey:@"state"];
     }else {
-        triggerTime = [formatter stringFromDate:[NSDate date]];
-        [request setPostValue:@"1" forKey:@"state"];
+        //triggerTime = [formatter stringFromDate:[NSDate date]];
+        //[request setPostValue:@"1" forKey:@"state"];
+        triggerTime = @"0";
     }
     [request setPostValue:triggerTime forKey:@"triggerTime"];
     [request setPostValue:reminder.longitude forKey:@"longitude"];

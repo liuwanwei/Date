@@ -18,7 +18,7 @@
 #pragma 私有函数
 // move view to right side
 - (void)moveToRightSide {
-    [self animateHomeViewToSide:CGRectMake(250.0f,
+    [self animateHomeViewToSide:CGRectMake(220.0f,
                                            self.navigationController.view.frame.origin.y,
                                            self.navigationController.view.frame.size.width,
                                            self.navigationController.view.frame.size.height)];
