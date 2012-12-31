@@ -412,6 +412,7 @@
     }else {
         cell.showDay = YES;
     }
+    cell.dateType = _dataType;
     cell.indexPath = indexPath;
     cell.bilateralFriend = friend;
     cell.reminder = reminder;
@@ -458,7 +459,15 @@
     }
     
     controller.reminder = cell.reminder;
-    if (DataTypeHistory == _dataType) {
+    if (YES == [_userManager isOneself:[cell.reminder.userID stringValue]]) {
+        controller.receiver = @"自己";
+    }else if (nil != cell.bilateralFriend) {
+        controller.receiver = cell.bilateralFriend.nickname;
+    }else {
+        controller.receiver = [cell.reminder.userID stringValue];
+    }
+    
+    if (DataTypeHistory == _dataType || (NO == [_userManager isOneself:[cell.reminder.userID stringValue]] && nil != controller.reminder.triggerTime)) {
         controller.settingMode = SettingModeShow;
     }else {
         controller.settingMode = SettingModeModify;

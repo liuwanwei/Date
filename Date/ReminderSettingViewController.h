@@ -26,6 +26,7 @@ typedef enum {
 @property (strong, nonatomic) NSString * desc;
 @property (nonatomic) SettingMode settingMode;
 @property (weak, nonatomic) NSString * receiver;
+@property (strong, nonatomic) NSNumber * receiverId;
 @property (strong, nonatomic) NSDate * triggerTime;
 @property (nonatomic) BOOL isLogin;
 @property (nonatomic) BOOL isAuthValid;

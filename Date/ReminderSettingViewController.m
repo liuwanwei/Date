@@ -36,6 +36,7 @@
 @synthesize isLogin = _isLogin;
 @synthesize isAuthValid = _isAuthValid;
 @synthesize isSpread = _isSpread;
+@synthesize receiverId = _receiverId;
 
 #pragma 私有函数
 - (void)initTableFooterView {
@@ -53,21 +54,27 @@
 }
 
 - (void)saveReminder {
+    _reminder.userID = _receiverId;
+    _reminder.triggerTime = _triggerTime;
     self.reminderManager.delegate = self;
     if (SettingModeNew == _settingMode) {
-        _reminder.triggerTime = _triggerTime;
-        if (NO == [_userManager isOneself:[_reminder.userID stringValue]] &&
+            if (NO == [_userManager isOneself:[_reminder.userID stringValue]] &&
             nil != _reminder.triggerTime) {
             [[MBProgressManager defaultManager] showHUD:@"发送中"];
         }
         [[ReminderManager defaultManager] sendReminder:_reminder];
         
     }else {
-        [[ReminderManager defaultManager] modifyReminder:_reminder withTriggerTime:_triggerTime withDesc:_reminder.desc];
-    }
+        if (YES == [_userManager isOneself:[_reminder.userID stringValue]] ||
+            nil == _triggerTime) {
+             [[ReminderManager defaultManager] modifyReminder:_reminder withTriggerTime:_triggerTime withDesc:_reminder.desc];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }else {
+             [[MBProgressManager defaultManager] showHUD:@"发送中"];
+             [[ReminderManager defaultManager] sendReminder:_reminder];
+        }
     
-    [self.navigationController popToRootViewControllerAnimated:YES];
-
+    }
 }
 
 - (void)initNavBar {
@@ -98,9 +105,10 @@
     _userManager = [UserManager defaultManager];
     if (SettingModeNew == _settingMode) {
         _reminder = [[ReminderManager defaultManager] reminder];
-        _reminder.userID = [NSNumber numberWithLongLong:[[UserManager defaultManager].oneselfId longLongValue]];
+        _receiverId = [NSNumber numberWithLongLong:[[UserManager defaultManager].oneselfId longLongValue]];
         _receiver = @"自己";
     }else {
+        _receiverId = _reminder.userID;
         _triggerTime = _reminder.triggerTime;
     }
 }
@@ -139,15 +147,13 @@
 
 - (NSString *)stringTriggerTime {
     if (nil != _triggerTime) {
-        if (_settingMode == SettingModeModify) {
-            [_btnSave setTitle:@"加入提醒" forState:UIControlStateNormal];
-        }else {
+        
             if (YES == [[UserManager defaultManager] isOneself:[_reminder.userID stringValue]] ) {
                 [_btnSave setTitle:@"加入提醒" forState:UIControlStateNormal];
             }else {
                 [_btnSave setTitle:@"发送提醒" forState:UIControlStateNormal];
             }
-        }
+        
         
         return [self custumDateTimeString:_triggerTime];
     }
@@ -220,20 +226,29 @@
 - (void)newReminderSuccess:(NSString *)reminderId {
     self.reminderManager.delegate = nil;
     [[MBProgressManager defaultManager] removeHUD];
-    [self.navigationController dismissViewControllerAnimated:YES completion:^{
-        if (YES == [_userManager isOneself:[_reminder.userID stringValue]] ||
-            nil == _reminder.triggerTime) {
-            if (nil == _reminder.triggerTime) {
-                [AppDelegate delegate].homeViewController.dataType = DataTypeCollectingBox;
-            }else {
-                [AppDelegate delegate].homeViewController.dataType = DataTypeRecent;
+    if (NO == [_userManager isOneself:[_reminder.userID stringValue]] && nil != _reminder.triggerTime) {
+        _reminder.id = reminderId;
+        [self.reminderManager modifyReminder:_reminder withType:ReminderTypeSend];
+    }
+    if (SettingModeModify == _settingMode) {
+        [[AppDelegate delegate].homeViewController initData];
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }else {
+        [self.navigationController dismissViewControllerAnimated:YES completion:^{
+            if (YES == [_userManager isOneself:[_reminder.userID stringValue]] ||
+                nil == _reminder.triggerTime) {
+                /*if (nil == _reminder.triggerTime) {
+                    [AppDelegate delegate].homeViewController.dataType = DataTypeCollectingBox;
+                }else {
+                    [AppDelegate delegate].homeViewController.dataType = DataTypeRecent;
+                }*/
+                
+                [[AppDelegate delegate].homeViewController initData];
+                [[AppDelegate delegate] checkRemindersExpired];
             }
             
-            [[AppDelegate delegate].homeViewController initData];
-            [[AppDelegate delegate] checkRemindersExpired];
-        }
-        
-    }];
+        }];
+    }
 }
 
 - (void)newReminderFailed {
