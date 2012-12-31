@@ -8,6 +8,7 @@
 
 #import "TextReminderSettingViewController.h"
 #import "ReminderSettingDescCell.h"
+#import "TextEditorViewController.h"
 #import "LMLibrary.h"
 
 @interface TextReminderSettingViewController () {
@@ -106,6 +107,7 @@
         if (_labelSize.height > 44) {
             [cell.textLabel sizeToFit];
         }
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }else {
         if (self.settingMode != SettingModeShow) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -135,7 +137,12 @@
         return;
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.section == 0 && indexPath.row == 1) {
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        TextEditorViewController * editor = [[TextEditorViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        editor.text = self.reminder.desc;
+        [self.navigationController pushViewController:editor animated:YES];
+    }
+    else if (indexPath.section == 0 && indexPath.row == 1) {
         [self clickTrigeerTimeRow:indexPath];
     }else if (indexPath.row == 2 && YES == self.isLogin) {
         [self clickSendRow];

@@ -113,10 +113,6 @@
 		3C9384B916893C7B00DA6412 /* feeddetail_toolbar_text_btn_h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C9384AD16893C7B00DA6412 /* feeddetail_toolbar_text_btn_h@2x.png */; };
 		3C9384BA16893C7B00DA6412 /* feeddetail_toolbar_text_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C9384AE16893C7B00DA6412 /* feeddetail_toolbar_text_btn.png */; };
 		3C9384BB16893C7B00DA6412 /* feeddetail_toolbar_text_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C9384AF16893C7B00DA6412 /* feeddetail_toolbar_text_btn@2x.png */; };
-		3C9384BC16893C7B00DA6412 /* navi_menuleft_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C9384B016893C7B00DA6412 /* navi_menuleft_down.png */; };
-		3C9384BD16893C7B00DA6412 /* navi_menuleft_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C9384B116893C7B00DA6412 /* navi_menuleft_down@2x.png */; };
-		3C9384BE16893C7B00DA6412 /* navi_menuleft_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C9384B216893C7B00DA6412 /* navi_menuleft_up.png */; };
-		3C9384BF16893C7B00DA6412 /* navi_menuleft_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C9384B316893C7B00DA6412 /* navi_menuleft_up@2x.png */; };
 		3C984EBF166C53C4005AA529 /* blueDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C984EBD166C53C4005AA529 /* blueDot.png */; };
 		3C984EC0166C53C4005AA529 /* blueDot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C984EBE166C53C4005AA529 /* blueDot@2x.png */; };
 		3C984EC2166C59AF005AA529 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C984EC1166C59AF005AA529 /* icon@2x.png */; };
@@ -169,6 +165,13 @@
 		3CF83C1E166DF8AB005ED593 /* libAsiHttpRequestLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CF83C05166DF86E005ED593 /* libAsiHttpRequestLibrary.a */; };
 		3CF83C1F166DF8AB005ED593 /* libHUDLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CF83C0E166DF87C005ED593 /* libHUDLibrary.a */; };
 		3CF83C20166DF8AB005ED593 /* libSinaWeiboLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CF83C17166DF889005ED593 /* libSinaWeiboLibrary.a */; };
+		E6A3980616913F4F004A460F /* leftMenuDown.png in Resources */ = {isa = PBXBuildFile; fileRef = E6A3980216913F4F004A460F /* leftMenuDown.png */; };
+		E6A3980716913F4F004A460F /* leftMenuDown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E6A3980316913F4F004A460F /* leftMenuDown@2x.png */; };
+		E6A3980816913F4F004A460F /* leftMenuUp.png in Resources */ = {isa = PBXBuildFile; fileRef = E6A3980416913F4F004A460F /* leftMenuUp.png */; };
+		E6A3980916913F4F004A460F /* leftMenuUp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E6A3980516913F4F004A460F /* leftMenuUp@2x.png */; };
+		E6A3980C16914121004A460F /* CustomChoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6A3980B16914121004A460F /* CustomChoiceViewController.m */; };
+		E6A3980F16918D50004A460F /* TextEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6A3980E16918D4F004A460F /* TextEditorViewController.m */; };
+		E6A3981116918DE0004A460F /* TextEditorCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6A3981016918DE0004A460F /* TextEditorCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -386,10 +389,6 @@
 		3C9384AD16893C7B00DA6412 /* feeddetail_toolbar_text_btn_h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "feeddetail_toolbar_text_btn_h@2x.png"; path = "Resources/images/feeddetail_toolbar_text_btn_h@2x.png"; sourceTree = "<group>"; };
 		3C9384AE16893C7B00DA6412 /* feeddetail_toolbar_text_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = feeddetail_toolbar_text_btn.png; path = Resources/images/feeddetail_toolbar_text_btn.png; sourceTree = "<group>"; };
 		3C9384AF16893C7B00DA6412 /* feeddetail_toolbar_text_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "feeddetail_toolbar_text_btn@2x.png"; path = "Resources/images/feeddetail_toolbar_text_btn@2x.png"; sourceTree = "<group>"; };
-		3C9384B016893C7B00DA6412 /* navi_menuleft_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = navi_menuleft_down.png; path = Resources/images/navi_menuleft_down.png; sourceTree = "<group>"; };
-		3C9384B116893C7B00DA6412 /* navi_menuleft_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "navi_menuleft_down@2x.png"; path = "Resources/images/navi_menuleft_down@2x.png"; sourceTree = "<group>"; };
-		3C9384B216893C7B00DA6412 /* navi_menuleft_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = navi_menuleft_up.png; path = Resources/images/navi_menuleft_up.png; sourceTree = "<group>"; };
-		3C9384B316893C7B00DA6412 /* navi_menuleft_up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "navi_menuleft_up@2x.png"; path = "Resources/images/navi_menuleft_up@2x.png"; sourceTree = "<group>"; };
 		3C984EBD166C53C4005AA529 /* blueDot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blueDot.png; path = Resources/images/blueDot.png; sourceTree = "<group>"; };
 		3C984EBE166C53C4005AA529 /* blueDot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blueDot@2x.png"; path = "Resources/images/blueDot@2x.png"; sourceTree = "<group>"; };
 		3C984EC1166C59AF005AA529 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "Resources/images/icon@2x.png"; sourceTree = "<group>"; };
@@ -455,6 +454,15 @@
 		3CF83BFD166DF86E005ED593 /* AsiHttpRequestLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AsiHttpRequestLibrary.xcodeproj; path = "../asi-http-request/AsiHttpRequestLibrary.xcodeproj"; sourceTree = "<group>"; };
 		3CF83C06166DF87C005ED593 /* HUDLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HUDLibrary.xcodeproj; path = ../MBProgressHUD/HUDLibrary.xcodeproj; sourceTree = "<group>"; };
 		3CF83C0F166DF889005ED593 /* SinaWeiboLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SinaWeiboLibrary.xcodeproj; path = "../weibo_ios_sdk_sso-oauth/SinaWeiboLibrary.xcodeproj"; sourceTree = "<group>"; };
+		E6A3980216913F4F004A460F /* leftMenuDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leftMenuDown.png; path = Resources/images/leftMenuDown.png; sourceTree = "<group>"; };
+		E6A3980316913F4F004A460F /* leftMenuDown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "leftMenuDown@2x.png"; path = "Resources/images/leftMenuDown@2x.png"; sourceTree = "<group>"; };
+		E6A3980416913F4F004A460F /* leftMenuUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leftMenuUp.png; path = Resources/images/leftMenuUp.png; sourceTree = "<group>"; };
+		E6A3980516913F4F004A460F /* leftMenuUp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "leftMenuUp@2x.png"; path = "Resources/images/leftMenuUp@2x.png"; sourceTree = "<group>"; };
+		E6A3980A16914121004A460F /* CustomChoiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomChoiceViewController.h; sourceTree = "<group>"; };
+		E6A3980B16914121004A460F /* CustomChoiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomChoiceViewController.m; sourceTree = "<group>"; };
+		E6A3980D16918D4F004A460F /* TextEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextEditorViewController.h; sourceTree = "<group>"; };
+		E6A3980E16918D4F004A460F /* TextEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextEditorViewController.m; sourceTree = "<group>"; };
+		E6A3981016918DE0004A460F /* TextEditorCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextEditorCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -622,6 +630,7 @@
 				3C838F301675D5B700A85826 /* ReminderDetailAudioCell.xib */,
 				3C1CB07F167AFAD60025BDB2 /* ReminderSettingTimeCell.xib */,
 				3C93849D1688539000DA6412 /* ReminderSettingDescCell.xib */,
+				E6A3981016918DE0004A460F /* TextEditorCell.xib */,
 			);
 			name = cell;
 			sourceTree = "<group>";
@@ -690,6 +699,10 @@
 		3CE0ABF916507EA2004B785A /* images */ = {
 			isa = PBXGroup;
 			children = (
+				E6A3980216913F4F004A460F /* leftMenuDown.png */,
+				E6A3980316913F4F004A460F /* leftMenuDown@2x.png */,
+				E6A3980416913F4F004A460F /* leftMenuUp.png */,
+				E6A3980516913F4F004A460F /* leftMenuUp@2x.png */,
 				3C417A16168D8BE7003FFB1C /* recordingBg.png */,
 				3C417A17168D8BE7003FFB1C /* recordingBg@2x.png */,
 				3C417A12168D57F6003FFB1C /* smallButtonBg.png */,
@@ -714,10 +727,6 @@
 				3C9384AD16893C7B00DA6412 /* feeddetail_toolbar_text_btn_h@2x.png */,
 				3C9384AE16893C7B00DA6412 /* feeddetail_toolbar_text_btn.png */,
 				3C9384AF16893C7B00DA6412 /* feeddetail_toolbar_text_btn@2x.png */,
-				3C9384B016893C7B00DA6412 /* navi_menuleft_down.png */,
-				3C9384B116893C7B00DA6412 /* navi_menuleft_down@2x.png */,
-				3C9384B216893C7B00DA6412 /* navi_menuleft_up.png */,
-				3C9384B316893C7B00DA6412 /* navi_menuleft_up@2x.png */,
 				3C31565F16819CFA00C1E42C /* btnTimeDeleteOri.png */,
 				3C31566016819CFA00C1E42C /* btnTimeDeleteOri@2x.png */,
 				3CE8509D16803DA50025ECA3 /* checkboxCompleted.png */,
@@ -827,6 +836,10 @@
 				3C9384A41689328A00DA6412 /* TextReminderDetailViewController.m */,
 				3C3BE6B1168A83F40052A8C5 /* ReminderTimeSettingViewController.h */,
 				3C3BE6B2168A83F40052A8C5 /* ReminderTimeSettingViewController.m */,
+				E6A3980A16914121004A460F /* CustomChoiceViewController.h */,
+				E6A3980B16914121004A460F /* CustomChoiceViewController.m */,
+				E6A3980D16918D4F004A460F /* TextEditorViewController.h */,
+				E6A3980E16918D4F004A460F /* TextEditorViewController.m */,
 			);
 			name = Class;
 			sourceTree = "<group>";
@@ -942,7 +955,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Liu&Mao";
 			};
-			buildConfigurationList = 3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "date" */;
+			buildConfigurationList = 3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "Date" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1106,10 +1119,6 @@
 				3C9384B916893C7B00DA6412 /* feeddetail_toolbar_text_btn_h@2x.png in Resources */,
 				3C9384BA16893C7B00DA6412 /* feeddetail_toolbar_text_btn.png in Resources */,
 				3C9384BB16893C7B00DA6412 /* feeddetail_toolbar_text_btn@2x.png in Resources */,
-				3C9384BC16893C7B00DA6412 /* navi_menuleft_down.png in Resources */,
-				3C9384BD16893C7B00DA6412 /* navi_menuleft_down@2x.png in Resources */,
-				3C9384BE16893C7B00DA6412 /* navi_menuleft_up.png in Resources */,
-				3C9384BF16893C7B00DA6412 /* navi_menuleft_up@2x.png in Resources */,
 				3C3BE6AC168975440052A8C5 /* sidebar_background@2x.png in Resources */,
 				3C3BE6B5168A83F40052A8C5 /* ReminderTimeSettingViewController.xib in Resources */,
 				3C3BE6B8168AA9E10052A8C5 /* feeddetail_toolbar_audio_btn.png in Resources */,
@@ -1127,6 +1136,11 @@
 				3C417A15168D57F6003FFB1C /* smallButtonBg@2x.png in Resources */,
 				3C417A18168D8BE7003FFB1C /* recordingBg.png in Resources */,
 				3C417A19168D8BE7003FFB1C /* recordingBg@2x.png in Resources */,
+				E6A3980616913F4F004A460F /* leftMenuDown.png in Resources */,
+				E6A3980716913F4F004A460F /* leftMenuDown@2x.png in Resources */,
+				E6A3980816913F4F004A460F /* leftMenuUp.png in Resources */,
+				E6A3980916913F4F004A460F /* leftMenuUp@2x.png in Resources */,
+				E6A3981116918DE0004A460F /* TextEditorCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1199,6 +1213,8 @@
 				3C93849C1688537500DA6412 /* ReminderSettingDescCell.m in Sources */,
 				3C9384A61689328D00DA6412 /* TextReminderDetailViewController.m in Sources */,
 				3C3BE6B4168A83F40052A8C5 /* ReminderTimeSettingViewController.m in Sources */,
+				E6A3980C16914121004A460F /* CustomChoiceViewController.m in Sources */,
+				E6A3980F16918D50004A460F /* TextEditorViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1355,7 +1371,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "B4075BAA-9078-4068-9FC2-D86C6A4B619D";
+				PROVISIONING_PROFILE = "8943D085-22C4-4891-A9CA-97E205FAAA6F";
 				VALID_ARCHS = "armv7s armv7";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1382,7 +1398,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "B4075BAA-9078-4068-9FC2-D86C6A4B619D";
+				PROVISIONING_PROFILE = "8943D085-22C4-4891-A9CA-97E205FAAA6F";
 				VALID_ARCHS = "armv7s armv7";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1427,7 +1443,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "date" */ = {
+		3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "Date" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C13E89B164DF4DB006424A2 /* Debug */,
