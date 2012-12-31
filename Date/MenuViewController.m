@@ -73,8 +73,10 @@
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 50.0;
     //[self.tableView setSeparatorColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"sidebar_separate_light"]]];
-    
+    NSIndexPath * indexpath = [NSIndexPath indexPathForRow:1 inSection:0];
+    [self.tableView selectRowAtIndexPath:indexpath animated:NO scrollPosition:0];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"sidebar_background"]];
+    
     // Do any additional setup after loading the view from its nib.
 }
 

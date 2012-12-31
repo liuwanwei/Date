@@ -65,8 +65,11 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (SettingModeModify == self.settingMode) {
+        if (nil == self.reminder.triggerTime) {
+            return 4;
+        }
         return 3;
-    }else if (SettingModeShow == self.settingMode) {
+    }else if (self.settingMode == SettingModeShow) {
         return 3;
     }
     

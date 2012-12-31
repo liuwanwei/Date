@@ -19,6 +19,13 @@ typedef enum {
     AudioStatePlaying
 }AudioState;
 
+typedef enum {
+    DataTypeCollectingBox = 0,
+    DataTypeToday = 1,
+    DataTypeRecent = 2,
+    DataTypeHistory
+}DataType;
+
 @protocol ReminderCellDelegate <NSObject>
 
 @optional
@@ -52,6 +59,7 @@ typedef enum {
 
 @property (nonatomic) BOOL showFrom;
 @property (nonatomic) BOOL showDay;
+@property (nonatomic) DataType dateType;
 
 - (IBAction)palyAudio:(UIButton *)sender;
 - (IBAction)showMap:(UIButton *)sender;

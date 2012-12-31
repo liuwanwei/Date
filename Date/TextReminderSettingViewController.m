@@ -64,6 +64,9 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (SettingModeModify == self.settingMode) {
+        if (nil == self.reminder.triggerTime) {
+            return 3;
+        }
         return 2;
     }else if (self.settingMode == SettingModeShow) {
         return 2;
@@ -79,13 +82,6 @@
             return _labelSize.height;
         }
     }
-    if (indexPath.row == 1) {
-        if (NO == self.isSpread){
-            return 44.0f;
-        }else {
-            return 275.0f;
-        }
-    }
     
     return 44.0f;
 }
@@ -99,6 +95,12 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
     
+    if (self.settingMode != SettingModeShow) {
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }else {
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }
+    
     if (0 == indexPath.row) {
         cell.textLabel.numberOfLines = 0;
         cell.textLabel.textColor = RGBColor(56, 57, 61);
@@ -109,12 +111,6 @@
         }
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }else {
-        if (self.settingMode != SettingModeShow) {
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }else {
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        }
-       
         if (indexPath.row == 1) {
             cell.textLabel.text = @"提醒时间";
             cell.detailTextLabel.text = [self stringTriggerTime];
