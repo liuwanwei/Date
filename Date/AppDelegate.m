@@ -15,6 +15,7 @@
 #import "RemindersNotificationViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "ReminderDetailViewController.h"
+#import "TextReminderDetailViewController.h"
 #import "BilateralFriendManager.h"
 #import "RemindersInboxViewController.h"
 
@@ -30,10 +31,17 @@
 
 #pragma 私有函数
 - (void)showRemindersNotificationViewControllerWithReminders:(Reminder *)reminder{
-    ReminderDetailViewController * viewController = [[ReminderDetailViewController alloc] initWithNibName:@"ReminderDetailViewController" bundle:nil];
+    ReminderDetailViewController * viewController;
+    if (nil == reminder.audioUrl || [reminder.audioUrl isEqualToString:@""]) {
+         viewController = [[TextReminderDetailViewController alloc] initWithNibName:@"TextReminderDetailViewController" bundle:nil];
+    }else {
+         viewController = [[ReminderDetailViewController alloc] initWithNibName:@"ReminderDetailViewController" bundle:nil];
+    }
+   
     viewController.reminder = reminder;
     viewController.friend = [[BilateralFriendManager defaultManager] bilateralFriendWithUserID:viewController.reminder.userID];
     viewController.detailViewShowMode = DeailViewShowModePresent;
+    viewController.parentController = _homeViewController;
     UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:viewController];
     [_navController presentViewController:nav animated:YES completion:nil];
 }
@@ -47,17 +55,34 @@
 
 #pragma 类成员函数
 - (void)makeMenuViewVisible {
-    _navController.view.layer.shadowColor = [UIColor blackColor].CGColor;
+    /*_navController.view.layer.shadowColor = [UIColor blackColor].CGColor;
     _navController.view.layer.shadowOpacity = 0.4f;
     _navController.view.layer.shadowOffset = CGSizeMake(-12.0, 1.0f);
     _navController.view.layer.shadowRadius = 7.0f;
-    _navController.view.layer.masksToBounds = NO;
+    _navController.view.layer.masksToBounds = NO;*/
     [_menuViewController setVisible:YES];
 }
 
 +(AppDelegate *)delegate{
     AppDelegate * delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     return delegate;
+}
+
+- (void)initNavleftBarItemWithController:(UIViewController *)controller withAction:(SEL)action{
+    if (action != nil) {
+        controller.navigationItem.hidesBackButton = YES;
+        UIButton *leftButton;
+        UIBarButtonItem * item;
+        
+        leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        [leftButton setImage:[UIImage imageNamed:@"backNavigationBar"] forState:UIControlStateNormal];
+        [leftButton addTarget:controller action:action forControlEvents:UIControlEventTouchUpInside];
+        item = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+        
+        controller.navigationItem.leftBarButtonItem = item;
+    }else {
+        controller.navigationItem.leftBarButtonItem = nil;
+    }
 }
 
 #pragma 事件函数
@@ -89,7 +114,8 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-    [self checkRemindersExpired];
+    [[SoundManager defaultSoundManager] playAlarmVoice];
+    //[self checkRemindersExpired];
 }
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {

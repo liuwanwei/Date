@@ -22,6 +22,7 @@ static UserManager * sUserManager;
 @synthesize accessToken = _accessToken;
 @synthesize expirationDate = _expirationDate;
 @synthesize refreshToken = _refreshToken;
+@synthesize oneselfId = _oneselfId;
 
 #pragma 私有函数
 - (BOOL)checkJsonValue:(id)value{
@@ -43,6 +44,7 @@ static UserManager * sUserManager;
 
 - (id)init {
     if (self = [super init]) {
+        _oneselfId = @"0";
     }
     
     return self;
@@ -67,8 +69,8 @@ expirationDate == nil) {
 }
 
 - (void)removeUserAuthData {
-    //[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SinaWeiboAuthData"];
-    //[self removeUserData];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"SinaWeiboAuthData"];
+    [self removeUserData];
 }
 
 - (NSString *)userID {
@@ -76,10 +78,6 @@ expirationDate == nil) {
     NSDictionary * userAuthData = [defaults objectForKey:@"SinaWeiboAuthData"];
 
     NSString * userId = [userAuthData objectForKey:@"UserIDKey"];
-    if (nil == userId) {
-        return @"0";
-    }
-    
     return userId;
 }
 
@@ -144,7 +142,7 @@ expirationDate == nil) {
     }
     
     [self storeUserData:screenName withImageUrl:imageUrl];
-    long long userId = [[self userID] longLongValue];
+    long long userId = [_oneselfId longLongValue];
 
     [[BilateralFriendManager defaultManager] newFriend:[NSNumber numberWithLongLong:userId] withName:screenName withImageUrl:imageUrl withState:YES];
     [self registerForRemoteNotification];
@@ -165,6 +163,15 @@ expirationDate == nil) {
         }
     }
 
+}
+
+- (BOOL)isOneself:(NSString *)userId {
+    BOOL result = NO;
+    if ([userId isEqualToString:_oneselfId] || [userId isEqualToString:[self userID]]) {
+        result = YES;
+    }
+    
+    return result;
 }
 
 @end

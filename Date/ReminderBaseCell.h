@@ -24,6 +24,7 @@ typedef enum {
 @optional
 - (void)clickAudioButton:(NSIndexPath *)indexPath withReminder:(Reminder *)reminder;
 - (void)clickMapButton:(NSIndexPath *)indexPath withReminder:(Reminder *)reminder;
+- (void)clickFinishButton:(NSIndexPath *)indexPath withReminder:(Reminder *)reminder;
 @end
 
 @interface ReminderBaseCell : UITableViewCell
@@ -39,6 +40,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UILabel * labelSendDate;
 @property (weak, nonatomic) IBOutlet UILabel * labelAudioTime;
 @property (weak, nonatomic) IBOutlet UIButton * btnFinished;
+@property (weak, nonatomic) IBOutlet UILabel * labelDay;
 
 @property (weak, nonatomic) Reminder * reminder;
 @property (weak, nonatomic) BilateralFriend * bilateralFriend;
@@ -47,6 +49,9 @@ typedef enum {
 @property (nonatomic) AudioState audioState;
 
 @property (weak, nonatomic) id<ReminderCellDelegate> delegate;
+
+@property (nonatomic) BOOL showFrom;
+@property (nonatomic) BOOL showDay;
 
 - (IBAction)palyAudio:(UIButton *)sender;
 - (IBAction)showMap:(UIButton *)sender;

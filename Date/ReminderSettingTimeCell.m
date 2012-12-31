@@ -48,7 +48,7 @@
     self.pickerView.delegate = self;
     self.pickerView.dataSource = self;
     
-    [_pickerView selectRow:1 inComponent:0 animated:NO];
+    [_pickerView selectRow:0 inComponent:0 animated:NO];
     NSDateFormatter * hour = [[NSDateFormatter alloc] init];
     [hour setDateFormat:@"HH"];
     NSString * currentDateStr = [hour stringFromDate:now];
@@ -78,8 +78,8 @@
     if (self) {
         NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"ReminderSettingTimeCell" owner:self options:nil] ;
         self = [nib objectAtIndex:0];
-        [self initData];
-        [self initPickerView];
+        //[self initData];
+        //[self initPickerView];
     }
     
     return self;
@@ -103,15 +103,15 @@
 - (void)setTriggerTime:(NSDate *)triggerTime {
     if (nil == triggerTime) {
         [_switchTime setOn:NO];
-        _labelTriggerTime.text = @"";
-        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        [_btnClearTime setHidden:YES];
+        //_labelTriggerTime.text = @"";
+        //self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        //[_btnClearTime setHidden:YES];
     }else {
-        NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"MM-dd HH:mm"];
-        _labelTriggerTime.text = [dateFormatter stringFromDate:triggerTime];
-        [_switchTime setOn:NO];
-        [_btnClearTime setHidden:NO];
+        //NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
+        //[dateFormatter setDateFormat:@"MM-dd HH:mm"];
+        //_labelTriggerTime.text = [dateFormatter stringFromDate:triggerTime];
+        [_switchTime setOn:YES];
+        //[_btnClearTime setHidden:NO];
     }
 }
 

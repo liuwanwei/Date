@@ -29,5 +29,6 @@
 
 - (void)makeMenuViewVisible;
 - (void)checkRemindersExpired;
+- (void)initNavleftBarItemWithController:(UIViewController *)controller withAction:(SEL)action;
 
 @end

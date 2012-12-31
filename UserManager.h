@@ -16,7 +16,7 @@
 @property (nonatomic, copy) NSString *accessToken;
 @property (nonatomic, copy) NSDate *expirationDate;
 @property (nonatomic, copy) NSString *refreshToken;
-
+@property (weak, nonatomic) NSString *oneselfId;
 
 + (UserManager *)defaultManager;
 
@@ -31,4 +31,6 @@
 
 - (void)updateDeviceTokenRequest:(NSString *)deviceToken;
 - (void)handleUpdateDeviceTokenResponse:(id)json;
+
+- (BOOL)isOneself:(NSString *)userId;
 @end

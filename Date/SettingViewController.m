@@ -10,6 +10,7 @@
 #import "ReminderManager.h"
 #import "SinaWeiboManager.h"
 #import "UserManager.h"
+#import "BilateralFriendManager.h"
 
 @interface SettingViewController () {
     NSArray * _appBadgeSignRows;
@@ -25,8 +26,16 @@
 
 #pragma 私有函数
 - (void)initMenuView {
-    UIBarButtonItem * leftItem = [[UIBarButtonItem alloc] initWithTitle:@"菜单" style:UIBarButtonItemStylePlain target:self action:@selector(leftBarBtnTapped:)];
-    self.navigationItem.leftBarButtonItem = leftItem;
+    UIButton * leftButton;
+    UIBarButtonItem * item;
+    
+    leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
+    [leftButton setImage:[UIImage imageNamed:@"navi_menuleft_up"] forState:UIControlStateNormal];
+    [leftButton setImage:[UIImage imageNamed:@"navi_menuleft_down"] forState:UIControlStateHighlighted];
+    [leftButton addTarget:self action:@selector(leftBarBtnTapped:) forControlEvents:UIControlEventTouchUpInside];
+    item = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    
+    self.navigationItem.leftBarButtonItem = item;
 }
 
 - (void)initData {
@@ -79,8 +88,8 @@
     [super viewDidLoad];
     self.tableView.rowHeight = 44;
     self.title = @"设置";
-    [self initData];
     [self initMenuView];
+    [self initData];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.navigationController.navigationItem.hidesBackButton = YES;
@@ -141,6 +150,8 @@
             
             if (NO == [self isAuthValid]) {
                 cell.detailTextLabel.text = @"过期";
+            }else {
+                cell.detailTextLabel.text = @"已绑定";
             }
         }else {
             cell.textLabel.text = [_appSnsInfo objectAtIndex:0];
@@ -152,16 +163,28 @@
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
         }
     }else if (2 == indexPath.section) {
-        cell.textLabel.text = @"退出";
+        cell.textLabel.text = @"解除绑定";
     }
     
     return cell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    if (section == 0) {
+        return @"绑定账号后，就可以向互相关注的好友发送闹铃提醒";
+    }
+    
+    return @"";
 }
 
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (0 == indexPath.section) {
+        if (YES == [self isAuthValid]) {
+            [tableView deselectRowAtIndexPath:indexPath animated:YES];
+            return;
+        }
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOAuthSuccessMessage:) name:kUserOAuthSuccessMessage object:nil];
         [[SinaWeiboManager defaultManager].sinaWeibo logIn];
     }else if (1 == indexPath.section) {
@@ -173,6 +196,13 @@
         _appBadgeMode = indexPath.row;
         [[ReminderManager defaultManager] storeAppBadgeMode:_appBadgeMode];
     }else if (2 == indexPath.section) {
+        long long userId = [[SinaWeiboManager defaultManager].sinaWeibo.userID longLongValue];
+        BilateralFriend * friend = [[BilateralFriendManager defaultManager]
+                                    bilateralFriendWithUserID:[NSNumber numberWithLongLong:userId]];
+        if (nil != friend) {
+            [[BilateralFriendManager defaultManager] deleteFriend:friend];
+        }
+        
         [[SinaWeiboManager defaultManager].sinaWeibo logOut];
         [self updateSinaRow];
     }

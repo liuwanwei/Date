@@ -24,6 +24,7 @@
     if (self) {
         NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"ReminderDetailAudioCell" owner:self options:nil] ;
         self = [nib objectAtIndex:0];
+        _labelDesc.numberOfLines = 0;
     }
     return self;
 }
