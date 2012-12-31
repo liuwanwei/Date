@@ -153,7 +153,7 @@
     
     //_selectedRow = indexPath.row;
     BilateralFriend * friend = [_friends objectAtIndex:indexPath.row];
-    _reminder.userID = friend.userID;
+    _parentController.receiverId = friend.userID;
     if ([[friend.userID stringValue] isEqualToString:[UserManager defaultManager].oneselfId ]) {
         _parentController.receiver = @"自己";
     }else {

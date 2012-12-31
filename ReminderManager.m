@@ -381,7 +381,7 @@ typedef enum {
     //NSDate * startDate = [formatter dateFromString:[formatter stringFromDate:date]];
     NSArray * results = nil;
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"isAlarm = NO AND triggerTime < %@",date];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"type = %d AND isAlarm = NO AND triggerTime < %@",ReminderTypeReceive,date];
     NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"triggerTime" ascending:NO];
     NSArray * sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
     
@@ -407,7 +407,6 @@ typedef enum {
         
         reminder.id = reminderId;
         reminder.createTime = [NSDate date];
-        //[[BilateralFriendManager defaultManager] modifyLastReminder:reminder.id withUserId:reminder.userID];
         [self saveSentReminder:reminder];
         
         if (self.delegate != nil) {
@@ -554,12 +553,14 @@ typedef enum {
         NSNumber * state = reminder.state;
         NSNumber * alarm = reminder.isAlarm;
         if (nil == friend) {
-            body = @"您自己的提醒";
+            body = @"您自己的提醒:";
         }else if ([[friend.userID stringValue] isEqualToString:[UserManager defaultManager].oneselfId]) {
-             body = @"您自己的提醒";
+             body = @"您自己的提醒:";
         }else {
-            body = [friend.nickname stringByAppendingString:@" 提醒你"];  
+            body = [friend.nickname stringByAppendingString:@" 提醒你:"];  
         }
+        body = [body stringByAppendingString:reminder.desc];
+        body = [body stringByAppendingString:@" "];
         body = [body stringByAppendingString:@"id="];
         body = [body stringByAppendingString:reminderId];
         body = [body stringByAppendingString:@" time="];
@@ -609,6 +610,11 @@ typedef enum {
     [self synchroniseToStore];
     [self cancelLocalNotificationWithReminder:reminder];
     [self appBadgeNumberWith:reminder.triggerTime withOperate:BadgeOperateSub];
+}
+
+- (void)modifyReminder:(Reminder *)reminder withType:(ReminderType)type {
+    reminder.type = [NSNumber numberWithInteger:type];
+    [self synchroniseToStore];
 }
 
 - (NSArray *)allRemindersWithReimnderType:(ReminderType)type {

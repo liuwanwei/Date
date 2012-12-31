@@ -82,6 +82,7 @@ typedef enum {
 - (void)modifyReminder:(Reminder *)reminder withReadState:(BOOL)isRead;
 - (void)modifyReminder:(Reminder *)reminder withBellState:(BOOL)isBell;
 - (void)modifyReminder:(Reminder *)reminder withState:(ReminderState)state;
+- (void)modifyReminder:(Reminder *)reminder withType:(ReminderType)type;
 
 - (void)storeAppBadgeMode:(AppBadgeMode)mode;
 - (AppBadgeMode)appBadgeMode;

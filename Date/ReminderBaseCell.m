@@ -10,6 +10,8 @@
 #import "SoundManager.h"
 
 #define LeftMargin  13
+#define LabelDesOffset 18
+#define LabelDesY 42
 
 @interface ReminderBaseCell () {
 
@@ -37,11 +39,12 @@
 @synthesize showFrom = _showFrom;
 @synthesize labelDay = _labelDay;
 @synthesize showDay = _showDay;
+@synthesize dateType = _dateType;
 
 - (NSString *)custumDayString:(NSDate *)date {
     NSString * dateString = @"" ;
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MM-dd"];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
     
     NSDate * nowDate = [NSDate date];
     nowDate = [formatter dateFromString:[formatter stringFromDate:nowDate]];
@@ -59,9 +62,9 @@
     }else if (diffDay == 2) {
         dateString = @"";
     }else if (diffDay == -1) {
-        
         dateString = @"(昨天) ";
     }else {
+        [formatter setDateFormat:@"MM-dd"];
         dateString = [dateString stringByAppendingString:@"("];
         dateString = [dateString stringByAppendingString:[formatter stringFromDate:date]];
         dateString = [dateString stringByAppendingString:@")"];
@@ -72,7 +75,17 @@
 - (void)setReminder:(Reminder *)reminer {
     if (nil != reminer) {
         _reminder = reminer;
-                
+        if (_dateType == DataTypeCollectingBox) {
+            [_labelTriggerDate setHidden:YES];
+            [_labelDay setHidden:YES];
+            [_labelNickname setHidden:YES];
+            _labelDescription.frame = CGRectMake(_labelDescription.frame.origin.x, LabelDesY - LabelDesOffset, _labelDescription.frame.size.width, _labelDescription.frame.size.height);
+        }else {
+            [_labelTriggerDate setHidden:NO];
+            [_labelDay setHidden:NO];
+            [_labelNickname setHidden:NO];
+            _labelDescription.frame = CGRectMake(_labelDescription.frame.origin.x, LabelDesY, _labelDescription.frame.size.width, _labelDescription.frame.size.height);
+        }
         if (nil == _reminder.longitude || [_reminder.longitude isEqualToString:@"0"]) {
             [_btnMap setHidden:YES];
         }else {
@@ -105,11 +118,18 @@
             _labelTriggerDate.frame = CGRectMake(42, _labelTriggerDate.frame.origin.y, _labelTriggerDate.frame.size.width, _labelTriggerDate.frame.size.height);
             _labelDescription.frame =  CGRectMake(45, _labelDescription.frame.origin.y, _labelDescription.frame.size.width, _labelDescription.frame.size.height);
             if (nil != reminer.triggerTime) {
-                NSString * day = [self custumDayString:reminer.triggerTime];
+                NSString * day;
+                if (DataTypeRecent == _dateType) {
+                    day = @"";
+                }else {
+                    day = [self custumDayString:reminer.triggerTime];
+                }
+               
                 if ([day isEqualToString:@""]) {
                     _labelDay.frame = CGRectMake(100, _labelDay.frame.origin.y, 0, _labelDay.frame.size.height);
                     _labelNickname.frame = CGRectMake(_labelDay.frame.origin.x, _labelNickname.frame.origin.y, _labelNickname.frame.size.width + 42, _labelNickname.frame.size.height);
                 }else {
+                    _labelDay.text = day;
                     _labelDay.frame = CGRectMake(100, _labelDay.frame.origin.y, 42, _labelDay.frame.size.height);
                     _labelNickname.frame = CGRectMake(_labelDay.frame.origin.x + 42, _labelNickname.frame.origin.y, _labelNickname.frame.size.width, _labelNickname.frame.size.height);
                 }
