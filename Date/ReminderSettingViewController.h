@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ChoiceViewController.h"
+#import "CustomChoiceViewController.h"
 #import "RemindersBaseViewController.h"
 #import "ReminderSettingTimeCell.h"
 

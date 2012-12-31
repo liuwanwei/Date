@@ -8,6 +8,7 @@
 
 #import "AudioReminderSettingViewController.h"
 #import "ReminderSettingAudioCell.h"
+#import "CustomChoiceViewController.h"
 
 @interface AudioReminderSettingViewController () {
      NSArray * _tags;
@@ -153,7 +154,7 @@
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0 && indexPath.row == 1) {
-        ChoiceViewController * choiceViewController = [[ChoiceViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        CustomChoiceViewController * choiceViewController = [[CustomChoiceViewController alloc] initWithStyle:UITableViewStyleGrouped];
         choiceViewController.choices = _tags;
         if (self.reminder.desc != nil) {
             choiceViewController.currentChoices = [NSArray arrayWithObject:self.reminder.desc];
