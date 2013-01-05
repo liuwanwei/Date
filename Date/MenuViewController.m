@@ -196,7 +196,7 @@
     }
     
     if (YES == update) {
-        [[AppDelegate delegate].homeViewController initData];
+        [[AppDelegate delegate].homeViewController initDataWithAnimation:YES];
     }
     
     [[AppDelegate delegate].homeViewController restoreViewLocation];

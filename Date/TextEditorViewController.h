@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ReminderSettingViewController.h"
 
 @interface TextEditorViewController : UITableViewController <UITextFieldDelegate>
 
 @property (nonatomic, strong) IBOutlet UITableViewCell * tvCell;
 @property (nonatomic, strong) IBOutlet UITextField * textField;
 @property (nonatomic, strong) NSString * text;
+@property (nonatomic, weak) ReminderSettingViewController * parentController;
 
 @end

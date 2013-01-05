@@ -22,21 +22,31 @@
 #pragma 私有函数
 - (void)initData {
     [super initData];
-    if (SettingModeNew == self.settingMode) {
-        self.reminder.desc = self.desc;
-    }
 }
 
 - (void)updateReceiverCell {
+    [super updateReceiverCell];
     NSIndexPath * indexPath = [NSIndexPath indexPathForRow:2 inSection:0];
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (void)updateTriggerTimeCell {
+    [super updateTriggerTimeCell];
     NSIndexPath * indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
+- (void)computeFontSize {
+    _labelSize = [self.desc sizeWithFont:[UIFont systemFontOfSize:15.0] constrainedToSize:CGSizeMake(100, MAXFLOAT) lineBreakMode: NSLineBreakByTruncatingTail];
+}
+
+- (void)updateDescCell {
+    [self computeFontSize];
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+#pragma 事件函数
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -49,7 +59,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-     _labelSize = [self.reminder.desc sizeWithFont:[UIFont systemFontOfSize:15.0] constrainedToSize:CGSizeMake(100, MAXFLOAT) lineBreakMode: NSLineBreakByTruncatingTail];
+    [self computeFontSize];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
 }
@@ -64,10 +74,10 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (SettingModeModify == self.settingMode) {
-        if (nil == self.reminder.triggerTime) {
+        //if (nil == self.reminder.triggerTime) {
             return 3;
-        }
-        return 2;
+        //}
+        //return 2;
     }else if (self.settingMode == SettingModeShow) {
         return 2;
     }
@@ -105,7 +115,7 @@
         cell.textLabel.numberOfLines = 0;
         cell.textLabel.textColor = RGBColor(56, 57, 61);
         cell.textLabel.font = [UIFont systemFontOfSize:17.0];
-        cell.textLabel.text = self.reminder.desc;
+        cell.textLabel.text = self.desc;
         if (_labelSize.height > 44) {
             [cell.textLabel sizeToFit];
         }
@@ -135,7 +145,8 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0 && indexPath.row == 0) {
         TextEditorViewController * editor = [[TextEditorViewController alloc] initWithStyle:UITableViewStyleGrouped];
-        editor.text = self.reminder.desc;
+        editor.text = self.desc;
+        editor.parentController = self;
         [self.navigationController pushViewController:editor animated:YES];
     }
     else if (indexPath.section == 0 && indexPath.row == 1) {

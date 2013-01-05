@@ -34,6 +34,7 @@ typedef enum {
 
 - (void)updateReceiverCell;
 - (void)updateTriggerTimeCell;
+- (void)updateDescCell;
 - (void)initData;
 - (NSString *)stringTriggerTime;
 - (void)clickTrigeerTimeRow:(NSIndexPath *)indexPath;

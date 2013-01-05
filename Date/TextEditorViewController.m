@@ -9,6 +9,8 @@
 #import "TextEditorViewController.h"
 #import "AppDelegate.h"
 
+#define LeftMarge 5
+
 @interface TextEditorViewController ()
 
 @end
@@ -18,6 +20,7 @@
 @synthesize tvCell = _tvCell;
 @synthesize textField = _textField;
 @synthesize text = _text;
+@synthesize parentController = _parentController;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -49,7 +52,8 @@
 
 #pragma mark - UITextFieldDelegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    // TODO save self.textField.text to reminder's description.
+    _parentController.desc = textField.text;
+    [_parentController updateDescCell];
     [self back];
     return YES;
 }
@@ -72,7 +76,7 @@
     UITableViewCell * cell = self.tvCell;
     _tvCell = nil;
     
-    self.textField.frame = cell.frame;
+    self.textField.frame = CGRectMake(LeftMarge, cell.frame.origin.y, cell.frame.size.width - LeftMarge, cell.frame.size.height);
     [self.textField becomeFirstResponder];
     self.textField.text = self.text;
     self.textField.delegate = self;

@@ -66,7 +66,9 @@
         dateString = @"昨天";
     }else {
         if (YES == show) {
-              dateString = date;
+            [formatter setDateFormat:@"MM-dd"];
+            date = [formatter stringFromDate:startDate];
+            dateString = date;
         }else {
             dateString = @"日期";
         }
@@ -97,6 +99,7 @@
     }else if (diffDay == -1) {
         dateString = @"昨天";
     }else {
+        [formatter setDateFormat:@"MM-dd"];
         dateString = [formatter stringFromDate:date];
     }
     return dateString;

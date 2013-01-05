@@ -9,6 +9,7 @@
 #import "AudioReminderSettingViewController.h"
 #import "ReminderSettingAudioCell.h"
 #import "CustomChoiceViewController.h"
+#import "TextEditorViewController.h"
 
 @interface AudioReminderSettingViewController () {
      NSArray * _tags;
@@ -30,12 +31,19 @@
 }
 
 - (void)updateReceiverCell {
+     [super updateReceiverCell];
     NSIndexPath * indexPath = [NSIndexPath indexPathForRow:3 inSection:0];
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (void)updateTriggerTimeCell {
+     [super updateTriggerTimeCell];
     NSIndexPath * indexPath = [NSIndexPath indexPathForRow:2 inSection:0];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+- (void)updateDescCell {
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
@@ -51,6 +59,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if (SettingModeNew == self.settingMode) {
+        self.desc = [_tags objectAtIndex:0];
+    }
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
 }
@@ -65,9 +76,9 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (SettingModeModify == self.settingMode) {
-        if (nil == self.reminder.triggerTime) {
+        //if (nil == self.reminder.triggerTime) {
             return 4;
-        }
+        //}
         return 3;
     }else if (self.settingMode == SettingModeShow) {
         return 3;
@@ -120,10 +131,7 @@
         }
         if (indexPath.row == 1) {
             cell.textLabel.text = @"标签";
-            if (nil == self.reminder.desc) {
-                self.reminder.desc = [_tags objectAtIndex:0];
-            }
-            cell.detailTextLabel.text =  self.reminder.desc;
+            cell.detailTextLabel.text =  self.desc;
         }else if (indexPath.row == 2) {
             cell.textLabel.text = @"提醒时间";
             cell.detailTextLabel.text = [self stringTriggerTime];
@@ -154,16 +162,19 @@
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0 && indexPath.row == 1) {
-        CustomChoiceViewController * choiceViewController = [[CustomChoiceViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        /*CustomChoiceViewController * choiceViewController = [[CustomChoiceViewController alloc] initWithStyle:UITableViewStyleGrouped];
         choiceViewController.choices = _tags;
-        if (self.reminder.desc != nil) {
-            choiceViewController.currentChoices = [NSArray arrayWithObject:self.reminder.desc];
+        if (self.desc != nil) {
+            choiceViewController.currentChoices = [NSArray arrayWithObject:self.desc];
         }
         choiceViewController.delegate = self;
         choiceViewController.type = SingleChoice;
-        choiceViewController.autoDisappear = YES;
+        choiceViewController.autoDisappear = YES;*/
+        TextEditorViewController * editor = [[TextEditorViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        editor.text = self.desc;
+        editor.parentController = self;
         
-        [self.navigationController pushViewController:choiceViewController animated:YES];
+        [self.navigationController pushViewController:editor animated:YES];
     }else if (indexPath.row == 2) {
         [self clickTrigeerTimeRow:indexPath];
     }else if (indexPath.row == 3 && YES == self.isLogin) {

@@ -18,6 +18,8 @@ static SoundManager * sSoundManager;
     NSDate * _startRecordDate;
     NSInteger _recordLength;
     NSTimer * _timer;
+    NSThread * _thread;
+    NSCondition * _lock;
 }
 
 @end
@@ -29,6 +31,7 @@ static SoundManager * sSoundManager;
 @synthesize viewWarning = _viewWarning;
 @synthesize currentRecordTime = _currentRecordTime;
 @synthesize parentView = _parentView;
+@synthesize indicatorView = _indicatorView;
 
 + (SoundManager *)defaultSoundManager {
     if (nil == sSoundManager) {
@@ -45,6 +48,7 @@ static SoundManager * sSoundManager;
             _view.frame = CGRectMake(50.0, 100.0, _view.frame.size.width,_view.frame.size.height);
             _viewWarning.frame = CGRectMake(50.0, 150.0, _viewWarning.frame.size.width,_viewWarning.frame.size.height);
             [self initImageView];
+            _lock = [[NSCondition alloc] init];
         }
     }
     
@@ -82,7 +86,6 @@ static SoundManager * sSoundManager;
 - (void)showWaringView {
     if (nil != _parentView) {
         [_parentView addSubview:_viewWarning];
-        
         [self performSelector:@selector(closeWaringView) withObject:self afterDelay:0.5];
     }
 }
@@ -93,8 +96,8 @@ static SoundManager * sSoundManager;
 
 - (void)showRecordingView {
     if (nil != _parentView) {
-        [_imageView startAnimating];
         [_parentView addSubview:_view];
+        [_indicatorView startAnimating];
     }
 }
 
@@ -132,44 +135,53 @@ static SoundManager * sSoundManager;
     }
 }
 
-#pragma 类成员函数
-- (BOOL)startRecord {
-    BOOL result = NO;
-    DocumentManager * manager = [DocumentManager defaultManager];
-    _recordFileURL =  [manager pathForRandomSoundWithSuffix:@"m4a"];
-    
-    AVAudioSession * session = [AVAudioSession sharedInstance];
+- (void)recorder {
+    [_lock lock];
     NSError * error;
-    
+    AVAudioSession * session = [AVAudioSession sharedInstance];
+        
     [session setCategory:AVAudioSessionCategoryRecord error:&error];
     if(session == nil) {
         NSLog(@"Error creating session: %@", [error description]);
-        return NO;
+        [_lock unlock];
+        return ;
     }else {
         [session setActive:YES error:nil];
     }
-    
     if (nil != _recorder) {
         [_recorder deleteRecording];
     }
-        
     _recorder = [[AVAudioRecorder alloc] initWithURL:_recordFileURL settings:[self setting] error:&error];
-    _startRecordDate = [NSDate date];
-    [self showRecordingView];
     if(_recorder) {
-        result = YES;
-        [self startTimer];
         [_recorder record];
-    }
-    else {
+        _startRecordDate = [NSDate date];
+        [self startTimer];
+    }else {
         NSLog(@"recorder: %@ %d %@", [error domain], [error code], [[error userInfo] description]);
     }
+        
+    [_indicatorView stopAnimating];
+    [_imageView startAnimating];
+    
+    [_lock unlock];
+}
+
+#pragma 类成员函数
+- (BOOL)startRecord {
+    BOOL result = YES;
+    DocumentManager * manager = [DocumentManager defaultManager];
+    _recordFileURL =  [manager pathForRandomSoundWithSuffix:@"m4a"];
+    [self showRecordingView];
+    _thread = [[NSThread alloc] initWithTarget:self selector:@selector(recorder) object:nil];
+    [_thread start];
     
     return result;
 }
 
 - (BOOL)stopRecord {
     BOOL result = NO;
+    [_lock lock];
+        
     [self stopTimer];
     if (nil != _recorder) {
         NSDate * endRecordDate = [NSDate date];
@@ -188,6 +200,8 @@ static SoundManager * sSoundManager;
     }else {
         result = YES;
     }
+
+    [_lock unlock];
     
     return result;
 }

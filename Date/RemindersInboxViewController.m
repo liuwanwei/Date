@@ -111,7 +111,7 @@
 }
 
 - (void)handleRemindersUpdateMessage:(NSNotification *)note {
-    [self initData];
+    [self initDataWithAnimation:NO];
     [[AppDelegate delegate] checkRemindersExpired];
 }
 
@@ -226,19 +226,22 @@
 }
 
 - (void)clearGroup {
-    NSArray * keys = [self.group allKeys];
     NSArray * reminders;
-    NSInteger index = 0;
-    for (NSString * key in keys) {
-        reminders = [self.group objectForKey:key];
-        if ([reminders count] == 0) {
-            [self.group removeObjectForKey:key];
-            [self.keys removeObjectAtIndex:index];
-            return;
+    NSInteger index;
+    NSInteger count;
+    NSString * key;
+    if (nil != self.keys) {
+        count = [self.keys count];
+        for (index = 0; index < count; index ++) {
+            key = [self.keys objectAtIndex:index];
+            reminders = [self.group objectForKey:key];
+            if ([reminders count] == 0) {
+                [self.group removeObjectForKey:key];
+                [self.keys removeObjectAtIndex:index];
+                return;
+            }
         }
-        index++;
     }
-    
 }
 
 #pragma 类成员函数
@@ -247,7 +250,7 @@
     [self presentViewController:_loginViewController animated:YES completion:nil];
 }
 
-- (void)initData {
+- (void)initDataWithAnimation:(BOOL)animation {
     [_toolbar setHidden:NO];
     self.tableView.frame =CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width,self.view.frame.size.height - _toolbar.frame.size.height);
     if (DataTypeToday == _dataType) {
@@ -278,6 +281,14 @@
         [formatter setDateFormat:@"yy-MM-dd"];
         NSMutableArray * reminders;
         NSString * key;
+        NSIndexSet * indexSet;
+        NSInteger indexSection  = 0;
+        if (YES == animation) {
+            [self.tableView reloadData];
+            [self.tableView beginUpdates];
+        }
+        
+      
         for (Reminder * reminder in self.reminders) {
             if (nil == reminder.triggerTime) {
                 key = [formatter stringFromDate:reminder.createTime];
@@ -291,6 +302,13 @@
                     [reminders addObject:reminder];
                     [self.group setValue:reminders forKey:key];
                     [self.keys addObject:key];
+                    
+                    if (YES == animation) {
+                        indexSet = [[NSIndexSet alloc] initWithIndex:indexSection];
+                        [self.tableView insertSections:indexSet withRowAnimation:UITableViewRowAnimationTop];
+                     }
+                    
+                    indexSection ++;
                 }else {
                     [reminders addObject:reminder];
                 }
@@ -299,6 +317,10 @@
             }
         }
         _friends = [[BilateralFriendManager defaultManager] friendsWithId:_usersIdArray];
+        if (YES == animation) {
+            [self.tableView endUpdates];
+        }
+        
     }else {
         [self.tableView setHidden:YES];
         self.group = nil;
@@ -308,7 +330,10 @@
     _usersIdArray = nil;
     _usersIdDictionary = nil;
     self.reminders = nil;
-    [self.tableView reloadData];
+    if (animation == NO) {
+        [self.tableView reloadData];
+    }
+
 }
 
 #pragma 事件函数
@@ -329,9 +354,8 @@
     _txtDesc.delegate = self;
     [self initMenuView];
     [self setInfoMode:InfoModeAudio];
-    [self initData];
+    [self initDataWithAnimation:YES];
     [self registerHandleMessage];
-    _toolbarView.frame = CGRectMake(0, 0, _toolbarView.frame.size.width, _toolbarView.frame.size.height);
     if (YES == [_sinaWeiboManager.sinaWeibo isAuthValid]) {
         [_sinaWeiboManager requestBilateralFriends];
         [[BilateralFriendManager defaultManager] checkRegisteredFriendsRequest];
@@ -439,7 +463,8 @@
             [self.reminderManager deleteReminderRequest:reminder];
             [[MBProgressManager defaultManager] showHUD:@"删除中"];
         }
-        
+    }else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationTop];
     }
 }
 
@@ -479,6 +504,7 @@
 #pragma mark - ReminderManager delegate
 - (void)deleteReminderSuccess:(Reminder *)reminder {
     [self.reminderManager deleteReminder:reminder];
+    
     [[self.group objectForKey:[self.keys objectAtIndex:_curDeleteIndexPath.section]] removeObjectAtIndex:_curDeleteIndexPath.row];
     [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:_curDeleteIndexPath] withRowAnimation:UITableViewRowAnimationFade];
     
