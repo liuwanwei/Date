@@ -288,7 +288,7 @@ static SoundManager * sSoundManager;
     _alarmPlayer.numberOfLoops  = 0;
     _alarmPlayer.volume = 1.0;
     _alarmPlayer.delegate = self;
-    if  (_player == nil)
+    if  (_alarmPlayer == nil)
         NSLog(@"播放失败");
     else
         [_alarmPlayer prepareToPlay];
@@ -339,9 +339,14 @@ static SoundManager * sSoundManager;
     if (_alarmPlayer == player) {
         _alarmPlayer = nil;
         if (self.delegate != nil) {
-            if ([self.delegate respondsToSelector:@selector(alarmPlayerDidFinishPlaying)]) {
-                [self.delegate performSelector:@selector(alarmPlayerDidFinishPlaying) withObject:nil];
-            }
+            
+            //if ([self.delegate respondsToSelector:@selector(alarmPlayerDidFinishPlaying)]) {
+            //    [self.delegate performSelector:@selector(alarmPlayerDidFinishPlaying) withObject:nil];
+            //}
+            
+            NSNotification * notification = nil;
+            notification = [NSNotification notificationWithName:kAlarmPlayFinishedMessage object:nil];
+            [[NSNotificationCenter defaultCenter] postNotification:notification];
         }
     }else {
         _player = nil;

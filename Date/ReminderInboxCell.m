@@ -45,10 +45,6 @@
         
         [super setReminder:reminer];
         
-        //NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-        //[formatter setDateFormat:@"HH:mm"];
-        //self.labelSendDate.text = [formatter stringFromDate:reminer.createTime];
-        
         if (nil != reminer.isRead && YES == [reminer.isRead integerValue]) {
             [_btnMark setHidden:YES];
             [self.btnFinished setHidden:NO];
@@ -58,7 +54,6 @@
         }
         
         if (ReminderStateFinish == [reminer.state integerValue]) {
-            //[self.btnFinished setBackgroundImage:[UIImage imageNamed:@"checkboxCompleted"] forState:UIControlStateNormal];
             [self.btnFinished setHidden:YES];
         }else{
             [self.btnFinished setHidden:NO];

@@ -26,7 +26,7 @@
 
 - (void)dismiss {
     [self.navigationController dismissViewControllerAnimated:YES completion:^ {
-        [[AppDelegate delegate] checkRemindersExpired];
+        //[[AppDelegate delegate] checkRemindersExpired];
     }];
 }
 
@@ -109,7 +109,7 @@
         if (YES == [self.userManager isOneself:[self.reminder.userID stringValue]] ||
             nil == self.reminder.triggerTime) {
             [[AppDelegate delegate].homeViewController initDataWithAnimation:NO];
-            [[AppDelegate delegate] checkRemindersExpired];
+            //[[AppDelegate delegate] checkRemindersExpired];
         }
         
     }];

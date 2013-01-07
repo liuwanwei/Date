@@ -20,6 +20,7 @@
 #import "AppDelegate.h"
 #import "ShowTextReminderViewController.h"
 #import "ShowAudioReminderViewController.h"
+#import "GlobalFunction.h"
 
 @interface RemindersInboxViewController () {
     NSMutableArray * _usersIdArray;
@@ -81,7 +82,7 @@
 
 - (void)handleRemindersUpdateMessage:(NSNotification *)note {
     [self initDataWithAnimation:NO];
-    [[AppDelegate delegate] checkRemindersExpired];
+    //[[AppDelegate delegate] checkRemindersExpired];
 }
 
 //Code from Brett Schumann
@@ -175,6 +176,7 @@
 - (void)showAudioReminderSettingController {
     NewAudioReminderViewController * controller = [[NewAudioReminderViewController alloc] initWithNibName:@"AudioReminderSettingViewController" bundle:nil];
     UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
+    [[GlobalFunction defaultGlobalFunction] setNavigationBarBackgroundImage:nav.navigationBar];
     [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
 
@@ -182,6 +184,7 @@
     NewTextReminderViewController * controller = [[NewTextReminderViewController alloc] initWithNibName:@"TextReminderSettingViewController" bundle:nil];
     controller.desc = _context;
     UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
+    [[GlobalFunction defaultGlobalFunction] setNavigationBarBackgroundImage:nav.navigationBar];
     [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
 
@@ -318,6 +321,7 @@
     [self setInfoMode:InfoModeAudio];
     [self initDataWithAnimation:YES];
     [self registerHandleMessage];
+    [_toolbar setBackgroundImage:[UIImage imageNamed:@"toolBarBg"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
     if (YES == [_sinaWeiboManager.sinaWeibo isAuthValid]) {
         [_sinaWeiboManager requestBilateralFriends];
         [[BilateralFriendManager defaultManager] checkRegisteredFriendsRequest];

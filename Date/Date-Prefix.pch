@@ -23,6 +23,7 @@
 #define kOnlineFriendsMessage @"OnlineFriendsMessage"
 #define kGetAddressMessage @"GetAddressMessage"
 #define kRemindesUpdateMessage @"RemindesUpdateMessage"
+#define kAlarmPlayFinishedMessage @"AlarmPlayFinishedMessage"
 
 #define kSinaWeiboUserIDKey @"id"
 #define kSinaWeiboScreenNameKey @"screen_name"

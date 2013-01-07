@@ -174,29 +174,22 @@
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BOOL update = NO;
     if (nil != _settingViewController) {
         [[AppDelegate delegate].navController popToRootViewControllerAnimated:NO];
         _settingViewController = nil;
     }
     
-    if (0 == indexPath.row) {
-        update = YES;
-        [AppDelegate delegate].homeViewController.dataType = DataTypeCollectingBox;
-    }else if (4 == indexPath.row){
+    if (4 == indexPath.row){
         if (_settingViewController == nil) {
             _settingViewController = [[SettingViewController alloc] initWithNibName:@"SettingViewController" bundle:nil];
         }
         [[AppDelegate delegate].navController pushViewController:_settingViewController animated:NO];
     }else {
-        update = YES;
-        uint row = indexPath.row - 1;
-        uint types[] = {DataTypeToday, DataTypeRecent, DataTypeHistory};
-        [AppDelegate delegate].homeViewController.dataType = types[row];
-    }
-    
-    if (YES == update) {
-        [[AppDelegate delegate].homeViewController initDataWithAnimation:YES];
+        uint types[] = {DataTypeCollectingBox,DataTypeToday, DataTypeRecent, DataTypeHistory};
+        if ([AppDelegate delegate].homeViewController.dataType != types[indexPath.row]) {
+            [AppDelegate delegate].homeViewController.dataType = types[indexPath.row];
+            [[AppDelegate delegate].homeViewController initDataWithAnimation:YES];
+        }
     }
     
     [[AppDelegate delegate].homeViewController restoreViewLocation];

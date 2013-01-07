@@ -186,7 +186,7 @@
 }
 
 - (void)alarmPlayerDidFinishPlaying {
-     [[AppDelegate delegate] checkRemindersExpired];
+     //[[AppDelegate delegate] checkRemindersExpired];
 }
 
 #pragma mark - FriendReminderCell Delegate
