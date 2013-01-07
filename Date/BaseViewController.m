@@ -56,6 +56,22 @@
                      }];
 }
 
+- (void)initMenuButton {
+    UIButton * leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
+    UIBarButtonItem * item;
+
+    UIImage *bgUpImg = [[UIImage imageNamed:@"leftMenuUp"]
+                      resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 10)];
+    
+    UIImage *bgDownImg = [[UIImage imageNamed:@"leftMenuDown"]
+                        resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 10)];
+    [leftButton setBackgroundImage:bgUpImg forState:UIControlStateNormal];
+    [leftButton setBackgroundImage:bgDownImg forState:UIControlStateHighlighted];
+    [leftButton addTarget:self action:@selector(leftBarBtnTapped:) forControlEvents:UIControlEventTouchUpInside];
+    item = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    
+    self.navigationItem.leftBarButtonItem = item;
+}
 #pragma 事件函数
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

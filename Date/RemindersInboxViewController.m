@@ -12,9 +12,14 @@
 #import "LoginViewController.h"
 #import "OnlineFriendsRemindViewController.h"
 #import "AudioReminderSettingViewController.h"
-#import "TextReminderSettingViewController.h"
+#import "ModifyTextReminderViewController.h"
+#import "NewTextReminderViewController.h"
+#import "NewAudioReminderViewController.h"
+#import "ModifyAudioReminderViewController.h"
 #import "MBProgressManager.h"
 #import "AppDelegate.h"
+#import "ShowTextReminderViewController.h"
+#import "ShowAudioReminderViewController.h"
 
 @interface RemindersInboxViewController () {
     NSMutableArray * _usersIdArray;
@@ -41,19 +46,6 @@
 @synthesize toolbarView = _toolbarView;
 
 #pragma 私有函数
-- (void)initMenuView {
-    UIButton * leftButton;
-    UIBarButtonItem * item;
-    
-    leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
-    [leftButton setImage:[UIImage imageNamed:@"leftMenuUp"] forState:UIControlStateNormal];
-    [leftButton setImage:[UIImage imageNamed:@"leftMenuDown"] forState:UIControlStateHighlighted];
-    [leftButton addTarget:self action:@selector(leftBarBtnTapped:) forControlEvents:UIControlEventTouchUpInside];
-    item = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-    
-    self.navigationItem.leftBarButtonItem = item;
-}
-
 - (void)addUserId:(NSNumber *)userId {
     if (nil == [_usersIdDictionary objectForKey:[userId stringValue]]) {
         [_usersIdDictionary setValue:userId forKey:[userId stringValue]];
@@ -62,9 +54,6 @@
 }
 
 - (void)registerHandleMessage {
-    
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOAuthSuccessMessage:) name:kUserOAuthSuccessMessage object:nil];
-    
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOnlineFriendsMessage:) name:kOnlineFriendsMessage object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -77,24 +66,8 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(handleRegisterUserMessage:) name:kGoRegisterUserMessage
-                                               object:nil];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleRemindersUpdateMessage:) name:kRemindesUpdateMessage
                                                object:nil];
-}
-
-/*
- 处理 LoginController 授权成功后，发送的消息
- */
-- (void)handleOAuthSuccessMessage:(NSNotification *)note {
-    if (nil != _loginViewController) {
-        [_loginViewController dismissViewControllerAnimated:YES completion:nil];
-    }
-    
-    [_sinaWeiboManager requestUserInfo];
-    [_sinaWeiboManager requestBilateralFriends];
 }
 
 /*
@@ -104,10 +77,6 @@
     OnlineFriendsRemindViewController * viewController = [[OnlineFriendsRemindViewController alloc] initWithNibName:@"OnlineFriendsRemindViewController" bundle:nil];
     UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:viewController];
     [self presentViewController:nav animated:YES completion:nil];
-}
-
-- (void)handleRegisterUserMessage:(NSNotification *)note {
-    [_userManager registerUserRequest];
 }
 
 - (void)handleRemindersUpdateMessage:(NSNotification *)note {
@@ -204,15 +173,13 @@
 }
 
 - (void)showAudioReminderSettingController {
-    AudioReminderSettingViewController * controller = [[AudioReminderSettingViewController alloc] initWithNibName:@"AudioReminderSettingViewController" bundle:nil];
-    controller.settingMode = SettingModeNew;
+    NewAudioReminderViewController * controller = [[NewAudioReminderViewController alloc] initWithNibName:@"AudioReminderSettingViewController" bundle:nil];
     UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
     [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)showTextReminderSettingController {
-    TextReminderSettingViewController * controller = [[TextReminderSettingViewController alloc] initWithNibName:@"TextReminderSettingViewController" bundle:nil];
-    controller.settingMode = SettingModeNew;
+    NewTextReminderViewController * controller = [[NewTextReminderViewController alloc] initWithNibName:@"TextReminderSettingViewController" bundle:nil];
     controller.desc = _context;
     UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
     [self.navigationController presentViewController:nav animated:YES completion:nil];
@@ -245,11 +212,6 @@
 }
 
 #pragma 类成员函数
-- (void)showLoginViewController {
-    _loginViewController = [[LoginViewController alloc] initWithNibName:@"LoginViewController" bundle:nil];
-    [self presentViewController:_loginViewController animated:YES completion:nil];
-}
-
 - (void)initDataWithAnimation:(BOOL)animation {
     [_toolbar setHidden:NO];
     self.tableView.frame =CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width,self.view.frame.size.height - _toolbar.frame.size.height);
@@ -352,7 +314,7 @@
     [super viewDidLoad];
     _dataType = DataTypeToday;
     _txtDesc.delegate = self;
-    [self initMenuView];
+    [self initMenuButton];
     [self setInfoMode:InfoModeAudio];
     [self initDataWithAnimation:YES];
     [self registerHandleMessage];
@@ -476,12 +438,29 @@
     
     ReminderBaseCell * cell = (ReminderBaseCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     NSString * audioPath = cell.reminder.audioUrl;
+    
     ReminderSettingViewController * controller;
-    if (nil == audioPath || [audioPath isEqualToString:@""]) {
-        controller = [[TextReminderSettingViewController alloc] initWithNibName:@"TextReminderSettingViewController" bundle:nil];
+    if (DataTypeHistory == _dataType || (NO == [_userManager isOneself:[cell.reminder.userID stringValue]] && nil != cell.reminder.triggerTime)) {
+        if (nil == audioPath || [audioPath isEqualToString:@""]) {
+            controller = [[ShowTextReminderViewController alloc] initWithNibName:@"TextReminderSettingViewController" bundle:nil];
+        }else {
+            controller = [[ShowAudioReminderViewController alloc] initWithNibName:@"AudioReminderSettingViewController" bundle:nil];
+        }
+        
     }else {
-        controller = [[AudioReminderSettingViewController alloc] initWithNibName:@"AudioReminderSettingViewController" bundle:nil];
+        if (nil == audioPath || [audioPath isEqualToString:@""]) {
+            controller = [[ModifyTextReminderViewController alloc] initWithNibName:@"TextReminderSettingViewController" bundle:nil];
+        }else {
+            controller = [[ModifyAudioReminderViewController alloc] initWithNibName:@"AudioReminderSettingViewController" bundle:nil];
+        }
+        
+        if (DataTypeCollectingBox == _dataType) {
+            controller.isInbox = YES;
+        }else {
+            controller.isInbox = NO;
+        }
     }
+    
     
     controller.reminder = cell.reminder;
     if (YES == [_userManager isOneself:[cell.reminder.userID stringValue]]) {
@@ -490,12 +469,6 @@
         controller.receiver = cell.bilateralFriend.nickname;
     }else {
         controller.receiver = [cell.reminder.userID stringValue];
-    }
-    
-    if (DataTypeHistory == _dataType || (NO == [_userManager isOneself:[cell.reminder.userID stringValue]] && nil != controller.reminder.triggerTime)) {
-        controller.settingMode = SettingModeShow;
-    }else {
-        controller.settingMode = SettingModeModify;
     }
     
     [self.navigationController pushViewController:controller animated:YES];

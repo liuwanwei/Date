@@ -10,33 +10,36 @@
 #import "CustomChoiceViewController.h"
 #import "RemindersBaseViewController.h"
 #import "ReminderSettingTimeCell.h"
+#import "MBProgressManager.h"
+#import "RemindersInboxViewController.h"
 
-typedef enum {
-    SettingModeNew = 0,
-    SettingModeModify = 1,
-    SettingModeShow
-}SettingMode;
-
-@interface ReminderSettingViewController : RemindersBaseViewController <UITableViewDelegate, UITableViewDataSource, ChoiceViewDelegate,ReminderSettingTimeCellDelegate,ReminderManagerDelegate>
+@interface ReminderSettingViewController : RemindersBaseViewController <UITableViewDelegate, UITableViewDataSource,ReminderManagerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView * tableView;
 @property (weak, nonatomic) IBOutlet UIPickerView * pickerView;
 
 @property (strong, nonatomic) Reminder * reminder;
 @property (strong, nonatomic) NSString * desc;
-@property (nonatomic) SettingMode settingMode;
 @property (weak, nonatomic) NSString * receiver;
 @property (strong, nonatomic) NSNumber * receiverId;
 @property (strong, nonatomic) NSDate * triggerTime;
 @property (nonatomic) BOOL isLogin;
 @property (nonatomic) BOOL isAuthValid;
-@property (nonatomic) BOOL isSpread;
+@property (weak, nonatomic) UserManager * userManager;
+@property (nonatomic) BOOL isInbox;
 
 - (void)updateReceiverCell;
 - (void)updateTriggerTimeCell;
 - (void)updateDescCell;
-- (void)initData;
 - (NSString *)stringTriggerTime;
 - (void)clickTrigeerTimeRow:(NSIndexPath *)indexPath;
 - (void)clickSendRow;
+- (void)initTableFooterView;
+- (void)updateTableFooterViewInCreateState;
+- (void)updateTableFooterViewInModifyInboxState;
+- (void)updateTableFooterViewInModifyAlarmState;
+- (void)hiddenTableFooterView;
+- (void)showTabeleFooterView;
+- (void)createReminder;
+- (void)modifyReminder;
 @end

@@ -20,24 +20,19 @@
 @implementation TextReminderSettingViewController
 
 #pragma 私有函数
-- (void)initData {
-    [super initData];
+- (void)computeFontSize {
+    _labelSize = [self.desc sizeWithFont:[UIFont systemFontOfSize:15.0] constrainedToSize:CGSizeMake(100, MAXFLOAT) lineBreakMode: NSLineBreakByTruncatingTail];
 }
 
-- (void)updateReceiverCell {
-    [super updateReceiverCell];
-    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:2 inSection:0];
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-}
-
+#pragma 类成员函数
 - (void)updateTriggerTimeCell {
-    [super updateTriggerTimeCell];
     NSIndexPath * indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
-- (void)computeFontSize {
-    _labelSize = [self.desc sizeWithFont:[UIFont systemFontOfSize:15.0] constrainedToSize:CGSizeMake(100, MAXFLOAT) lineBreakMode: NSLineBreakByTruncatingTail];
+- (void)updateReceiverCell {
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:2 inSection:0];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (void)updateDescCell {
@@ -60,8 +55,6 @@
 {
     [super viewDidLoad];
     [self computeFontSize];
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -73,16 +66,7 @@
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (SettingModeModify == self.settingMode) {
-        //if (nil == self.reminder.triggerTime) {
-            return 3;
-        //}
-        //return 2;
-    }else if (self.settingMode == SettingModeShow) {
-        return 2;
-    }
-    
-    return 3;
+    return 2;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -103,21 +87,18 @@
     cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
-    }
-    
-    if (self.settingMode != SettingModeShow) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }else {
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
     if (0 == indexPath.row) {
-        cell.textLabel.numberOfLines = 0;
-        cell.textLabel.textColor = RGBColor(56, 57, 61);
-        cell.textLabel.font = [UIFont systemFontOfSize:17.0];
-        cell.textLabel.text = self.desc;
+        cell.textLabel.text = @"内容";
+        cell.detailTextLabel.numberOfLines = 0;
+        cell.detailTextLabel.text = self.desc;
         if (_labelSize.height > 44) {
-            [cell.textLabel sizeToFit];
+            [cell.detailTextLabel sizeToFit];
+            cell.detailTextLabel.textAlignment = NSTextAlignmentLeft;
+        }else {
+            cell.detailTextLabel.textAlignment = NSTextAlignmentRight;
         }
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }else {
@@ -135,26 +116,5 @@
     }    
     return cell;
 }
-
-#pragma mark - Table view delegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (self.settingMode == SettingModeShow) {
-        return;
-    }
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.section == 0 && indexPath.row == 0) {
-        TextEditorViewController * editor = [[TextEditorViewController alloc] initWithStyle:UITableViewStyleGrouped];
-        editor.text = self.desc;
-        editor.parentController = self;
-        [self.navigationController pushViewController:editor animated:YES];
-    }
-    else if (indexPath.section == 0 && indexPath.row == 1) {
-        [self clickTrigeerTimeRow:indexPath];
-    }else if (indexPath.row == 2 && YES == self.isLogin) {
-        [self clickSendRow];
-    }
-}
-
 
 @end

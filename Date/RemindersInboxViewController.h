@@ -29,6 +29,5 @@ typedef enum {
 - (IBAction)changeInfoMode:(UIButton *)sender;
 
 - (void)initDataWithAnimation:(BOOL)animation;
-- (void)showLoginViewController;
 
 @end

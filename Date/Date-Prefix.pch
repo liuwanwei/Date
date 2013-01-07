@@ -22,7 +22,6 @@
 #define kUserOAuthSuccessMessage @"UserOAuthSuccessMessage"
 #define kOnlineFriendsMessage @"OnlineFriendsMessage"
 #define kGetAddressMessage @"GetAddressMessage"
-#define kGoRegisterUserMessage @"GoRegisterUserMessage"
 #define kRemindesUpdateMessage @"RemindesUpdateMessage"
 
 #define kSinaWeiboUserIDKey @"id"

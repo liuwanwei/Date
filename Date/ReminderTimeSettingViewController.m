@@ -87,7 +87,6 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [_datePick removeTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
-    [_parentContoller updateTriggerTimeCell];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -100,11 +99,13 @@
 
 - (IBAction)clickClear:(id)sender {
     _parentContoller.triggerTime = nil;
+    [_parentContoller updateTriggerTimeCell];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)clickSet:(id)sender {
     _parentContoller.triggerTime = _datePick.date;
+    [_parentContoller updateTriggerTimeCell];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

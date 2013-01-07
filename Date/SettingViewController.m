@@ -25,19 +25,6 @@
 @synthesize tableView = _tableView;
 
 #pragma 私有函数
-- (void)initMenuView {
-    UIButton * leftButton;
-    UIBarButtonItem * item;
-    
-    leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
-    [leftButton setImage:[UIImage imageNamed:@"leftMenuUp"] forState:UIControlStateNormal];
-    [leftButton setImage:[UIImage imageNamed:@"leftMenuDown"] forState:UIControlStateHighlighted];
-    [leftButton addTarget:self action:@selector(leftBarBtnTapped:) forControlEvents:UIControlEventTouchUpInside];
-    item = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-    
-    self.navigationItem.leftBarButtonItem = item;
-}
-
 - (void)initData {
     _appBadgeMode = [[ReminderManager defaultManager] appBadgeMode];
     _appBadgeSignRows = [[NSArray alloc] initWithObjects:@"不显示",@"今日提醒",@"近期提醒", nil];
@@ -88,7 +75,7 @@
     [super viewDidLoad];
     self.tableView.rowHeight = 44;
     self.title = @"设置";
-    [self initMenuView];
+    [self initMenuButton];
     [self initData];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
