@@ -225,7 +225,7 @@
         self.title = @"所有提醒";
         self.reminders = [self.reminderManager recentUnFinishedReminders];
     }else if (DataTypeCollectingBox == _dataType) {
-        self.title = @"收集箱";
+        self.title = LocalString(@"DraftBox");
         self.reminders = [self.reminderManager collectingBoxReminders];
     }else if (DataTypeHistory == _dataType) {
         self.title = @"已完成";

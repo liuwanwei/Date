@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define LocalString(key)  NSLocalizedString(key, nil)
+
 @interface GlobalFunction : NSObject
 
 + (GlobalFunction *)defaultGlobalFunction;

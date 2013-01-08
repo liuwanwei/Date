@@ -17,10 +17,6 @@
 #import "ReminderTimeSettingViewController.h"
 #import "LMLibrary.h"
 
-#define kPromptInbox @"信息将加入本地收集箱中"
-#define kPromptAlarm @"信息将加入本地提醒中"
-#define kPromptSend @"提醒将发送给您的朋友"
-
 @interface ReminderSettingViewController () {
     UIDatePicker * _datePicker;
     UILabel * _labelPrompt;
@@ -106,7 +102,7 @@
     _btnSave.layer.frame = CGRectMake(10, 30, 300, 44);
     _btnSave.titleLabel.font = [UIFont systemFontOfSize:18.0];
     [_btnSave setBackgroundImage:[UIImage imageNamed:@"buttonBg"] forState:UIControlStateNormal];
-    [_btnSave setTitle:@"加入收集" forState:UIControlStateNormal];
+    [_btnSave setTitle:LocalString(@"SettingPromptOfDraftBoxWithButton") forState:UIControlStateNormal];
     [_btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_btnSave addTarget:self action:@selector(saveReminder) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:_btnSave];
@@ -117,26 +113,26 @@
 - (void)updateTableFooterViewInCreateState{
     if (nil != _triggerTime) {
         if (YES == [[UserManager defaultManager] isOneself:[_receiverId stringValue]] ) {
-            _labelPrompt.text = kPromptAlarm;
-            [_btnSave setTitle:@"加入提醒" forState:UIControlStateNormal];
+            _labelPrompt.text = LocalString(@"SettingPromptOfAlarm");
+            [_btnSave setTitle:LocalString(@"SettingPromptOfAlarmWithButton") forState:UIControlStateNormal];
         }else {
-            _labelPrompt.text = kPromptSend;
-            [_btnSave setTitle:@"发送提醒" forState:UIControlStateNormal];
+            _labelPrompt.text = LocalString(@"SettingPromptOfSend");
+            [_btnSave setTitle:LocalString(@"SettingPromptOfSendWithButton") forState:UIControlStateNormal];
         }
     }else {
-        _labelPrompt.text = kPromptInbox;
-        [_btnSave setTitle:@"加入收集" forState:UIControlStateNormal];
+        _labelPrompt.text = LocalString(@"SettingPromptOfDraftBox");
+        [_btnSave setTitle:LocalString(@"SettingPromptOfDraftBoxWithButton") forState:UIControlStateNormal];
     }
 }
 
 - (void)updateTableFooterViewInModifyInboxState {
     if (nil != _triggerTime) {
         if (YES == [[UserManager defaultManager] isOneself:[_receiverId stringValue]] ) {
-            _labelPrompt.text = kPromptAlarm;
-            [_btnSave setTitle:@"加入提醒" forState:UIControlStateNormal];
+            _labelPrompt.text = LocalString(@"SettingPromptOfAlarm");;
+            [_btnSave setTitle:LocalString(@"SettingPromptOfAlarmWithButton") forState:UIControlStateNormal];
         }else {
-            _labelPrompt.text = kPromptSend;
-            [_btnSave setTitle:@"发送提醒" forState:UIControlStateNormal];
+            _labelPrompt.text = LocalString(@"SettingPromptOfSend");
+            [_btnSave setTitle:LocalString(@"SettingPromptOfSendWithButton") forState:UIControlStateNormal];
         }
     }else {
         _labelPrompt.text = @"";
@@ -150,12 +146,12 @@
             _labelPrompt.text = @"";
             [_btnSave setTitle:@"保存" forState:UIControlStateNormal];
         }else {
-            _labelPrompt.text = kPromptSend;
-            [_btnSave setTitle:@"发送提醒" forState:UIControlStateNormal];
+            _labelPrompt.text = LocalString(@"SettingPromptOfSend");
+            [_btnSave setTitle:LocalString(@"SettingPromptOfSendWithButton") forState:UIControlStateNormal];
         }
     }else {
-        _labelPrompt.text = kPromptInbox;
-        [_btnSave setTitle:@"加入收集" forState:UIControlStateNormal];
+        _labelPrompt.text = LocalString(@"SettingPromptOfDraftBox");
+        [_btnSave setTitle:LocalString(@"SettingPromptOfDraftBoxWithButton") forState:UIControlStateNormal];
     }
 }
 

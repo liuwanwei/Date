@@ -14,6 +14,13 @@
 #import "SinaWeiboManager.h"
 #import "LoginViewController.h"
 #import "LMLibrary.h"
+#import "GlobalFunction.h"
+
+typedef enum {
+    MenuCellTagTitle = 1,
+    MenuCellTagStart,
+    MenuCellTagSeparate
+}MenuCellTag;
 
 @interface MenuViewController () {
     ServerMode _serverMode;
@@ -28,6 +35,7 @@
 @implementation MenuViewController
 @synthesize btnServerMode = _btnServerMode;
 @synthesize tableView = _tableView;
+@synthesize menuCell = _menuCell;
 
 #pragma 私有函数
 - (BOOL)isLogin {
@@ -131,42 +139,36 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString * CellIdentifier = @"Cell";
+    static NSString * CellIdentifier = @"MenuCell";
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    UIImageView * separatorView;
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
+        [[NSBundle mainBundle] loadNibNamed:@"MenuCell" owner:self options:nil];
+        cell = self.menuCell;
+        _menuCell = nil;
         cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
         cell.selectedBackgroundView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"sidebar_cellhighlighted_bg"]];
-        cell.textLabel.highlightedTextColor = RGBColor(56,57,61);
-        cell.textLabel.textColor = RGBColor(56,57,61);
-        cell.textLabel.font =  [UIFont systemFontOfSize:17.0];
-        
-        separatorView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sidebar_separate_light"]];
-        separatorView.frame = CGRectMake(2, 49, 210, 1);
-        [cell addSubview:separatorView];
     }
 
-    UIImage * image = nil;
+    UILabel * labelTitle = (UILabel *)[cell viewWithTag:MenuCellTagTitle];
+    UIImageView * imageStart = (UIImageView *)[cell viewWithTag:MenuCellTagStart];
+    UIImageView * imageSeparate = (UIImageView *)[cell viewWithTag:MenuCellTagSeparate];
+    [imageStart setHidden:YES];
     if (indexPath.row == 0) {
-        cell.textLabel.text = @"收集箱";
-        //[separatorView setHidden:YES];
-    }//else if (indexPath.section == 1){
-        //cell.textLabel.text = [_rows objectAtIndex:indexPath.row];
-//        image = [UIImage imageNamed:[_rowImages objectAtIndex:indexPath.row]];
+        labelTitle.text = LocalString(@"DraftBox");
+    }
     else if (indexPath.row == 4){
-        //if (indexPath.row == 0) {
-            cell.textLabel.text = @"设置";
-            [separatorView setHidden:YES];
-        //}
+        labelTitle.text = @"设置";
+        [imageSeparate setHidden:YES];
     }else {
         if (indexPath.row != 3) {
-            [separatorView setHidden:YES];
+            [imageSeparate setHidden:YES];
+            if (indexPath.row == 1) {
+                [imageStart setHidden:NO];
+            }
         }
-        cell.textLabel.text = [_rows objectAtIndex:indexPath.row - 1];
+        labelTitle.text = [_rows objectAtIndex:indexPath.row - 1];
     }
     
-    cell.imageView.image = image;
     return cell;
 }
 

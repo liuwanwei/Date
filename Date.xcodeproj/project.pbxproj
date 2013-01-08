@@ -89,6 +89,8 @@
 		3C3513C2169C028600F78FB9 /* leftMenuStar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3513BF169C028600F78FB9 /* leftMenuStar.png */; };
 		3C3513C3169C028600F78FB9 /* leftMenuStar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3513C0169C028600F78FB9 /* leftMenuStar@2x.png */; };
 		3C3513C4169C028600F78FB9 /* navigationBarBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3513C1169C028600F78FB9 /* navigationBarBg.png */; };
+		3C3513C6169C037E00F78FB9 /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C3513C5169C037E00F78FB9 /* MenuCell.xib */; };
+		3C3513CD169C0FB600F78FB9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C3513CF169C0FB600F78FB9 /* Localizable.strings */; };
 		3C3BE6AC168975440052A8C5 /* sidebar_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3BE6AB168975440052A8C5 /* sidebar_background@2x.png */; };
 		3C3BE6B4168A83F40052A8C5 /* ReminderTimeSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3BE6B2168A83F40052A8C5 /* ReminderTimeSettingViewController.m */; };
 		3C3BE6B5168A83F40052A8C5 /* ReminderTimeSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C3BE6B3168A83F40052A8C5 /* ReminderTimeSettingViewController.xib */; };
@@ -377,6 +379,9 @@
 		3C3513BF169C028600F78FB9 /* leftMenuStar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leftMenuStar.png; path = Resources/images/leftMenuStar.png; sourceTree = "<group>"; };
 		3C3513C0169C028600F78FB9 /* leftMenuStar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "leftMenuStar@2x.png"; path = "Resources/images/leftMenuStar@2x.png"; sourceTree = "<group>"; };
 		3C3513C1169C028600F78FB9 /* navigationBarBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = navigationBarBg.png; path = Resources/images/navigationBarBg.png; sourceTree = "<group>"; };
+		3C3513C5169C037E00F78FB9 /* MenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
+		3C3513CE169C0FB600F78FB9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		3C3513D0169C103F00F78FB9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C3BE6AB168975440052A8C5 /* sidebar_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sidebar_background@2x.png"; path = "Resources/images/sidebar_background@2x.png"; sourceTree = "<group>"; };
 		3C3BE6B1168A83F40052A8C5 /* ReminderTimeSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderTimeSettingViewController.h; sourceTree = "<group>"; };
 		3C3BE6B2168A83F40052A8C5 /* ReminderTimeSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderTimeSettingViewController.m; sourceTree = "<group>"; };
@@ -615,6 +620,7 @@
 		3C13E871164DF4DB006424A2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				3C3513CF169C0FB600F78FB9 /* Localizable.strings */,
 				3C13E872164DF4DB006424A2 /* Date-Info.plist */,
 				3C13E873164DF4DB006424A2 /* InfoPlist.strings */,
 				3C13E878164DF4DB006424A2 /* Date-Prefix.pch */,
@@ -677,6 +683,7 @@
 				3C1CB07F167AFAD60025BDB2 /* ReminderSettingTimeCell.xib */,
 				3C93849D1688539000DA6412 /* ReminderSettingDescCell.xib */,
 				E6A3981016918DE0004A460F /* TextEditorCell.xib */,
+				3C3513C5169C037E00F78FB9 /* MenuCell.xib */,
 			);
 			name = cell;
 			sourceTree = "<group>";
@@ -1216,6 +1223,8 @@
 				3C3513C2169C028600F78FB9 /* leftMenuStar.png in Resources */,
 				3C3513C3169C028600F78FB9 /* leftMenuStar@2x.png in Resources */,
 				3C3513C4169C028600F78FB9 /* navigationBarBg.png in Resources */,
+				3C3513C6169C037E00F78FB9 /* MenuCell.xib in Resources */,
+				3C3513CD169C0FB600F78FB9 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1360,6 +1369,15 @@
 				3C3BE6D9168C0CC30052A8C5 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		3C3513CF169C0FB600F78FB9 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3C3513CE169C0FB600F78FB9 /* zh-Hans */,
+				3C3513D0169C103F00F78FB9 /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
