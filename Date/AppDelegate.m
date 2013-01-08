@@ -56,11 +56,12 @@
     UIAlertView * alertView;
     BilateralFriend * friend = [[BilateralFriendManager defaultManager] bilateralFriendWithUserID:reminder.userID];
     NSString * nickname;
-    if (nil == friend) {
-        nickname = [NSString stringWithFormat:@"%@:",[reminder.userID stringValue]];
+    NSString * userId = [reminder.userID stringValue];
+    if ([userId isEqualToString:[UserManager defaultManager].oneselfId]) {
+        nickname = @"";
     }else {
-        if ([[friend.userID stringValue] isEqualToString:[UserManager defaultManager].oneselfId]) {
-            nickname = @"";
+        if (nil == friend) {
+            nickname = [NSString stringWithFormat:@"%@:",[reminder.userID stringValue]];
         }else {
             nickname = [NSString stringWithFormat:@":%@",friend.nickname];
         }

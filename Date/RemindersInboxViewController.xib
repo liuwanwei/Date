@@ -141,7 +141,6 @@
 										<string key="NSFrame">{{38, 1}, {240, 30}}</string>
 										<reference key="NSSuperview" ref="490004793"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
 										<bool key="IBUIClipsSubviews">YES</bool>
@@ -178,7 +177,7 @@
 									<object class="IBUIButton" id="158775931">
 										<reference key="NSNextResponder" ref="490004793"/>
 										<int key="NSvFlags">292</int>
-										<string key="NSFrame">{{38, -2}, {253, 38}}</string>
+										<string key="NSFrame">{{38, 0}, {253, 32}}</string>
 										<reference key="NSSuperview" ref="490004793"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="123851357"/>
@@ -187,7 +186,6 @@
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 										<int key="IBUIContentHorizontalAlignment">0</int>
 										<int key="IBUIContentVerticalAlignment">0</int>
-										<string key="IBUINormalTitle">按住 说话</string>
 										<reference key="IBUIHighlightedTitleColor" ref="834203949"/>
 										<object class="NSColor" key="IBUINormalTitleColor">
 											<int key="NSColorSpace">1</int>
@@ -196,7 +194,7 @@
 										<reference key="IBUINormalTitleShadowColor" ref="496544208"/>
 										<object class="NSCustomResource" key="IBUINormalBackgroundImage">
 											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">feeddetail_toolbar_audio_btn.png</string>
+											<string key="NSResourceName">recordBtn.png</string>
 										</object>
 										<object class="IBUIFontDescription" key="IBUIFontDescription">
 											<int key="type">2</int>
@@ -379,8 +377,8 @@
 						<reference key="object" ref="191373211"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="969550597"/>
-							<reference ref="179121906"/>
 							<reference ref="563351894"/>
+							<reference ref="179121906"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -420,9 +418,9 @@
 						<int key="objectID">53</int>
 						<reference key="object" ref="490004793"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="158775931"/>
 							<reference ref="123851357"/>
 							<reference ref="166551394"/>
+							<reference ref="158775931"/>
 						</array>
 						<reference key="parent" ref="118230074"/>
 					</object>
@@ -468,7 +466,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">74</int>
+			<int key="maxID">78</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -573,8 +571,8 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">feeddetail_toolbar_audio_btn.png</string>
-			<string key="NS.object.0">{253, 38}</string>
+			<string key="NS.key.0">recordBtn.png</string>
+			<string key="NS.object.0">{253, 32}</string>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">1926</string>
 	</data>

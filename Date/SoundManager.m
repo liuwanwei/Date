@@ -16,10 +16,11 @@ static SoundManager * sSoundManager;
     AVAudioPlayer * _player;
     AVAudioPlayer * _alarmPlayer;
     NSDate * _startRecordDate;
-    NSInteger _recordLength;
+    float _recordLength;
     NSTimer * _timer;
     NSThread * _thread;
     NSCondition * _lock;
+    NSArray  * _images;
 }
 
 @end
@@ -69,7 +70,7 @@ static SoundManager * sSoundManager;
 
 - (void)initImageView {
     if (nil != _imageView) {
-        self.imageView.animationImages = [NSArray arrayWithObjects:
+        /*self.imageView.animationImages = [NSArray arrayWithObjects:
                                           [UIImage imageNamed:@"recordingSignal001"],
                                           [UIImage imageNamed:@"recordingSignal002"],
                                           [UIImage imageNamed:@"recordingSignal003"],
@@ -79,7 +80,37 @@ static SoundManager * sSoundManager;
                                           [UIImage imageNamed:@"recordingSignal007"],
                                           [UIImage imageNamed:@"recordingSignal008"],
                                           nil];
-        self.imageView.animationDuration = 1;
+        self.imageView.animationDuration = 1;*/
+        _images =  [NSArray arrayWithObjects:
+                    [UIImage imageNamed:@"recordingSignal001"],
+                    [UIImage imageNamed:@"recordingSignal002"],
+                    [UIImage imageNamed:@"recordingSignal003"],
+                    [UIImage imageNamed:@"recordingSignal004"],
+                    [UIImage imageNamed:@"recordingSignal005"],
+                    [UIImage imageNamed:@"recordingSignal006"],
+                    [UIImage imageNamed:@"recordingSignal007"],
+                    [UIImage imageNamed:@"recordingSignal008"],
+                    nil];
+    }
+}
+
+- (void)setImageWithAudioLevel:(NSInteger)level {
+    if (level >= 35) {
+        [_imageView setImage:[_images objectAtIndex:7]];
+    }else if (level >= 30 && level < 35){
+        [_imageView setImage:[_images objectAtIndex:6]];
+    }if (level >= 25 && level < 30){
+        [_imageView setImage:[_images objectAtIndex:5]];
+    }if (level >= 20 && level < 25){
+        [_imageView setImage:[_images objectAtIndex:4]];
+    }if (level >= 15 && level < 20){
+        [_imageView setImage:[_images objectAtIndex:3]];
+    }if (level >= 10 && level < 15){
+        [_imageView setImage:[_images objectAtIndex:2]];
+    }if (level >= 5 && level < 10){
+        [_imageView setImage:[_images objectAtIndex:1]];
+    }if (level < 5){
+        [_imageView setImage:[_images objectAtIndex:0]];
     }
 }
 
@@ -102,7 +133,7 @@ static SoundManager * sSoundManager;
 }
 
 - (void)closeRecordingView {
-    [_imageView stopAnimating];
+    //[_imageView stopAnimating];
     [_view removeFromSuperview];
 }
 
@@ -114,22 +145,28 @@ static SoundManager * sSoundManager;
 }
 
 - (void)checkRecordLength {
-    if (_recordLength > 30) {
-        [self stopTimer];
-        [self stopRecord];
+    if (NO == _thread.isExecuting) {
+        if (_recordLength > 30) {
+            [self stopTimer];
+            [self stopRecord];
+        }
+        [_recorder updateMeters];
+        double avgPowerForChannel = pow(10, (0.05 * [_recorder averagePowerForChannel:0]));
+        [self setImageWithAudioLevel:avgPowerForChannel * 100];
+        _recordLength = _recordLength + 0.03;
     }
     
-    _recordLength++;
 }
 
 - (void)startTimer {
     [self stopTimer];
     _recordLength = 0;
-    _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(checkRecordLength) userInfo:nil repeats:YES];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:0.03 target:self selector:@selector(checkRecordLength) userInfo:nil repeats:YES];
 }
 
 - (void)stopTimer {
     if (nil != _timer) {
+        NSLog(@"stopTimer");
         [_timer invalidate];
         _timer = nil;
     }
@@ -153,16 +190,15 @@ static SoundManager * sSoundManager;
     }
     _recorder = [[AVAudioRecorder alloc] initWithURL:_recordFileURL settings:[self setting] error:&error];
     if(_recorder) {
+        [_recorder setMeteringEnabled:YES];
         [_recorder record];
         _startRecordDate = [NSDate date];
-        [self startTimer];
     }else {
         NSLog(@"recorder: %@ %d %@", [error domain], [error code], [[error userInfo] description]);
     }
         
     [_indicatorView stopAnimating];
-    [_imageView startAnimating];
-    
+    //[_imageView startAnimating];
     [_lock unlock];
 }
 
@@ -174,7 +210,7 @@ static SoundManager * sSoundManager;
     [self showRecordingView];
     _thread = [[NSThread alloc] initWithTarget:self selector:@selector(recorder) object:nil];
     [_thread start];
-    
+    [self startTimer];
     return result;
 }
 
