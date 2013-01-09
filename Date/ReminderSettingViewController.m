@@ -37,6 +37,7 @@
 @synthesize receiverId = _receiverId;
 @synthesize userManager = _userManager;
 @synthesize isInbox = _isInbox;
+@synthesize labelSize = _labelSize;
 
 #pragma 私有函数
 - (void)removeHUD {
@@ -188,6 +189,10 @@
     }
 }
 
+- (void)computeFontSize {
+    _labelSize = [self.desc sizeWithFont:[UIFont systemFontOfSize:15.0] constrainedToSize:CGSizeMake(150, MAXFLOAT) lineBreakMode: NSLineBreakByTruncatingTail];
+}
+
 #pragma 事件函数
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -207,6 +212,7 @@
     _userManager = [UserManager defaultManager];
     _isLogin = [[SinaWeiboManager defaultManager].sinaWeibo isLoggedIn];
     _isAuthValid = [[SinaWeiboManager defaultManager].sinaWeibo isAuthValid];
+    [self computeFontSize];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -223,7 +229,18 @@
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        if (_labelSize.height > 44) {
+            return _labelSize.height;
+        }
+    }
+    
+    return 44.0f;
 }
 
 #pragma mark - ReminderManager delegate

@@ -155,6 +155,7 @@
 		3CB275151654EAF400FAEF1F /* OnlineFriendsRemindViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CB275131654EAF400FAEF1F /* OnlineFriendsRemindViewController.xib */; };
 		3CB275181654EC1C00FAEF1F /* ZhiHuNavigationBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CB275161654EC1C00FAEF1F /* ZhiHuNavigationBar.png */; };
 		3CB275191654EC1C00FAEF1F /* ZhiHuNavigationBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CB275171654EC1C00FAEF1F /* ZhiHuNavigationBar@2x.png */; };
+		3CBF31E8169D086D00827F1D /* TextEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CBF31E7169D086D00827F1D /* TextEditorViewController.xib */; };
 		3CC9CE23165F730100E7E9D9 /* FriendRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9CE21165F730100E7E9D9 /* FriendRemindersViewController.m */; };
 		3CC9CE24165F730100E7E9D9 /* FriendRemindersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CC9CE22165F730100E7E9D9 /* FriendRemindersViewController.xib */; };
 		3CC9CE28165F76D000E7E9D9 /* FriendReminderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9CE27165F76D000E7E9D9 /* FriendReminderCell.m */; };
@@ -459,6 +460,7 @@
 		3CB275131654EAF400FAEF1F /* OnlineFriendsRemindViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OnlineFriendsRemindViewController.xib; sourceTree = "<group>"; };
 		3CB275161654EC1C00FAEF1F /* ZhiHuNavigationBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ZhiHuNavigationBar.png; path = Resources/images/ZhiHuNavigationBar.png; sourceTree = "<group>"; };
 		3CB275171654EC1C00FAEF1F /* ZhiHuNavigationBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ZhiHuNavigationBar@2x.png"; path = "Resources/images/ZhiHuNavigationBar@2x.png"; sourceTree = "<group>"; };
+		3CBF31E7169D086D00827F1D /* TextEditorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextEditorViewController.xib; sourceTree = "<group>"; };
 		3CC9CE20165F730100E7E9D9 /* FriendRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendRemindersViewController.h; sourceTree = "<group>"; };
 		3CC9CE21165F730100E7E9D9 /* FriendRemindersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendRemindersViewController.m; sourceTree = "<group>"; };
 		3CC9CE22165F730100E7E9D9 /* FriendRemindersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendRemindersViewController.xib; sourceTree = "<group>"; };
@@ -853,6 +855,7 @@
 				3CE0ABFD16507EBE004B785A /* HomeViewController.xib */,
 				3CE0AC0016507EBE004B785A /* LoginViewController.xib */,
 				3C044CAE1659DC5D000551C5 /* RecordView.xib */,
+				3CBF31E7169D086D00827F1D /* TextEditorViewController.xib */,
 			);
 			name = xib;
 			sourceTree = "<group>";
@@ -1225,6 +1228,7 @@
 				3C3513C4169C028600F78FB9 /* navigationBarBg.png in Resources */,
 				3C3513C6169C037E00F78FB9 /* MenuCell.xib in Resources */,
 				3C3513CD169C0FB600F78FB9 /* Localizable.strings in Resources */,
+				3CBF31E8169D086D00827F1D /* TextEditorViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

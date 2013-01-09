@@ -36,9 +36,9 @@
 
 - (void)viewDidLoad
 {
+    [self initData];
     [super viewDidLoad];
     [self hiddenTableFooterView];
-    [self initData];
     self.title = @"查看详情";
     [[AppDelegate delegate] initNavleftBarItemWithController:self withAction:@selector(back)];
 }

@@ -78,29 +78,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return 4;
-}
-
-#pragma mark - Table view delegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.section == 0 && indexPath.row == 1) {
-        TextEditorViewController * editor = [[TextEditorViewController alloc] initWithStyle:UITableViewStyleGrouped];
-        editor.text = self.desc;
-        editor.parentController = self;
-        
-        [self.navigationController pushViewController:editor animated:YES];
-    }else if (indexPath.row == 2) {
-        [self clickTrigeerTimeRow:indexPath];
-    }else if (indexPath.row == 3 && YES == self.isLogin) {
-        [self clickSendRow];
-    }
-}
-
 #pragma mark - ReminderManager delegate
 - (void)newReminderSuccess:(NSString *)reminderId {
     [super newReminderSuccess:reminderId];

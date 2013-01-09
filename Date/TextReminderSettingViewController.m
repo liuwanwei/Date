@@ -12,26 +12,21 @@
 #import "LMLibrary.h"
 
 @interface TextReminderSettingViewController () {
-    CGSize _labelSize;
+    
 }
 
 @end
 
 @implementation TextReminderSettingViewController
 
-#pragma 私有函数
-- (void)computeFontSize {
-    _labelSize = [self.desc sizeWithFont:[UIFont systemFontOfSize:15.0] constrainedToSize:CGSizeMake(100, MAXFLOAT) lineBreakMode: NSLineBreakByTruncatingTail];
-}
-
 #pragma 类成员函数
 - (void)updateTriggerTimeCell {
-    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (void)updateReceiverCell {
-    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:2 inSection:0];
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:1 inSection:1];
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
@@ -54,7 +49,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self computeFontSize];
+    //[self computeFontSize];
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,18 +61,12 @@
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row == 0) {
-        if (_labelSize.height > 44) {
-            return _labelSize.height;
-        }
+    if (0 == section) {
+        return 1;
+    }else {
+        return 2;
     }
-    
-    return 44.0f;
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -90,22 +79,17 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     
-    if (0 == indexPath.row) {
-        cell.textLabel.text = @"内容";
-        cell.detailTextLabel.numberOfLines = 0;
-        cell.detailTextLabel.text = self.desc;
-        if (_labelSize.height > 44) {
-            [cell.detailTextLabel sizeToFit];
-            cell.detailTextLabel.textAlignment = NSTextAlignmentLeft;
-        }else {
-            cell.detailTextLabel.textAlignment = NSTextAlignmentRight;
-        }
+    if (indexPath.section == 0) {
+        cell.textLabel.text = self.desc;
+        cell.textLabel.numberOfLines = 0;
+        cell.textLabel.textColor = RGBColor(50, 79, 133);
+        cell.textLabel.font = [UIFont systemFontOfSize:15];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }else {
-        if (indexPath.row == 1) {
+        if (indexPath.row == 0) {
             cell.textLabel.text = @"提醒时间";
             cell.detailTextLabel.text = [self stringTriggerTime];
-        }else if (indexPath.row == 2){
+        }else if (indexPath.row == 1){
             cell.textLabel.text = @"发送给";
             cell.detailTextLabel.text = self.receiver;
             if (NO == self.isLogin) {
@@ -115,6 +99,23 @@
 
     }    
     return cell;
+}
+
+#pragma mark - Table view delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        TextEditorViewController * editor = [[TextEditorViewController alloc] initWithNibName:@"TextEditorViewController" bundle:nil];
+        editor.text = self.desc;
+        editor.parentController = self;
+        [self.navigationController pushViewController:editor animated:YES];
+    }
+    else if (indexPath.section == 1 && indexPath.row == 0) {
+        [self clickTrigeerTimeRow:indexPath];
+    }else if (indexPath.section == 1 && indexPath.row == 1 && YES == self.isLogin) {
+        [self clickSendRow];
+    }
 }
 
 @end

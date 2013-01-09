@@ -27,6 +27,7 @@
 @property (nonatomic) BOOL isAuthValid;
 @property (weak, nonatomic) UserManager * userManager;
 @property (nonatomic) BOOL isInbox;
+@property (nonatomic) CGSize labelSize;
 
 - (void)updateReceiverCell;
 - (void)updateTriggerTimeCell;
@@ -42,4 +43,5 @@
 - (void)showTabeleFooterView;
 - (void)createReminder;
 - (void)modifyReminder;
+- (void)computeFontSize;
 @end
