@@ -112,6 +112,8 @@
 		3C417A15168D57F6003FFB1C /* smallButtonBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C417A13168D57F6003FFB1C /* smallButtonBg@2x.png */; };
 		3C417A18168D8BE7003FFB1C /* recordingBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C417A16168D8BE7003FFB1C /* recordingBg.png */; };
 		3C417A19168D8BE7003FFB1C /* recordingBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C417A17168D8BE7003FFB1C /* recordingBg@2x.png */; };
+		3C719E1F169E493B00EECCB0 /* SettingAppBadgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C719E1D169E493B00EECCB0 /* SettingAppBadgeViewController.m */; };
+		3C719E20169E493B00EECCB0 /* SettingAppBadgeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C719E1E169E493B00EECCB0 /* SettingAppBadgeViewController.xib */; };
 		3C838F2F1675D59100A85826 /* ReminderDetailAudioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C838F2E1675D59100A85826 /* ReminderDetailAudioCell.m */; };
 		3C838F311675D5B700A85826 /* ReminderDetailAudioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C838F301675D5B700A85826 /* ReminderDetailAudioCell.xib */; };
 		3C9384931688292D00DA6412 /* TextReminderSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9384911688292D00DA6412 /* TextReminderSettingViewController.m */; };
@@ -409,6 +411,9 @@
 		3C417A13168D57F6003FFB1C /* smallButtonBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "smallButtonBg@2x.png"; path = "Resources/images/smallButtonBg@2x.png"; sourceTree = "<group>"; };
 		3C417A16168D8BE7003FFB1C /* recordingBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = recordingBg.png; path = Resources/images/recordingBg.png; sourceTree = "<group>"; };
 		3C417A17168D8BE7003FFB1C /* recordingBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "recordingBg@2x.png"; path = "Resources/images/recordingBg@2x.png"; sourceTree = "<group>"; };
+		3C719E1C169E493B00EECCB0 /* SettingAppBadgeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingAppBadgeViewController.h; sourceTree = "<group>"; };
+		3C719E1D169E493B00EECCB0 /* SettingAppBadgeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingAppBadgeViewController.m; sourceTree = "<group>"; };
+		3C719E1E169E493B00EECCB0 /* SettingAppBadgeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingAppBadgeViewController.xib; sourceTree = "<group>"; };
 		3C838F2D1675D59100A85826 /* ReminderDetailAudioCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderDetailAudioCell.h; sourceTree = "<group>"; };
 		3C838F2E1675D59100A85826 /* ReminderDetailAudioCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderDetailAudioCell.m; sourceTree = "<group>"; };
 		3C838F301675D5B700A85826 /* ReminderDetailAudioCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderDetailAudioCell.xib; sourceTree = "<group>"; };
@@ -838,6 +843,7 @@
 		3CE0ABFA16507EA9004B785A /* xib */ = {
 			isa = PBXGroup;
 			children = (
+				3C719E1E169E493B00EECCB0 /* SettingAppBadgeViewController.xib */,
 				3C3BE6B3168A83F40052A8C5 /* ReminderTimeSettingViewController.xib */,
 				3C9384A51689328C00DA6412 /* TextReminderDetailViewController.xib */,
 				3C93849716882BD800DA6412 /* AudioReminderSettingViewController.xib */,
@@ -903,8 +909,6 @@
 				3CF017DF165B500E00F83814 /* ReminderSendingViewController.m */,
 				3CC9CE20165F730100E7E9D9 /* FriendRemindersViewController.h */,
 				3CC9CE21165F730100E7E9D9 /* FriendRemindersViewController.m */,
-				3C1CB0771679BA760025BDB2 /* SettingViewController.h */,
-				3C1CB0781679BA760025BDB2 /* SettingViewController.m */,
 				3C3156631681AE4000C1E42C /* BaseViewController.h */,
 				3C3156641681AE4000C1E42C /* BaseViewController.m */,
 				3C3499361670509C001012B6 /* ReminderDetailViewController.h */,
@@ -917,6 +921,10 @@
 				E6A3980B16914121004A460F /* CustomChoiceViewController.m */,
 				E6A3980D16918D4F004A460F /* TextEditorViewController.h */,
 				E6A3980E16918D4F004A460F /* TextEditorViewController.m */,
+				3C1CB0771679BA760025BDB2 /* SettingViewController.h */,
+				3C1CB0781679BA760025BDB2 /* SettingViewController.m */,
+				3C719E1C169E493B00EECCB0 /* SettingAppBadgeViewController.h */,
+				3C719E1D169E493B00EECCB0 /* SettingAppBadgeViewController.m */,
 			);
 			name = Class;
 			sourceTree = "<group>";
@@ -1229,6 +1237,7 @@
 				3C3513C6169C037E00F78FB9 /* MenuCell.xib in Resources */,
 				3C3513CD169C0FB600F78FB9 /* Localizable.strings in Resources */,
 				3CBF31E8169D086D00827F1D /* TextEditorViewController.xib in Resources */,
+				3C719E20169E493B00EECCB0 /* SettingAppBadgeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1310,6 +1319,7 @@
 				3C19885416982E15002311E5 /* ShowTextReminderViewController.m in Sources */,
 				3C19885716983092002311E5 /* ShowAudioReminderViewController.m in Sources */,
 				3C351395169ACA1F00F78FB9 /* GlobalFunction.m in Sources */,
+				3C719E1F169E493B00EECCB0 /* SettingAppBadgeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
