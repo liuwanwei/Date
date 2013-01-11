@@ -214,7 +214,6 @@
 - (void)setIndexPath:(NSIndexPath *)indexPath{
     
     _indexPath = indexPath;
-    return;
     NSInteger index = indexPath.row;
     
     NSInteger type = 0;

@@ -103,7 +103,7 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     if (0 == indexPath.section) {
-        cell.imageView.image = [UIImage imageNamed:@"sinaWeiboLogo"];
+        //cell.imageView.image = [UIImage imageNamed:@"sinaWeiboLogo"];
         cell.textLabel.text = LocalString(@"SettingAppSNSBinding");
         if (YES == [self isLogin]) {
             if (NO == [self isAuthValid]) {
@@ -115,7 +115,7 @@
             cell.detailTextLabel.text = @"未绑定";
         }
     }else if (1 == indexPath.section) {
-        cell.imageView.image = [UIImage imageNamed:@"notification"];
+        //cell.imageView.image = [UIImage imageNamed:@"notification"];
         cell.textLabel.text = @"应用程序标记";
         cell.detailTextLabel.text = [_appBadgeSignRows objectAtIndex:_appBadgeMode];
     }

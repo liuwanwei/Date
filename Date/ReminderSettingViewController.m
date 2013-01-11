@@ -91,7 +91,7 @@
 }
 
 - (void)initTableFooterView {
-    UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 300, 100)];
+    UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 300, 150)];
     
     _labelPrompt = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 300, 20)];
     _labelPrompt.backgroundColor = [UIColor clearColor];
@@ -100,7 +100,7 @@
     [view addSubview:_labelPrompt];
     
     _btnSave = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    _btnSave.layer.frame = CGRectMake(10, 30, 300, 44);
+    _btnSave.layer.frame = CGRectMake(10, 30, 300, 50);
     _btnSave.titleLabel.font = [UIFont systemFontOfSize:18.0];
     [_btnSave setBackgroundImage:[UIImage imageNamed:@"buttonBg"] forState:UIControlStateNormal];
     [_btnSave setTitle:LocalString(@"SettingPromptOfDraftBoxWithButton") forState:UIControlStateNormal];

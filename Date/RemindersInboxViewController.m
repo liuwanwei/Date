@@ -34,6 +34,10 @@
     NSIndexPath * _curDeleteIndexPath;
     InfoMode _infoMode;
     NSString * _context;
+    
+    EGORefreshTableHeaderView * _refreshHeaderView;
+    BOOL _reloading;
+    UIControl * _overView;
 }
 
 @end
@@ -45,6 +49,7 @@
 @synthesize txtDesc = _txtDesc;
 @synthesize toolbar = _toolbar;
 @synthesize toolbarView = _toolbarView;
+@synthesize labelPrompt = _labelPrompt;
 
 #pragma 私有函数
 - (void)addUserId:(NSNumber *)userId {
@@ -99,6 +104,18 @@
     // get a rect for the textView frame
     CGRect containerFrame = _toolbar.frame;
     containerFrame.origin.y = self.view.bounds.size.height - (keyboardBounds.size.height + containerFrame.size.height);
+    
+    if (nil == _overView) {
+        _overView = [[UIControl alloc] init];
+        _overView.backgroundColor = [UIColor whiteColor];
+        _overView.frame = CGRectMake(0, 44, 320, containerFrame.origin.y);
+        [_overView addTarget:self action:@selector(restoreView) forControlEvents:UIControlEventTouchDown];
+        //[[[UIApplication sharedApplication] keyWindow] addSubview:_overView];
+        [self.view addSubview:_overView];
+    }else {
+        _overView.frame = CGRectMake(0, 44, 320, containerFrame.origin.y + 1);
+    }
+
     // animations settings
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
@@ -106,17 +123,14 @@
     [UIView setAnimationCurve:[curve intValue]];
     
     // set views with new info
-    _toolbar.frame = containerFrame;
+   
+     _overView.backgroundColor = [UIColor blackColor];
+    _overView.alpha = 0.7;
     
     // commit animations
     [UIView commitAnimations];
+    _toolbar.frame = CGRectMake(_toolbar.frame.origin.x,0,_toolbar.frame.size.width,_toolbar.frame.size.height);
     
-    UIControl *overView = [[UIControl alloc] init];
-    overView.tag = 10086;
-    overView.backgroundColor = [UIColor clearColor];
-    overView.frame = CGRectMake(0, 44, 320, containerFrame.origin.y);
-    [overView addTarget:self action:@selector(restoreView) forControlEvents:UIControlEventTouchDown];
-    [[[UIApplication sharedApplication] keyWindow] addSubview:overView];
 }
 
 -(void) keyboardWillHide:(NSNotification *)note{
@@ -135,16 +149,17 @@
     [UIView setAnimationCurve:[curve intValue]];
     
     // set views with new info
-    _toolbar.frame = containerFrame;
     
     // commit animations
     [UIView commitAnimations];
+    _toolbar.frame = containerFrame;
 }
 
 - (void)restoreView {
-    UIControl *overView = (UIControl *)[[[UIApplication sharedApplication] keyWindow] viewWithTag:10086];
-    [overView removeFromSuperview];
+    [_overView removeFromSuperview];
+    _overView = nil;
     [_txtDesc resignFirstResponder];
+     [self setInfoMode:InfoModeAudio];
 }
 
 - (void)registerForRemoteNotification {
@@ -168,7 +183,7 @@
         [_btnMode setImage:[UIImage imageNamed:@"feeddetail_toolbar_phone_btn"] forState:UIControlStateNormal];
         [_btnMode setImage:[UIImage imageNamed:@"feeddetail_toolbar_phone_btn_h"] forState:UIControlStateHighlighted];
         [_txtDesc becomeFirstResponder];
-        _txtDesc.frame = CGRectMake(_txtDesc.frame.origin.x, _txtDesc.frame.origin.y, 240, _txtDesc.frame.size.height);
+        _txtDesc.frame = CGRectMake(_txtDesc.frame.origin.x, _txtDesc.frame.origin.y, 281, _txtDesc.frame.size.height);
         _btnAudio.frame = CGRectMake(_btnAudio.frame.origin.x, _btnAudio.frame.origin.y, 0, _btnAudio.frame.size.height);
     }
 }
@@ -191,7 +206,9 @@
 - (void)reloadData {
     [self.tableView reloadData];
     if ([self.group count] == 0) {
-        [self.tableView setHidden:YES];
+        [_labelPrompt setHidden:NO];
+    }else {
+        [_labelPrompt setHidden:YES];
     }
 }
 
@@ -212,6 +229,20 @@
             }
         }
     }
+}
+
+- (void)initView {
+    if (_refreshHeaderView == nil) {
+        EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.tableView.bounds.size.height, self.view.frame.size.width, self.tableView.bounds.size.height)];
+        view.delegate = self;
+        [self.tableView addSubview:view];
+        _refreshHeaderView = view;
+    }
+    
+    //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"toolBarBg"]];
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    [_toolbar setBackgroundImage:[UIImage imageNamed:@"toolBarBg"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
 }
 
 #pragma 类成员函数
@@ -235,7 +266,7 @@
     }
     
     if (nil != self.reminders) {
-        [self.tableView setHidden:NO];
+        [_labelPrompt setHidden:YES];
         self.group = nil;
         self.keys = nil;
         self.group = [[NSMutableDictionary alloc] initWithCapacity:0];
@@ -287,9 +318,9 @@
         }
         
     }else {
-        [self.tableView setHidden:YES];
         self.group = nil;
         self.keys = nil;
+        [_labelPrompt setHidden:NO];
     }
     
     _usersIdArray = nil;
@@ -321,7 +352,7 @@
     [self setInfoMode:InfoModeAudio];
     [self initDataWithAnimation:YES];
     [self registerHandleMessage];
-    [_toolbar setBackgroundImage:[UIImage imageNamed:@"toolBarBg"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+    [self initView];
     if (YES == [_sinaWeiboManager.sinaWeibo isAuthValid]) {
         [_sinaWeiboManager requestBilateralFriends];
         [[BilateralFriendManager defaultManager] checkRegisteredFriendsRequest];
@@ -499,7 +530,7 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     _context = _txtDesc.text;
     [self restoreView];
-    [self changeInfoMode:nil];
+   
     [self showTextReminderSettingController];
     return YES;
 }
@@ -511,6 +542,54 @@
     [self clearGroup];
     
     [self performSelector:@selector(reloadData) withObject:self afterDelay:0.2];
+}
+
+#pragma mark -
+#pragma mark UIScrollViewDelegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+    [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+		
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    
+    [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    
+}
+
+#pragma mark -
+#pragma mark Data Source Loading / Reloading Methods
+
+- (void)reloadTableViewDataSource{
+    
+    //  should be calling your tableviews data source model to reload
+    //  put here just for demo
+    
+    _reloading = YES;
+    [self setInfoMode:InfoModeText];
+    
+}
+
+- (void)doneLoadingTableViewData{
+    
+    //  model should call this when its done loading
+    _reloading = NO;
+    [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+}
+
+#pragma mark -
+#pragma mark EGORefreshTableHeaderDelegate Methods
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+    NSLog(@"egoRefreshTableHeaderDidTriggerRefresh");
+    [self reloadTableViewDataSource];
+    [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:0.01];
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+    return _reloading;
 }
 
 @end

@@ -55,7 +55,6 @@
 		3C1CB06F167873320025BDB2 /* cat.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3C1CB06E167873320025BDB2 /* cat.wav */; };
 		3C1CB072167966990025BDB2 /* Reminder.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C1CB071167966990025BDB2 /* Reminder.m */; };
 		3C1CB07516797B2A0025BDB2 /* buttonBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C1CB07316797B2A0025BDB2 /* buttonBg.png */; };
-		3C1CB07616797B2A0025BDB2 /* buttonrBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C1CB07416797B2A0025BDB2 /* buttonrBg@2x.png */; };
 		3C1CB07A1679BA770025BDB2 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C1CB0781679BA760025BDB2 /* SettingViewController.m */; };
 		3C1CB07B1679BA770025BDB2 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C1CB0791679BA770025BDB2 /* SettingViewController.xib */; };
 		3C1CB07E167AFABE0025BDB2 /* ReminderSettingTimeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C1CB07D167AFABE0025BDB2 /* ReminderSettingTimeCell.m */; };
@@ -112,14 +111,29 @@
 		3C417A15168D57F6003FFB1C /* smallButtonBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C417A13168D57F6003FFB1C /* smallButtonBg@2x.png */; };
 		3C417A18168D8BE7003FFB1C /* recordingBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C417A16168D8BE7003FFB1C /* recordingBg.png */; };
 		3C417A19168D8BE7003FFB1C /* recordingBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C417A17168D8BE7003FFB1C /* recordingBg@2x.png */; };
+		3C5B1D2F169FAF040079C12F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5B1D2E169FAF040079C12F /* QuartzCore.framework */; };
+		3C5B1D3C169FB8E20079C12F /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5B1D34169FB8E20079C12F /* blackArrow.png */; };
+		3C5B1D3D169FB8E20079C12F /* blackArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5B1D35169FB8E20079C12F /* blackArrow@2x.png */; };
+		3C5B1D3E169FB8E20079C12F /* blueArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5B1D36169FB8E20079C12F /* blueArrow.png */; };
+		3C5B1D3F169FB8E20079C12F /* blueArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5B1D37169FB8E20079C12F /* blueArrow@2x.png */; };
+		3C5B1D40169FB8E20079C12F /* grayArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5B1D38169FB8E20079C12F /* grayArrow.png */; };
+		3C5B1D41169FB8E20079C12F /* grayArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5B1D39169FB8E20079C12F /* grayArrow@2x.png */; };
+		3C5B1D42169FB8E20079C12F /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5B1D3A169FB8E20079C12F /* whiteArrow.png */; };
+		3C5B1D43169FB8E20079C12F /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5B1D3B169FB8E20079C12F /* whiteArrow@2x.png */; };
+		3C5B1D46169FCF110079C12F /* deleteBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5B1D44169FCF110079C12F /* deleteBtn.png */; };
+		3C5B1D47169FCF110079C12F /* deleteBtn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5B1D45169FCF110079C12F /* deleteBtn@2x.png */; };
+		3C5B1D49169FE4750079C12F /* cellBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5B1D48169FE4750079C12F /* cellBg@2x.png */; };
+		3C5B1D4C169FEF990079C12F /* messageBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5B1D4A169FEF990079C12F /* messageBg.png */; };
+		3C5B1D4D169FEF990079C12F /* messageBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5B1D4B169FEF990079C12F /* messageBg@2x.png */; };
+		3C5B1D4F169FF0FE0079C12F /* buttonBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5B1D4E169FF0FE0079C12F /* buttonBg@2x.png */; };
 		3C719E1F169E493B00EECCB0 /* SettingAppBadgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C719E1D169E493B00EECCB0 /* SettingAppBadgeViewController.m */; };
 		3C719E20169E493B00EECCB0 /* SettingAppBadgeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C719E1E169E493B00EECCB0 /* SettingAppBadgeViewController.xib */; };
 		3C719E24169E584700EECCB0 /* SettingSNSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C719E22169E584600EECCB0 /* SettingSNSViewController.m */; };
 		3C719E25169E584700EECCB0 /* SettingSNSViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C719E23169E584700EECCB0 /* SettingSNSViewController.xib */; };
-		3C719E27169E664B00EECCB0 /* buttonDelete.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C719E26169E664B00EECCB0 /* buttonDelete.png */; };
 		3C719E29169E698000EECCB0 /* sinaLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C719E28169E698000EECCB0 /* sinaLogo@2x.png */; };
 		3C838F2F1675D59100A85826 /* ReminderDetailAudioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C838F2E1675D59100A85826 /* ReminderDetailAudioCell.m */; };
 		3C838F311675D5B700A85826 /* ReminderDetailAudioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C838F301675D5B700A85826 /* ReminderDetailAudioCell.xib */; };
+		3C91EAE5169FAD9C0017E3FC /* libEGOTableViewPullRefreshLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C91EAE2169FAD820017E3FC /* libEGOTableViewPullRefreshLibrary.a */; };
 		3C9384931688292D00DA6412 /* TextReminderSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9384911688292D00DA6412 /* TextReminderSettingViewController.m */; };
 		3C9384941688292D00DA6412 /* TextReminderSettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9384921688292D00DA6412 /* TextReminderSettingViewController.xib */; };
 		3C93849816882BD800DA6412 /* AudioReminderSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C93849616882BD800DA6412 /* AudioReminderSettingViewController.m */; };
@@ -209,6 +223,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 3C13E863164DF4DA006424A2;
 			remoteInfo = Date;
+		};
+		3C91EAE1169FAD820017E3FC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C91EADA169FAD810017E3FC /* EGOTableViewPullRefreshLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3C91EAB6169FACA80017E3FC;
+			remoteInfo = EGOTableViewPullRefreshLibrary;
+		};
+		3C91EAE3169FAD900017E3FC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C91EADA169FAD810017E3FC /* EGOTableViewPullRefreshLibrary.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C91EAB5169FACA80017E3FC;
+			remoteInfo = EGOTableViewPullRefreshLibrary;
 		};
 		3CE0AC691650FA76004B785A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -345,7 +373,6 @@
 		3C1CB070167966990025BDB2 /* Reminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reminder.h; sourceTree = "<group>"; };
 		3C1CB071167966990025BDB2 /* Reminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reminder.m; sourceTree = "<group>"; };
 		3C1CB07316797B2A0025BDB2 /* buttonBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonBg.png; path = Resources/images/buttonBg.png; sourceTree = "<group>"; };
-		3C1CB07416797B2A0025BDB2 /* buttonrBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonrBg@2x.png"; path = "Resources/images/buttonrBg@2x.png"; sourceTree = "<group>"; };
 		3C1CB0771679BA760025BDB2 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		3C1CB0781679BA760025BDB2 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		3C1CB0791679BA770025BDB2 /* SettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingViewController.xib; sourceTree = "<group>"; };
@@ -419,17 +446,32 @@
 		3C417A13168D57F6003FFB1C /* smallButtonBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "smallButtonBg@2x.png"; path = "Resources/images/smallButtonBg@2x.png"; sourceTree = "<group>"; };
 		3C417A16168D8BE7003FFB1C /* recordingBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = recordingBg.png; path = Resources/images/recordingBg.png; sourceTree = "<group>"; };
 		3C417A17168D8BE7003FFB1C /* recordingBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "recordingBg@2x.png"; path = "Resources/images/recordingBg@2x.png"; sourceTree = "<group>"; };
+		3C5B1D2E169FAF040079C12F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		3C5B1D34169FB8E20079C12F /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blackArrow.png; path = Resources/images/blackArrow.png; sourceTree = "<group>"; };
+		3C5B1D35169FB8E20079C12F /* blackArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blackArrow@2x.png"; path = "Resources/images/blackArrow@2x.png"; sourceTree = "<group>"; };
+		3C5B1D36169FB8E20079C12F /* blueArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blueArrow.png; path = Resources/images/blueArrow.png; sourceTree = "<group>"; };
+		3C5B1D37169FB8E20079C12F /* blueArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blueArrow@2x.png"; path = "Resources/images/blueArrow@2x.png"; sourceTree = "<group>"; };
+		3C5B1D38169FB8E20079C12F /* grayArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grayArrow.png; path = Resources/images/grayArrow.png; sourceTree = "<group>"; };
+		3C5B1D39169FB8E20079C12F /* grayArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "grayArrow@2x.png"; path = "Resources/images/grayArrow@2x.png"; sourceTree = "<group>"; };
+		3C5B1D3A169FB8E20079C12F /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = whiteArrow.png; path = Resources/images/whiteArrow.png; sourceTree = "<group>"; };
+		3C5B1D3B169FB8E20079C12F /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "whiteArrow@2x.png"; path = "Resources/images/whiteArrow@2x.png"; sourceTree = "<group>"; };
+		3C5B1D44169FCF110079C12F /* deleteBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = deleteBtn.png; path = Resources/images/deleteBtn.png; sourceTree = "<group>"; };
+		3C5B1D45169FCF110079C12F /* deleteBtn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "deleteBtn@2x.png"; path = "Resources/images/deleteBtn@2x.png"; sourceTree = "<group>"; };
+		3C5B1D48169FE4750079C12F /* cellBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cellBg@2x.png"; path = "Resources/images/cellBg@2x.png"; sourceTree = "<group>"; };
+		3C5B1D4A169FEF990079C12F /* messageBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = messageBg.png; path = Resources/images/messageBg.png; sourceTree = "<group>"; };
+		3C5B1D4B169FEF990079C12F /* messageBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "messageBg@2x.png"; path = "Resources/images/messageBg@2x.png"; sourceTree = "<group>"; };
+		3C5B1D4E169FF0FE0079C12F /* buttonBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonBg@2x.png"; path = "Resources/images/buttonBg@2x.png"; sourceTree = "<group>"; };
 		3C719E1C169E493B00EECCB0 /* SettingAppBadgeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingAppBadgeViewController.h; sourceTree = "<group>"; };
 		3C719E1D169E493B00EECCB0 /* SettingAppBadgeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingAppBadgeViewController.m; sourceTree = "<group>"; };
 		3C719E1E169E493B00EECCB0 /* SettingAppBadgeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingAppBadgeViewController.xib; sourceTree = "<group>"; };
 		3C719E21169E584600EECCB0 /* SettingSNSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingSNSViewController.h; sourceTree = "<group>"; };
 		3C719E22169E584600EECCB0 /* SettingSNSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingSNSViewController.m; sourceTree = "<group>"; };
 		3C719E23169E584700EECCB0 /* SettingSNSViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingSNSViewController.xib; sourceTree = "<group>"; };
-		3C719E26169E664B00EECCB0 /* buttonDelete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonDelete.png; path = Resources/images/buttonDelete.png; sourceTree = "<group>"; };
 		3C719E28169E698000EECCB0 /* sinaLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sinaLogo@2x.png"; path = "Resources/images/sinaLogo@2x.png"; sourceTree = "<group>"; };
 		3C838F2D1675D59100A85826 /* ReminderDetailAudioCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderDetailAudioCell.h; sourceTree = "<group>"; };
 		3C838F2E1675D59100A85826 /* ReminderDetailAudioCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderDetailAudioCell.m; sourceTree = "<group>"; };
 		3C838F301675D5B700A85826 /* ReminderDetailAudioCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderDetailAudioCell.xib; sourceTree = "<group>"; };
+		3C91EADA169FAD810017E3FC /* EGOTableViewPullRefreshLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = EGOTableViewPullRefreshLibrary.xcodeproj; path = ../EGOTableViewPullRefresh/EGOTableViewPullRefreshLibrary.xcodeproj; sourceTree = "<group>"; };
 		3C9384901688292D00DA6412 /* TextReminderSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextReminderSettingViewController.h; sourceTree = "<group>"; };
 		3C9384911688292D00DA6412 /* TextReminderSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextReminderSettingViewController.m; sourceTree = "<group>"; };
 		3C9384921688292D00DA6412 /* TextReminderSettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextReminderSettingViewController.xib; sourceTree = "<group>"; };
@@ -536,6 +578,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C5B1D2F169FAF040079C12F /* QuartzCore.framework in Frameworks */,
+				3C91EAE5169FAD9C0017E3FC /* libEGOTableViewPullRefreshLibrary.a in Frameworks */,
 				3C3354FB167307CC006E1331 /* libxml2.dylib in Frameworks */,
 				3CF83C1E166DF8AB005ED593 /* libAsiHttpRequestLibrary.a in Frameworks */,
 				3CF83C1F166DF8AB005ED593 /* libHUDLibrary.a in Frameworks */,
@@ -582,6 +626,8 @@
 		3C13E859164DF4DA006424A2 = {
 			isa = PBXGroup;
 			children = (
+				3C5B1D2E169FAF040079C12F /* QuartzCore.framework */,
+				3C91EADA169FAD810017E3FC /* EGOTableViewPullRefreshLibrary.xcodeproj */,
 				3C3354FA167307CC006E1331 /* libxml2.dylib */,
 				3CF83C0F166DF889005ED593 /* SinaWeiboLibrary.xcodeproj */,
 				3CF83C06166DF87C005ED593 /* HUDLibrary.xcodeproj */,
@@ -693,6 +739,14 @@
 			name = GlobalFunction;
 			sourceTree = "<group>";
 		};
+		3C91EADB169FAD810017E3FC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3C91EAE2169FAD820017E3FC /* libEGOTableViewPullRefreshLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		3CB0DC111654F1AC00209DF6 /* cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -776,56 +830,23 @@
 		3CE0ABF916507EA2004B785A /* images */ = {
 			isa = PBXGroup;
 			children = (
-				3CDE9041169EBCEB0099EB81 /* notification.png */,
-				3CDE9042169EBCEB0099EB81 /* notification@2x.png */,
-				3CDE9043169EBCEB0099EB81 /* sinaWeiboLogo.png */,
-				3CDE9044169EBCEB0099EB81 /* sinaWeiboLogo@2x.png */,
-				3C719E28169E698000EECCB0 /* sinaLogo@2x.png */,
-				3C719E26169E664B00EECCB0 /* buttonDelete.png */,
-				3C3513BF169C028600F78FB9 /* leftMenuStar.png */,
-				3C3513C0169C028600F78FB9 /* leftMenuStar@2x.png */,
-				3C3513C1169C028600F78FB9 /* navigationBarBg.png */,
-				3C3513B7169BF33600F78FB9 /* recordBtn.png */,
-				3C3513B8169BF33600F78FB9 /* recordBtn@2x.png */,
-				3C351396169ACCDC00F78FB9 /* toolBarBg.png */,
-				3C351397169ACCDC00F78FB9 /* toolBarBg@2x.png */,
-				3C351388169ABCC200F78FB9 /* navigationBarBg@2x.png */,
-				E6A3980216913F4F004A460F /* leftMenuDown.png */,
-				E6A3980316913F4F004A460F /* leftMenuDown@2x.png */,
-				E6A3980416913F4F004A460F /* leftMenuUp.png */,
-				E6A3980516913F4F004A460F /* leftMenuUp@2x.png */,
-				3C417A16168D8BE7003FFB1C /* recordingBg.png */,
-				3C417A17168D8BE7003FFB1C /* recordingBg@2x.png */,
-				3C417A12168D57F6003FFB1C /* smallButtonBg.png */,
-				3C417A13168D57F6003FFB1C /* smallButtonBg@2x.png */,
+				3C5B1D4E169FF0FE0079C12F /* buttonBg@2x.png */,
+				3C5B1D4A169FEF990079C12F /* messageBg.png */,
+				3C5B1D4B169FEF990079C12F /* messageBg@2x.png */,
+				3C5B1D48169FE4750079C12F /* cellBg@2x.png */,
 				3C3BE6DE168C236A0052A8C5 /* backNavigationBar.png */,
 				3C3BE6DF168C236A0052A8C5 /* backNavigationBar@2x.png */,
+				3C1988FC1654818F0038031D /* badgeValueRed.png */,
 				3C3BE6C8168BF7B70052A8C5 /* big-approve.png */,
 				3C3BE6C9168BF7B70052A8C5 /* big-approve@2x.png */,
 				3C3BE6CA168BF7B70052A8C5 /* big-cancel.png */,
 				3C3BE6CB168BF7B70052A8C5 /* big-cancel@2x.png */,
-				3C3BE6BA168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg.png */,
-				3C3BE6BB168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg@2x.png */,
-				3C3BE6BC168ADAEC0052A8C5 /* sidebar_separate_light@2x.png */,
-				3C3BE6B6168AA9E10052A8C5 /* feeddetail_toolbar_audio_btn.png */,
-				3C3BE6B7168AA9E10052A8C5 /* feeddetail_toolbar_audio_btn@2x.png */,
-				3C3BE6AB168975440052A8C5 /* sidebar_background@2x.png */,
-				3C9384A816893C7B00DA6412 /* feeddetail_toolbar_phone_btn_h.png */,
-				3C9384A916893C7B00DA6412 /* feeddetail_toolbar_phone_btn_h@2x.png */,
-				3C9384AA16893C7B00DA6412 /* feeddetail_toolbar_phone_btn.png */,
-				3C9384AB16893C7B00DA6412 /* feeddetail_toolbar_phone_btn@2x.png */,
-				3C9384AC16893C7B00DA6412 /* feeddetail_toolbar_text_btn_h.png */,
-				3C9384AD16893C7B00DA6412 /* feeddetail_toolbar_text_btn_h@2x.png */,
-				3C9384AE16893C7B00DA6412 /* feeddetail_toolbar_text_btn.png */,
-				3C9384AF16893C7B00DA6412 /* feeddetail_toolbar_text_btn@2x.png */,
-				3C31565F16819CFA00C1E42C /* btnTimeDeleteOri.png */,
-				3C31566016819CFA00C1E42C /* btnTimeDeleteOri@2x.png */,
-				3CE8509D16803DA50025ECA3 /* checkboxCompleted.png */,
-				3CE8509E16803DA50025ECA3 /* checkboxCompleted@2x.png */,
-				3CE8509F16803DA50025ECA3 /* checkboxOri.png */,
-				3CE850A016803DA50025ECA3 /* checkboxOri@2x.png */,
-				3C1CB07316797B2A0025BDB2 /* buttonBg.png */,
-				3C1CB07416797B2A0025BDB2 /* buttonrBg@2x.png */,
+				3C5B1D34169FB8E20079C12F /* blackArrow.png */,
+				3C5B1D35169FB8E20079C12F /* blackArrow@2x.png */,
+				3C5B1D36169FB8E20079C12F /* blueArrow.png */,
+				3C5B1D37169FB8E20079C12F /* blueArrow@2x.png */,
+				3C984EBD166C53C4005AA529 /* blueDot.png */,
+				3C984EBE166C53C4005AA529 /* blueDot@2x.png */,
 				3C984EC5166C83CD005AA529 /* btnClock.png */,
 				3C984EC6166C83CD005AA529 /* btnClock@2x.png */,
 				3C984EC7166C83CD005AA529 /* btnLocation.png */,
@@ -834,13 +855,47 @@
 				3C984ECA166C83CD005AA529 /* btnPause@2x.png */,
 				3C984ECB166C83CD005AA529 /* btnPlay.png */,
 				3C984ECC166C83CD005AA529 /* btnPlay@2x.png */,
-				3C984ECD166C83CD005AA529 /* reminderReceiverNodeBkg.png */,
-				3C984ECE166C83CD005AA529 /* reminderReceiverNodeBkg@2x.png */,
-				3C984ECF166C83CD005AA529 /* reminderSenderNodeBkg.png */,
-				3C984ED0166C83CD005AA529 /* reminderSenderNodeBkg@2x.png */,
+				3C31565F16819CFA00C1E42C /* btnTimeDeleteOri.png */,
+				3C31566016819CFA00C1E42C /* btnTimeDeleteOri@2x.png */,
+				3C1CB07316797B2A0025BDB2 /* buttonBg.png */,
+				3CE8509D16803DA50025ECA3 /* checkboxCompleted.png */,
+				3CE8509E16803DA50025ECA3 /* checkboxCompleted@2x.png */,
+				3CE8509F16803DA50025ECA3 /* checkboxOri.png */,
+				3CE850A016803DA50025ECA3 /* checkboxOri@2x.png */,
+				3C5B1D44169FCF110079C12F /* deleteBtn.png */,
+				3C5B1D45169FCF110079C12F /* deleteBtn@2x.png */,
+				3C3BE6B6168AA9E10052A8C5 /* feeddetail_toolbar_audio_btn.png */,
+				3C3BE6B7168AA9E10052A8C5 /* feeddetail_toolbar_audio_btn@2x.png */,
+				3C9384AA16893C7B00DA6412 /* feeddetail_toolbar_phone_btn.png */,
+				3C9384AB16893C7B00DA6412 /* feeddetail_toolbar_phone_btn@2x.png */,
+				3C9384A816893C7B00DA6412 /* feeddetail_toolbar_phone_btn_h.png */,
+				3C9384A916893C7B00DA6412 /* feeddetail_toolbar_phone_btn_h@2x.png */,
+				3C9384AE16893C7B00DA6412 /* feeddetail_toolbar_text_btn.png */,
+				3C9384AF16893C7B00DA6412 /* feeddetail_toolbar_text_btn@2x.png */,
+				3C9384AC16893C7B00DA6412 /* feeddetail_toolbar_text_btn_h.png */,
+				3C9384AD16893C7B00DA6412 /* feeddetail_toolbar_text_btn_h@2x.png */,
+				3C5B1D38169FB8E20079C12F /* grayArrow.png */,
+				3C5B1D39169FB8E20079C12F /* grayArrow@2x.png */,
 				3C984EC1166C59AF005AA529 /* icon@2x.png */,
-				3C984EBD166C53C4005AA529 /* blueDot.png */,
-				3C984EBE166C53C4005AA529 /* blueDot@2x.png */,
+				E6A3980216913F4F004A460F /* leftMenuDown.png */,
+				E6A3980316913F4F004A460F /* leftMenuDown@2x.png */,
+				3C3513BF169C028600F78FB9 /* leftMenuStar.png */,
+				3C3513C0169C028600F78FB9 /* leftMenuStar@2x.png */,
+				E6A3980416913F4F004A460F /* leftMenuUp.png */,
+				E6A3980516913F4F004A460F /* leftMenuUp@2x.png */,
+				3CE0AC0516507EF8004B785A /* logo.png */,
+				3CE0AC0616507EF8004B785A /* logo@2x.png */,
+				3CB0DC1416553CEB00209DF6 /* male.png */,
+				3C1988FD1654818F0038031D /* menu.png */,
+				3C1988FE1654818F0038031D /* menu@2x.png */,
+				3C3513C1169C028600F78FB9 /* navigationBarBg.png */,
+				3C351388169ABCC200F78FB9 /* navigationBarBg@2x.png */,
+				3CDE9041169EBCEB0099EB81 /* notification.png */,
+				3CDE9042169EBCEB0099EB81 /* notification@2x.png */,
+				3C3513B7169BF33600F78FB9 /* recordBtn.png */,
+				3C3513B8169BF33600F78FB9 /* recordBtn@2x.png */,
+				3C417A16168D8BE7003FFB1C /* recordingBg.png */,
+				3C417A17168D8BE7003FFB1C /* recordingBg@2x.png */,
 				3C044CB51659E00F000551C5 /* recordingBkg.png */,
 				3C044CB61659E00F000551C5 /* recordingBkg@2x.png */,
 				3C044CB71659E00F000551C5 /* recordingSignal001.png */,
@@ -851,14 +906,25 @@
 				3C044CBC1659E00F000551C5 /* recordingSignal006.png */,
 				3C044CBD1659E00F000551C5 /* recordingSignal007.png */,
 				3C044CBE1659E00F000551C5 /* recordingSignal008.png */,
-				3CB0DC1416553CEB00209DF6 /* male.png */,
+				3C984ECD166C83CD005AA529 /* reminderReceiverNodeBkg.png */,
+				3C984ECE166C83CD005AA529 /* reminderReceiverNodeBkg@2x.png */,
+				3C984ECF166C83CD005AA529 /* reminderSenderNodeBkg.png */,
+				3C984ED0166C83CD005AA529 /* reminderSenderNodeBkg@2x.png */,
+				3C3BE6AB168975440052A8C5 /* sidebar_background@2x.png */,
+				3C3BE6BA168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg.png */,
+				3C3BE6BB168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg@2x.png */,
+				3C3BE6BC168ADAEC0052A8C5 /* sidebar_separate_light@2x.png */,
+				3C719E28169E698000EECCB0 /* sinaLogo@2x.png */,
+				3CDE9043169EBCEB0099EB81 /* sinaWeiboLogo.png */,
+				3CDE9044169EBCEB0099EB81 /* sinaWeiboLogo@2x.png */,
+				3C417A12168D57F6003FFB1C /* smallButtonBg.png */,
+				3C417A13168D57F6003FFB1C /* smallButtonBg@2x.png */,
+				3C351396169ACCDC00F78FB9 /* toolBarBg.png */,
+				3C351397169ACCDC00F78FB9 /* toolBarBg@2x.png */,
+				3C5B1D3A169FB8E20079C12F /* whiteArrow.png */,
+				3C5B1D3B169FB8E20079C12F /* whiteArrow@2x.png */,
 				3CB275161654EC1C00FAEF1F /* ZhiHuNavigationBar.png */,
 				3CB275171654EC1C00FAEF1F /* ZhiHuNavigationBar@2x.png */,
-				3C1988FC1654818F0038031D /* badgeValueRed.png */,
-				3C1988FD1654818F0038031D /* menu.png */,
-				3C1988FE1654818F0038031D /* menu@2x.png */,
-				3CE0AC0516507EF8004B785A /* logo.png */,
-				3CE0AC0616507EF8004B785A /* logo@2x.png */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -893,64 +959,64 @@
 		3CE0AC541650D5C3004B785A /* Class */ = {
 			isa = PBXGroup;
 			children = (
-				3C351392169AC9AD00F78FB9 /* GlobalFunction */,
+				3C93849516882BD800DA6412 /* AudioReminderSettingViewController.h */,
+				3C93849616882BD800DA6412 /* AudioReminderSettingViewController.m */,
+				3C3156631681AE4000C1E42C /* BaseViewController.h */,
+				3C3156641681AE4000C1E42C /* BaseViewController.m */,
 				3CC9CE25165F768D00E7E9D9 /* Cell */,
-				3C349927166EEF62001012B6 /* RemindersInboxViewController.h */,
-				3C349928166EEF62001012B6 /* RemindersInboxViewController.m */,
-				3C23E8B21669ACA30098149A /* RemindersBaseViewController.h */,
-				3C23E8B31669ACA30098149A /* RemindersBaseViewController.m */,
-				3CD0ADFD166877C0001986F0 /* MenuViewController.h */,
-				3CD0ADFE166877C0001986F0 /* MenuViewController.m */,
-				3C40DE3F16670F41005627C9 /* RemindersNotificationViewController.h */,
-				3C40DE4016670F41005627C9 /* RemindersNotificationViewController.m */,
+				E6A3980A16914121004A460F /* CustomChoiceViewController.h */,
+				E6A3980B16914121004A460F /* CustomChoiceViewController.m */,
+				3CC9CE20165F730100E7E9D9 /* FriendRemindersViewController.h */,
+				3CC9CE21165F730100E7E9D9 /* FriendRemindersViewController.m */,
+				3C351392169AC9AD00F78FB9 /* GlobalFunction */,
 				3CE0ABFB16507EBE004B785A /* HomeViewController.h */,
 				3CE0ABFC16507EBE004B785A /* HomeViewController.m */,
 				3CE0ABFE16507EBE004B785A /* LoginViewController.h */,
 				3CE0ABFF16507EBE004B785A /* LoginViewController.m */,
-				3CB275111654EAF400FAEF1F /* OnlineFriendsRemindViewController.h */,
-				3CB275121654EAF400FAEF1F /* OnlineFriendsRemindViewController.m */,
-				3C044CC9165A0E1B000551C5 /* ReminderSettingViewController.h */,
-				3C044CCA165A0E1B000551C5 /* ReminderSettingViewController.m */,
-				3C9384901688292D00DA6412 /* TextReminderSettingViewController.h */,
-				3C9384911688292D00DA6412 /* TextReminderSettingViewController.m */,
-				3C19884916980CF9002311E5 /* NewTextReminderViewController.h */,
-				3C19884A16980CF9002311E5 /* NewTextReminderViewController.m */,
-				3C198846169804DA002311E5 /* ModifyTextReminderViewController.h */,
-				3C198847169804DA002311E5 /* ModifyTextReminderViewController.m */,
-				3C19885216982E13002311E5 /* ShowTextReminderViewController.h */,
-				3C19885316982E13002311E5 /* ShowTextReminderViewController.m */,
-				3C93849516882BD800DA6412 /* AudioReminderSettingViewController.h */,
-				3C93849616882BD800DA6412 /* AudioReminderSettingViewController.m */,
-				3C19884C16982422002311E5 /* NewAudioReminderViewController.h */,
-				3C19884D16982422002311E5 /* NewAudioReminderViewController.m */,
+				3CD0ADFD166877C0001986F0 /* MenuViewController.h */,
+				3CD0ADFE166877C0001986F0 /* MenuViewController.m */,
 				3C19884F16982974002311E5 /* ModifyAudioReminderViewController.h */,
 				3C19885016982975002311E5 /* ModifyAudioReminderViewController.m */,
-				3C19885516983091002311E5 /* ShowAudioReminderViewController.h */,
-				3C19885616983091002311E5 /* ShowAudioReminderViewController.m */,
-				3C044CD6165A8C57000551C5 /* ReminderMapViewController.h */,
-				3C044CD7165A8C58000551C5 /* ReminderMapViewController.m */,
-				3CF017DE165B500D00F83814 /* ReminderSendingViewController.h */,
-				3CF017DF165B500E00F83814 /* ReminderSendingViewController.m */,
-				3CC9CE20165F730100E7E9D9 /* FriendRemindersViewController.h */,
-				3CC9CE21165F730100E7E9D9 /* FriendRemindersViewController.m */,
-				3C3156631681AE4000C1E42C /* BaseViewController.h */,
-				3C3156641681AE4000C1E42C /* BaseViewController.m */,
+				3C198846169804DA002311E5 /* ModifyTextReminderViewController.h */,
+				3C198847169804DA002311E5 /* ModifyTextReminderViewController.m */,
+				3C19884C16982422002311E5 /* NewAudioReminderViewController.h */,
+				3C19884D16982422002311E5 /* NewAudioReminderViewController.m */,
+				3C19884916980CF9002311E5 /* NewTextReminderViewController.h */,
+				3C19884A16980CF9002311E5 /* NewTextReminderViewController.m */,
+				3CB275111654EAF400FAEF1F /* OnlineFriendsRemindViewController.h */,
+				3CB275121654EAF400FAEF1F /* OnlineFriendsRemindViewController.m */,
 				3C3499361670509C001012B6 /* ReminderDetailViewController.h */,
 				3C3499371670509D001012B6 /* ReminderDetailViewController.m */,
-				3C9384A31689328A00DA6412 /* TextReminderDetailViewController.h */,
-				3C9384A41689328A00DA6412 /* TextReminderDetailViewController.m */,
+				3C044CD6165A8C57000551C5 /* ReminderMapViewController.h */,
+				3C044CD7165A8C58000551C5 /* ReminderMapViewController.m */,
+				3C23E8B21669ACA30098149A /* RemindersBaseViewController.h */,
+				3C23E8B31669ACA30098149A /* RemindersBaseViewController.m */,
+				3CF017DE165B500D00F83814 /* ReminderSendingViewController.h */,
+				3CF017DF165B500E00F83814 /* ReminderSendingViewController.m */,
+				3C044CC9165A0E1B000551C5 /* ReminderSettingViewController.h */,
+				3C044CCA165A0E1B000551C5 /* ReminderSettingViewController.m */,
+				3C349927166EEF62001012B6 /* RemindersInboxViewController.h */,
+				3C349928166EEF62001012B6 /* RemindersInboxViewController.m */,
+				3C40DE3F16670F41005627C9 /* RemindersNotificationViewController.h */,
+				3C40DE4016670F41005627C9 /* RemindersNotificationViewController.m */,
 				3C3BE6B1168A83F40052A8C5 /* ReminderTimeSettingViewController.h */,
 				3C3BE6B2168A83F40052A8C5 /* ReminderTimeSettingViewController.m */,
-				E6A3980A16914121004A460F /* CustomChoiceViewController.h */,
-				E6A3980B16914121004A460F /* CustomChoiceViewController.m */,
-				E6A3980D16918D4F004A460F /* TextEditorViewController.h */,
-				E6A3980E16918D4F004A460F /* TextEditorViewController.m */,
-				3C1CB0771679BA760025BDB2 /* SettingViewController.h */,
-				3C1CB0781679BA760025BDB2 /* SettingViewController.m */,
 				3C719E1C169E493B00EECCB0 /* SettingAppBadgeViewController.h */,
 				3C719E1D169E493B00EECCB0 /* SettingAppBadgeViewController.m */,
 				3C719E21169E584600EECCB0 /* SettingSNSViewController.h */,
 				3C719E22169E584600EECCB0 /* SettingSNSViewController.m */,
+				3C1CB0771679BA760025BDB2 /* SettingViewController.h */,
+				3C1CB0781679BA760025BDB2 /* SettingViewController.m */,
+				3C19885516983091002311E5 /* ShowAudioReminderViewController.h */,
+				3C19885616983091002311E5 /* ShowAudioReminderViewController.m */,
+				3C19885216982E13002311E5 /* ShowTextReminderViewController.h */,
+				3C19885316982E13002311E5 /* ShowTextReminderViewController.m */,
+				E6A3980D16918D4F004A460F /* TextEditorViewController.h */,
+				E6A3980E16918D4F004A460F /* TextEditorViewController.m */,
+				3C9384A31689328A00DA6412 /* TextReminderDetailViewController.h */,
+				3C9384A41689328A00DA6412 /* TextReminderDetailViewController.m */,
+				3C9384901688292D00DA6412 /* TextReminderSettingViewController.h */,
+				3C9384911688292D00DA6412 /* TextReminderSettingViewController.m */,
 			);
 			name = Class;
 			sourceTree = "<group>";
@@ -1027,6 +1093,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				3C91EAE4169FAD900017E3FC /* PBXTargetDependency */,
 				3CF83C19166DF8A4005ED593 /* PBXTargetDependency */,
 				3CF83C1B166DF8A4005ED593 /* PBXTargetDependency */,
 				3CF83C1D166DF8A4005ED593 /* PBXTargetDependency */,
@@ -1087,6 +1154,10 @@
 					ProjectRef = 3CF83BF1166DF834005ED593 /* EGOLibrary.xcodeproj */;
 				},
 				{
+					ProductGroup = 3C91EADB169FAD810017E3FC /* Products */;
+					ProjectRef = 3C91EADA169FAD810017E3FC /* EGOTableViewPullRefreshLibrary.xcodeproj */;
+				},
+				{
 					ProductGroup = 3CF83C07166DF87C005ED593 /* Products */;
 					ProjectRef = 3CF83C06166DF87C005ED593 /* HUDLibrary.xcodeproj */;
 				},
@@ -1108,6 +1179,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		3C91EAE2169FAD820017E3FC /* libEGOTableViewPullRefreshLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libEGOTableViewPullRefreshLibrary.a;
+			remoteRef = 3C91EAE1169FAD820017E3FC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		3CE0AC6A1650FA76004B785A /* libLMLibrary.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1209,7 +1287,6 @@
 				3C1D19E91677703800524F2C /* ReminderSettingAudioCell.xib in Resources */,
 				3C1CB06F167873320025BDB2 /* cat.wav in Resources */,
 				3C1CB07516797B2A0025BDB2 /* buttonBg.png in Resources */,
-				3C1CB07616797B2A0025BDB2 /* buttonrBg@2x.png in Resources */,
 				3C1CB07B1679BA770025BDB2 /* SettingViewController.xib in Resources */,
 				3C1CB080167AFAD60025BDB2 /* ReminderSettingTimeCell.xib in Resources */,
 				3CE850A116803DA50025ECA3 /* checkboxCompleted.png in Resources */,
@@ -1265,12 +1342,25 @@
 				3CBF31E8169D086D00827F1D /* TextEditorViewController.xib in Resources */,
 				3C719E20169E493B00EECCB0 /* SettingAppBadgeViewController.xib in Resources */,
 				3C719E25169E584700EECCB0 /* SettingSNSViewController.xib in Resources */,
-				3C719E27169E664B00EECCB0 /* buttonDelete.png in Resources */,
 				3C719E29169E698000EECCB0 /* sinaLogo@2x.png in Resources */,
 				3CDE9045169EBCEB0099EB81 /* notification.png in Resources */,
 				3CDE9046169EBCEB0099EB81 /* notification@2x.png in Resources */,
 				3CDE9047169EBCEB0099EB81 /* sinaWeiboLogo.png in Resources */,
 				3CDE9048169EBCEB0099EB81 /* sinaWeiboLogo@2x.png in Resources */,
+				3C5B1D3C169FB8E20079C12F /* blackArrow.png in Resources */,
+				3C5B1D3D169FB8E20079C12F /* blackArrow@2x.png in Resources */,
+				3C5B1D3E169FB8E20079C12F /* blueArrow.png in Resources */,
+				3C5B1D3F169FB8E20079C12F /* blueArrow@2x.png in Resources */,
+				3C5B1D40169FB8E20079C12F /* grayArrow.png in Resources */,
+				3C5B1D41169FB8E20079C12F /* grayArrow@2x.png in Resources */,
+				3C5B1D42169FB8E20079C12F /* whiteArrow.png in Resources */,
+				3C5B1D43169FB8E20079C12F /* whiteArrow@2x.png in Resources */,
+				3C5B1D46169FCF110079C12F /* deleteBtn.png in Resources */,
+				3C5B1D47169FCF110079C12F /* deleteBtn@2x.png in Resources */,
+				3C5B1D49169FE4750079C12F /* cellBg@2x.png in Resources */,
+				3C5B1D4C169FEF990079C12F /* messageBg.png in Resources */,
+				3C5B1D4D169FEF990079C12F /* messageBg@2x.png in Resources */,
+				3C5B1D4F169FF0FE0079C12F /* buttonBg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1372,6 +1462,11 @@
 			isa = PBXTargetDependency;
 			target = 3C13E863164DF4DA006424A2 /* date */;
 			targetProxy = 3C13E890164DF4DB006424A2 /* PBXContainerItemProxy */;
+		};
+		3C91EAE4169FAD900017E3FC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = EGOTableViewPullRefreshLibrary;
+			targetProxy = 3C91EAE3169FAD900017E3FC /* PBXContainerItemProxy */;
 		};
 		3CE0AC6C1650FA86004B785A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1514,6 +1609,7 @@
 					../EgoImageLoading/EGOImageLoader,
 					../MBProgressHUD,
 					"../weibo_ios_sdk_sso-oauth/src/JSONKit",
+					../EGOTableViewPullRefresh/EGOTableViewPullRefresh/Classes/View,
 				);
 				INFOPLIST_FILE = "Date/Date-Info.plist";
 				LIBRARY_SEARCH_PATHS = "";
@@ -1541,6 +1637,7 @@
 					../EgoImageLoading/EGOImageLoader,
 					../MBProgressHUD,
 					"../weibo_ios_sdk_sso-oauth/src/JSONKit",
+					../EGOTableViewPullRefresh/EGOTableViewPullRefresh/Classes/View,
 				);
 				INFOPLIST_FILE = "Date/Date-Info.plist";
 				LIBRARY_SEARCH_PATHS = "";

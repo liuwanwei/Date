@@ -39,9 +39,9 @@
     UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 300, 100)];
     
     UIButton * btnRelieve = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    btnRelieve.layer.frame = CGRectMake(10, 30, 300, 44);
+    btnRelieve.layer.frame = CGRectMake(10, 30, 300, 50);
     btnRelieve.titleLabel.font = [UIFont systemFontOfSize:18.0];
-    [btnRelieve setBackgroundImage:[UIImage imageNamed:@"buttonDelete"] forState:UIControlStateNormal];
+    [btnRelieve setBackgroundImage:[UIImage imageNamed:@"deleteBtn"] forState:UIControlStateNormal];
     [btnRelieve setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [btnRelieve setTitle:LocalString(@"SettingAppSNSRelieve") forState:UIControlStateNormal];
     [btnRelieve addTarget:self action:@selector(relieveSNS) forControlEvents:UIControlEventTouchUpInside];
