@@ -106,7 +106,7 @@
 								<array class="NSMutableArray" key="NSSubviews">
 									<object class="IBUIButton" id="166551394">
 										<reference key="NSNextResponder" ref="490004793"/>
-										<int key="NSvFlags">292</int>
+										<int key="NSvFlags">-2147483356</int>
 										<string key="NSFrame">{{-8, -4}, {45, 38}}</string>
 										<reference key="NSSuperview" ref="490004793"/>
 										<reference key="NSWindow"/>
@@ -177,7 +177,7 @@
 									<object class="IBUIButton" id="158775931">
 										<reference key="NSNextResponder" ref="490004793"/>
 										<int key="NSvFlags">292</int>
-										<string key="NSFrame">{{38, 0}, {253, 32}}</string>
+										<string key="NSFrame">{{27, 0}, {255, 34}}</string>
 										<reference key="NSSuperview" ref="490004793"/>
 										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="123851357"/>
@@ -572,7 +572,7 @@
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="NS.key.0">recordBtn.png</string>
-			<string key="NS.object.0">{253, 32}</string>
+			<string key="NS.object.0">{255, 34}</string>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">1926</string>
 	</data>

@@ -28,6 +28,7 @@ typedef enum {
     NSArray * _rowImages;
     SettingViewController * _settingViewController;
     LoginViewController * _loginViewController;
+    NSIndexPath * _lastIndexPath;
 }
 
 @end
@@ -80,12 +81,9 @@ typedef enum {
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 50.0;
-    //[self.tableView setSeparatorColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"sidebar_separate_light"]]];
-    NSIndexPath * indexpath = [NSIndexPath indexPathForRow:1 inSection:0];
-    [self.tableView selectRowAtIndexPath:indexpath animated:NO scrollPosition:0];
+    _lastIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+    [self.tableView selectRowAtIndexPath:_lastIndexPath animated:NO scrollPosition:0];
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"sidebar_background"]];
-    
-    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -117,25 +115,7 @@ typedef enum {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    /*if (section == 0) {
-        return 1;
-    }else if (section == 1){
-        return _rows.count;
-    }else{
-        return 1;
-    }*/
     return 5;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    /*if (section == 0) {
-        return @"收集";
-    }else if (section == 1){
-        return @"提醒";
-    }else{
-        return @"设置";
-    }*/
-    return @"";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -155,17 +135,21 @@ typedef enum {
     [imageStart setHidden:YES];
     if (indexPath.row == 0) {
         labelTitle.text = LocalString(@"DraftBox");
+        [imageSeparate setHidden:NO];
     }
     else if (indexPath.row == 4){
         labelTitle.text = @"设置";
         [imageSeparate setHidden:YES];
     }else {
         if (indexPath.row != 3) {
-            [imageSeparate setHidden:YES];
             if (indexPath.row == 1) {
-                [imageStart setHidden:NO];
+                 [imageStart setHidden:NO];
             }
+            [imageSeparate setHidden:YES];
+        }else {
+            [imageSeparate setHidden:NO];
         }
+
         labelTitle.text = [_rows objectAtIndex:indexPath.row - 1];
     }
     
@@ -180,6 +164,24 @@ typedef enum {
         [[AppDelegate delegate].navController popToRootViewControllerAnimated:NO];
         _settingViewController = nil;
     }
+    
+    UITableViewCell * cell;;
+    UIImageView * imageSeparate;
+    
+    cell = [tableView cellForRowAtIndexPath:_lastIndexPath];
+    imageSeparate = (UIImageView *)[cell viewWithTag:MenuCellTagSeparate];
+    if (0 == _lastIndexPath.row || 3 == _lastIndexPath.row) {
+        [imageSeparate setHidden:NO];
+    }
+    
+    cell = [tableView cellForRowAtIndexPath:indexPath];
+    imageSeparate = (UIImageView *)[cell viewWithTag:MenuCellTagSeparate];
+    if (0 == indexPath.row || 3 == indexPath.row) {
+        [imageSeparate setHidden:YES];
+    }
+    
+    
+    _lastIndexPath = indexPath;
     
     if (4 == indexPath.row){
         if (_settingViewController == nil) {

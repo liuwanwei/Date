@@ -8,10 +8,13 @@
 
 #import "ReminderBaseCell.h"
 #import "SoundManager.h"
+#import "LMLibrary.h"
 
 #define LeftMargin  13
 #define LabelDesOffset 18
 #define LabelDesY 42
+
+static NSArray * sColorArray;
 
 @interface ReminderBaseCell () {
 
@@ -186,11 +189,26 @@
     
 }
 
+/*- (void)setIndexPath:(NSIndexPath *)indexPath{
+    _indexPath = indexPath;
+    NSInteger index = indexPath.row;
+    if (indexPath.row >= 5) {
+        index = indexPath.row % 2;
+        if (0 == index) {
+            index = 4;
+        }else {
+            index = 3;
+        }
+    }
+    NSLog(@"%d",index);
+    [self.contentView setBackgroundColor:[sColorArray objectAtIndex:index]];
+}*/
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // Initialization code
+        //sColorArray = [[NSArray alloc] initWithObjects:RGBColor(0xe0,0xd8,0xcd),RGBColor(0xe5 , 0xdd, 0xd2),RGBColor(0xff, 0xff, 0xff),RGBColor(0xed, 0xe5, 0xda),RGBColor(0xf2, 0xef, 0xe8),nil];
     }
     return self;
 }

@@ -15,5 +15,6 @@
 + (GlobalFunction *)defaultGlobalFunction;
 
 - (void)setNavigationBarBackgroundImage:(UINavigationBar *)navigationBar;
+- (void)initNavleftBarItemWithController:(UIViewController *)controller withAction:(SEL)action;
 
 @end

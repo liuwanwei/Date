@@ -243,6 +243,14 @@
     return 44.0f;
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return @"内容";
+    }
+    
+    return nil;
+}
+
 #pragma mark - ReminderManager delegate
 - (void)newReminderSuccess:(NSString *)reminderId {
     self.reminderManager.delegate = nil;

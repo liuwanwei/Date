@@ -162,11 +162,13 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    UIApplicationState state = application.applicationState;
     if (YES == _showingAlert) {
         return;
     }else {
-        _showingAlert = YES;
-        [[SoundManager defaultSoundManager] playAlarmVoice];
+        if (UIApplicationStateActive == state) {
+            [[SoundManager defaultSoundManager] playAlarmVoice];
+        }
     }
    
 }
@@ -208,9 +210,8 @@
     if (NO == _showingAlert) {
         [self checkRemindersExpired];
     }
-
+    
     [[ReminderManager defaultManager] updateAppBadge];
-    //UIApplicationState state = application.applicationState;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

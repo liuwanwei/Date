@@ -85,7 +85,7 @@
         cell.textLabel.numberOfLines = 0;
         cell.textLabel.text =  self.desc;
         cell.textLabel.textColor = RGBColor(50, 79, 133);
-        cell.textLabel.font = [UIFont systemFontOfSize:15];
+        cell.textLabel.font = [UIFont fontWithName:@"Helvetica Bold" size:15.0];
     }else {
         if (indexPath.row == 0) {
             CellIdentifier = @"ReminderSettingAudioCell";

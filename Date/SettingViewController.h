@@ -13,4 +13,14 @@
 
 @property (weak, nonatomic) IBOutlet UITableView * tableView;
 
+@property (strong, nonatomic) NSArray * appBadgeSignRows;
+@property (strong ,nonatomic) NSArray * appSnsInfo;
+@property (nonatomic) AppBadgeMode appBadgeMode;
+
+- (void)updateAppBadgeCell;
+- (void)updateSNSCell;
+- (BOOL)isLogin;
+- (BOOL)isAuthValid;
+- (NSString *)sinaNickname;
+
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "SettingAppBadgeViewController.h"
+#import "GlobalFunction.h"
 
 @interface SettingAppBadgeViewController ()
 
@@ -15,6 +16,11 @@
 @implementation SettingAppBadgeViewController
 @synthesize tableView = _tableView;
 @synthesize parentController = _parentController;
+
+#pragma 私有函数
+- (void)back {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,7 +34,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    self.title = LocalString(@"SettingAppBadge");
+    self.tableView.dataSource= self;
+    self.tableView.delegate = self;
+    [[GlobalFunction defaultGlobalFunction] initNavleftBarItemWithController:self withAction:@selector(back)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -54,11 +63,22 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
-    if (0 == indexPath.section) {
+    
+    cell.textLabel.text = [_parentController.appBadgeSignRows objectAtIndex:indexPath.row];
+    if (_parentController.appBadgeMode == indexPath.row) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
     
     return cell;
 }
 
+#pragma mark - Table view delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    _parentController.appBadgeMode = indexPath.row;
+    [[ReminderManager defaultManager] storeAppBadgeMode:_parentController.appBadgeMode];
+    [_parentController updateAppBadgeCell];
+    [self back];
+}
 
 @end

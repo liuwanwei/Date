@@ -8,6 +8,10 @@
 
 "DraftBox" = "草稿箱";
 
+"SettingAppBadge" = "应用程序标记";
+"SettingAppSNSBinding" = "微博账号绑定";
+"SettingAppSNSRelieve" = "解除绑定";
+
 "SettingPromptOfDraftBox" = "信息将加入本地草稿箱中";
 "SettingPromptOfAlarm" = "信息将加入本地提醒中";
 "SettingPromptOfSend" = "提醒将发送给您的朋友";

@@ -57,9 +57,11 @@
 }
 
 - (void)initMenuButton {
-    UIButton * leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
-    UIBarButtonItem * item;
+    //UIBarButtonItem * leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"leftMenuUp"] style:UIBarButtonItemStylePlain target:self action:@selector(leftBarBtnTapped:)];
 
+    UIButton * leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
+
+    UIBarButtonItem * leftItem;
     UIImage *bgUpImg = [[UIImage imageNamed:@"leftMenuUp"]
                       resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 10)];
     
@@ -68,9 +70,10 @@
     [leftButton setBackgroundImage:bgUpImg forState:UIControlStateNormal];
     [leftButton setBackgroundImage:bgDownImg forState:UIControlStateHighlighted];
     [leftButton addTarget:self action:@selector(leftBarBtnTapped:) forControlEvents:UIControlEventTouchUpInside];
-    item = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    leftButton.contentMode = UIViewContentModeCenter;
+    leftItem = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
     
-    self.navigationItem.leftBarButtonItem = item;
+    self.navigationItem.leftBarButtonItem = leftItem;
 }
 #pragma 事件函数
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

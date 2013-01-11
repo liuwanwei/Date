@@ -114,6 +114,10 @@
 		3C417A19168D8BE7003FFB1C /* recordingBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C417A17168D8BE7003FFB1C /* recordingBg@2x.png */; };
 		3C719E1F169E493B00EECCB0 /* SettingAppBadgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C719E1D169E493B00EECCB0 /* SettingAppBadgeViewController.m */; };
 		3C719E20169E493B00EECCB0 /* SettingAppBadgeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C719E1E169E493B00EECCB0 /* SettingAppBadgeViewController.xib */; };
+		3C719E24169E584700EECCB0 /* SettingSNSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C719E22169E584600EECCB0 /* SettingSNSViewController.m */; };
+		3C719E25169E584700EECCB0 /* SettingSNSViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C719E23169E584700EECCB0 /* SettingSNSViewController.xib */; };
+		3C719E27169E664B00EECCB0 /* buttonDelete.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C719E26169E664B00EECCB0 /* buttonDelete.png */; };
+		3C719E29169E698000EECCB0 /* sinaLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C719E28169E698000EECCB0 /* sinaLogo@2x.png */; };
 		3C838F2F1675D59100A85826 /* ReminderDetailAudioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C838F2E1675D59100A85826 /* ReminderDetailAudioCell.m */; };
 		3C838F311675D5B700A85826 /* ReminderDetailAudioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C838F301675D5B700A85826 /* ReminderDetailAudioCell.xib */; };
 		3C9384931688292D00DA6412 /* TextReminderSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9384911688292D00DA6412 /* TextReminderSettingViewController.m */; };
@@ -164,6 +168,10 @@
 		3CC9CE2A165F772A00E7E9D9 /* FriendReminderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CC9CE29165F772A00E7E9D9 /* FriendReminderCell.xib */; };
 		3CD0AE00166877C0001986F0 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD0ADFE166877C0001986F0 /* MenuViewController.m */; };
 		3CD0AE01166877C0001986F0 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CD0ADFF166877C0001986F0 /* MenuViewController.xib */; };
+		3CDE9045169EBCEB0099EB81 /* notification.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CDE9041169EBCEB0099EB81 /* notification.png */; };
+		3CDE9046169EBCEB0099EB81 /* notification@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CDE9042169EBCEB0099EB81 /* notification@2x.png */; };
+		3CDE9047169EBCEB0099EB81 /* sinaWeiboLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CDE9043169EBCEB0099EB81 /* sinaWeiboLogo.png */; };
+		3CDE9048169EBCEB0099EB81 /* sinaWeiboLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CDE9044169EBCEB0099EB81 /* sinaWeiboLogo@2x.png */; };
 		3CE0ABF716507BD4004B785A /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE0ABF616507BD4004B785A /* UserManager.m */; };
 		3CE0AC0116507EBE004B785A /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE0ABFC16507EBE004B785A /* HomeViewController.m */; };
 		3CE0AC0216507EBE004B785A /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CE0ABFD16507EBE004B785A /* HomeViewController.xib */; };
@@ -414,6 +422,11 @@
 		3C719E1C169E493B00EECCB0 /* SettingAppBadgeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingAppBadgeViewController.h; sourceTree = "<group>"; };
 		3C719E1D169E493B00EECCB0 /* SettingAppBadgeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingAppBadgeViewController.m; sourceTree = "<group>"; };
 		3C719E1E169E493B00EECCB0 /* SettingAppBadgeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingAppBadgeViewController.xib; sourceTree = "<group>"; };
+		3C719E21169E584600EECCB0 /* SettingSNSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingSNSViewController.h; sourceTree = "<group>"; };
+		3C719E22169E584600EECCB0 /* SettingSNSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingSNSViewController.m; sourceTree = "<group>"; };
+		3C719E23169E584700EECCB0 /* SettingSNSViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingSNSViewController.xib; sourceTree = "<group>"; };
+		3C719E26169E664B00EECCB0 /* buttonDelete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = buttonDelete.png; path = Resources/images/buttonDelete.png; sourceTree = "<group>"; };
+		3C719E28169E698000EECCB0 /* sinaLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sinaLogo@2x.png"; path = "Resources/images/sinaLogo@2x.png"; sourceTree = "<group>"; };
 		3C838F2D1675D59100A85826 /* ReminderDetailAudioCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderDetailAudioCell.h; sourceTree = "<group>"; };
 		3C838F2E1675D59100A85826 /* ReminderDetailAudioCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderDetailAudioCell.m; sourceTree = "<group>"; };
 		3C838F301675D5B700A85826 /* ReminderDetailAudioCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderDetailAudioCell.xib; sourceTree = "<group>"; };
@@ -475,6 +488,10 @@
 		3CD0ADFD166877C0001986F0 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		3CD0ADFE166877C0001986F0 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		3CD0ADFF166877C0001986F0 /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
+		3CDE9041169EBCEB0099EB81 /* notification.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = notification.png; path = Resources/images/notification.png; sourceTree = "<group>"; };
+		3CDE9042169EBCEB0099EB81 /* notification@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "notification@2x.png"; path = "Resources/images/notification@2x.png"; sourceTree = "<group>"; };
+		3CDE9043169EBCEB0099EB81 /* sinaWeiboLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sinaWeiboLogo.png; path = Resources/images/sinaWeiboLogo.png; sourceTree = "<group>"; };
+		3CDE9044169EBCEB0099EB81 /* sinaWeiboLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sinaWeiboLogo@2x.png"; path = "Resources/images/sinaWeiboLogo@2x.png"; sourceTree = "<group>"; };
 		3CE0ABF516507BD4004B785A /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
 		3CE0ABF616507BD4004B785A /* UserManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserManager.m; sourceTree = "<group>"; };
 		3CE0ABFB16507EBE004B785A /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
@@ -759,6 +776,12 @@
 		3CE0ABF916507EA2004B785A /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3CDE9041169EBCEB0099EB81 /* notification.png */,
+				3CDE9042169EBCEB0099EB81 /* notification@2x.png */,
+				3CDE9043169EBCEB0099EB81 /* sinaWeiboLogo.png */,
+				3CDE9044169EBCEB0099EB81 /* sinaWeiboLogo@2x.png */,
+				3C719E28169E698000EECCB0 /* sinaLogo@2x.png */,
+				3C719E26169E664B00EECCB0 /* buttonDelete.png */,
 				3C3513BF169C028600F78FB9 /* leftMenuStar.png */,
 				3C3513C0169C028600F78FB9 /* leftMenuStar@2x.png */,
 				3C3513C1169C028600F78FB9 /* navigationBarBg.png */,
@@ -843,6 +866,7 @@
 		3CE0ABFA16507EA9004B785A /* xib */ = {
 			isa = PBXGroup;
 			children = (
+				3C719E23169E584700EECCB0 /* SettingSNSViewController.xib */,
 				3C719E1E169E493B00EECCB0 /* SettingAppBadgeViewController.xib */,
 				3C3BE6B3168A83F40052A8C5 /* ReminderTimeSettingViewController.xib */,
 				3C9384A51689328C00DA6412 /* TextReminderDetailViewController.xib */,
@@ -925,6 +949,8 @@
 				3C1CB0781679BA760025BDB2 /* SettingViewController.m */,
 				3C719E1C169E493B00EECCB0 /* SettingAppBadgeViewController.h */,
 				3C719E1D169E493B00EECCB0 /* SettingAppBadgeViewController.m */,
+				3C719E21169E584600EECCB0 /* SettingSNSViewController.h */,
+				3C719E22169E584600EECCB0 /* SettingSNSViewController.m */,
 			);
 			name = Class;
 			sourceTree = "<group>";
@@ -1238,6 +1264,13 @@
 				3C3513CD169C0FB600F78FB9 /* Localizable.strings in Resources */,
 				3CBF31E8169D086D00827F1D /* TextEditorViewController.xib in Resources */,
 				3C719E20169E493B00EECCB0 /* SettingAppBadgeViewController.xib in Resources */,
+				3C719E25169E584700EECCB0 /* SettingSNSViewController.xib in Resources */,
+				3C719E27169E664B00EECCB0 /* buttonDelete.png in Resources */,
+				3C719E29169E698000EECCB0 /* sinaLogo@2x.png in Resources */,
+				3CDE9045169EBCEB0099EB81 /* notification.png in Resources */,
+				3CDE9046169EBCEB0099EB81 /* notification@2x.png in Resources */,
+				3CDE9047169EBCEB0099EB81 /* sinaWeiboLogo.png in Resources */,
+				3CDE9048169EBCEB0099EB81 /* sinaWeiboLogo@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1320,6 +1353,7 @@
 				3C19885716983092002311E5 /* ShowAudioReminderViewController.m in Sources */,
 				3C351395169ACA1F00F78FB9 /* GlobalFunction.m in Sources */,
 				3C719E1F169E493B00EECCB0 /* SettingAppBadgeViewController.m in Sources */,
+				3C719E24169E584700EECCB0 /* SettingSNSViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
