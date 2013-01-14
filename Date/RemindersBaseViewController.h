@@ -13,6 +13,7 @@
 #import "ReminderMapViewController.h"
 #import "BaseViewController.h"
 #import "GlobalFunction.h"
+#import "LMLibrary.h"
 
 @interface RemindersBaseViewController : BaseViewController <UITableViewDelegate, UITableViewDataSource,ReminderManagerDelegate,ReminderCellDelegate,SoundManagerDelegate>
 

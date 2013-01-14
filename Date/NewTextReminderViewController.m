@@ -38,6 +38,7 @@
     self.reminder = [[ReminderManager defaultManager] reminder];
     self.receiverId = [NSNumber numberWithLongLong:[[UserManager defaultManager].oneselfId longLongValue]];
     self.receiver = @"自己";
+    [self initTriggerTime];
 }
 
 - (void)updateReceiverCell {

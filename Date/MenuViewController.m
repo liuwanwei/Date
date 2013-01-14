@@ -141,6 +141,7 @@ typedef enum {
         labelTitle.text = @"设置";
         [imageSeparate setHidden:YES];
     }else {
+        labelTitle.text = [_rows objectAtIndex:indexPath.row - 1];
         if (indexPath.row != 3) {
             if (indexPath.row == 1) {
                  [imageStart setHidden:NO];
@@ -149,8 +150,6 @@ typedef enum {
         }else {
             [imageSeparate setHidden:NO];
         }
-
-        labelTitle.text = [_rows objectAtIndex:indexPath.row - 1];
     }
     
     return cell;

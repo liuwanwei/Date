@@ -42,6 +42,8 @@
     self.reminder.audioUrl = [manager.recordFileURL relativePath];
     self.reminder.audioLength = [NSNumber numberWithInteger:manager.currentRecordTime];
     self.desc = @"记得做";
+    
+    [self initTriggerTime];
 }
 
 - (void)updateReceiverCell {
@@ -54,6 +56,7 @@
    [super updateTriggerTimeCell];
 }
 
+#pragma 事件函数
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

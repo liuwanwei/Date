@@ -61,10 +61,6 @@
 
 - (void)registerHandleMessage {
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOnlineFriendsMessage:) name:kOnlineFriendsMessage object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow:)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
 		
 		[[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide:)
@@ -108,14 +104,12 @@
     if (nil == _overView) {
         _overView = [[UIControl alloc] init];
         _overView.backgroundColor = [UIColor whiteColor];
-        _overView.frame = CGRectMake(0, 44, 320, containerFrame.origin.y);
+        _overView.frame = CGRectMake(0, 60, 320,self.view.bounds.size.height - 60);
         [_overView addTarget:self action:@selector(restoreView) forControlEvents:UIControlEventTouchDown];
         //[[[UIApplication sharedApplication] keyWindow] addSubview:_overView];
         [self.view addSubview:_overView];
-    }else {
-        _overView.frame = CGRectMake(0, 44, 320, containerFrame.origin.y + 1);
     }
-
+    
     // animations settings
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
@@ -123,17 +117,16 @@
     [UIView setAnimationCurve:[curve intValue]];
     
     // set views with new info
-   
      _overView.backgroundColor = [UIColor blackColor];
     _overView.alpha = 0.7;
-    
+    self.navigationController.navigationBarHidden = YES;
+    [_txtDesc setHidden:NO];
     // commit animations
     [UIView commitAnimations];
-    _toolbar.frame = CGRectMake(_toolbar.frame.origin.x,0,_toolbar.frame.size.width,_toolbar.frame.size.height);
-    
 }
 
 -(void) keyboardWillHide:(NSNotification *)note{
+    
     [self restoreView];
     NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
     NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
@@ -149,10 +142,10 @@
     [UIView setAnimationCurve:[curve intValue]];
     
     // set views with new info
-    
+    self.navigationController.navigationBarHidden = NO;
+    [_txtDesc setHidden:YES];
     // commit animations
     [UIView commitAnimations];
-    _toolbar.frame = containerFrame;
 }
 
 - (void)restoreView {
@@ -175,21 +168,17 @@
     if (InfoModeAudio == _infoMode) {
         [_btnMode setImage:[UIImage imageNamed:@"feeddetail_toolbar_text_btn"] forState:UIControlStateNormal];
         [_btnMode setImage:[UIImage imageNamed:@"feeddetail_toolbar_text_btn_h"] forState:UIControlStateHighlighted];
-        _txtDesc.text = @"";
         [_txtDesc resignFirstResponder];
-        _btnAudio.frame = CGRectMake(_btnAudio.frame.origin.x, _btnAudio.frame.origin.y, 240, _btnAudio.frame.size.height);
-        _txtDesc.frame = CGRectMake(_txtDesc.frame.origin.x, _txtDesc.frame.origin.y, 0, _txtDesc.frame.size.height);
     }else {
         [_btnMode setImage:[UIImage imageNamed:@"feeddetail_toolbar_phone_btn"] forState:UIControlStateNormal];
         [_btnMode setImage:[UIImage imageNamed:@"feeddetail_toolbar_phone_btn_h"] forState:UIControlStateHighlighted];
         [_txtDesc becomeFirstResponder];
-        _txtDesc.frame = CGRectMake(_txtDesc.frame.origin.x, _txtDesc.frame.origin.y, 281, _txtDesc.frame.size.height);
-        _btnAudio.frame = CGRectMake(_btnAudio.frame.origin.x, _btnAudio.frame.origin.y, 0, _btnAudio.frame.size.height);
     }
 }
 
 - (void)showAudioReminderSettingController {
     NewAudioReminderViewController * controller = [[NewAudioReminderViewController alloc] initWithNibName:@"AudioReminderSettingViewController" bundle:nil];
+    controller.dateType = _dataType;
     UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
     [[GlobalFunction defaultGlobalFunction] setNavigationBarBackgroundImage:nav.navigationBar];
     [self.navigationController presentViewController:nav animated:YES completion:nil];
@@ -198,6 +187,7 @@
 - (void)showTextReminderSettingController {
     NewTextReminderViewController * controller = [[NewTextReminderViewController alloc] initWithNibName:@"TextReminderSettingViewController" bundle:nil];
     controller.desc = _context;
+    controller.dateType = _dataType;
     UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
     [[GlobalFunction defaultGlobalFunction] setNavigationBarBackgroundImage:nav.navigationBar];
     [self.navigationController presentViewController:nav animated:YES completion:nil];
@@ -239,7 +229,9 @@
         _refreshHeaderView = view;
     }
     
-    //self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"toolBarBg"]];
+    _txtDesc.frame = CGRectMake(_txtDesc.frame.origin.x, _txtDesc.frame.origin.y, _txtDesc.frame.size.width, 60);
+    [_txtDesc setHidden:YES];
+    _txtDesc.delegate = self;
     self.view.backgroundColor = [UIColor whiteColor];
     
     [_toolbar setBackgroundImage:[UIImage imageNamed:@"toolBarBg"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
@@ -320,6 +312,7 @@
     }else {
         self.group = nil;
         self.keys = nil;
+        [self.tableView reloadData];
         [_labelPrompt setHidden:NO];
     }
     
@@ -347,7 +340,6 @@
 {
     [super viewDidLoad];
     _dataType = DataTypeToday;
-    _txtDesc.delegate = self;
     [self initMenuButton];
     [self setInfoMode:InfoModeAudio];
     [self initDataWithAnimation:YES];
@@ -358,6 +350,19 @@
         [[BilateralFriendManager defaultManager] checkRegisteredFriendsRequest];
         [self registerForRemoteNotification];
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -530,8 +535,8 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     _context = _txtDesc.text;
     [self restoreView];
-   
     [self showTextReminderSettingController];
+    _txtDesc.text = @"";
     return YES;
 }
 
@@ -583,7 +588,6 @@
 #pragma mark EGORefreshTableHeaderDelegate Methods
 
 - (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
-    NSLog(@"egoRefreshTableHeaderDidTriggerRefresh");
     [self reloadTableViewDataSource];
     [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:0.01];
 }

@@ -39,7 +39,7 @@
     UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 300, 100)];
     
     UIButton * btnRelieve = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    btnRelieve.layer.frame = CGRectMake(10, 30, 300, 50);
+    btnRelieve.layer.frame = CGRectMake(10, 30, 300, 44);
     btnRelieve.titleLabel.font = [UIFont systemFontOfSize:18.0];
     [btnRelieve setBackgroundImage:[UIImage imageNamed:@"deleteBtn"] forState:UIControlStateNormal];
     [btnRelieve setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

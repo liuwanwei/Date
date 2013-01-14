@@ -96,7 +96,8 @@
         if (YES == _showFrom) {
             NSString * from = @"来自:";
             if ([[UserManager defaultManager] isOneself:[_reminder.userID stringValue]]) {
-                from = [from stringByAppendingString:@"我"];
+//                from = [from stringByAppendingString:@"我"];
+                from = @"";
             }else if (nil != _bilateralFriend) {
                 from = [from stringByAppendingString:_bilateralFriend.nickname];
             }else {

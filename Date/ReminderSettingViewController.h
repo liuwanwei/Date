@@ -28,6 +28,7 @@
 @property (weak, nonatomic) UserManager * userManager;
 @property (nonatomic) BOOL isInbox;
 @property (nonatomic) CGSize labelSize;
+@property (nonatomic) DataType dateType;
 
 - (void)updateReceiverCell;
 - (void)updateTriggerTimeCell;
@@ -44,4 +45,5 @@
 - (void)createReminder;
 - (void)modifyReminder;
 - (void)computeFontSize;
+- (void)initTriggerTime;
 @end

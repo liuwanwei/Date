@@ -29,7 +29,7 @@
     if (self) {
         NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"ReminderInboxCell" owner:self options:nil] ;
         self = [nib objectAtIndex:0];
-        [self.contentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"cellBg"]]];
+//        [self.contentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"cellBg"]]];
 
     }
     return self;
@@ -68,10 +68,10 @@
 
             if (YES == [reminer.isAlarm boolValue]) {
                 self.labelTriggerDate.textColor = RGBColor(153,153,153);
-                self.labelTriggerDate.font = [UIFont boldSystemFontOfSize:20.0];
+                self.labelTriggerDate.font = [UIFont systemFontOfSize:20.0];
             }else {
                 self.labelTriggerDate.textColor = RGBColor(0,0,0);
-                self.labelTriggerDate.font = [UIFont boldSystemFontOfSize:20.0];
+                self.labelTriggerDate.font = [UIFont systemFontOfSize:20.0];
             }
             self.labelTriggerDate.text =[formatter stringFromDate:reminer.triggerTime];
         }else {

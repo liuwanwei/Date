@@ -240,6 +240,11 @@ typedef enum {
     
 }
 
+- (void)remindersSize {
+    [self collectingBoxReminders];
+    [self recentUnFinishedReminders];
+}
+
 #pragma 静态函数
 + (ReminderManager *)defaultManager {
     if (nil == sReminderManager) {
@@ -647,7 +652,10 @@ typedef enum {
     results = [self executeFetchRequest:request];
     
     if (nil == results || results.count == 0) {
+        _allRemindersSize = 0;
         return nil;
+    }else {
+        _allRemindersSize = [results count];
     }
     return results;
 }
@@ -669,7 +677,10 @@ typedef enum {
     results = [self executeFetchRequest:request];
     
     if (nil == results || results.count == 0) {
+        _todayRemindersSize = 0;
         return nil;
+    }else {
+        _todayRemindersSize = [results count];
     }
     return results;
 }
@@ -711,7 +722,10 @@ typedef enum {
     results = [self executeFetchRequest:request];
     
     if (nil == results || results.count == 0) {
+        _draftRemindersSize = 0;
         return nil;
+    }else {
+        _draftRemindersSize = [results count];
     }
     return results;
 }
@@ -763,6 +777,11 @@ typedef enum {
     }
     
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badgeSize];
+}
+
+- (void)computeRemindersSize {
+     NSThread * thread = [[NSThread alloc] initWithTarget:self selector:@selector(remindersSize) object:nil];
+    [thread start];
 }
 
 @end

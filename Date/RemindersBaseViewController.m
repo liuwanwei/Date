@@ -163,23 +163,6 @@
     return _reminders.count;
 }*/
 
-/*- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    NSString *sectionTitle = [self tableView:tableView titleForHeaderInSection:section];
-    if (sectionTitle == nil) {
-        return   ;
-    }
-    
-    UILabel * label = [[UILabel alloc] init];
-    label.frame = CGRectMake(0, 0, 320, 22);
-    label.backgroundColor = [UIColor clearColor];
-    label.font=[UIFont fontWithName:@"Helvetica-Bold" size:14];
-    label.text = sectionTitle;
-    UIView * sectionView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 22)];
-    [sectionView setBackgroundColor:[UIColor blackColor]];
-    [sectionView addSubview:label];
-    return sectionView;
-}*/
-
 #pragma mark - SoundManager Delegate
 - (void)audioPlayerDidFinishPlaying {
     [self stopPlayingAudio];

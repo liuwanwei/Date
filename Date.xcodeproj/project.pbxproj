@@ -126,6 +126,7 @@
 		3C5B1D4C169FEF990079C12F /* messageBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5B1D4A169FEF990079C12F /* messageBg.png */; };
 		3C5B1D4D169FEF990079C12F /* messageBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5B1D4B169FEF990079C12F /* messageBg@2x.png */; };
 		3C5B1D4F169FF0FE0079C12F /* buttonBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5B1D4E169FF0FE0079C12F /* buttonBg@2x.png */; };
+		3C5B1D7016A10BD80079C12F /* InsetsTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5B1D6F16A10BD80079C12F /* InsetsTextField.m */; };
 		3C719E1F169E493B00EECCB0 /* SettingAppBadgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C719E1D169E493B00EECCB0 /* SettingAppBadgeViewController.m */; };
 		3C719E20169E493B00EECCB0 /* SettingAppBadgeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C719E1E169E493B00EECCB0 /* SettingAppBadgeViewController.xib */; };
 		3C719E24169E584700EECCB0 /* SettingSNSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C719E22169E584600EECCB0 /* SettingSNSViewController.m */; };
@@ -461,6 +462,8 @@
 		3C5B1D4A169FEF990079C12F /* messageBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = messageBg.png; path = Resources/images/messageBg.png; sourceTree = "<group>"; };
 		3C5B1D4B169FEF990079C12F /* messageBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "messageBg@2x.png"; path = "Resources/images/messageBg@2x.png"; sourceTree = "<group>"; };
 		3C5B1D4E169FF0FE0079C12F /* buttonBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "buttonBg@2x.png"; path = "Resources/images/buttonBg@2x.png"; sourceTree = "<group>"; };
+		3C5B1D6E16A10BD80079C12F /* InsetsTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InsetsTextField.h; sourceTree = "<group>"; };
+		3C5B1D6F16A10BD80079C12F /* InsetsTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InsetsTextField.m; sourceTree = "<group>"; };
 		3C719E1C169E493B00EECCB0 /* SettingAppBadgeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingAppBadgeViewController.h; sourceTree = "<group>"; };
 		3C719E1D169E493B00EECCB0 /* SettingAppBadgeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingAppBadgeViewController.m; sourceTree = "<group>"; };
 		3C719E1E169E493B00EECCB0 /* SettingAppBadgeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingAppBadgeViewController.xib; sourceTree = "<group>"; };
@@ -672,6 +675,7 @@
 		3C13E870164DF4DB006424A2 /* Date */ = {
 			isa = PBXGroup;
 			children = (
+				3C5B1D6D16A10B8F0079C12F /* UIControl */,
 				3C0DC304165CB18900355619 /* Hud */,
 				3CB0DC3A16561A5900209DF6 /* Sound */,
 				3CE0ABF416507B50004B785A /* DataStore */,
@@ -737,6 +741,15 @@
 				3C351394169ACA1F00F78FB9 /* GlobalFunction.m */,
 			);
 			name = GlobalFunction;
+			sourceTree = "<group>";
+		};
+		3C5B1D6D16A10B8F0079C12F /* UIControl */ = {
+			isa = PBXGroup;
+			children = (
+				3C5B1D6E16A10BD80079C12F /* InsetsTextField.h */,
+				3C5B1D6F16A10BD80079C12F /* InsetsTextField.m */,
+			);
+			name = UIControl;
 			sourceTree = "<group>";
 		};
 		3C91EADB169FAD810017E3FC /* Products */ = {
@@ -959,16 +972,16 @@
 		3CE0AC541650D5C3004B785A /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				3CC9CE25165F768D00E7E9D9 /* Cell */,
+				3C351392169AC9AD00F78FB9 /* GlobalFunction */,
 				3C93849516882BD800DA6412 /* AudioReminderSettingViewController.h */,
 				3C93849616882BD800DA6412 /* AudioReminderSettingViewController.m */,
 				3C3156631681AE4000C1E42C /* BaseViewController.h */,
 				3C3156641681AE4000C1E42C /* BaseViewController.m */,
-				3CC9CE25165F768D00E7E9D9 /* Cell */,
 				E6A3980A16914121004A460F /* CustomChoiceViewController.h */,
 				E6A3980B16914121004A460F /* CustomChoiceViewController.m */,
 				3CC9CE20165F730100E7E9D9 /* FriendRemindersViewController.h */,
 				3CC9CE21165F730100E7E9D9 /* FriendRemindersViewController.m */,
-				3C351392169AC9AD00F78FB9 /* GlobalFunction */,
 				3CE0ABFB16507EBE004B785A /* HomeViewController.h */,
 				3CE0ABFC16507EBE004B785A /* HomeViewController.m */,
 				3CE0ABFE16507EBE004B785A /* LoginViewController.h */,
@@ -1444,6 +1457,7 @@
 				3C351395169ACA1F00F78FB9 /* GlobalFunction.m in Sources */,
 				3C719E1F169E493B00EECCB0 /* SettingAppBadgeViewController.m in Sources */,
 				3C719E24169E584700EECCB0 /* SettingSNSViewController.m in Sources */,
+				3C5B1D7016A10BD80079C12F /* InsetsTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

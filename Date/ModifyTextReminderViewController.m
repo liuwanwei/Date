@@ -109,10 +109,9 @@ typedef enum {
         editor.text = self.desc;
         editor.parentController = self;
         [self.navigationController pushViewController:editor animated:YES];
-    }
-    else if (indexPath.section == 0 && indexPath.row == 1) {
+    }else if (indexPath.section == 1 && indexPath.row == 0) {
         [self clickTrigeerTimeRow:indexPath];
-    }else if (indexPath.row == 2 && YES == self.isLogin) {
+    }else if (indexPath.row == 1 && YES == self.isLogin) {
         [self clickSendRow];
     }
 }

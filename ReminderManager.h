@@ -42,6 +42,9 @@ typedef enum {
 @interface ReminderManager : BaseManager
 
 @property (weak, nonatomic) id<ReminderManagerDelegate> delegate;
+@property (nonatomic) NSInteger draftRemindersSize;
+@property (nonatomic) NSInteger todayRemindersSize;
+@property (nonatomic) NSInteger allRemindersSize;
 
 + (ReminderManager *)defaultManager;
 
@@ -60,6 +63,8 @@ typedef enum {
 - (NSArray *)todayUnFinishedReminders;
 - (NSArray *)historyReminders;
 - (NSArray *)collectingBoxReminders;
+
+- (void)computeRemindersSize;
 
 - (void)sendReminder:(Reminder *)reminder;
 - (void)handleNewReminderResponse:(id)json;

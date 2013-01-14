@@ -38,6 +38,7 @@
 @synthesize userManager = _userManager;
 @synthesize isInbox = _isInbox;
 @synthesize labelSize = _labelSize;
+@synthesize dateType = _dateType;
 
 #pragma 私有函数
 - (void)removeHUD {
@@ -100,7 +101,7 @@
     [view addSubview:_labelPrompt];
     
     _btnSave = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    _btnSave.layer.frame = CGRectMake(10, 30, 300, 50);
+    _btnSave.layer.frame = CGRectMake(10, 30, 300, 44);
     _btnSave.titleLabel.font = [UIFont systemFontOfSize:18.0];
     [_btnSave setBackgroundImage:[UIImage imageNamed:@"buttonBg"] forState:UIControlStateNormal];
     [_btnSave setTitle:LocalString(@"SettingPromptOfDraftBoxWithButton") forState:UIControlStateNormal];
@@ -191,6 +192,31 @@
 
 - (void)computeFontSize {
     _labelSize = [self.desc sizeWithFont:[UIFont systemFontOfSize:15.0] constrainedToSize:CGSizeMake(150, MAXFLOAT) lineBreakMode: NSLineBreakByTruncatingTail];
+}
+
+- (void)initTriggerTime {
+    if (DataTypeToday == self.dateType || DataTypeRecent == self.dateType) {
+        NSDate * nowTime = [NSDate date];
+        NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"yyyy-MM-dd"];
+        NSUInteger unitFlags = kCFCalendarUnitHour;
+        NSCalendar * calendar = [NSCalendar currentCalendar];
+        NSDateComponents * components = [calendar components:unitFlags fromDate:nowTime];
+        NSInteger curHour =  components.hour;
+        NSString * time = [formatter stringFromDate:nowTime];
+        [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        
+        if (12 > curHour) {
+            time = [time stringByAppendingString:@" 12:00:00"];
+            self.triggerTime = [formatter dateFromString:time];
+        }else if (18 > curHour) {
+            time = [time stringByAppendingString:@" 18:00:00"];
+            self.triggerTime = [formatter dateFromString:time];
+        }else if (22 > curHour) {
+            time = [time stringByAppendingString:@" 22:00:00"];
+            self.triggerTime = [formatter dateFromString:time];
+        }
+    }
 }
 
 #pragma 事件函数
