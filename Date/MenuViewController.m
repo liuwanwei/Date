@@ -133,8 +133,12 @@ typedef enum {
     UIImageView * imageStart = (UIImageView *)[cell viewWithTag:MenuCellTagStart];
     UIImageView * imageSeparate = (UIImageView *)[cell viewWithTag:MenuCellTagSeparate];
     [imageStart setHidden:YES];
+    ReminderManager * reminderManager = [ReminderManager defaultManager];
+    NSString * remindersSize;
     if (indexPath.row == 0) {
+        remindersSize = [NSString stringWithFormat:@" %d", reminderManager.draftRemindersSize];
         labelTitle.text = LocalString(@"DraftBox");
+        labelTitle.text = [labelTitle.text stringByAppendingString:remindersSize];
         [imageSeparate setHidden:NO];
     }
     else if (indexPath.row == 4){
@@ -144,12 +148,25 @@ typedef enum {
         labelTitle.text = [_rows objectAtIndex:indexPath.row - 1];
         if (indexPath.row != 3) {
             if (indexPath.row == 1) {
-                 [imageStart setHidden:NO];
+                remindersSize = [NSString stringWithFormat:@" %d", reminderManager.todayRemindersSize];
+                labelTitle.text = [labelTitle.text stringByAppendingString:remindersSize];
+                [imageStart setHidden:NO];
+                [imageSeparate setHidden:YES];
+            }else if(indexPath.row == 2) {
+                remindersSize = [NSString stringWithFormat:@" %d", reminderManager.allRemindersSize];
+                labelTitle.text = [labelTitle.text stringByAppendingString:remindersSize];
+                [imageSeparate setHidden:NO];
             }
-            [imageSeparate setHidden:YES];
         }else {
             [imageSeparate setHidden:NO];
         }
+    }
+    
+    if (_lastIndexPath.section == indexPath.section && _lastIndexPath.row == indexPath.row) {
+        if (_lastIndexPath.row == 0 || _lastIndexPath.row == 2 || _lastIndexPath.row == 3) {
+            [imageSeparate setHidden:YES];
+        }
+        [self.tableView selectRowAtIndexPath:_lastIndexPath animated:NO scrollPosition:0];
     }
     
     return cell;
@@ -169,16 +186,15 @@ typedef enum {
     
     cell = [tableView cellForRowAtIndexPath:_lastIndexPath];
     imageSeparate = (UIImageView *)[cell viewWithTag:MenuCellTagSeparate];
-    if (0 == _lastIndexPath.row || 3 == _lastIndexPath.row) {
+    if (0 == _lastIndexPath.row || 2 == _lastIndexPath.row) {
         [imageSeparate setHidden:NO];
     }
     
     cell = [tableView cellForRowAtIndexPath:indexPath];
     imageSeparate = (UIImageView *)[cell viewWithTag:MenuCellTagSeparate];
-    if (0 == indexPath.row || 3 == indexPath.row) {
+    if (0 == indexPath.row || 2 == indexPath.row) {
         [imageSeparate setHidden:YES];
     }
-    
     
     _lastIndexPath = indexPath;
     

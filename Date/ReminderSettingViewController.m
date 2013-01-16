@@ -53,6 +53,40 @@
     }
 }
 
+- (void)initTableFooterViewOfReminderFinished {
+    UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 300, 150)];
+    
+    _labelPrompt = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 300, 20)];
+    _labelPrompt.backgroundColor = [UIColor clearColor];
+    _labelPrompt.textAlignment = NSTextAlignmentCenter;
+    _labelPrompt.textColor = RGBColor(153,153,153);
+    
+    if (_triggerTime != nil) {
+        _labelPrompt.text = @"将还原到所有提醒";
+    }else {
+        _labelPrompt.text = @"将还原到草稿箱";
+    }
+    [view addSubview:_labelPrompt];
+    
+    _btnSave = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _btnSave.layer.frame = CGRectMake(10, 30, 300, 44);
+    _btnSave.titleLabel.font = [UIFont systemFontOfSize:18.0];
+    [_btnSave setBackgroundImage:[UIImage imageNamed:@"buttonBg"] forState:UIControlStateNormal];
+    [_btnSave setTitle:@"还原" forState:UIControlStateNormal];
+    [_btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_btnSave addTarget:self action:@selector(restoreReminder) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:_btnSave];
+    
+    self.tableView.tableFooterView = view;
+
+}
+
+- (void)restoreReminder {
+    [self.reminderManager modifyReminder:_reminder withState:ReminderStateUnFinish];
+    [[AppDelegate delegate].homeViewController initDataWithAnimation:NO];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 #pragma 类成员函数
 - (void)updateReceiverCell {
 }
@@ -191,7 +225,8 @@
 }
 
 - (void)computeFontSize {
-    _labelSize = [self.desc sizeWithFont:[UIFont systemFontOfSize:15.0] constrainedToSize:CGSizeMake(150, MAXFLOAT) lineBreakMode: NSLineBreakByTruncatingTail];
+    _labelSize = [self.desc sizeWithFont:[UIFont fontWithName:@"Helvetica" size:15.0] constrainedToSize:CGSizeMake(150, MAXFLOAT) lineBreakMode: NSLineBreakByTruncatingTail];
+    _labelSize.height = _labelSize.height + 25;
 }
 
 - (void)initTriggerTime {
@@ -232,13 +267,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self initTableFooterView];
+    [self computeFontSize];
+    if (_dateType == DataTypeRecent || _dateType == DataTypeToday || _dateType == DataTypeCollectingBox) {
+        [self initTableFooterView];
+    }else if (_dateType == DataTypeHistory){
+        [self initTableFooterViewOfReminderFinished];
+    }
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     _userManager = [UserManager defaultManager];
     _isLogin = [[SinaWeiboManager defaultManager].sinaWeibo isLoggedIn];
     _isAuthValid = [[SinaWeiboManager defaultManager].sinaWeibo isAuthValid];
-    [self computeFontSize];
+   
 }
 
 - (void)viewDidAppear:(BOOL)animated {

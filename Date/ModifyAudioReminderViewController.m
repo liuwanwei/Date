@@ -9,6 +9,7 @@
 #import "ModifyAudioReminderViewController.h"
 #import "AppDelegate.h"
 #import "TextEditorViewController.h"
+#import "GlobalFunction.h"
 
 typedef enum {
     TitleTypeShow = 0,

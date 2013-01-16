@@ -46,8 +46,8 @@ static SoundManager * sSoundManager;
     if (self = [super init]) {
         [[NSBundle mainBundle] loadNibNamed:@"RecordView" owner:self options:nil];
         if (nil != _view) {
-            _view.frame = CGRectMake(50.0, 100.0, _view.frame.size.width,_view.frame.size.height);
-            _viewWarning.frame = CGRectMake(50.0, 150.0, _viewWarning.frame.size.width,_viewWarning.frame.size.height);
+            _view.frame = CGRectMake(54.0, 100.0, _view.frame.size.width,_view.frame.size.height);
+            _viewWarning.frame = CGRectMake(54.0, 150.0, _viewWarning.frame.size.width,_viewWarning.frame.size.height);
             [self initImageView];
             _lock = [[NSCondition alloc] init];
         }
@@ -70,17 +70,6 @@ static SoundManager * sSoundManager;
 
 - (void)initImageView {
     if (nil != _imageView) {
-        /*self.imageView.animationImages = [NSArray arrayWithObjects:
-                                          [UIImage imageNamed:@"recordingSignal001"],
-                                          [UIImage imageNamed:@"recordingSignal002"],
-                                          [UIImage imageNamed:@"recordingSignal003"],
-                                          [UIImage imageNamed:@"recordingSignal004"],
-                                          [UIImage imageNamed:@"recordingSignal005"],
-                                          [UIImage imageNamed:@"recordingSignal006"],
-                                          [UIImage imageNamed:@"recordingSignal007"],
-                                          [UIImage imageNamed:@"recordingSignal008"],
-                                          nil];
-        self.imageView.animationDuration = 1;*/
         _images =  [NSArray arrayWithObjects:
                     [UIImage imageNamed:@"recordingSignal001"],
                     [UIImage imageNamed:@"recordingSignal002"],
@@ -192,6 +181,7 @@ static SoundManager * sSoundManager;
     if(_recorder) {
         [_recorder setMeteringEnabled:YES];
         [_recorder record];
+        _recorder.delegate = self;
         _startRecordDate = [NSDate date];
     }else {
         NSLog(@"recorder: %@ %d %@", [error domain], [error code], [[error userInfo] description]);
@@ -289,7 +279,6 @@ static SoundManager * sSoundManager;
     }
     
     DocumentManager * manager = [DocumentManager defaultManager];
-    
     path = [[manager soundPath] stringByAppendingPathComponent:[self fileNameWithPath:path]];
     NSURL * url = [NSURL fileURLWithPath:path isDirectory:NO];
     _player  = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
@@ -338,6 +327,18 @@ static SoundManager * sSoundManager;
     }
 }
 
+- (void)deleteAudioFile:(NSString *)path {
+    if (nil != path && ![path isEqualToString:@""]) {
+        NSError * error;
+        DocumentManager * manager = [DocumentManager defaultManager];
+        path = [[manager soundPath] stringByAppendingPathComponent:[self fileNameWithPath:path]];
+        NSFileManager * fileManager = [NSFileManager defaultManager];
+        if (YES == [fileManager fileExistsAtPath:path]) {
+            [fileManager removeItemAtPath:path error:&error];
+        }
+    }
+}
+
 - (NSInteger)audioTime:(NSString *)path {
     NSInteger time = 0;
     NSError * error;
@@ -374,16 +375,16 @@ static SoundManager * sSoundManager;
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     if (_alarmPlayer == player) {
         _alarmPlayer = nil;
-        if (self.delegate != nil) {
+        
             
             //if ([self.delegate respondsToSelector:@selector(alarmPlayerDidFinishPlaying)]) {
             //    [self.delegate performSelector:@selector(alarmPlayerDidFinishPlaying) withObject:nil];
             //}
             
-            NSNotification * notification = nil;
-            notification = [NSNotification notificationWithName:kAlarmPlayFinishedMessage object:nil];
-            [[NSNotificationCenter defaultCenter] postNotification:notification];
-        }
+        NSNotification * notification = nil;
+        notification = [NSNotification notificationWithName:kAlarmPlayFinishedMessage object:nil];
+        [[NSNotificationCenter defaultCenter] postNotification:notification];
+     
     }else {
         _player = nil;
         if (self.delegate != nil) {
@@ -393,6 +394,12 @@ static SoundManager * sSoundManager;
         }
   
     }
+}
+
+#pragma AVAudioPlayerDelegate
+- (void)audioRecorderBeginInterruption:(AVAudioRecorder *)recorder {
+    [self stopTimer];
+    [self stopRecord];
 }
 
 @end

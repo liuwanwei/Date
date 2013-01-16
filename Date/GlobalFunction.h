@@ -17,4 +17,6 @@
 - (void)setNavigationBarBackgroundImage:(UINavigationBar *)navigationBar;
 - (void)initNavleftBarItemWithController:(UIViewController *)controller withAction:(SEL)action;
 
+- (UIColor *)viewBackground;
+
 @end

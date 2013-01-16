@@ -271,7 +271,7 @@
         /*if (NO == [_reminder.isRead integerValue]) {
             [[ReminderManager defaultManager] updateReminderReadStateRequest:_reminder withReadState:YES];
         }*/
-        
+       
         if ([[SoundManager defaultSoundManager] fileExistsAtPath:_reminder.audioUrl]) {
             [self setAudioState:AudioStatePlaying];
             self.labelAudioTime.text = [_reminder.audioLength stringValue];

@@ -63,7 +63,7 @@
         if (nil == friend) {
             nickname = [NSString stringWithFormat:@"%@:",[reminder.userID stringValue]];
         }else {
-            nickname = [NSString stringWithFormat:@":%@",friend.nickname];
+            nickname = [NSString stringWithFormat:@"%@:",friend.nickname];
         }
     }
     
@@ -104,6 +104,7 @@
     _navController.view.layer.shadowRadius = 7.0f;
     _navController.view.layer.masksToBounds = NO;*/
     [_menuViewController setVisible:YES];
+    [_menuViewController.tableView reloadData];
 }
 
 +(AppDelegate *)delegate{
@@ -137,10 +138,11 @@
     
     [[GlobalFunction defaultGlobalFunction] setNavigationBarBackgroundImage:_navController.navigationBar];
     
-    _menuViewController = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];
-    _menuViewController.view.frame = CGRectMake(0, 20, 320, 460);
-    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    _menuViewController = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];
+    _menuViewController.view.frame = CGRectMake(0, 20, 320, self.window.frame.size.height);
+    
     self.window.rootViewController = _navController;
     [self.window addSubview:_menuViewController.view];
     
@@ -210,8 +212,6 @@
     if (NO == _showingAlert) {
         [self checkRemindersExpired];
     }
-    
-    [[ReminderManager defaultManager] updateAppBadge];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

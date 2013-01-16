@@ -21,6 +21,7 @@
 @synthesize parentController = _parentController;
 @synthesize textView = _textView;
 
+#pragma 事件函数
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -53,16 +54,15 @@
 }
 
 - (void)back{
+    [_textView resignFirstResponder];
+    _parentController.desc = _textView.text;
+    [_parentController updateDescCell];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if ([text isEqualToString:@"\n"]) {
-        [textView resignFirstResponder];
-        _parentController.desc = textView.text;
-        [_parentController updateDescCell];
         [self back];
-        //[self performSelector:@selector(back) withObject:self afterDelay:0.3];
         return NO;
     }
     return YES;

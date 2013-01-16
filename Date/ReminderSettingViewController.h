@@ -37,6 +37,7 @@
 - (void)clickTrigeerTimeRow:(NSIndexPath *)indexPath;
 - (void)clickSendRow;
 - (void)initTableFooterView;
+- (void)initTableFooterViewOfReminderFinished;
 - (void)updateTableFooterViewInCreateState;
 - (void)updateTableFooterViewInModifyInboxState;
 - (void)updateTableFooterViewInModifyAlarmState;

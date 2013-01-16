@@ -109,7 +109,7 @@
             }
             
             if (indexPath.row == 1) {
-                cell.textLabel.text = @"提醒时间";
+                cell.textLabel.text = @"闹钟";
                 cell.detailTextLabel.text = [self stringTriggerTime];
             }else if (indexPath.row == 2){
                 cell.textLabel.text = @"发送给";

@@ -66,7 +66,7 @@ typedef enum {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString * timeline = [defaults objectForKey:kRemoteRemindersUpdateTimeline];
     if (nil == timeline) {
-        timeline = @"0";
+        timeline = [self timeline];
     }
     return timeline;
 }
@@ -84,19 +84,15 @@ typedef enum {
  新加reminder表数据的同时，修改BilateralFriend表
  */
 - (void)saveRemotesReminders:(NSArray *)data {
-    if ([data count] > 0) {
-         [self saveTimeline];
-    }
     BOOL isBell;
     Reminder * reminder;
     BilateralFriend * friend;
-    NSDate * nowDate = [NSDate date];
+
     NSNumberFormatter * numberFormatter = [[NSNumberFormatter alloc] init];
     NSDateFormatter * dateFormatter = [[NSDateFormatter alloc] init];
     NSTimeZone * timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
     [dateFormatter setTimeZone:timeZone];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    //NSString * state;
     NSString * triggerTime;
     NSString * reminderId;
     for (id object in data) {
@@ -114,49 +110,19 @@ typedef enum {
                 reminder.longitude = [object objectForKey:@"longitude"];
                 reminder.type = [NSNumber numberWithInteger:ReminderTypeReceive];
                 reminder.isRead = [NSNumber numberWithBool:YES];
-                //reminder.isRead = [numberFormatter numberFromString:[object objectForKey:@"state"]];
-                //state = [object objectForKey:@"state"];
                 reminder.audioLength = [numberFormatter numberFromString:[object objectForKey:@"audioLength"]];
                         
-                /*if (YES == [reminder.isRead boolValue]) {
-                    if ([nowDate compare:reminder.triggerTime] == NSOrderedDescending) {
-                        //过期
-                        reminder.isAlarm = [NSNumber numberWithBool:YES];
-                    }else {
-                        //未过期
-                        isBell = YES;
-                        reminder.isAlarm = [NSNumber numberWithBool:NO];
-                    }
-                }else {
-                    if ([nowDate compare:reminder.triggerTime] == NSOrderedAscending) {
-                        // 未过期
-                        isBell = YES;
-                    }
-                    reminder.isAlarm = [NSNumber numberWithBool:NO];
-                }*/
-                
-                //if ([state isEqualToString:@"1"]) {
                 triggerTime = [object objectForKey:@"triggerTime"];
                 if ([triggerTime isEqualToString:@"0"]) {
                     reminder.triggerTime = nil;
                 }else {
                     reminder.triggerTime = [dateFormatter dateFromString:triggerTime];
-                    if ([nowDate compare:reminder.triggerTime] == NSOrderedAscending) {
-                        isBell = YES;
-                        reminder.isAlarm = [NSNumber numberWithBool:NO];
-                    }else {
-                        reminder.isAlarm = [NSNumber numberWithBool:YES];
-                    }
-                    
-                    [self appBadgeNumberWith:reminder.triggerTime withOperate:BadgeOperateAdd];
+                                            isBell = YES;
+                    reminder.isAlarm = [NSNumber numberWithBool:NO];
+                    [self updateRemindersSizeWith:reminder.triggerTime withOperate:BadgeOperateAdd];
                 }
                         
                 [self synchroniseToStore];
-                //[[BilateralFriendManager defaultManager] modifyLastReminder:reminder.id withUserId:reminder.userID];
-                        
-                if (NO == [reminder.isRead boolValue])  {
-                    //[[BilateralFriendManager defaultManager] modifyUnReadRemindersSizeWithUserId: reminder.userID withOperateType:OperateTypeAdd];
-                }
                        
                 if (YES == isBell) {
                     friend = [[BilateralFriendManager defaultManager]bilateralFriendWithUserID:reminder.userID];
@@ -165,6 +131,9 @@ typedef enum {
             }
         }
         
+        if ([data count] > 0) {
+            [self saveTimeline];
+        }
         NSNotification * notification = nil;
         notification = [NSNotification notificationWithName:kRemindesUpdateMessage object:nil];
         [[NSNotificationCenter defaultCenter] postNotification:notification];
@@ -203,46 +172,47 @@ typedef enum {
     return localNotification;
 }
 
-- (void)appBadgeNumberWith:(NSDate *)triggerTime withOperate:(BadgeOperate)operate{
-    AppBadgeMode mode = [self appBadgeMode];
-    
+- (void)remindersSize {
+    [self collectingBoxReminders];
+    [self recentUnFinishedReminders];
+}
+
+- (void)updateRemindersSizeWith:(NSDate *)triggerTime withOperate:(BadgeOperate)operate {
     NSDate * today = [NSDate date];
     NSDate * tomorrow;
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy-MM-dd"];
     today = [formatter dateFromString:[formatter stringFromDate:today]];
     tomorrow = [today dateByAddingTimeInterval:24*60*60];
-    
-    NSInteger badgeSize = 0;
-    badgeSize = [UIApplication sharedApplication].applicationIconBadgeNumber;
-    BOOL sign = NO;
-    if (AppBadgeModeToady == mode) {
-        if ([triggerTime compare:today] == NSOrderedDescending &&
-            [triggerTime compare:tomorrow] == NSOrderedAscending) {
-            sign = YES;
+
+    if (nil == triggerTime) {
+        if (BadgeOperateAdd == operate) {
+            _draftRemindersSize++;
+        }else if (BadgeOperateSub == operate && 0 != _draftRemindersSize) {
+            _draftRemindersSize--;
         }
-    }else if (AppBadgeModeRecent == mode) {
-        if ([triggerTime compare:today] == NSOrderedDescending) {
+    }else {
+        BOOL sign = NO;
+        if ([triggerTime compare:tomorrow] == NSOrderedAscending) {
             sign = YES;
-            badgeSize += 1;
-        }
-    }
-    
-    if (YES == sign) {
-        if (operate == BadgeOperateAdd) {
-            badgeSize += 1;
-        }else {
-            badgeSize -= 1;
         }
         
-        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badgeSize];
+        if (BadgeOperateAdd == operate) {
+            if (YES == sign) {
+                _todayRemindersSize ++;
+            }
+            _allRemindersSize++;
+        }else if (BadgeOperateSub == operate) {
+            if (YES == sign && 0 != _todayRemindersSize) {
+                _todayRemindersSize --;
+            }
+            if (0 != _allRemindersSize) {
+                _allRemindersSize --;
+            }
+        }
     }
     
-}
-
-- (void)remindersSize {
-    [self collectingBoxReminders];
-    [self recentUnFinishedReminders];
+    [self updateAppBadge];
 }
 
 #pragma 静态函数
@@ -293,8 +263,11 @@ typedef enum {
 
 - (void)deleteReminder:(Reminder *)reminder {
     [self cancelLocalNotificationWithReminder:reminder];
+    if (ReminderStateUnFinish == [reminder.state integerValue]) {
+         [self updateRemindersSizeWith:reminder.triggerTime withOperate:BadgeOperateSub];
+    }
+    [[SoundManager defaultSoundManager] deleteAudioFile:reminder.audioUrl];
     [self deleteFromStore:reminder synchronized:YES];
-    [self updateAppBadge];
 }
 
 - (void)modifyReminder:(Reminder *)reminder withTriggerTime:(NSDate *)triggerTime withDesc:(NSString *)desc {
@@ -322,7 +295,7 @@ typedef enum {
                 [[ReminderManager defaultManager] addLocalNotificationWithReminder:reminder withBilateralFriend:friend];
             }
             
-            [self updateAppBadge];
+            //[self updateAppBadge];
         }
 
         NSNotification * notification = nil;
@@ -408,7 +381,7 @@ typedef enum {
 - (void)sendReminder:(Reminder *)reminder {
     if (YES == [[UserManager defaultManager] isOneself:[reminder.userID stringValue]] || nil == reminder.triggerTime) {
         NSString * reminderId = [[NSDate date] description];
-        [self appBadgeNumberWith:reminder.triggerTime withOperate:BadgeOperateAdd];
+        [self updateRemindersSizeWith:reminder.triggerTime withOperate:BadgeOperateAdd];
         
         reminder.id = reminderId;
         reminder.createTime = [NSDate date];
@@ -553,10 +526,10 @@ typedef enum {
 - (void)addLocalNotificationWithReminder:(Reminder *)reminder withBilateralFriend:(BilateralFriend *)friend{
     if (nil == [self localNotification:reminder.id] && nil != reminder.triggerTime) {
         NSString * body;
-        NSString * reminderId = reminder.id;
-        NSDate * triggerTime = reminder.triggerTime;
-        NSNumber * state = reminder.state;
-        NSNumber * alarm = reminder.isAlarm;
+//        NSString * reminderId = reminder.id;
+//        NSDate * triggerTime = reminder.triggerTime;
+//        NSNumber * state = reminder.state;
+//        NSNumber * alarm = reminder.isAlarm;
         if (nil == friend) {
             body = @"您自己的提醒:";
         }else if ([[friend.userID stringValue] isEqualToString:[UserManager defaultManager].oneselfId]) {
@@ -565,7 +538,7 @@ typedef enum {
             body = [friend.nickname stringByAppendingString:@" 提醒你:"];  
         }
         body = [body stringByAppendingString:reminder.desc];
-        body = [body stringByAppendingString:@" "];
+        /*body = [body stringByAppendingString:@" "];
         body = [body stringByAppendingString:@"id="];
         body = [body stringByAppendingString:reminderId];
         body = [body stringByAppendingString:@" time="];
@@ -573,7 +546,7 @@ typedef enum {
         body = [body stringByAppendingString:@" state="];
         body = [body stringByAppendingString:[state stringValue]];
         body = [body stringByAppendingString:@" isAlarm="];
-        body = [body stringByAppendingString:[alarm stringValue]];
+        body = [body stringByAppendingString:[alarm stringValue]];*/
         
         UILocalNotification * newNotification = [[UILocalNotification alloc] init];
         newNotification.fireDate = reminder.triggerTime;
@@ -611,10 +584,25 @@ typedef enum {
 
 - (void)modifyReminder:(Reminder *)reminder withState:(ReminderState)state {
     reminder.state = [NSNumber numberWithInteger:state];
-    reminder.isAlarm = [NSNumber numberWithBool:YES];
+    if (ReminderStateFinish == state) {
+        reminder.isAlarm = [NSNumber numberWithBool:YES];
+        [self cancelLocalNotificationWithReminder:reminder];
+        [self updateRemindersSizeWith:reminder.triggerTime withOperate:BadgeOperateSub];
+    }else {
+        if (nil != reminder.triggerTime) {
+            NSDate * nowDate = [NSDate date];
+            if ([nowDate compare:reminder.triggerTime] == NSOrderedAscending) {
+                //未过期) {
+                reminder.isAlarm = [NSNumber numberWithBool:NO];
+                BilateralFriend * friend = [[BilateralFriendManager defaultManager]bilateralFriendWithUserID:reminder.userID];
+                [self addLocalNotificationWithReminder:reminder withBilateralFriend:friend];
+                [self updateRemindersSizeWith:reminder.triggerTime withOperate:BadgeOperateAdd];
+            }
+        }
+    }
+    
     [self synchroniseToStore];
-    [self cancelLocalNotificationWithReminder:reminder];
-    [self appBadgeNumberWith:reminder.triggerTime withOperate:BadgeOperateSub];
+    
 }
 
 - (void)modifyReminder:(Reminder *)reminder withType:(ReminderType)type {
@@ -725,6 +713,7 @@ typedef enum {
         _draftRemindersSize = 0;
         return nil;
     }else {
+        
         _draftRemindersSize = [results count];
     }
     return results;
@@ -763,18 +752,20 @@ typedef enum {
 
 - (void)updateAppBadge {
     AppBadgeMode mode = [self appBadgeMode];
-    NSInteger badgeSize;
-    NSArray * reminders;
+    NSInteger badgeSize = 0;
+    //NSArray * reminders;
     if (AppBadgeModeToady == mode) {
-        reminders = [self todayUnFinishedReminders];
+        badgeSize = _todayRemindersSize;
+        //reminders = [self todayUnFinishedReminders];
     }else if (AppBadgeModeRecent == mode){
-        reminders = [self recentUnFinishedReminders];
+        badgeSize = _allRemindersSize;
+        //reminders = [self recentUnFinishedReminders];
     }
-    if (nil != reminders) {
-        badgeSize = [reminders count];
-    }else {
-        badgeSize = 0;
-    }
+//    if (nil != reminders) {
+//        badgeSize = [reminders count];
+//    }else {
+//        badgeSize = 0;
+//    }
     
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badgeSize];
 }

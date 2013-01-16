@@ -12,10 +12,6 @@ static GlobalFunction * sGlobalFunction;
 
 @implementation GlobalFunction
 
-- (UIColor *)navigationItemTintColor{
-    return [UIColor colorWithRed:0.137 green:0.557 blue:0.867 alpha:0.5];
-}
-
 + (GlobalFunction *)defaultGlobalFunction{
     if (nil == sGlobalFunction) {
         sGlobalFunction = [[GlobalFunction alloc] init];
@@ -27,8 +23,12 @@ static GlobalFunction * sGlobalFunction;
 - (void)setNavigationBarBackgroundImage:(UINavigationBar *)navigationBar{
     UIImage * image = [UIImage imageNamed:@"navigationBarBg"];
     [navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
-    navigationBar.tintColor = self.navigationItemTintColor;
-    [navigationBar.titleTextAttributes setValue:RGBColor(232, 224, 213) forKey:UITextAttributeTextColor];
+    navigationBar.tintColor = RGBColor(242, 242, 242);
+    UIFont * font = [UIFont systemFontOfSize:20.0];
+    NSValue * offset = [NSValue valueWithUIOffset:UIOffsetMake(0, 2)];
+    NSDictionary *attr = [[NSDictionary alloc] initWithObjectsAndKeys:font, UITextAttributeFont,RGBColor(0, 0, 0), UITextAttributeTextColor,[UIColor whiteColor],UITextAttributeTextShadowColor,offset,UITextAttributeTextShadowOffset,nil];
+    [navigationBar setTitleTextAttributes:attr];
+   
 }
 
 - (void)initNavleftBarItemWithController:(UIViewController *)controller withAction:(SEL)action{
@@ -46,6 +46,10 @@ static GlobalFunction * sGlobalFunction;
     }else {
         controller.navigationItem.leftBarButtonItem = nil;
     }
+}
+
+- (UIColor *)viewBackground {
+    return RGBColor(255,255,255);
 }
 
 @end

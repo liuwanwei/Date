@@ -83,7 +83,7 @@
 							<object class="IBUIButton" id="681162688">
 								<reference key="NSNextResponder" ref="578300763"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{6, 22}, {26, 26}}</string>
+								<string key="NSFrame">{{9, 22}, {26, 26}}</string>
 								<reference key="NSSuperview" ref="578300763"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="127861064"/>
@@ -98,6 +98,10 @@
 									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 								</object>
 								<reference key="IBUINormalTitleShadowColor" ref="504961949"/>
+								<object class="NSCustomResource" key="IBUIHighlightedBackgroundImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">checkboxCompleted.png</string>
+								</object>
 								<object class="NSCustomResource" key="IBUINormalBackgroundImage">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">checkboxOri.png</string>
@@ -356,7 +360,6 @@
 				<reference key="IBUIBackgroundColor" ref="104350086"/>
 				<string key="IBUIRestorationIdentifier">ReminderInboxCell</string>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-				<int key="IBUISelectionStyle">0</int>
 				<int key="IBUIAccessoryType">1</int>
 				<reference key="IBUIContentView" ref="578300763"/>
 				<string key="IBUIReuseIdentifier">ReminderInboxCell</string>
@@ -701,6 +704,7 @@
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="blueDot.png">{16, 16}</string>
 			<string key="btnPlay.png">{113, 84}</string>
+			<string key="checkboxCompleted.png">{17, 17}</string>
 			<string key="checkboxOri.png">{26, 26}</string>
 			<string key="sidebar_separate_light@2x.png">{450, 4}</string>
 		</dictionary>

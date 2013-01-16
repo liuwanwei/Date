@@ -38,8 +38,13 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-    [self.btnFinished setBackgroundImage:[UIImage imageNamed:@"checkboxCompleted"] forState:UIControlStateHighlighted];
-    // Configure the view for the selected state
+    [self.btnFinished setHighlighted:NO];
+    [self.btnFinished setSelected:NO];
+}
+
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
+    [super setHighlighted:highlighted animated:animated];
+    [self.btnFinished setHighlighted:NO];
 }
 
 - (void)setReminder:(Reminder *)reminer {

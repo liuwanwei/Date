@@ -29,7 +29,7 @@
 #pragma 私有函数
 - (void)initData {
     _appBadgeMode = [[ReminderManager defaultManager] appBadgeMode];
-    _appBadgeSignRows = [[NSArray alloc] initWithObjects:@"不显示",@"今日提醒",@"近期提醒", nil];
+    _appBadgeSignRows = [[NSArray alloc] initWithObjects:@"不显示",@"今日提醒",@"所有提醒", nil];
     _appSnsInfo = [[NSArray alloc] initWithObjects:@"新浪微博", nil];
     _otherInfo = [[NSArray alloc] initWithObjects:@"退出", nil];
 }
