@@ -12,6 +12,7 @@
 #import "BilateralFriend.h"
 #import "ReminderManager.h"
 #import "UserManager.h"
+#import "LMLibrary.h"
 
 typedef enum {
     AudioStateNormal = 0,
@@ -51,19 +52,16 @@ typedef enum {
 
 @property (weak, nonatomic) Reminder * reminder;
 @property (weak, nonatomic) BilateralFriend * bilateralFriend;
-
+@property (nonatomic) DataType dateType;
 @property (strong, nonatomic) NSIndexPath * indexPath;
 @property (nonatomic) AudioState audioState;
 
 @property (weak, nonatomic) id<ReminderCellDelegate> delegate;
-
-@property (nonatomic) BOOL showFrom;
-@property (nonatomic) BOOL showDay;
-@property (nonatomic) DataType dateType;
 
 - (IBAction)palyAudio:(UIButton *)sender;
 - (IBAction)showMap:(UIButton *)sender;
 - (IBAction)finish:(UIButton *)sender;
 
 - (void)modifyReminderReadState;
+- (NSString *)custumDayString:(NSDate *)date;
 @end

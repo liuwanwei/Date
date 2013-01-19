@@ -9,11 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "ReminderSettingViewController.h"
 
-@interface ReminderTimeSettingViewController : UIViewController <UITableViewDelegate, UITableViewDataSource,UIPickerViewDelegate,UIPickerViewDataSource>
+@interface ReminderTimeSettingViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UITableView * tableView;
-@property (weak, nonatomic) IBOutlet UIPickerView * pickerView;
-@property (weak, nonatomic) IBOutlet UIDatePicker * datePick;
 @property (weak, nonatomic) IBOutlet UILabel * labelDay;
 @property (weak, nonatomic) IBOutlet UILabel * labelDate;
 @property (weak, nonatomic) IBOutlet UILabel * labelTime;
@@ -21,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIButton * btnSet;
 
 @property (weak, nonatomic) ReminderSettingViewController * parentContoller;
+@property (weak, nonatomic) UIDatePicker * datePick;
 
 - (IBAction)clickClear:(id)sender;
 - (IBAction)clickSet:(id)sender;

@@ -11,11 +11,10 @@
 #import "SinaWeiboManager.h"
 #import "UserManager.h"
 #import "BilateralFriendManager.h"
+#import "SettingAppBadgeViewController.h"
+#import "SettingSNSViewController.h"
 
 @interface SettingViewController () {
-    NSArray * _appBadgeSignRows;
-    AppBadgeMode _appBadgeMode;
-    NSArray * _appSnsInfo;
     NSArray * _otherInfo;
 }
 
@@ -23,26 +22,27 @@
 
 @implementation SettingViewController
 @synthesize tableView = _tableView;
+@synthesize appBadgeSignRows = _appBadgeSignRows;
+@synthesize appBadgeMode = _appBadgeMode;
+@synthesize appSnsInfo = _appSnsInfo;
 
 #pragma 私有函数
-- (void)initMenuView {
-    UIButton * leftButton;
-    UIBarButtonItem * item;
-    
-    leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
-    [leftButton setImage:[UIImage imageNamed:@"leftMenuUp"] forState:UIControlStateNormal];
-    [leftButton setImage:[UIImage imageNamed:@"leftMenuDown"] forState:UIControlStateHighlighted];
-    [leftButton addTarget:self action:@selector(leftBarBtnTapped:) forControlEvents:UIControlEventTouchUpInside];
-    item = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-    
-    self.navigationItem.leftBarButtonItem = item;
-}
-
 - (void)initData {
     _appBadgeMode = [[ReminderManager defaultManager] appBadgeMode];
-    _appBadgeSignRows = [[NSArray alloc] initWithObjects:@"不显示",@"今日提醒",@"近期提醒", nil];
+    _appBadgeSignRows = [[NSArray alloc] initWithObjects:@"不显示",@"今日提醒",@"所有提醒", nil];
     _appSnsInfo = [[NSArray alloc] initWithObjects:@"新浪微博", nil];
     _otherInfo = [[NSArray alloc] initWithObjects:@"退出", nil];
+}
+
+- (void)updateSNSCell {
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+#pragma 类成员函数
+- (void)updateAppBadgeCell {
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (BOOL)isLogin {
@@ -55,22 +55,6 @@
 
 - (NSString *)sinaNickname {
     return [UserManager defaultManager].screenName;
-}
-
-- (void)updateSinaRow {
-    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-}
-
-/*
- 处理 LoginController 授权成功后，发送的消息
- */
-- (void)handleOAuthSuccessMessage:(NSNotification *)note {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:kUserOAuthSuccessMessage object:nil];
-    [[SinaWeiboManager defaultManager] requestUserInfo];
-    [[SinaWeiboManager defaultManager] requestBilateralFriends];
-    
-    [self updateSinaRow];
 }
 
 #pragma 事件函数
@@ -88,7 +72,7 @@
     [super viewDidLoad];
     self.tableView.rowHeight = 44;
     self.title = @"设置";
-    [self initMenuView];
+    [self initMenuButton];
     [self initData];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -103,32 +87,12 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (0 == section) {
-        return _appSnsInfo.count;
-        
-    }else if (1 == section) {
-        return _appBadgeSignRows.count;
-    }else if (2 == section) {
-        return _otherInfo.count;
-    }
-    return 0;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if (section == 0) {
-        return @"账号绑定";
-    }else if (1 == section) {
-        return @"应用程序标记";
-    }else if (2 == section) {
-        return @"其他";
-    }
-    
-    return nil;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -136,75 +100,42 @@
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     if (0 == indexPath.section) {
+        //cell.imageView.image = [UIImage imageNamed:@"sinaWeiboLogo"];
+        cell.textLabel.text = LocalString(@"SettingAppSNSBinding");
         if (YES == [self isLogin]) {
-            if (nil != [self sinaNickname]) {
-                NSString * str = [[_appSnsInfo objectAtIndex:0] stringByAppendingString:@" ("];
-                str = [str stringByAppendingString:[self sinaNickname]];
-                str = [str stringByAppendingString:@")"];
-                cell.textLabel.text = str;
-            }else {
-                cell.textLabel.text = [_appSnsInfo objectAtIndex:0];
-            }
-            
             if (NO == [self isAuthValid]) {
-                cell.detailTextLabel.text = @"过期";
+                cell.detailTextLabel.text = @"已过期";
             }else {
                 cell.detailTextLabel.text = @"已绑定";
             }
         }else {
-            cell.textLabel.text = [_appSnsInfo objectAtIndex:0];
             cell.detailTextLabel.text = @"未绑定";
         }
     }else if (1 == indexPath.section) {
-        cell.textLabel.text = [_appBadgeSignRows objectAtIndex:indexPath.row];
-        if (_appBadgeMode == indexPath.row) {
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        }
-    }else if (2 == indexPath.section) {
-        cell.textLabel.text = @"解除绑定";
+        //cell.imageView.image = [UIImage imageNamed:@"notification"];
+        cell.textLabel.text = @"应用程序标记";
+        cell.detailTextLabel.text = [_appBadgeSignRows objectAtIndex:_appBadgeMode];
     }
     
     return cell;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    if (section == 0) {
-        return @"绑定账号后，就可以向互相关注的好友发送闹铃提醒";
-    }
-    
-    return @"";
-}
-
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (0 == indexPath.section) {
-        if (YES == [self isAuthValid]) {
-            [tableView deselectRowAtIndexPath:indexPath animated:YES];
-            return;
-        }
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOAuthSuccessMessage:) name:kUserOAuthSuccessMessage object:nil];
-        [[SinaWeiboManager defaultManager].sinaWeibo logIn];
-    }else if (1 == indexPath.section) {
-        NSIndexPath * path =  [NSIndexPath indexPathForRow:_appBadgeMode inSection:1];
-        UITableViewCell * selectedCell = [tableView cellForRowAtIndexPath:path];
-        selectedCell.accessoryType = UITableViewCellAccessoryNone;
-        UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        _appBadgeMode = indexPath.row;
-        [[ReminderManager defaultManager] storeAppBadgeMode:_appBadgeMode];
-    }else if (2 == indexPath.section) {
-        long long userId = [[SinaWeiboManager defaultManager].sinaWeibo.userID longLongValue];
-        BilateralFriend * friend = [[BilateralFriendManager defaultManager]
-                                    bilateralFriendWithUserID:[NSNumber numberWithLongLong:userId]];
-        if (nil != friend) {
-            [[BilateralFriendManager defaultManager] deleteFriend:friend];
-        }
+        SettingSNSViewController * controller = [[SettingSNSViewController alloc] initWithNibName:@"SettingSNSViewController" bundle:nil];
+        controller.parentController = self;
+        [self.navigationController pushViewController:controller animated:YES];
         
-        [[SinaWeiboManager defaultManager].sinaWeibo logOut];
-        [self updateSinaRow];
+    }else if (1 == indexPath.section) {
+        SettingAppBadgeViewController * controller = [[SettingAppBadgeViewController alloc] initWithNibName:@"SettingAppBadgeViewController" bundle:nil];
+        controller.parentController = self;
+        [self.navigationController pushViewController:controller animated:YES];
     }
 }
 

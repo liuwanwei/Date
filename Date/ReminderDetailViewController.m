@@ -64,7 +64,7 @@
  
 - (void)dismiss {
     [self.reminderManager modifyReminder:_reminder withBellState:YES];
-    [_parentController initData];
+    [_parentController initDataWithAnimation:NO];
     if (_detailViewShowMode == DeailViewShowModePresent) {
         [self dismissViewControllerAnimated:YES completion:nil];
         [self performSelector:@selector(checkRemindersExpired) withObject:self afterDelay:1.0];

@@ -18,6 +18,12 @@
 #import "TextReminderDetailViewController.h"
 #import "BilateralFriendManager.h"
 #import "RemindersInboxViewController.h"
+#import "GlobalFunction.h"
+
+@interface AppDelegate () {
+    BOOL _showingAlert;
+}
+@end
 
 @implementation AppDelegate
 
@@ -46,11 +52,48 @@
     [_navController presentViewController:nav animated:YES completion:nil];
 }
 
+- (void)showAlertViewWithReminder:(Reminder *)reminder {
+    UIAlertView * alertView;
+    BilateralFriend * friend = [[BilateralFriendManager defaultManager] bilateralFriendWithUserID:reminder.userID];
+    NSString * nickname;
+    NSString * userId = [reminder.userID stringValue];
+    if ([userId isEqualToString:[UserManager defaultManager].oneselfId]) {
+        nickname = @"";
+    }else {
+        if (nil == friend) {
+            nickname = [NSString stringWithFormat:@"%@:",[reminder.userID stringValue]];
+        }else {
+            nickname = [NSString stringWithFormat:@"%@:",friend.nickname];
+        }
+    }
+    
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"HH:mm"];
+    NSString * time = [formatter stringFromDate:reminder.triggerTime];
+    NSString * title = nickname;
+    title  = [title stringByAppendingString:reminder.desc];
+    NSString * message = time;
+    
+    if (nil != reminder.audioUrl && ![reminder.audioUrl isEqualToString:@""]) {
+        [[SoundManager defaultSoundManager] playAudio:reminder.audioUrl];
+    }
+    
+    alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+    alertView.restorationIdentifier = reminder.id;
+    [alertView show];
+}
+
 - (void)checkRemindersExpired {
     NSArray * reminders = [[ReminderManager defaultManager] remindersExpired];
     if (nil != reminders) {
-        [self showRemindersNotificationViewControllerWithReminders:[reminders objectAtIndex:0]];
+        //[self showRemindersNotificationViewControllerWithReminders:[reminders objectAtIndex:0]];
+        _showingAlert = YES;
+        [self showAlertViewWithReminder:[reminders objectAtIndex:0]];
     }
+}
+
+- (void)handleAlarmPlayFinishedMessageMessage:(NSNotification *)note {
+    [self checkRemindersExpired];
 }
 
 #pragma 类成员函数
@@ -61,6 +104,7 @@
     _navController.view.layer.shadowRadius = 7.0f;
     _navController.view.layer.masksToBounds = NO;*/
     [_menuViewController setVisible:YES];
+    [_menuViewController.tableView reloadData];
 }
 
 +(AppDelegate *)delegate{
@@ -89,33 +133,46 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[SinaWeiboManager defaultManager] initSinaWeibo];
-    
-    //HomeViewController * viewController = [[HomeViewController alloc] initWithNibName:@"HomeViewController" bundle:nil];
     _homeViewController = [[RemindersInboxViewController alloc] initWithNibName:@"RemindersInboxViewController" bundle:nil];
     _navController = [[UINavigationController alloc] initWithRootViewController:_homeViewController];
     
-    _menuViewController = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];
-    _menuViewController.view.frame = CGRectMake(0, 20, 320, 460);
+    [[GlobalFunction defaultGlobalFunction] setNavigationBarBackgroundImage:_navController.navigationBar];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    _menuViewController = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];
+    _menuViewController.view.frame = CGRectMake(0, 20, 320, self.window.frame.size.height);
+    
     self.window.rootViewController = _navController;
     [self.window addSubview:_menuViewController.view];
     
     [_menuViewController setVisible:NO];
     [self.window makeKeyAndVisible];
     
-    UILocalNotification *localNotif =
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleAlarmPlayFinishedMessageMessage:) name:kAlarmPlayFinishedMessage
+                                               object:nil];
+
+    
+    /*UILocalNotification *localNotif =
     [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
     if (localNotif) {
         //NSString * reminderId = [localNotif.userInfo objectForKey:@"key"];
-    }
+    }*/
     
     return YES;
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-    [[SoundManager defaultSoundManager] playAlarmVoice];
-    //[self checkRemindersExpired];
+    UIApplicationState state = application.applicationState;
+    if (YES == _showingAlert) {
+        return;
+    }else {
+        if (UIApplicationStateActive == state) {
+            [[SoundManager defaultSoundManager] playAlarmVoice];
+        }
+    }
+   
 }
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
@@ -152,9 +209,9 @@
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     [[SinaWeiboManager defaultManager].sinaWeibo applicationDidBecomeActive];
     [[ReminderManager defaultManager] getRemoteRemindersRequest];
-    [self checkRemindersExpired];
-    [[ReminderManager defaultManager] updateAppBadge];
-    //UIApplicationState state = application.applicationState;
+    if (NO == _showingAlert) {
+        [self checkRemindersExpired];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -268,4 +325,13 @@
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    [[SoundManager defaultSoundManager] stopAudio];
+    ReminderManager * manager = [ReminderManager defaultManager];
+    Reminder * reminder = [manager reminderWithId:alertView.restorationIdentifier];
+    [manager modifyReminder:reminder withBellState:YES];
+    [_homeViewController initDataWithAnimation:NO];
+    _showingAlert = NO;
+    [self checkRemindersExpired];
+}
 @end

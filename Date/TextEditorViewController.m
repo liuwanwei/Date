@@ -9,19 +9,22 @@
 #import "TextEditorViewController.h"
 #import "AppDelegate.h"
 
+#define LeftMarge 5
+
 @interface TextEditorViewController ()
 
 @end
 
 @implementation TextEditorViewController
 
-@synthesize tvCell = _tvCell;
-@synthesize textField = _textField;
 @synthesize text = _text;
+@synthesize parentController = _parentController;
+@synthesize textView = _textView;
 
-- (id)initWithStyle:(UITableViewStyle)style
+#pragma 事件函数
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithStyle:style];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
@@ -33,6 +36,9 @@
     [super viewDidLoad];
     
     self.title = @"内容";
+    _textView.text = _text;
+    _textView.delegate  = self;
+    [_textView becomeFirstResponder];
     [[AppDelegate delegate] initNavleftBarItemWithController:self withAction:@selector(back)];
 }
 
@@ -42,93 +48,24 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [_textView resignFirstResponder];
+}
+
 - (void)back{
+    [_textView resignFirstResponder];
+    _parentController.desc = _textView.text;
+    [_parentController updateDescCell];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
-#pragma mark - UITextFieldDelegate
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    // TODO save self.textField.text to reminder's description.
-    [self back];
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if ([text isEqualToString:@"\n"]) {
+        [self back];
+        return NO;
+    }
     return YES;
-}
-
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return 1;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [[NSBundle mainBundle] loadNibNamed:@"TextEditorCell" owner:self options:nil];
-    UITableViewCell * cell = self.tvCell;
-    _tvCell = nil;
-    
-    self.textField.frame = cell.frame;
-    [self.textField becomeFirstResponder];
-    self.textField.text = self.text;
-    self.textField.delegate = self;
-    return cell;
-}
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
 }
 
 @end

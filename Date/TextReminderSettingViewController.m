@@ -12,31 +12,31 @@
 #import "LMLibrary.h"
 
 @interface TextReminderSettingViewController () {
-    CGSize _labelSize;
+    
 }
 
 @end
 
 @implementation TextReminderSettingViewController
 
-#pragma 私有函数
-- (void)initData {
-    [super initData];
-    if (SettingModeNew == self.settingMode) {
-        self.reminder.desc = self.desc;
-    }
+#pragma 类成员函数
+- (void)updateTriggerTimeCell {
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (void)updateReceiverCell {
-    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:2 inSection:0];
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:1 inSection:1];
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
-- (void)updateTriggerTimeCell {
-    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+- (void)updateDescCell {
+    [self computeFontSize];
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
+#pragma 事件函数
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -49,9 +49,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-     _labelSize = [self.reminder.desc sizeWithFont:[UIFont systemFontOfSize:15.0] constrainedToSize:CGSizeMake(100, MAXFLOAT) lineBreakMode: NSLineBreakByTruncatingTail];
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
+    //[self computeFontSize];
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,27 +61,12 @@
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (SettingModeModify == self.settingMode) {
-        if (nil == self.reminder.triggerTime) {
-            return 3;
-        }
-        return 2;
-    }else if (self.settingMode == SettingModeShow) {
+    if (0 == section) {
+        return 1;
+    }else {
         return 2;
     }
-    
-    return 3;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row == 0) {
-        if (_labelSize.height > 44) {
-            return _labelSize.height;
-        }
-    }
-    
-    return 44.0f;
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -93,28 +76,20 @@
     cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
-    }
-    
-    if (self.settingMode != SettingModeShow) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }else {
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    if (0 == indexPath.row) {
+    if (indexPath.section == 0) {
+        cell.textLabel.text = self.desc;
         cell.textLabel.numberOfLines = 0;
-        cell.textLabel.textColor = RGBColor(56, 57, 61);
-        cell.textLabel.font = [UIFont systemFontOfSize:17.0];
-        cell.textLabel.text = self.reminder.desc;
-        if (_labelSize.height > 44) {
-            [cell.textLabel sizeToFit];
-        }
+        cell.textLabel.textColor = RGBColor(50, 79, 133);
+        cell.textLabel.font = [UIFont fontWithName:@"Helvetica Bold" size:15.0];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }else {
-        if (indexPath.row == 1) {
-            cell.textLabel.text = @"提醒时间";
+        if (indexPath.row == 0) {
+            cell.textLabel.text = @"闹钟";
             cell.detailTextLabel.text = [self stringTriggerTime];
-        }else if (indexPath.row == 2){
+        }else if (indexPath.row == 1){
             cell.textLabel.text = @"发送给";
             cell.detailTextLabel.text = self.receiver;
             if (NO == self.isLogin) {
@@ -129,21 +104,18 @@
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.settingMode == SettingModeShow) {
-        return;
-    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0 && indexPath.row == 0) {
-        TextEditorViewController * editor = [[TextEditorViewController alloc] initWithStyle:UITableViewStyleGrouped];
-        editor.text = self.reminder.desc;
+        TextEditorViewController * editor = [[TextEditorViewController alloc] initWithNibName:@"TextEditorViewController" bundle:nil];
+        editor.text = self.desc;
+        editor.parentController = self;
         [self.navigationController pushViewController:editor animated:YES];
     }
-    else if (indexPath.section == 0 && indexPath.row == 1) {
+    else if (indexPath.section == 1 && indexPath.row == 0) {
         [self clickTrigeerTimeRow:indexPath];
-    }else if (indexPath.row == 2 && YES == self.isLogin) {
+    }else if (indexPath.section == 1 && indexPath.row == 1 && YES == self.isLogin) {
         [self clickSendRow];
     }
 }
-
 
 @end

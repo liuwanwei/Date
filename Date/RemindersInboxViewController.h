@@ -8,27 +8,27 @@
 
 #import <UIKit/UIKit.h>
 #import "RemindersBaseViewController.h"
+#import "EGORefreshTableHeaderView.h"
+#import "InsetsTextField.h"
 
 typedef enum {
     InfoModeAudio = 0,
     InfoModeText
 }InfoMode;
 
-@interface RemindersInboxViewController : RemindersBaseViewController<UITextFieldDelegate>
+@interface RemindersInboxViewController : RemindersBaseViewController<UITextFieldDelegate,EGORefreshTableHeaderDelegate>
 
 @property (nonatomic) DataType dataType;
 @property (weak, nonatomic) IBOutlet UIButton * btnMode;
 @property (weak, nonatomic) IBOutlet UIButton * btnAudio;
-@property (weak, nonatomic) IBOutlet UITextField  * txtDesc;
+@property (weak, nonatomic) IBOutlet InsetsTextField  * txtDesc;
 @property (weak, nonatomic) IBOutlet UIToolbar * toolbar;
 @property (weak, nonatomic) IBOutlet UIView * toolbarView;
+@property (weak, nonatomic) IBOutlet UILabel * labelPrompt;
 
 - (IBAction)startRecord:(id)sender;
 - (IBAction)stopRecord:(id)sender;
 
-- (IBAction)changeInfoMode:(UIButton *)sender;
-
-- (void)initData;
-- (void)showLoginViewController;
+- (void)initDataWithAnimation:(BOOL)animation;
 
 @end

@@ -23,12 +23,13 @@ typedef enum {
 - (void)audioPlayerDidStopPlaying;
 @end
 
-@interface SoundManager : NSObject <AVAudioPlayerDelegate>
+@interface SoundManager : NSObject <AVAudioPlayerDelegate,AVAudioRecorderDelegate>
 
 @property (strong, nonatomic) NSURL * recordFileURL;
 @property (strong, nonatomic) IBOutlet UIView * view;
 @property (weak, nonatomic) IBOutlet UIImageView * imageView;
 @property (strong, nonatomic) IBOutlet UIView * viewWarning;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView * indicatorView;
 @property (weak, nonatomic) UIView * parentView;
 @property (nonatomic) NSTimeInterval currentRecordTime;
 
@@ -43,6 +44,7 @@ typedef enum {
 
 - (BOOL)playAudio:(NSString *)path;
 - (void)stopAudio;
+- (void)deleteAudioFile:(NSString *)path;
 
 - (void)playAlarmVoice;
 
