@@ -26,7 +26,4 @@
 @property (strong, nonatomic) NSMutableDictionary * group;
 @property (strong, nonatomic) NSMutableArray * keys;
 
-- (NSString *)custumDateString:(NSString *)date withShowDate:(BOOL)show;
-- (NSString *)custumDayString:(NSDate *)date;
-- (NSString *)custumDateTimeString:(NSDate *)date;
 @end

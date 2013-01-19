@@ -69,7 +69,7 @@
 		3C3156651681AE4100C1E42C /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3156641681AE4000C1E42C /* BaseViewController.m */; };
 		3C3354FB167307CC006E1331 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3354FA167307CC006E1331 /* libxml2.dylib */; };
 		3C34992A166EEF62001012B6 /* RemindersInboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C349928166EEF62001012B6 /* RemindersInboxViewController.m */; };
-		3C34992B166EEF62001012B6 /* RemindersInboxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C349929166EEF62001012B6 /* RemindersInboxViewController.xib */; };
+		3C34992B166EEF62001012B6 /* RemindersBaseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C349929166EEF62001012B6 /* RemindersBaseViewController.xib */; };
 		3C34992E166EFC25001012B6 /* ReminderInboxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C34992D166EFC25001012B6 /* ReminderInboxCell.m */; };
 		3C349930166F1062001012B6 /* ReminderInboxCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C34992F166F1062001012B6 /* ReminderInboxCell.xib */; };
 		3C3499391670509E001012B6 /* ReminderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3499371670509D001012B6 /* ReminderDetailViewController.m */; };
@@ -166,6 +166,12 @@
 		3CF83C1E166DF8AB005ED593 /* libAsiHttpRequestLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CF83C05166DF86E005ED593 /* libAsiHttpRequestLibrary.a */; };
 		3CF83C1F166DF8AB005ED593 /* libHUDLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CF83C0E166DF87C005ED593 /* libHUDLibrary.a */; };
 		3CF83C20166DF8AB005ED593 /* libSinaWeiboLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CF83C17166DF889005ED593 /* libSinaWeiboLibrary.a */; };
+		3CFCCBB116A90232002AC474 /* TodayReminderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFCCBB016A90232002AC474 /* TodayReminderCell.m */; };
+		3CFCCBB316A90278002AC474 /* TodayReminderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CFCCBB216A90278002AC474 /* TodayReminderCell.xib */; };
+		3CFCCBFA16A999B4002AC474 /* HistoryReminderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFCCBF916A999B4002AC474 /* HistoryReminderCell.m */; };
+		3CFCCBFE16A99A1F002AC474 /* HistoryReminderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CFCCBFD16A99A1F002AC474 /* HistoryReminderCell.xib */; };
+		3CFCCC0116AA2C26002AC474 /* dateTimeSwitcher.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CFCCBFF16AA2C26002AC474 /* dateTimeSwitcher.png */; };
+		3CFCCC0216AA2C26002AC474 /* dateTimeSwitcher@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CFCCC0016AA2C26002AC474 /* dateTimeSwitcher@2x.png */; };
 		E6A3980616913F4F004A460F /* leftMenuDown.png in Resources */ = {isa = PBXBuildFile; fileRef = E6A3980216913F4F004A460F /* leftMenuDown.png */; };
 		E6A3980716913F4F004A460F /* leftMenuDown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E6A3980316913F4F004A460F /* leftMenuDown@2x.png */; };
 		E6A3980816913F4F004A460F /* leftMenuUp.png in Resources */ = {isa = PBXBuildFile; fileRef = E6A3980416913F4F004A460F /* leftMenuUp.png */; };
@@ -354,7 +360,7 @@
 		3C3354FA167307CC006E1331 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		3C349927166EEF62001012B6 /* RemindersInboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemindersInboxViewController.h; sourceTree = "<group>"; };
 		3C349928166EEF62001012B6 /* RemindersInboxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemindersInboxViewController.m; sourceTree = "<group>"; };
-		3C349929166EEF62001012B6 /* RemindersInboxViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemindersInboxViewController.xib; sourceTree = "<group>"; };
+		3C349929166EEF62001012B6 /* RemindersBaseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemindersBaseViewController.xib; sourceTree = "<group>"; };
 		3C34992C166EFC25001012B6 /* ReminderInboxCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderInboxCell.h; sourceTree = "<group>"; };
 		3C34992D166EFC25001012B6 /* ReminderInboxCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderInboxCell.m; sourceTree = "<group>"; };
 		3C34992F166F1062001012B6 /* ReminderInboxCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderInboxCell.xib; sourceTree = "<group>"; };
@@ -479,6 +485,14 @@
 		3CF83BFD166DF86E005ED593 /* AsiHttpRequestLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AsiHttpRequestLibrary.xcodeproj; path = "../asi-http-request/AsiHttpRequestLibrary.xcodeproj"; sourceTree = "<group>"; };
 		3CF83C06166DF87C005ED593 /* HUDLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HUDLibrary.xcodeproj; path = ../MBProgressHUD/HUDLibrary.xcodeproj; sourceTree = "<group>"; };
 		3CF83C0F166DF889005ED593 /* SinaWeiboLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SinaWeiboLibrary.xcodeproj; path = "../weibo_ios_sdk_sso-oauth/SinaWeiboLibrary.xcodeproj"; sourceTree = "<group>"; };
+		3CFCCBAF16A90231002AC474 /* TodayReminderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodayReminderCell.h; sourceTree = "<group>"; };
+		3CFCCBB016A90232002AC474 /* TodayReminderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodayReminderCell.m; sourceTree = "<group>"; };
+		3CFCCBB216A90278002AC474 /* TodayReminderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TodayReminderCell.xib; sourceTree = "<group>"; };
+		3CFCCBF816A999B4002AC474 /* HistoryReminderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryReminderCell.h; sourceTree = "<group>"; };
+		3CFCCBF916A999B4002AC474 /* HistoryReminderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryReminderCell.m; sourceTree = "<group>"; };
+		3CFCCBFD16A99A1F002AC474 /* HistoryReminderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryReminderCell.xib; sourceTree = "<group>"; };
+		3CFCCBFF16AA2C26002AC474 /* dateTimeSwitcher.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dateTimeSwitcher.png; path = Resources/images/dateTimeSwitcher.png; sourceTree = "<group>"; };
+		3CFCCC0016AA2C26002AC474 /* dateTimeSwitcher@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dateTimeSwitcher@2x.png"; path = "Resources/images/dateTimeSwitcher@2x.png"; sourceTree = "<group>"; };
 		E6A3980216913F4F004A460F /* leftMenuDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leftMenuDown.png; path = Resources/images/leftMenuDown.png; sourceTree = "<group>"; };
 		E6A3980316913F4F004A460F /* leftMenuDown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "leftMenuDown@2x.png"; path = "Resources/images/leftMenuDown@2x.png"; sourceTree = "<group>"; };
 		E6A3980416913F4F004A460F /* leftMenuUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leftMenuUp.png; path = Resources/images/leftMenuUp.png; sourceTree = "<group>"; };
@@ -684,6 +698,8 @@
 				3C23E8AD1669A1C10098149A /* ReminderNotificationCell.xib */,
 				3C984EDF166C90D4005AA529 /* FriendReminderSenderCell.xib */,
 				3C34992F166F1062001012B6 /* ReminderInboxCell.xib */,
+				3CFCCBB216A90278002AC474 /* TodayReminderCell.xib */,
+				3CFCCBFD16A99A1F002AC474 /* HistoryReminderCell.xib */,
 				3C838F301675D5B700A85826 /* ReminderDetailAudioCell.xib */,
 				3C1CB07F167AFAD60025BDB2 /* ReminderSettingTimeCell.xib */,
 				3C93849D1688539000DA6412 /* ReminderSettingDescCell.xib */,
@@ -715,6 +731,10 @@
 				3C23E8B01669A41C0098149A /* ReminderBaseCell.m */,
 				3C34992C166EFC25001012B6 /* ReminderInboxCell.h */,
 				3C34992D166EFC25001012B6 /* ReminderInboxCell.m */,
+				3CFCCBAF16A90231002AC474 /* TodayReminderCell.h */,
+				3CFCCBB016A90232002AC474 /* TodayReminderCell.m */,
+				3CFCCBF816A999B4002AC474 /* HistoryReminderCell.h */,
+				3CFCCBF916A999B4002AC474 /* HistoryReminderCell.m */,
 				3C838F2D1675D59100A85826 /* ReminderDetailAudioCell.h */,
 				3C838F2E1675D59100A85826 /* ReminderDetailAudioCell.m */,
 				3C1CB07C167AFABE0025BDB2 /* ReminderSettingTimeCell.h */,
@@ -757,6 +777,8 @@
 		3CE0ABF916507EA2004B785A /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3CFCCBFF16AA2C26002AC474 /* dateTimeSwitcher.png */,
+				3CFCCC0016AA2C26002AC474 /* dateTimeSwitcher@2x.png */,
 				3C3BE6DE168C236A0052A8C5 /* backNavigationBar.png */,
 				3C3BE6DF168C236A0052A8C5 /* backNavigationBar@2x.png */,
 				3C3BE6C8168BF7B70052A8C5 /* big-approve.png */,
@@ -829,7 +851,7 @@
 				3C9384921688292D00DA6412 /* TextReminderSettingViewController.xib */,
 				3C1CB0791679BA770025BDB2 /* SettingViewController.xib */,
 				3C3499381670509E001012B6 /* ReminderDetailViewController.xib */,
-				3C349929166EEF62001012B6 /* RemindersInboxViewController.xib */,
+				3C349929166EEF62001012B6 /* RemindersBaseViewController.xib */,
 				3C40DE4116670F41005627C9 /* RemindersNotificationViewController.xib */,
 				3CD0ADFF166877C0001986F0 /* MenuViewController.xib */,
 				3CC9CE22165F730100E7E9D9 /* FriendRemindersViewController.xib */,
@@ -874,12 +896,12 @@
 				3C044CD7165A8C58000551C5 /* ReminderMapViewController.m */,
 				3C23E8B21669ACA30098149A /* RemindersBaseViewController.h */,
 				3C23E8B31669ACA30098149A /* RemindersBaseViewController.m */,
+				3C349927166EEF62001012B6 /* RemindersInboxViewController.h */,
+				3C349928166EEF62001012B6 /* RemindersInboxViewController.m */,
 				3CF017DE165B500D00F83814 /* ReminderSendingViewController.h */,
 				3CF017DF165B500E00F83814 /* ReminderSendingViewController.m */,
 				3C044CC9165A0E1B000551C5 /* ReminderSettingViewController.h */,
 				3C044CCA165A0E1B000551C5 /* ReminderSettingViewController.m */,
-				3C349927166EEF62001012B6 /* RemindersInboxViewController.h */,
-				3C349928166EEF62001012B6 /* RemindersInboxViewController.m */,
 				3C40DE3F16670F41005627C9 /* RemindersNotificationViewController.h */,
 				3C40DE4016670F41005627C9 /* RemindersNotificationViewController.m */,
 				3C3BE6B1168A83F40052A8C5 /* ReminderTimeSettingViewController.h */,
@@ -1145,7 +1167,7 @@
 				3C984ED7166C83CD005AA529 /* btnPlay.png in Resources */,
 				3C984ED8166C83CD005AA529 /* btnPlay@2x.png in Resources */,
 				3C984EE0166C90D4005AA529 /* FriendReminderSenderCell.xib in Resources */,
-				3C34992B166EEF62001012B6 /* RemindersInboxViewController.xib in Resources */,
+				3C34992B166EEF62001012B6 /* RemindersBaseViewController.xib in Resources */,
 				3C349930166F1062001012B6 /* ReminderInboxCell.xib in Resources */,
 				3C34993A1670509E001012B6 /* ReminderDetailViewController.xib in Resources */,
 				3C838F311675D5B700A85826 /* ReminderDetailAudioCell.xib in Resources */,
@@ -1204,6 +1226,10 @@
 				3CDA36B916A6A42A008C6E18 /* sidebar_background.png in Resources */,
 				3CDA36BA16A6A42A008C6E18 /* sidebar_separate_light.png in Resources */,
 				3C469EF716A6AE220080AF49 /* Icon@2x.png in Resources */,
+				3CFCCBB316A90278002AC474 /* TodayReminderCell.xib in Resources */,
+				3CFCCBFE16A99A1F002AC474 /* HistoryReminderCell.xib in Resources */,
+				3CFCCC0116AA2C26002AC474 /* dateTimeSwitcher.png in Resources */,
+				3CFCCC0216AA2C26002AC474 /* dateTimeSwitcher@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1286,6 +1312,8 @@
 				3C719E1F169E493B00EECCB0 /* SettingAppBadgeViewController.m in Sources */,
 				3C719E24169E584700EECCB0 /* SettingSNSViewController.m in Sources */,
 				3C5B1D7016A10BD80079C12F /* InsetsTextField.m in Sources */,
+				3CFCCBB116A90232002AC474 /* TodayReminderCell.m in Sources */,
+				3CFCCBFA16A999B4002AC474 /* HistoryReminderCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1378,7 +1406,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: WANWEI LIU";
+				CODE_SIGN_IDENTITY = "iPhone Developer: WANWEI LIU (5Y6RV2MD2B)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1398,7 +1426,7 @@
 					"../weibo_ios_sdk_sso-oauth/src/JSONKit",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PROVISIONING_PROFILE = "8DB104F4-6ECD-4A46-B72A-829543B3DA4D";
+				PROVISIONING_PROFILE = "8943D085-22C4-4891-A9CA-97E205FAAA6F";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1414,7 +1442,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: WANWEI LIU";
+				CODE_SIGN_IDENTITY = "iPhone Developer: WANWEI LIU (5Y6RV2MD2B)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1428,7 +1456,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "8DB104F4-6ECD-4A46-B72A-829543B3DA4D";
+				PROVISIONING_PROFILE = "8943D085-22C4-4891-A9CA-97E205FAAA6F";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1439,7 +1467,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: WANWEI LIU (5Y6RV2MD2B)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Date/Date-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -1458,7 +1486,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8943D085-22C4-4891-A9CA-97E205FAAA6F";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7s armv7";
 				WRAPPER_EXTENSION = app;
@@ -1469,7 +1497,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: WANWEI LIU (5Y6RV2MD2B)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Date/Date-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -1488,7 +1516,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8943D085-22C4-4891-A9CA-97E205FAAA6F";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7s armv7";
 				WRAPPER_EXTENSION = app;

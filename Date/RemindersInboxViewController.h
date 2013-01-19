@@ -29,8 +29,6 @@ typedef enum {
 - (IBAction)startRecord:(id)sender;
 - (IBAction)stopRecord:(id)sender;
 
-- (IBAction)changeInfoMode:(UIButton *)sender;
-
 - (void)initDataWithAnimation:(BOOL)animation;
 
 @end

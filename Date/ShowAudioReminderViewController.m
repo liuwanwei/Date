@@ -38,7 +38,9 @@
 {
     [self initData];
     [super viewDidLoad];
-    [self hiddenTableFooterView];
+    if (DataTypeHistory != self.dateType) {
+        [self hiddenTableFooterView];
+    }
     self.title = @"查看详情";
     [[AppDelegate delegate] initNavleftBarItemWithController:self withAction:@selector(back)];
 }

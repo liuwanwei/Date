@@ -7,7 +7,6 @@
 //
 
 #import "ReminderInboxCell.h"
-#import "LMLibrary.h"
 
 @implementation ReminderInboxCell
 @synthesize btnMark = _btnMark;
@@ -33,18 +32,6 @@
 
     }
     return self;
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-    [self.btnFinished setHighlighted:NO];
-    [self.btnFinished setSelected:NO];
-}
-
-- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
-    [super setHighlighted:highlighted animated:animated];
-    [self.btnFinished setHighlighted:NO];
 }
 
 - (void)setReminder:(Reminder *)reminer {

@@ -17,6 +17,10 @@
 - (void)setNavigationBarBackgroundImage:(UINavigationBar *)navigationBar;
 - (void)initNavleftBarItemWithController:(UIViewController *)controller withAction:(SEL)action;
 
+- (NSString *)custumDateString:(NSString *)date withShowDate:(BOOL)show;
+- (NSString *)custumDateTimeString:(NSDate *)date;
+- (NSString *)custumDayString:(NSDate *)date;
+
 - (UIColor *)viewBackground;
 
 @end

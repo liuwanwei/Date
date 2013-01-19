@@ -16,6 +16,7 @@
 #import "AppDelegate.h"
 #import "ReminderTimeSettingViewController.h"
 #import "LMLibrary.h"
+#import "GlobalFunction.h"
 
 @interface ReminderSettingViewController () {
     UIDatePicker * _datePicker;
@@ -117,7 +118,7 @@
 - (NSString *)stringTriggerTime {
     NSString * result;
     if (nil != _triggerTime) {
-        result =  [self custumDateTimeString:_triggerTime];
+        result =  [[GlobalFunction defaultGlobalFunction] custumDateTimeString:_triggerTime];
     }else {
         result = @"未设置";
     }

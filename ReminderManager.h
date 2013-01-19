@@ -13,7 +13,9 @@
 
 typedef enum {
     ReminderTypeReceive = 0,
-    ReminderTypeSend
+    ReminderTypeSend = 1,
+    ReminderTypeReceiveAndNoAlarm = 2,
+    ReminderTypeSendAndNoAlarm
 }ReminderType;
 
 typedef enum {

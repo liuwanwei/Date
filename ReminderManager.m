@@ -19,6 +19,12 @@ typedef enum {
     BadgeOperateSub
 }BadgeOperate;
 
+@interface ReminderManager () {
+    UILocalNotification * newNotification;
+}
+
+@end
+
 @implementation ReminderManager
 @synthesize delegate = _delegate;
 
@@ -547,10 +553,13 @@ typedef enum {
         body = [body stringByAppendingString:[state stringValue]];
         body = [body stringByAppendingString:@" isAlarm="];
         body = [body stringByAppendingString:[alarm stringValue]];*/
-        
-        UILocalNotification * newNotification = [[UILocalNotification alloc] init];
+        if (nil == newNotification) {
+            newNotification = [[UILocalNotification alloc] init];
+        }
+       
         newNotification.fireDate = reminder.triggerTime;
         newNotification.alertBody = body;
+        newNotification.repeatInterval = 0;
         newNotification.soundName = @"cat.wav";
         newNotification.alertAction = @"查看应用";
         newNotification.timeZone=[NSTimeZone defaultTimeZone];
@@ -562,6 +571,7 @@ typedef enum {
 - (void)cancelLocalNotificationWithReminder:(Reminder *)reminder {
     UILocalNotification * localNotification = [self localNotification:reminder.id];
     if (nil != localNotification) {
+        NSLog(@"cancelLocalNotificationWithReminder");
         [[UIApplication sharedApplication] cancelLocalNotification:localNotification];
     }
 }
@@ -579,6 +589,11 @@ typedef enum {
 
 - (void)modifyReminder:(Reminder *)reminder withBellState:(BOOL)isBell {
     reminder.isAlarm = [NSNumber numberWithBool:isBell];
+     NSLog(@"withBellState");
+    if (YES == isBell) {
+        NSLog(@"isBell == YES");
+        [self cancelLocalNotificationWithReminder:reminder];
+    }
     [self synchroniseToStore];
 }
 
@@ -641,10 +656,12 @@ typedef enum {
     
     if (nil == results || results.count == 0) {
         _allRemindersSize = 0;
+        [self updateAppBadge];
         return nil;
     }else {
         _allRemindersSize = [results count];
     }
+    [self updateAppBadge];
     return results;
 }
 
@@ -666,10 +683,12 @@ typedef enum {
     
     if (nil == results || results.count == 0) {
         _todayRemindersSize = 0;
+        [self updateAppBadge];
         return nil;
     }else {
         _todayRemindersSize = [results count];
     }
+    [self updateAppBadge];
     return results;
 }
 
@@ -692,6 +711,7 @@ typedef enum {
     if (nil == results || results.count == 0) {
         return nil;
     }
+    
     return results;
 }
 
@@ -711,11 +731,12 @@ typedef enum {
     
     if (nil == results || results.count == 0) {
         _draftRemindersSize = 0;
+        [self updateAppBadge];
         return nil;
     }else {
-        
         _draftRemindersSize = [results count];
     }
+    [self updateAppBadge];
     return results;
 }
 

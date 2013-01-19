@@ -8,6 +8,9 @@
 
 #import "RemindersInboxViewController.h"
 #import "ReminderInboxCell.h"
+#import "TodayReminderCell.h"
+#import "ReminderBaseCell.h"
+#import "HistoryReminderCell.h"
 #import "SinaWeiboManager.h"
 #import "LoginViewController.h"
 #import "OnlineFriendsRemindViewController.h"
@@ -61,12 +64,6 @@
 
 - (void)registerHandleMessage {
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOnlineFriendsMessage:) name:kOnlineFriendsMessage object:nil];
-		
-		[[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification 
-                                               object:nil];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleRemindersUpdateMessage:) name:kRemindesUpdateMessage
                                                object:nil];
@@ -83,24 +80,17 @@
 
 - (void)handleRemindersUpdateMessage:(NSNotification *)note {
     [self initDataWithAnimation:NO];
-    //[[AppDelegate delegate] checkRemindersExpired];
 }
 
--(void) keyboardWillHide:(NSNotification *)note{
-    
-    [self restoreView];
-    NSNumber *duration = [note.userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-    NSNumber *curve = [note.userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey];
-    
-    // get a rect for the textView frame
-    CGRect containerFrame = _toolbar.frame;
-    containerFrame.origin.y = self.view.bounds.size.height - containerFrame.size.height;
-    
+- (void)restoreView {
+    [_overView removeFromSuperview];
+    _overView = nil;
+    [_txtDesc resignFirstResponder];
+   
     // animations settings
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
-    [UIView setAnimationDuration:[duration doubleValue]];
-    [UIView setAnimationCurve:[curve intValue]];
+    [UIView setAnimationDuration:0.25];
     
     // set views with new info
     self.navigationController.navigationBarHidden = NO;
@@ -109,28 +99,12 @@
     [UIView commitAnimations];
 }
 
-- (void)restoreView {
-    [_overView removeFromSuperview];
-    _overView = nil;
-    [_txtDesc resignFirstResponder];
-     [self setInfoMode:InfoModeAudio];
-}
-
 - (void)registerForRemoteNotification {
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge |UIRemoteNotificationTypeSound)];
 }
 
 - (void)removeHUD {
     [[MBProgressManager defaultManager] removeHUD];
-}
-
-- (void)setInfoMode:(InfoMode)mode {
-    _infoMode = mode;
-    if (InfoModeAudio == _infoMode) {
-        [_txtDesc resignFirstResponder];
-    }else {
-        [_txtDesc becomeFirstResponder];
-    }
 }
 
 - (void)showAudioReminderSettingController {
@@ -313,7 +287,6 @@
     
     _dataType = DataTypeToday;
     [self initMenuButton];
-    [self setInfoMode:InfoModeAudio];
     [self initDataWithAnimation:YES];
     [self registerHandleMessage];
     [self initView];
@@ -353,14 +326,6 @@
     }
 }
 
-- (IBAction)changeInfoMode:(UIButton *)sender {
-    if (InfoModeAudio == _infoMode) {
-        [self setInfoMode:InfoModeText];
-    }else {
-        [self setInfoMode:InfoModeAudio];
-    }
-}
-
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -372,7 +337,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (DataTypeToday != _dataType) {
-        return  [self custumDateString:[self.keys objectAtIndex:section] withShowDate:YES];
+        return  [[GlobalFunction defaultGlobalFunction] custumDateString:[self.keys objectAtIndex:section] withShowDate:YES];
     }
     
     return nil;
@@ -389,24 +354,31 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     Reminder * reminder = [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
-    static NSString * CellIdentifier = @"ReminderInboxCell";
-    ReminderInboxCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[ReminderInboxCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.delegate = self;
+    static NSString * CellIdentifier;
+    ReminderBaseCell * cell;
+    if (DataTypeToday == _dataType || DataTypeRecent == _dataType) {
+        CellIdentifier = @"TodayReminderCell";
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[TodayReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        }
+    }else if (DataTypeHistory == _dataType) {
+        CellIdentifier = @"HistoryReminderCell";
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[HistoryReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        }
+    }else if (DataTypeCollectingBox == _dataType) {
+        CellIdentifier = @"ReminderInboxCell";
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[ReminderInboxCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        }
     }
     
+    cell.delegate = self;
+    
     BilateralFriend * friend = [_friends objectForKey:reminder.userID];
-    if (_dataType == DataTypeCollectingBox) {
-        cell.showFrom = NO;
-    }else {
-        cell.showFrom = YES;
-    }
-    if (_dataType == DataTypeHistory) {
-        cell.showDay = NO;
-    }else {
-        cell.showDay = YES;
-    }
     cell.dateType = _dataType;
     cell.indexPath = indexPath;
     cell.bilateralFriend = friend;
@@ -469,7 +441,6 @@
             controller.isInbox = NO;
         }
     }
-    
     
     controller.reminder = cell.reminder;
     controller.dateType = _dataType;
@@ -538,9 +509,6 @@
 #pragma mark Data Source Loading / Reloading Methods
 
 - (void)reloadTableViewDataSource{
-    
-    //  should be calling your tableviews data source model to reload
-    //  put here just for demo
     _reloading = YES;
     if (nil == _overView) {
         _overView = [[UIControl alloc] init];
@@ -561,8 +529,6 @@
     [_txtDesc setHidden:NO];
     // commit animations
     [UIView commitAnimations];
-    
-    [self setInfoMode:InfoModeText];
 }
 
 - (void)doneLoadingTableViewData{

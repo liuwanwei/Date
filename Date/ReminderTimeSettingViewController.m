@@ -9,6 +9,7 @@
 #import "ReminderTimeSettingViewController.h"
 #import "LMLibrary.h"
 #import "AppDelegate.h"
+#import "GlobalFunction.h"
 
 @interface ReminderTimeSettingViewController () {
 }
@@ -50,7 +51,7 @@
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yy-MM-dd"];
     NSString * day = [formatter stringFromDate:date];
-    _labelDay.text = [_parentContoller custumDateString:day withShowDate:YES];
+    _labelDay.text = [[GlobalFunction defaultGlobalFunction] custumDateString:day withShowDate:YES];
     //_labelDate.text = day;
     [formatter setDateFormat:@"HH:mm"];
     _labelTime.text = [formatter stringFromDate:date];
