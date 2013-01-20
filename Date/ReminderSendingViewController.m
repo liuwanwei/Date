@@ -27,7 +27,6 @@
 @synthesize tableView = _tableView;
 @synthesize friendCell = _friendCell;
 @synthesize reminder = _reminder;
-@synthesize triggerTime = _triggerTime;
 @synthesize parentController = _parentController;
 
 #pragma 私有函数
@@ -134,7 +133,7 @@
         nicknameLabel.text = friend.nickname;
     }
     
-    if ([friend.userID isEqualToNumber:_reminder.userID]) {
+    if ([friend.userID isEqualToNumber:_parentController.receiverId]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
    
@@ -176,7 +175,6 @@
     _reminderManager.delegate = nil;
     [[MBProgressManager defaultManager] removeHUD];
     [self.navigationController popToRootViewControllerAnimated:YES];
-//    [self saveSendReminder:reminderId]; move to ReminderManager::sendReminder.不跟界面绑定。
 }
 
 - (void)newReminderFailed {

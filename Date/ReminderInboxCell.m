@@ -7,7 +7,6 @@
 //
 
 #import "ReminderInboxCell.h"
-#import "LMLibrary.h"
 
 @implementation ReminderInboxCell
 @synthesize btnMark = _btnMark;
@@ -29,25 +28,16 @@
     if (self) {
         NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"ReminderInboxCell" owner:self options:nil] ;
         self = [nib objectAtIndex:0];
+//        [self.contentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"cellBg"]]];
+
     }
     return self;
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
-    [self.btnFinished setBackgroundImage:[UIImage imageNamed:@"checkboxCompleted"] forState:UIControlStateHighlighted];
-    // Configure the view for the selected state
 }
 
 - (void)setReminder:(Reminder *)reminer {
     if (nil != reminer) {
         
         [super setReminder:reminer];
-        
-        //NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-        //[formatter setDateFormat:@"HH:mm"];
-        //self.labelSendDate.text = [formatter stringFromDate:reminer.createTime];
         
         if (nil != reminer.isRead && YES == [reminer.isRead integerValue]) {
             [_btnMark setHidden:YES];
@@ -58,7 +48,6 @@
         }
         
         if (ReminderStateFinish == [reminer.state integerValue]) {
-            //[self.btnFinished setBackgroundImage:[UIImage imageNamed:@"checkboxCompleted"] forState:UIControlStateNormal];
             [self.btnFinished setHidden:YES];
         }else{
             [self.btnFinished setHidden:NO];
@@ -71,10 +60,10 @@
 
             if (YES == [reminer.isAlarm boolValue]) {
                 self.labelTriggerDate.textColor = RGBColor(153,153,153);
-                self.labelTriggerDate.font = [UIFont boldSystemFontOfSize:20.0];
+                self.labelTriggerDate.font = [UIFont systemFontOfSize:20.0];
             }else {
                 self.labelTriggerDate.textColor = RGBColor(0,0,0);
-                self.labelTriggerDate.font = [UIFont boldSystemFontOfSize:20.0];
+                self.labelTriggerDate.font = [UIFont systemFontOfSize:20.0];
             }
             self.labelTriggerDate.text =[formatter stringFromDate:reminer.triggerTime];
         }else {
