@@ -12,5 +12,6 @@
 
 - (IBAction)leftBarBtnTapped:(id)sender;
 - (void)restoreViewLocation;
+- (void)initMenuButton;
 
 @end

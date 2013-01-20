@@ -16,8 +16,11 @@ static SoundManager * sSoundManager;
     AVAudioPlayer * _player;
     AVAudioPlayer * _alarmPlayer;
     NSDate * _startRecordDate;
-    NSInteger _recordLength;
+    float _recordLength;
     NSTimer * _timer;
+    NSThread * _thread;
+    NSCondition * _lock;
+    NSArray  * _images;
 }
 
 @end
@@ -29,6 +32,7 @@ static SoundManager * sSoundManager;
 @synthesize viewWarning = _viewWarning;
 @synthesize currentRecordTime = _currentRecordTime;
 @synthesize parentView = _parentView;
+@synthesize indicatorView = _indicatorView;
 
 + (SoundManager *)defaultSoundManager {
     if (nil == sSoundManager) {
@@ -42,9 +46,10 @@ static SoundManager * sSoundManager;
     if (self = [super init]) {
         [[NSBundle mainBundle] loadNibNamed:@"RecordView" owner:self options:nil];
         if (nil != _view) {
-            _view.frame = CGRectMake(50.0, 100.0, _view.frame.size.width,_view.frame.size.height);
-            _viewWarning.frame = CGRectMake(50.0, 150.0, _viewWarning.frame.size.width,_viewWarning.frame.size.height);
+            _view.frame = CGRectMake(54.0, 100.0, _view.frame.size.width,_view.frame.size.height);
+            _viewWarning.frame = CGRectMake(54.0, 150.0, _viewWarning.frame.size.width,_viewWarning.frame.size.height);
             [self initImageView];
+            _lock = [[NSCondition alloc] init];
         }
     }
     
@@ -65,24 +70,42 @@ static SoundManager * sSoundManager;
 
 - (void)initImageView {
     if (nil != _imageView) {
-        self.imageView.animationImages = [NSArray arrayWithObjects:
-                                          [UIImage imageNamed:@"recordingSignal001"],
-                                          [UIImage imageNamed:@"recordingSignal002"],
-                                          [UIImage imageNamed:@"recordingSignal003"],
-                                          [UIImage imageNamed:@"recordingSignal004"],
-                                          [UIImage imageNamed:@"recordingSignal005"],
-                                          [UIImage imageNamed:@"recordingSignal006"],
-                                          [UIImage imageNamed:@"recordingSignal007"],
-                                          [UIImage imageNamed:@"recordingSignal008"],
-                                          nil];
-        self.imageView.animationDuration = 1;
+        _images =  [NSArray arrayWithObjects:
+                    [UIImage imageNamed:@"recordingSignal001"],
+                    [UIImage imageNamed:@"recordingSignal002"],
+                    [UIImage imageNamed:@"recordingSignal003"],
+                    [UIImage imageNamed:@"recordingSignal004"],
+                    [UIImage imageNamed:@"recordingSignal005"],
+                    [UIImage imageNamed:@"recordingSignal006"],
+                    [UIImage imageNamed:@"recordingSignal007"],
+                    [UIImage imageNamed:@"recordingSignal008"],
+                    nil];
+    }
+}
+
+- (void)setImageWithAudioLevel:(NSInteger)level {
+    if (level >= 35) {
+        [_imageView setImage:[_images objectAtIndex:7]];
+    }else if (level >= 30 && level < 35){
+        [_imageView setImage:[_images objectAtIndex:6]];
+    }if (level >= 25 && level < 30){
+        [_imageView setImage:[_images objectAtIndex:5]];
+    }if (level >= 20 && level < 25){
+        [_imageView setImage:[_images objectAtIndex:4]];
+    }if (level >= 15 && level < 20){
+        [_imageView setImage:[_images objectAtIndex:3]];
+    }if (level >= 10 && level < 15){
+        [_imageView setImage:[_images objectAtIndex:2]];
+    }if (level >= 5 && level < 10){
+        [_imageView setImage:[_images objectAtIndex:1]];
+    }if (level < 5){
+        [_imageView setImage:[_images objectAtIndex:0]];
     }
 }
 
 - (void)showWaringView {
     if (nil != _parentView) {
         [_parentView addSubview:_viewWarning];
-        
         [self performSelector:@selector(closeWaringView) withObject:self afterDelay:0.5];
     }
 }
@@ -93,13 +116,13 @@ static SoundManager * sSoundManager;
 
 - (void)showRecordingView {
     if (nil != _parentView) {
-        [_imageView startAnimating];
         [_parentView addSubview:_view];
+        [_indicatorView startAnimating];
     }
 }
 
 - (void)closeRecordingView {
-    [_imageView stopAnimating];
+    //[_imageView stopAnimating];
     [_view removeFromSuperview];
 }
 
@@ -111,65 +134,80 @@ static SoundManager * sSoundManager;
 }
 
 - (void)checkRecordLength {
-    if (_recordLength > 30) {
-        [self stopTimer];
-        [self stopRecord];
+    if (NO == _thread.isExecuting) {
+        if (_recordLength > 30) {
+            [self stopTimer];
+            [self stopRecord];
+        }
+        [_recorder updateMeters];
+        double avgPowerForChannel = pow(10, (0.05 * [_recorder averagePowerForChannel:0]));
+        [self setImageWithAudioLevel:avgPowerForChannel * 100];
+        _recordLength = _recordLength + 0.03;
     }
     
-    _recordLength++;
 }
 
 - (void)startTimer {
     [self stopTimer];
     _recordLength = 0;
-    _timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(checkRecordLength) userInfo:nil repeats:YES];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:0.03 target:self selector:@selector(checkRecordLength) userInfo:nil repeats:YES];
 }
 
 - (void)stopTimer {
     if (nil != _timer) {
+        NSLog(@"stopTimer");
         [_timer invalidate];
         _timer = nil;
     }
 }
 
-#pragma 类成员函数
-- (BOOL)startRecord {
-    BOOL result = NO;
-    DocumentManager * manager = [DocumentManager defaultManager];
-    _recordFileURL =  [manager pathForRandomSoundWithSuffix:@"m4a"];
-    
-    AVAudioSession * session = [AVAudioSession sharedInstance];
+- (void)recorder {
+    [_lock lock];
     NSError * error;
-    
+    AVAudioSession * session = [AVAudioSession sharedInstance];
+        
     [session setCategory:AVAudioSessionCategoryRecord error:&error];
     if(session == nil) {
         NSLog(@"Error creating session: %@", [error description]);
-        return NO;
+        [_lock unlock];
+        return ;
     }else {
         [session setActive:YES error:nil];
     }
-    
     if (nil != _recorder) {
         [_recorder deleteRecording];
     }
-        
     _recorder = [[AVAudioRecorder alloc] initWithURL:_recordFileURL settings:[self setting] error:&error];
-    _startRecordDate = [NSDate date];
-    [self showRecordingView];
     if(_recorder) {
-        result = YES;
-        [self startTimer];
+        [_recorder setMeteringEnabled:YES];
         [_recorder record];
-    }
-    else {
+        _recorder.delegate = self;
+        _startRecordDate = [NSDate date];
+    }else {
         NSLog(@"recorder: %@ %d %@", [error domain], [error code], [[error userInfo] description]);
     }
-    
+        
+    [_indicatorView stopAnimating];
+    //[_imageView startAnimating];
+    [_lock unlock];
+}
+
+#pragma 类成员函数
+- (BOOL)startRecord {
+    BOOL result = YES;
+    DocumentManager * manager = [DocumentManager defaultManager];
+    _recordFileURL =  [manager pathForRandomSoundWithSuffix:@"m4a"];
+    [self showRecordingView];
+    _thread = [[NSThread alloc] initWithTarget:self selector:@selector(recorder) object:nil];
+    [_thread start];
+    [self startTimer];
     return result;
 }
 
 - (BOOL)stopRecord {
     BOOL result = NO;
+    [_lock lock];
+        
     [self stopTimer];
     if (nil != _recorder) {
         NSDate * endRecordDate = [NSDate date];
@@ -188,6 +226,8 @@ static SoundManager * sSoundManager;
     }else {
         result = YES;
     }
+
+    [_lock unlock];
     
     return result;
 }
@@ -239,7 +279,6 @@ static SoundManager * sSoundManager;
     }
     
     DocumentManager * manager = [DocumentManager defaultManager];
-    
     path = [[manager soundPath] stringByAppendingPathComponent:[self fileNameWithPath:path]];
     NSURL * url = [NSURL fileURLWithPath:path isDirectory:NO];
     _player  = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
@@ -274,7 +313,7 @@ static SoundManager * sSoundManager;
     _alarmPlayer.numberOfLoops  = 0;
     _alarmPlayer.volume = 1.0;
     _alarmPlayer.delegate = self;
-    if  (_player == nil)
+    if  (_alarmPlayer == nil)
         NSLog(@"播放失败");
     else
         [_alarmPlayer prepareToPlay];
@@ -285,6 +324,18 @@ static SoundManager * sSoundManager;
     if (nil != _player) {
         [_player stop];
         _player = nil;
+    }
+}
+
+- (void)deleteAudioFile:(NSString *)path {
+    if (nil != path && ![path isEqualToString:@""]) {
+        NSError * error;
+        DocumentManager * manager = [DocumentManager defaultManager];
+        path = [[manager soundPath] stringByAppendingPathComponent:[self fileNameWithPath:path]];
+        NSFileManager * fileManager = [NSFileManager defaultManager];
+        if (YES == [fileManager fileExistsAtPath:path]) {
+            [fileManager removeItemAtPath:path error:&error];
+        }
     }
 }
 
@@ -324,11 +375,16 @@ static SoundManager * sSoundManager;
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     if (_alarmPlayer == player) {
         _alarmPlayer = nil;
-        if (self.delegate != nil) {
-            if ([self.delegate respondsToSelector:@selector(alarmPlayerDidFinishPlaying)]) {
-                [self.delegate performSelector:@selector(alarmPlayerDidFinishPlaying) withObject:nil];
-            }
-        }
+        
+            
+            //if ([self.delegate respondsToSelector:@selector(alarmPlayerDidFinishPlaying)]) {
+            //    [self.delegate performSelector:@selector(alarmPlayerDidFinishPlaying) withObject:nil];
+            //}
+            
+        NSNotification * notification = nil;
+        notification = [NSNotification notificationWithName:kAlarmPlayFinishedMessage object:nil];
+        [[NSNotificationCenter defaultCenter] postNotification:notification];
+     
     }else {
         _player = nil;
         if (self.delegate != nil) {
@@ -338,6 +394,12 @@ static SoundManager * sSoundManager;
         }
   
     }
+}
+
+#pragma AVAudioPlayerDelegate
+- (void)audioRecorderBeginInterruption:(AVAudioRecorder *)recorder {
+    [self stopTimer];
+    [self stopRecord];
 }
 
 @end
