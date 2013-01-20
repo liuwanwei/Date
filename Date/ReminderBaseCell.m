@@ -39,6 +39,7 @@
 @synthesize btnFinished = _btnFinished;
 @synthesize labelDay = _labelDay;
 @synthesize dateType = _dateType;
+@synthesize editState = _editState;
 
 - (NSString *)custumDayString:(NSDate *)date {
     NSString * dateString = @"" ;
@@ -112,6 +113,17 @@
         [_indicatorView setHidden:YES];
     }
     
+}
+
+- (void)setEditState:(CellEditState)editState{
+    BOOL hidden = NO;
+    if(CellEditStateDelete == editState){
+        // 进入删除状态时隐藏播放按钮。
+        hidden = YES;
+    }
+    
+    self.btnAudio.hidden = hidden;
+    self.labelAudioTime.hidden = hidden;
 }
 
 - (void)modifyReminderReadState {
