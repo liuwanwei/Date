@@ -15,6 +15,7 @@
 #import "LoginViewController.h"
 #import "LMLibrary.h"
 #import "GlobalFunction.h"
+#import "AboutUsViewController.h"
 
 typedef enum {
     MenuCellTagTitle = 1,
@@ -27,6 +28,7 @@ typedef enum {
     NSArray * _rows;
     NSArray * _rowImages;
     SettingViewController * _settingViewController;
+    AboutUsViewController * _aboutUsViewController;
     LoginViewController * _loginViewController;
     NSIndexPath * _lastIndexPath;
 }
@@ -109,13 +111,12 @@ typedef enum {
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    //return 3;
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return 6;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -143,6 +144,9 @@ typedef enum {
     }
     else if (indexPath.row == 4){
         labelTitle.text = @"设置";
+        [imageSeparate setHidden:YES];
+    }else if (indexPath.row == 5) {
+        labelTitle.text = @"关于";
         [imageSeparate setHidden:YES];
     }else {
         labelTitle.text = [_rows objectAtIndex:indexPath.row - 1];
@@ -181,6 +185,11 @@ typedef enum {
         _settingViewController = nil;
     }
     
+    if (nil != _aboutUsViewController) {
+        [[AppDelegate delegate].navController popToRootViewControllerAnimated:NO];
+        _settingViewController = nil;
+    }
+    
     UITableViewCell * cell;;
     UIImageView * imageSeparate;
     
@@ -203,6 +212,11 @@ typedef enum {
             _settingViewController = [[SettingViewController alloc] initWithNibName:@"SettingViewController" bundle:nil];
         }
         [[AppDelegate delegate].navController pushViewController:_settingViewController animated:NO];
+    }if (5 == indexPath.row) {
+        if (_aboutUsViewController == nil) {
+            _aboutUsViewController = [[AboutUsViewController alloc] initWithNibName:@"AboutUsViewController" bundle:nil];
+        }
+        [[AppDelegate delegate].navController pushViewController:_aboutUsViewController animated:NO];
     }else {
         uint types[] = {DataTypeCollectingBox,DataTypeToday, DataTypeRecent, DataTypeHistory};
         if ([AppDelegate delegate].homeViewController.dataType != types[indexPath.row]) {
