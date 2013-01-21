@@ -85,6 +85,7 @@
         cell.textLabel.textColor = RGBColor(50, 79, 133);
         cell.textLabel.font = [UIFont fontWithName:@"Helvetica Bold" size:15.0];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.detailTextLabel.text = @"";
     }else {
         if (indexPath.row == 0) {
             cell.textLabel.text = @"闹钟";

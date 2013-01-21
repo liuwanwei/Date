@@ -22,5 +22,6 @@
 
 - (IBAction)clickClear:(id)sender;
 - (IBAction)clickSet:(id)sender;
+- (IBAction)clickChange:(id)sender;
 
 @end

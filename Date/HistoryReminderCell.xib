@@ -104,7 +104,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{13, 5}, {60, 31}}</string>
 								<reference key="NSSuperview" ref="441783622"/>
-								<reference key="NSNextKeyView"/>
+								<reference key="NSNextKeyView" ref="38262321"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -228,7 +228,7 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<int key="IBUIAccessoryType">1</int>
 				<reference key="IBUIContentView" ref="441783622"/>
-				<string key="IBUIReuseIdentifier">TodayReminderCell</string>
+				<string key="IBUIReuseIdentifier">HistoryReminderCell</string>
 				<real value="71" key="IBUIRowHeight"/>
 			</object>
 		</array>

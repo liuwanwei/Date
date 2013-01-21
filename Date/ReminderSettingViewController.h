@@ -12,6 +12,7 @@
 #import "ReminderSettingTimeCell.h"
 #import "MBProgressManager.h"
 #import "RemindersInboxViewController.h"
+#import "ReminderManager.h"
 
 @interface ReminderSettingViewController : RemindersBaseViewController <UITableViewDelegate, UITableViewDataSource,ReminderManagerDelegate>
 
@@ -29,6 +30,7 @@
 @property (nonatomic) BOOL isInbox;
 @property (nonatomic) CGSize labelSize;
 @property (nonatomic) DataType dateType;
+@property (nonatomic) ReminderType reminderType;
 
 - (void)updateReceiverCell;
 - (void)updateTriggerTimeCell;

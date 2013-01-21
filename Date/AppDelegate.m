@@ -54,25 +54,25 @@
 
 - (void)showAlertViewWithReminder:(Reminder *)reminder {
     UIAlertView * alertView;
-    BilateralFriend * friend = [[BilateralFriendManager defaultManager] bilateralFriendWithUserID:reminder.userID];
-    NSString * nickname;
-    NSString * userId = [reminder.userID stringValue];
-    if ([userId isEqualToString:[UserManager defaultManager].oneselfId]) {
-        nickname = @"";
-    }else {
-        if (nil == friend) {
-            nickname = [NSString stringWithFormat:@"%@:",[reminder.userID stringValue]];
-        }else {
-            nickname = [NSString stringWithFormat:@"%@:",friend.nickname];
-        }
-    }
-    
+//    BilateralFriend * friend = [[BilateralFriendManager defaultManager] bilateralFriendWithUserID:reminder.userID];
+//    NSString * nickname;
+//    NSString * userId = [reminder.userID stringValue];
+//    if ([userId isEqualToString:[UserManager defaultManager].oneselfId]) {
+//        nickname = @"";
+//    }else {
+//        if (nil == friend) {
+//            nickname = [NSString stringWithFormat:@"%@:",[reminder.userID stringValue]];
+//        }else {
+//            nickname = [NSString stringWithFormat:@"%@:",friend.nickname];
+//        }
+//    }
+    NSString * title;
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"HH:mm"];
     NSString * time = [formatter stringFromDate:reminder.triggerTime];
-    NSString * title = nickname;
-    title  = [title stringByAppendingString:reminder.desc];
-    NSString * message = time;
+    title  = time;
+    NSString * message = @"提醒:";
+    message = [message stringByAppendingString:reminder.desc];
     
     if (nil != reminder.audioUrl && ![reminder.audioUrl isEqualToString:@""]) {
         [[SoundManager defaultSoundManager] playAudio:reminder.audioUrl];
