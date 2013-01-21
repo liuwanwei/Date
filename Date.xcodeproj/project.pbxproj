@@ -69,7 +69,7 @@
 		3C3156651681AE4100C1E42C /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3156641681AE4000C1E42C /* BaseViewController.m */; };
 		3C3354FB167307CC006E1331 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3354FA167307CC006E1331 /* libxml2.dylib */; };
 		3C34992A166EEF62001012B6 /* RemindersInboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C349928166EEF62001012B6 /* RemindersInboxViewController.m */; };
-		3C34992B166EEF62001012B6 /* RemindersBaseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C349929166EEF62001012B6 /* RemindersBaseViewController.xib */; };
+		3C34992B166EEF62001012B6 /* RemindersInboxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C349929166EEF62001012B6 /* RemindersInboxViewController.xib */; };
 		3C34992E166EFC25001012B6 /* ReminderInboxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C34992D166EFC25001012B6 /* ReminderInboxCell.m */; };
 		3C349930166F1062001012B6 /* ReminderInboxCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C34992F166F1062001012B6 /* ReminderInboxCell.xib */; };
 		3C3499391670509E001012B6 /* ReminderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3499371670509D001012B6 /* ReminderDetailViewController.m */; };
@@ -172,6 +172,8 @@
 		3CFCCBFE16A99A1F002AC474 /* HistoryReminderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CFCCBFD16A99A1F002AC474 /* HistoryReminderCell.xib */; };
 		3CFCCC0116AA2C26002AC474 /* dateTimeSwitcher.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CFCCBFF16AA2C26002AC474 /* dateTimeSwitcher.png */; };
 		3CFCCC0216AA2C26002AC474 /* dateTimeSwitcher@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CFCCC0016AA2C26002AC474 /* dateTimeSwitcher@2x.png */; };
+		3CFCCC0616AA499E002AC474 /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFCCC0416AA499D002AC474 /* AboutUsViewController.m */; };
+		3CFCCC0716AA499E002AC474 /* AboutUsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CFCCC0516AA499D002AC474 /* AboutUsViewController.xib */; };
 		E6A3980616913F4F004A460F /* leftMenuDown.png in Resources */ = {isa = PBXBuildFile; fileRef = E6A3980216913F4F004A460F /* leftMenuDown.png */; };
 		E6A3980716913F4F004A460F /* leftMenuDown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E6A3980316913F4F004A460F /* leftMenuDown@2x.png */; };
 		E6A3980816913F4F004A460F /* leftMenuUp.png in Resources */ = {isa = PBXBuildFile; fileRef = E6A3980416913F4F004A460F /* leftMenuUp.png */; };
@@ -360,7 +362,7 @@
 		3C3354FA167307CC006E1331 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		3C349927166EEF62001012B6 /* RemindersInboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemindersInboxViewController.h; sourceTree = "<group>"; };
 		3C349928166EEF62001012B6 /* RemindersInboxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemindersInboxViewController.m; sourceTree = "<group>"; };
-		3C349929166EEF62001012B6 /* RemindersBaseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemindersBaseViewController.xib; sourceTree = "<group>"; };
+		3C349929166EEF62001012B6 /* RemindersInboxViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemindersInboxViewController.xib; sourceTree = "<group>"; };
 		3C34992C166EFC25001012B6 /* ReminderInboxCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderInboxCell.h; sourceTree = "<group>"; };
 		3C34992D166EFC25001012B6 /* ReminderInboxCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderInboxCell.m; sourceTree = "<group>"; };
 		3C34992F166F1062001012B6 /* ReminderInboxCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderInboxCell.xib; sourceTree = "<group>"; };
@@ -493,6 +495,9 @@
 		3CFCCBFD16A99A1F002AC474 /* HistoryReminderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryReminderCell.xib; sourceTree = "<group>"; };
 		3CFCCBFF16AA2C26002AC474 /* dateTimeSwitcher.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dateTimeSwitcher.png; path = Resources/images/dateTimeSwitcher.png; sourceTree = "<group>"; };
 		3CFCCC0016AA2C26002AC474 /* dateTimeSwitcher@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dateTimeSwitcher@2x.png"; path = "Resources/images/dateTimeSwitcher@2x.png"; sourceTree = "<group>"; };
+		3CFCCC0316AA499C002AC474 /* AboutUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutUsViewController.h; sourceTree = "<group>"; };
+		3CFCCC0416AA499D002AC474 /* AboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutUsViewController.m; sourceTree = "<group>"; };
+		3CFCCC0516AA499D002AC474 /* AboutUsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutUsViewController.xib; sourceTree = "<group>"; };
 		E6A3980216913F4F004A460F /* leftMenuDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leftMenuDown.png; path = Resources/images/leftMenuDown.png; sourceTree = "<group>"; };
 		E6A3980316913F4F004A460F /* leftMenuDown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "leftMenuDown@2x.png"; path = "Resources/images/leftMenuDown@2x.png"; sourceTree = "<group>"; };
 		E6A3980416913F4F004A460F /* leftMenuUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leftMenuUp.png; path = Resources/images/leftMenuUp.png; sourceTree = "<group>"; };
@@ -843,6 +848,7 @@
 		3CE0ABFA16507EA9004B785A /* xib */ = {
 			isa = PBXGroup;
 			children = (
+				3CFCCC0516AA499D002AC474 /* AboutUsViewController.xib */,
 				3C719E23169E584700EECCB0 /* SettingSNSViewController.xib */,
 				3C719E1E169E493B00EECCB0 /* SettingAppBadgeViewController.xib */,
 				3C3BE6B3168A83F40052A8C5 /* ReminderTimeSettingViewController.xib */,
@@ -851,7 +857,7 @@
 				3C9384921688292D00DA6412 /* TextReminderSettingViewController.xib */,
 				3C1CB0791679BA770025BDB2 /* SettingViewController.xib */,
 				3C3499381670509E001012B6 /* ReminderDetailViewController.xib */,
-				3C349929166EEF62001012B6 /* RemindersBaseViewController.xib */,
+				3C349929166EEF62001012B6 /* RemindersInboxViewController.xib */,
 				3C40DE4116670F41005627C9 /* RemindersNotificationViewController.xib */,
 				3CD0ADFF166877C0001986F0 /* MenuViewController.xib */,
 				3CC9CE22165F730100E7E9D9 /* FriendRemindersViewController.xib */,
@@ -922,6 +928,8 @@
 				3C9384A41689328A00DA6412 /* TextReminderDetailViewController.m */,
 				3C9384901688292D00DA6412 /* TextReminderSettingViewController.h */,
 				3C9384911688292D00DA6412 /* TextReminderSettingViewController.m */,
+				3CFCCC0316AA499C002AC474 /* AboutUsViewController.h */,
+				3CFCCC0416AA499D002AC474 /* AboutUsViewController.m */,
 			);
 			name = Class;
 			sourceTree = "<group>";
@@ -1167,7 +1175,7 @@
 				3C984ED7166C83CD005AA529 /* btnPlay.png in Resources */,
 				3C984ED8166C83CD005AA529 /* btnPlay@2x.png in Resources */,
 				3C984EE0166C90D4005AA529 /* FriendReminderSenderCell.xib in Resources */,
-				3C34992B166EEF62001012B6 /* RemindersBaseViewController.xib in Resources */,
+				3C34992B166EEF62001012B6 /* RemindersInboxViewController.xib in Resources */,
 				3C349930166F1062001012B6 /* ReminderInboxCell.xib in Resources */,
 				3C34993A1670509E001012B6 /* ReminderDetailViewController.xib in Resources */,
 				3C838F311675D5B700A85826 /* ReminderDetailAudioCell.xib in Resources */,
@@ -1230,6 +1238,7 @@
 				3CFCCBFE16A99A1F002AC474 /* HistoryReminderCell.xib in Resources */,
 				3CFCCC0116AA2C26002AC474 /* dateTimeSwitcher.png in Resources */,
 				3CFCCC0216AA2C26002AC474 /* dateTimeSwitcher@2x.png in Resources */,
+				3CFCCC0716AA499E002AC474 /* AboutUsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1314,6 +1323,7 @@
 				3C5B1D7016A10BD80079C12F /* InsetsTextField.m in Sources */,
 				3CFCCBB116A90232002AC474 /* TodayReminderCell.m in Sources */,
 				3CFCCBFA16A999B4002AC474 /* HistoryReminderCell.m in Sources */,
+				3CFCCC0616AA499E002AC474 /* AboutUsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

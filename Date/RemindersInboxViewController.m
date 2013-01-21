@@ -529,6 +529,7 @@
     [_txtDesc setHidden:NO];
     // commit animations
     [UIView commitAnimations];
+    [_txtDesc becomeFirstResponder];
 }
 
 - (void)doneLoadingTableViewData{

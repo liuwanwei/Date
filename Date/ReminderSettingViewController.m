@@ -9,7 +9,6 @@
 #import "ReminderSettingViewController.h"
 #import "SoundManager.h"
 #import "Reminder.h"
-#import "ReminderManager.h"
 #import "ReminderMapViewController.h"
 #import "ReminderSendingViewController.h"
 #import "SinaWeiboManager.h"
@@ -40,6 +39,7 @@
 @synthesize isInbox = _isInbox;
 @synthesize labelSize = _labelSize;
 @synthesize dateType = _dateType;
+@synthesize reminderType = _reminderType;
 
 #pragma 私有函数
 - (void)removeHUD {
@@ -226,8 +226,8 @@
 }
 
 - (void)computeFontSize {
-    _labelSize = [self.desc sizeWithFont:[UIFont fontWithName:@"Helvetica" size:15.0] constrainedToSize:CGSizeMake(150, MAXFLOAT) lineBreakMode: NSLineBreakByTruncatingTail];
-    _labelSize.height = _labelSize.height + 25;
+    _labelSize = [self.desc sizeWithFont:[UIFont fontWithName:@"Helvetica" size:15.0] constrainedToSize:CGSizeMake(150, MAXFLOAT) lineBreakMode: NSLineBreakByWordWrapping];
+    _labelSize.height = _labelSize.height + 5;
 }
 
 - (void)initTriggerTime {
@@ -279,7 +279,7 @@
     _userManager = [UserManager defaultManager];
     _isLogin = [[SinaWeiboManager defaultManager].sinaWeibo isLoggedIn];
     _isAuthValid = [[SinaWeiboManager defaultManager].sinaWeibo isAuthValid];
-   
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {

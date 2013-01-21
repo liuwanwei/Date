@@ -53,6 +53,7 @@
                      completion:^(BOOL finished){
                          UIControl *overView = (UIControl *)[[[UIApplication sharedApplication] keyWindow] viewWithTag:10086];
                          [overView removeFromSuperview];
+                         [[AppDelegate delegate].menuViewController setVisible:NO];
                      }];
 }
 

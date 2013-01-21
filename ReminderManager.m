@@ -20,7 +20,7 @@ typedef enum {
 }BadgeOperate;
 
 @interface ReminderManager () {
-    UILocalNotification * newNotification;
+  
 }
 
 @end
@@ -531,32 +531,21 @@ typedef enum {
 
 - (void)addLocalNotificationWithReminder:(Reminder *)reminder withBilateralFriend:(BilateralFriend *)friend{
     if (nil == [self localNotification:reminder.id] && nil != reminder.triggerTime) {
-        NSString * body;
-//        NSString * reminderId = reminder.id;
-//        NSDate * triggerTime = reminder.triggerTime;
-//        NSNumber * state = reminder.state;
-//        NSNumber * alarm = reminder.isAlarm;
-        if (nil == friend) {
-            body = @"您自己的提醒:";
-        }else if ([[friend.userID stringValue] isEqualToString:[UserManager defaultManager].oneselfId]) {
-             body = @"您自己的提醒:";
-        }else {
-            body = [friend.nickname stringByAppendingString:@" 提醒你:"];  
-        }
+        NSString * body = @"提醒:";
+//        if (nil == friend) {
+//            body = @"您自己的提醒:";
+//        }else if ([[friend.userID stringValue] isEqualToString:[UserManager defaultManager].oneselfId]) {
+//             body = @"您自己的提醒:";
+//        }else {
+//            body = [friend.nickname stringByAppendingString:@" 提醒你:"];
+//        }
+        NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"HH:mm"];
+        body = [body stringByAppendingString:[formatter stringFromDate:reminder.triggerTime]];
+        body = [body stringByAppendingString:@" "];
         body = [body stringByAppendingString:reminder.desc];
-        /*body = [body stringByAppendingString:@" "];
-        body = [body stringByAppendingString:@"id="];
-        body = [body stringByAppendingString:reminderId];
-        body = [body stringByAppendingString:@" time="];
-        body = [body stringByAppendingString:triggerTime.description];
-        body = [body stringByAppendingString:@" state="];
-        body = [body stringByAppendingString:[state stringValue]];
-        body = [body stringByAppendingString:@" isAlarm="];
-        body = [body stringByAppendingString:[alarm stringValue]];*/
-        if (nil == newNotification) {
-            newNotification = [[UILocalNotification alloc] init];
-        }
-       
+        
+        UILocalNotification * newNotification = [[UILocalNotification alloc] init];
         newNotification.fireDate = reminder.triggerTime;
         newNotification.alertBody = body;
         newNotification.repeatInterval = 0;
