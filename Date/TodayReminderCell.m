@@ -36,10 +36,10 @@
     
         if (YES == [self.reminder.isAlarm boolValue]) {
             self.labelTriggerDate.textColor = RGBColor(153,153,153);
-            self.labelTriggerDate.font = [UIFont systemFontOfSize:20.0];
+//            self.labelTriggerDate.font = [UIFont systemFontOfSize:20.0];
         }else {
             self.labelTriggerDate.textColor = RGBColor(0,0,0);
-            self.labelTriggerDate.font = [UIFont systemFontOfSize:20.0];
+//            self.labelTriggerDate.font = [UIFont systemFontOfSize:20.0];
         }
         self.labelTriggerDate.text =[formatter stringFromDate:self.reminder.triggerTime];
         self.labelDay.text = day;
