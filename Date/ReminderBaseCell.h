@@ -27,6 +27,11 @@ typedef enum {
     DataTypeHistory
 }DataType;
 
+typedef enum {
+    CellEditingStateDefault = 0,
+    CellEditingStateDelete = 1
+}CellEditingState;
+
 @protocol ReminderCellDelegate <NSObject>
 
 @optional
@@ -55,6 +60,7 @@ typedef enum {
 @property (nonatomic) DataType dateType;
 @property (strong, nonatomic) NSIndexPath * indexPath;
 @property (nonatomic) AudioState audioState;
+@property (nonatomic) CellEditingState editingState;
 
 @property (weak, nonatomic) id<ReminderCellDelegate> delegate;
 
@@ -64,4 +70,5 @@ typedef enum {
 
 - (void)modifyReminderReadState;
 - (NSString *)custumDayString:(NSDate *)date;
+- (BOOL)isAudioReminder;
 @end
