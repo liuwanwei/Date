@@ -414,13 +414,13 @@
 - (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"begin editing");
     ReminderBaseCell * cell = (ReminderBaseCell *)[tableView cellForRowAtIndexPath:indexPath];
-    cell.editState = CellEditStateDelete;
+    cell.editingState = CellEditingStateDelete;
 }
 
 - (void)tableView:(UITableView *)tableView didEndEditingRowAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"end editing");
     ReminderBaseCell * cell = (ReminderBaseCell *)[tableView cellForRowAtIndexPath:indexPath];
-    cell.editState = CellEditStateDefault;
+    cell.editingState = CellEditingStateDefault;
 }
 
 #pragma mark - Table view delegate

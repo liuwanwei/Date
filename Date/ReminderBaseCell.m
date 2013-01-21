@@ -39,7 +39,7 @@
 @synthesize btnFinished = _btnFinished;
 @synthesize labelDay = _labelDay;
 @synthesize dateType = _dateType;
-@synthesize editState = _editState;
+@synthesize editingState = _editingState;
 
 - (NSString *)custumDayString:(NSDate *)date {
     NSString * dateString = @"" ;
@@ -72,10 +72,18 @@
     return dateString;
 }
 
+- (BOOL)isAudioReminder{
+    if (nil == _reminder.audioUrl || [_reminder.audioUrl isEqualToString:@""]){
+        return NO;
+    }else{
+        return YES;
+    }
+}
+
 - (void)setReminder:(Reminder *)reminer {
     if (nil != reminer) {
         _reminder = reminer;
-        if (nil == _reminder.audioUrl || [_reminder.audioUrl isEqualToString:@""]) {
+        if (! [self isAudioReminder]) {
             [_btnAudio setHidden:YES];
             [_labelAudioTime setHidden:YES];
             [_indicatorView setHidden:YES];
@@ -115,15 +123,17 @@
     
 }
 
-- (void)setEditState:(CellEditState)editState{
-    BOOL hidden = NO;
-    if(CellEditStateDelete == editState){
-        // 进入删除状态时隐藏播放按钮。
-        hidden = YES;
+- (void)setEditingState:(CellEditingState)editingState{
+    if ([self isAudioReminder]) {
+        BOOL hidden = NO;
+        if(CellEditingStateDelete == editingState){
+            // 进入删除状态时隐藏播放按钮。
+            hidden = YES;
+        }
+        
+        self.btnAudio.hidden = hidden;
+        self.labelAudioTime.hidden = hidden;
     }
-    
-    self.btnAudio.hidden = hidden;
-    self.labelAudioTime.hidden = hidden;
 }
 
 - (void)modifyReminderReadState {
