@@ -33,6 +33,8 @@ static SoundManager * sSoundManager;
 @synthesize currentRecordTime = _currentRecordTime;
 @synthesize parentView = _parentView;
 @synthesize indicatorView = _indicatorView;
+@synthesize alertSound = _alertSound;
+@synthesize aviableAlertSounds = _aviableAlertSounds;
 
 + (SoundManager *)defaultSoundManager {
     if (nil == sSoundManager) {
@@ -51,6 +53,11 @@ static SoundManager * sSoundManager;
             [self initImageView];
             _lock = [[NSCondition alloc] init];
         }
+        
+        _aviableAlertSounds = [NSArray arrayWithObjects:
+                               [NSArray arrayWithObjects:AlertSoundTitleCat, AlertSoundTitleDog, AlertSoundTitleNightingale, AlertSoundTitleSilence, nil],
+                               [NSArray arrayWithObjects:AlertSoundTypeCat, AlertSoundTypeDog, AlertSoundTypeNightingale, AlertSoundTypeSilence, nil],
+                               nil];
     }
     
     return self;
@@ -81,6 +88,38 @@ static SoundManager * sSoundManager;
                     [UIImage imageNamed:@"recordingSignal008"],
                     nil];
     }
+}
+
+- (void)saveAlertSound:(NSString *)alertSound{
+    self.alertSound = alertSound;
+    
+    [[NSUserDefaults standardUserDefaults] setObject:alertSound forKey:AlertSoundKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (NSString *)alertSound{
+    if (_alertSound == nil) {
+        NSString * sound = [[NSUserDefaults standardUserDefaults] objectForKey:AlertSoundKey];
+        if (nil != sound) {
+            self.alertSound = sound;
+        }else{
+            self.alertSound = AlertSoundTypeCat;
+        }
+    }
+    
+    return _alertSound;
+}
+
+- (NSString *)alertSoundTitleForType:(NSString *)type{
+    NSArray * soundTypes = [self.aviableAlertSounds objectAtIndex:1];
+    for (int i = 0; i < soundTypes.count; i ++) {
+        if ([type isEqualToString:[soundTypes objectAtIndex:i]]){
+            NSArray * soundTitles = [self.aviableAlertSounds objectAtIndex:0];
+            return [soundTitles objectAtIndex:i];
+        }
+    }
+    
+    return nil;
 }
 
 - (void)setImageWithAudioLevel:(NSInteger)level {
@@ -297,8 +336,16 @@ static SoundManager * sSoundManager;
 }
 
 - (void)playAlarmVoice {
-    NSURL *url = [[NSBundle mainBundle] URLForResource: @"cat"
-                                         withExtension: @"wav"];
+    if (! [self.alertSound isEqualToString: AlertSoundTypeSilence]) {
+        [self playAlertSound:self.alertSound];
+    }
+}
+
+- (void)playAlertSound:(NSString *)bundleSoundName{
+    NSString * name = [bundleSoundName stringByDeletingPathExtension];
+    NSString * extension = [bundleSoundName pathExtension];
+    NSURL *url = [[NSBundle mainBundle] URLForResource: name
+                                         withExtension:extension];
     NSError  *error;
     AVAudioSession * session = [AVAudioSession sharedInstance];
     [session setCategory:AVAudioSessionCategoryPlayback error:&error];
@@ -317,7 +364,7 @@ static SoundManager * sSoundManager;
         NSLog(@"播放失败");
     else
         [_alarmPlayer prepareToPlay];
-        [_alarmPlayer play];
+    [_alarmPlayer play];
 }
 
 - (void)stopAudio {

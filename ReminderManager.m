@@ -549,7 +549,7 @@ typedef enum {
         newNotification.fireDate = reminder.triggerTime;
         newNotification.alertBody = body;
         newNotification.repeatInterval = 0;
-        newNotification.soundName = @"cat.wav";
+        newNotification.soundName = [[SoundManager defaultSoundManager] alertSound];
         newNotification.alertAction = @"查看应用";
         newNotification.timeZone=[NSTimeZone defaultTimeZone];
         newNotification.userInfo = [NSDictionary dictionaryWithObject:reminder.id forKey:@"key"];

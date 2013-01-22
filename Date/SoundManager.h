@@ -15,6 +15,17 @@ typedef enum {
     VoiceTypeReminder
 }VoiceType;
 
+#define AlertSoundKey               @"AlertSoundKey"
+#define AlertSoundTypeSilence       @"AlertSoundTypeSilence"
+#define AlertSoundTypeCat           @"milkCat.wav"
+#define AlertSoundTypeDog           @"bigDog.wav"
+#define AlertSoundTypeNightingale   @"nightingale.wav"
+
+#define AlertSoundTitleCat           @"喵星人"
+#define AlertSoundTitleDog           @"汪星人"
+#define AlertSoundTitleNightingale   @"夜莺"
+#define AlertSoundTitleSilence       @"静音"
+
 @protocol SoundManagerDelegate <NSObject>
 
 @optional
@@ -32,6 +43,8 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView * indicatorView;
 @property (weak, nonatomic) UIView * parentView;
 @property (nonatomic) NSTimeInterval currentRecordTime;
+@property (nonatomic, strong) NSArray * aviableAlertSounds;
+@property (nonatomic, strong) NSString * alertSound;
 
 @property (weak, nonatomic) id<SoundManagerDelegate> delegate;
 
@@ -47,6 +60,9 @@ typedef enum {
 - (void)deleteAudioFile:(NSString *)path;
 
 - (void)playAlarmVoice;
+- (void)playAlertSound:(NSString *)bundleSoundName;
+- (void)saveAlertSound:(NSString *)sound;
+- (NSString *)alertSoundTitleForType:(NSString *)type;
 
 - (NSInteger)audioTime:(NSString *)path;
 
