@@ -13,6 +13,7 @@
 #import "BilateralFriendManager.h"
 #import "SettingAppBadgeViewController.h"
 #import "SettingSNSViewController.h"
+#import "SettingAlertSound.h"
 
 @interface SettingViewController () {
     NSArray * _otherInfo;
@@ -57,6 +58,16 @@
     return [UserManager defaultManager].screenName;
 }
 
+- (void)refreshTable:(NSNotification *)notification{
+    if (nil != notification) {
+        NSDictionary * userInfo = notification.userInfo;
+        int section = [((NSNumber *)[userInfo objectForKey:@"section"]) intValue];
+        int row = [((NSNumber *)[userInfo objectForKey:@"row"]) intValue];
+        NSIndexPath * indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
 #pragma 事件函数
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -77,6 +88,12 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.navigationController.navigationItem.hidesBackButton = YES;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTable:) name:UINotificationRefreshCell object:nil];
+}
+
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -87,7 +104,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -118,6 +135,10 @@
         //cell.imageView.image = [UIImage imageNamed:@"notification"];
         cell.textLabel.text = @"应用程序标记";
         cell.detailTextLabel.text = [_appBadgeSignRows objectAtIndex:_appBadgeMode];
+    }else if(2 == indexPath.section){
+        cell.textLabel.text = @"提醒声音";
+        SoundManager * soundManager = [SoundManager defaultSoundManager];
+        cell.detailTextLabel.text = [soundManager alertSoundTitleForType:soundManager.alertSound];
     }
     
     return cell;
@@ -136,6 +157,9 @@
         SettingAppBadgeViewController * controller = [[SettingAppBadgeViewController alloc] initWithNibName:@"SettingAppBadgeViewController" bundle:nil];
         controller.parentController = self;
         [self.navigationController pushViewController:controller animated:YES];
+    }else if (2 == indexPath.section){
+        SettingAlertSound * contoller = [[SettingAlertSound alloc] initWithStyle:UITableViewStyleGrouped];
+        [self.navigationController pushViewController:contoller animated:YES];
     }
 }
 
