@@ -86,8 +86,8 @@
     return cell;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
-    return @"修改提示音后，将在新添加的提醒中生效。";
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section{
+    return @"修改声音后，将在创建新的提醒时生效。";
 }
 
 
@@ -114,7 +114,7 @@
     // 播放当前选中的声音。
     [soundManager playAlertSound:soundName];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:UINotificationRefreshCell object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:2], @"section", [NSNumber numberWithInt:0], @"row", nil]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UINotificationRefreshCell object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:0], @"section", [NSNumber numberWithInt:2], @"row", nil]];
 }
 
 @end
