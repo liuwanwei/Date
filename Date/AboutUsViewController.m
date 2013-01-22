@@ -7,6 +7,7 @@
 //
 
 #import "AboutUsViewController.h"
+#import "GlobalFunction.h"
 
 @interface AboutUsViewController () {
     NSArray * _array;
@@ -21,6 +22,10 @@
 - (void)initData {
     _array = [[NSArray alloc] initWithObjects:@"刘万伟",@"毛_宇",nil];
     _arrayNumber = [[NSArray alloc] initWithObjects:@"iharbor",@"maoyu417",nil];
+}
+
+- (void)back{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -40,7 +45,8 @@
     [self initData];
     self.title = @"关于我们";
     [self initMenuButton];
-    self.navigationController.navigationItem.hidesBackButton = YES;
+//    self.navigationController.navigationItem.hidesBackButton = YES;
+    [[GlobalFunction defaultGlobalFunction] initNavleftBarItemWithController:self withAction:@selector(back)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -79,7 +85,9 @@
 {
     _curIndexPath = indexPath;
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"访问他的微博" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"访问", nil];
+    
+    NSString * title = [NSString stringWithFormat:@"看一看 @%@ 的微博？", [_array objectAtIndex:indexPath.row]];
+    UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:title message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"查看", nil];
     [alertView show];
 }
 

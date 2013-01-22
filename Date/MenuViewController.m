@@ -116,7 +116,7 @@ typedef enum {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 6;
+    return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -141,7 +141,7 @@ typedef enum {
         remindersSize = [NSString stringWithFormat:@" %d", reminderManager.draftRemindersSize];
         labelTitle.text = LocalString(@"DraftBox");
         labelTitle.text = [labelTitle.text stringByAppendingString:remindersSize];
-        [imageSeparate setHidden:NO];
+//        [imageSeparate setHidden:NO];
     }
     else if (indexPath.row == 4){
         labelTitle.text = @"设置";
@@ -160,10 +160,10 @@ typedef enum {
             }else if(indexPath.row == 2) {
                 remindersSize = [NSString stringWithFormat:@" %d", reminderManager.allRemindersSize];
                 labelTitle.text = [labelTitle.text stringByAppendingString:remindersSize];
-                [imageSeparate setHidden:NO];
+//                [imageSeparate setHidden:NO];
             }
         }else {
-            [imageSeparate setHidden:NO];
+//            [imageSeparate setHidden:NO];
         }
     }
     
@@ -197,7 +197,7 @@ typedef enum {
     cell = [tableView cellForRowAtIndexPath:_lastIndexPath];
     imageSeparate = (UIImageView *)[cell viewWithTag:MenuCellTagSeparate];
     if (0 == _lastIndexPath.row || 2 == _lastIndexPath.row) {
-        [imageSeparate setHidden:NO];
+//        [imageSeparate setHidden:NO];
     }
     
     cell = [tableView cellForRowAtIndexPath:indexPath];
