@@ -172,6 +172,10 @@
 		3CFCCC0216AA2C26002AC474 /* dateTimeSwitcher@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CFCCC0016AA2C26002AC474 /* dateTimeSwitcher@2x.png */; };
 		3CFCCC0616AA499E002AC474 /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFCCC0416AA499D002AC474 /* AboutUsViewController.m */; };
 		3CFCCC0716AA499E002AC474 /* AboutUsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CFCCC0516AA499D002AC474 /* AboutUsViewController.xib */; };
+		E68A7FF116AE3C7200DCA6E1 /* bigDog.wav in Resources */ = {isa = PBXBuildFile; fileRef = E68A7FEE16AE3C7200DCA6E1 /* bigDog.wav */; };
+		E68A7FF216AE3C7200DCA6E1 /* milkCat.wav in Resources */ = {isa = PBXBuildFile; fileRef = E68A7FEF16AE3C7200DCA6E1 /* milkCat.wav */; };
+		E68A7FF316AE3C7200DCA6E1 /* nightingale.wav in Resources */ = {isa = PBXBuildFile; fileRef = E68A7FF016AE3C7200DCA6E1 /* nightingale.wav */; };
+		E68A7FF616AE5A2000DCA6E1 /* SettingAlertSound.m in Sources */ = {isa = PBXBuildFile; fileRef = E68A7FF516AE5A2000DCA6E1 /* SettingAlertSound.m */; };
 		E6A3980616913F4F004A460F /* leftMenuDown.png in Resources */ = {isa = PBXBuildFile; fileRef = E6A3980216913F4F004A460F /* leftMenuDown.png */; };
 		E6A3980716913F4F004A460F /* leftMenuDown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E6A3980316913F4F004A460F /* leftMenuDown@2x.png */; };
 		E6A3980816913F4F004A460F /* leftMenuUp.png in Resources */ = {isa = PBXBuildFile; fileRef = E6A3980416913F4F004A460F /* leftMenuUp.png */; };
@@ -494,6 +498,11 @@
 		3CFCCC0316AA499C002AC474 /* AboutUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutUsViewController.h; sourceTree = "<group>"; };
 		3CFCCC0416AA499D002AC474 /* AboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutUsViewController.m; sourceTree = "<group>"; };
 		3CFCCC0516AA499D002AC474 /* AboutUsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutUsViewController.xib; sourceTree = "<group>"; };
+		E68A7FEE16AE3C7200DCA6E1 /* bigDog.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bigDog.wav; sourceTree = "<group>"; };
+		E68A7FEF16AE3C7200DCA6E1 /* milkCat.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = milkCat.wav; sourceTree = "<group>"; };
+		E68A7FF016AE3C7200DCA6E1 /* nightingale.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = nightingale.wav; sourceTree = "<group>"; };
+		E68A7FF416AE5A2000DCA6E1 /* SettingAlertSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingAlertSound.h; sourceTree = "<group>"; };
+		E68A7FF516AE5A2000DCA6E1 /* SettingAlertSound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingAlertSound.m; sourceTree = "<group>"; };
 		E6A3980216913F4F004A460F /* leftMenuDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leftMenuDown.png; path = Resources/images/leftMenuDown.png; sourceTree = "<group>"; };
 		E6A3980316913F4F004A460F /* leftMenuDown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "leftMenuDown@2x.png"; path = "Resources/images/leftMenuDown@2x.png"; sourceTree = "<group>"; };
 		E6A3980416913F4F004A460F /* leftMenuUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leftMenuUp.png; path = Resources/images/leftMenuUp.png; sourceTree = "<group>"; };
@@ -657,6 +666,9 @@
 		3C1CB06D167873320025BDB2 /* sound */ = {
 			isa = PBXGroup;
 			children = (
+				E68A7FEE16AE3C7200DCA6E1 /* bigDog.wav */,
+				E68A7FEF16AE3C7200DCA6E1 /* milkCat.wav */,
+				E68A7FF016AE3C7200DCA6E1 /* nightingale.wav */,
 				3C1CB06E167873320025BDB2 /* cat.wav */,
 			);
 			name = sound;
@@ -868,16 +880,18 @@
 		3CE0AC541650D5C3004B785A /* Class */ = {
 			isa = PBXGroup;
 			children = (
-				3CC9CE25165F768D00E7E9D9 /* Cell */,
-				3C351392169AC9AD00F78FB9 /* GlobalFunction */,
+				3CFCCC0316AA499C002AC474 /* AboutUsViewController.h */,
+				3CFCCC0416AA499D002AC474 /* AboutUsViewController.m */,
 				3C93849516882BD800DA6412 /* AudioReminderSettingViewController.h */,
 				3C93849616882BD800DA6412 /* AudioReminderSettingViewController.m */,
 				3C3156631681AE4000C1E42C /* BaseViewController.h */,
 				3C3156641681AE4000C1E42C /* BaseViewController.m */,
+				3CC9CE25165F768D00E7E9D9 /* Cell */,
 				E6A3980A16914121004A460F /* CustomChoiceViewController.h */,
 				E6A3980B16914121004A460F /* CustomChoiceViewController.m */,
 				3CC9CE20165F730100E7E9D9 /* FriendRemindersViewController.h */,
 				3CC9CE21165F730100E7E9D9 /* FriendRemindersViewController.m */,
+				3C351392169AC9AD00F78FB9 /* GlobalFunction */,
 				3CD0ADFD166877C0001986F0 /* MenuViewController.h */,
 				3CD0ADFE166877C0001986F0 /* MenuViewController.m */,
 				3C19884F16982974002311E5 /* ModifyAudioReminderViewController.h */,
@@ -896,16 +910,18 @@
 				3C044CD7165A8C58000551C5 /* ReminderMapViewController.m */,
 				3C23E8B21669ACA30098149A /* RemindersBaseViewController.h */,
 				3C23E8B31669ACA30098149A /* RemindersBaseViewController.m */,
-				3C349927166EEF62001012B6 /* RemindersInboxViewController.h */,
-				3C349928166EEF62001012B6 /* RemindersInboxViewController.m */,
 				3CF017DE165B500D00F83814 /* ReminderSendingViewController.h */,
 				3CF017DF165B500E00F83814 /* ReminderSendingViewController.m */,
 				3C044CC9165A0E1B000551C5 /* ReminderSettingViewController.h */,
 				3C044CCA165A0E1B000551C5 /* ReminderSettingViewController.m */,
+				3C349927166EEF62001012B6 /* RemindersInboxViewController.h */,
+				3C349928166EEF62001012B6 /* RemindersInboxViewController.m */,
 				3C40DE3F16670F41005627C9 /* RemindersNotificationViewController.h */,
 				3C40DE4016670F41005627C9 /* RemindersNotificationViewController.m */,
 				3C3BE6B1168A83F40052A8C5 /* ReminderTimeSettingViewController.h */,
 				3C3BE6B2168A83F40052A8C5 /* ReminderTimeSettingViewController.m */,
+				E68A7FF416AE5A2000DCA6E1 /* SettingAlertSound.h */,
+				E68A7FF516AE5A2000DCA6E1 /* SettingAlertSound.m */,
 				3C719E1C169E493B00EECCB0 /* SettingAppBadgeViewController.h */,
 				3C719E1D169E493B00EECCB0 /* SettingAppBadgeViewController.m */,
 				3C719E21169E584600EECCB0 /* SettingSNSViewController.h */,
@@ -922,8 +938,6 @@
 				3C9384A41689328A00DA6412 /* TextReminderDetailViewController.m */,
 				3C9384901688292D00DA6412 /* TextReminderSettingViewController.h */,
 				3C9384911688292D00DA6412 /* TextReminderSettingViewController.m */,
-				3CFCCC0316AA499C002AC474 /* AboutUsViewController.h */,
-				3CFCCC0416AA499D002AC474 /* AboutUsViewController.m */,
 			);
 			name = Class;
 			sourceTree = "<group>";
@@ -1231,6 +1245,9 @@
 				3CFCCC0116AA2C26002AC474 /* dateTimeSwitcher.png in Resources */,
 				3CFCCC0216AA2C26002AC474 /* dateTimeSwitcher@2x.png in Resources */,
 				3CFCCC0716AA499E002AC474 /* AboutUsViewController.xib in Resources */,
+				E68A7FF116AE3C7200DCA6E1 /* bigDog.wav in Resources */,
+				E68A7FF216AE3C7200DCA6E1 /* milkCat.wav in Resources */,
+				E68A7FF316AE3C7200DCA6E1 /* nightingale.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1316,6 +1333,7 @@
 				3CFCCBB116A90232002AC474 /* TodayReminderCell.m in Sources */,
 				3CFCCBFA16A999B4002AC474 /* HistoryReminderCell.m in Sources */,
 				3CFCCC0616AA499E002AC474 /* AboutUsViewController.m in Sources */,
+				E68A7FF616AE5A2000DCA6E1 /* SettingAlertSound.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
