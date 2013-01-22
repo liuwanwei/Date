@@ -49,7 +49,7 @@
 #define kBilateralFriendEntity @"BilateralFriend"
 #define kReminderEntity @"Reminder"
 
-#define kInboxTimeDesc  @"加入收集箱，暂不提醒"
+#define kInboxTimeDesc  @"加入收集箱"
 #define kTodayTimeDesc  @"加入今日提醒"
 #define kTomorrowDesc   @"加入明日提醒"
 #define kOneDayTimeDesc @"加入某日提醒"

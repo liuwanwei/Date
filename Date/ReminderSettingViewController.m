@@ -117,9 +117,7 @@
     NSString * result;
     if (nil != _triggerTime) {
         if (ReminderTypeReceive == _reminderType) {
-            result = kAlarmTimeDesc;
-            result = [result stringByAppendingString:@" "];
-            result = [result stringByAppendingString:[[GlobalFunction defaultGlobalFunction] custumDateTimeString:_triggerTime]];
+            result = [[GlobalFunction defaultGlobalFunction] custumDateTimeString:_triggerTime];
         }else {
             result =  [[GlobalFunction defaultGlobalFunction] custumDayString:_triggerTime];
         }

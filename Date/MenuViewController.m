@@ -85,7 +85,7 @@ typedef enum {
     self.tableView.rowHeight = 50.0;
     _lastIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
     [self.tableView selectRowAtIndexPath:_lastIndexPath animated:NO scrollPosition:0];
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"sidebar_background"]];
+//    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"sidebar_background"]];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -116,7 +116,7 @@ typedef enum {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 6;
+    return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -131,6 +131,7 @@ typedef enum {
     }
 
     UILabel * labelTitle = (UILabel *)[cell viewWithTag:MenuCellTagTitle];
+    labelTitle.textColor = RGBColor(255, 255, 255);
     UIImageView * imageStart = (UIImageView *)[cell viewWithTag:MenuCellTagStart];
     UIImageView * imageSeparate = (UIImageView *)[cell viewWithTag:MenuCellTagSeparate];
     [imageStart setHidden:YES];
@@ -140,7 +141,7 @@ typedef enum {
         remindersSize = [NSString stringWithFormat:@" %d", reminderManager.draftRemindersSize];
         labelTitle.text = LocalString(@"DraftBox");
         labelTitle.text = [labelTitle.text stringByAppendingString:remindersSize];
-        [imageSeparate setHidden:NO];
+//        [imageSeparate setHidden:NO];
     }
     else if (indexPath.row == 4){
         labelTitle.text = @"设置";
@@ -159,10 +160,10 @@ typedef enum {
             }else if(indexPath.row == 2) {
                 remindersSize = [NSString stringWithFormat:@" %d", reminderManager.allRemindersSize];
                 labelTitle.text = [labelTitle.text stringByAppendingString:remindersSize];
-                [imageSeparate setHidden:NO];
+//                [imageSeparate setHidden:NO];
             }
         }else {
-            [imageSeparate setHidden:NO];
+//            [imageSeparate setHidden:NO];
         }
     }
     
@@ -196,7 +197,7 @@ typedef enum {
     cell = [tableView cellForRowAtIndexPath:_lastIndexPath];
     imageSeparate = (UIImageView *)[cell viewWithTag:MenuCellTagSeparate];
     if (0 == _lastIndexPath.row || 2 == _lastIndexPath.row) {
-        [imageSeparate setHidden:NO];
+//        [imageSeparate setHidden:NO];
     }
     
     cell = [tableView cellForRowAtIndexPath:indexPath];

@@ -93,7 +93,7 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     [self initPickerView];
-    _rows = [[NSArray alloc] initWithObjects:kInboxTimeDesc,kTodayTimeDesc,kTomorrowDesc,kOneDayTimeDesc,kAlarmTimeDesc, nil];
+    _rows = [[NSArray alloc] initWithObjects:kInboxTimeDesc,kTodayTimeDesc,kOneDayTimeDesc,kAlarmTimeDesc, nil];
     [[AppDelegate delegate] initNavleftBarItemWithController:self withAction:@selector(back)];
 }
 
@@ -155,15 +155,15 @@
             _parentContoller.triggerTime = [NSDate date];
             _parentContoller.reminderType = ReminderTypeReceiveAndNoAlarm;
             break;
+//        case 2:
+//            back = YES;
+//            _parentContoller.triggerTime = [[GlobalFunction defaultGlobalFunction] tomorrow];
+//            _parentContoller.reminderType = ReminderTypeReceiveAndNoAlarm;
+//            break;
         case 2:
-            back = YES;
-            _parentContoller.triggerTime = [[GlobalFunction defaultGlobalFunction] tomorrow];
-            _parentContoller.reminderType = ReminderTypeReceiveAndNoAlarm;
-            break;
-        case 3:
             [self showPickerViewWithMode:UIDatePickerModeDate];
             break;
-        case 4:
+        case 3:
             [self showPickerViewWithMode:UIDatePickerModeDateAndTime];
             break;
         default:
