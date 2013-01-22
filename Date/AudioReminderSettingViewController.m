@@ -86,6 +86,7 @@
         cell.textLabel.text =  self.desc;
         cell.textLabel.textColor = RGBColor(50, 79, 133);
         cell.textLabel.font = [UIFont fontWithName:@"Helvetica Bold" size:15.0];
+        cell.detailTextLabel.text = @"";
     }else {
         if (indexPath.row == 0) {
             CellIdentifier = @"ReminderSettingAudioCell";
@@ -109,7 +110,7 @@
             }
             
             if (indexPath.row == 1) {
-                cell.textLabel.text = @"闹钟";
+                cell.textLabel.text = @"提醒";
                 cell.detailTextLabel.text = [self stringTriggerTime];
             }else if (indexPath.row == 2){
                 cell.textLabel.text = @"发送给";

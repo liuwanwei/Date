@@ -14,20 +14,14 @@
     if (nil != self.reminder.triggerTime) {
         if (ReminderTypeReceiveAndNoAlarm == [self.reminder.type integerValue]) {
             [self.labelTriggerDate setHidden:YES];
+            self.labelDescription.frame = CGRectMake(self.labelDescription.frame.origin.x, 26, self.labelDescription.frame.size.width, self.labelDescription.frame.size.height);
         }else {
             [self.labelTriggerDate setHidden:NO];
+             self.labelDescription.frame = CGRectMake(self.labelDescription.frame.origin.x, 42, self.labelDescription.frame.size.width, self.labelDescription.frame.size.height);
         }
         
         NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"HH:mm"];
-        
-        if (YES == [self.reminder.isAlarm boolValue]) {
-            self.labelTriggerDate.textColor = RGBColor(153,153,153);
-            self.labelTriggerDate.font = [UIFont systemFontOfSize:20.0];
-        }else {
-            self.labelTriggerDate.textColor = RGBColor(0,0,0);
-            self.labelTriggerDate.font = [UIFont systemFontOfSize:20.0];
-        }
         self.labelTriggerDate.text =[formatter stringFromDate:self.reminder.triggerTime];
     }else {
         [self.labelTriggerDate setHidden:YES];

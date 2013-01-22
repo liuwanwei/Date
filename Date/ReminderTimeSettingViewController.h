@@ -9,19 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "ReminderSettingViewController.h"
 
-@interface ReminderTimeSettingViewController : UIViewController
-
-@property (weak, nonatomic) IBOutlet UILabel * labelDay;
-@property (weak, nonatomic) IBOutlet UILabel * labelDate;
-@property (weak, nonatomic) IBOutlet UILabel * labelTime;
-@property (weak, nonatomic) IBOutlet UIButton * btnClear;
-@property (weak, nonatomic) IBOutlet UIButton * btnSet;
+@interface ReminderTimeSettingViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) ReminderSettingViewController * parentContoller;
 @property (weak, nonatomic) UIDatePicker * datePick;
+@property (weak, nonatomic) IBOutlet UITableView * tableView;
+@property (weak, nonatomic) IBOutlet UIView * finshView;
 
-- (IBAction)clickClear:(id)sender;
-- (IBAction)clickSet:(id)sender;
-- (IBAction)clickChange:(id)sender;
-
+- (IBAction)clickOK:(id)sender;
+- (IBAction)clickCancel:(id)sender;
 @end

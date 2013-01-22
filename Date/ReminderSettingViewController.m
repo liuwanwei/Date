@@ -49,25 +49,23 @@
 - (void)initDatePicker {
     if (nil == _datePicker) {
         _datePicker = [[UIDatePicker alloc] init];
-        [_datePicker setDatePickerMode:UIDatePickerModeDateAndTime];
-        [_datePicker setMinuteInterval:5];
     }
 }
 
 - (void)initTableFooterViewOfReminderFinished {
     UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 300, 150)];
     
-    _labelPrompt = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 300, 20)];
-    _labelPrompt.backgroundColor = [UIColor clearColor];
-    _labelPrompt.textAlignment = NSTextAlignmentCenter;
-    _labelPrompt.textColor = RGBColor(153,153,153);
-    
-    if (_triggerTime != nil) {
-        _labelPrompt.text = @"将还原到所有提醒";
-    }else {
-        _labelPrompt.text = @"将还原到草稿箱";
-    }
-    [view addSubview:_labelPrompt];
+//    _labelPrompt = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 300, 20)];
+//    _labelPrompt.backgroundColor = [UIColor clearColor];
+//    _labelPrompt.textAlignment = NSTextAlignmentCenter;
+//    _labelPrompt.textColor = RGBColor(153,153,153);
+//    
+//    if (_triggerTime != nil) {
+//        _labelPrompt.text = @"将还原到所有提醒";
+//    }else {
+//        _labelPrompt.text = @"将还原到草稿箱";
+//    }
+//    [view addSubview:_labelPrompt];
     
     _btnSave = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     _btnSave.layer.frame = CGRectMake(10, 30, 300, 44);
@@ -118,9 +116,15 @@
 - (NSString *)stringTriggerTime {
     NSString * result;
     if (nil != _triggerTime) {
-        result =  [[GlobalFunction defaultGlobalFunction] custumDateTimeString:_triggerTime];
+        if (ReminderTypeReceive == _reminderType) {
+            result = kAlarmTimeDesc;
+            result = [result stringByAppendingString:@" "];
+            result = [result stringByAppendingString:[[GlobalFunction defaultGlobalFunction] custumDateTimeString:_triggerTime]];
+        }else {
+            result =  [[GlobalFunction defaultGlobalFunction] custumDayString:_triggerTime];
+        }
     }else {
-        result = @"未设置";
+        result = kInboxTimeDesc;
     }
 
     return result;
@@ -129,17 +133,17 @@
 - (void)initTableFooterView {
     UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 300, 150)];
     
-    _labelPrompt = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 300, 20)];
-    _labelPrompt.backgroundColor = [UIColor clearColor];
-    _labelPrompt.textAlignment = NSTextAlignmentCenter;
-    _labelPrompt.textColor = RGBColor(153,153,153);
-    [view addSubview:_labelPrompt];
+//    _labelPrompt = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 300, 20)];
+//    _labelPrompt.backgroundColor = [UIColor clearColor];
+//    _labelPrompt.textAlignment = NSTextAlignmentCenter;
+//    _labelPrompt.textColor = RGBColor(153,153,153);
+//    [view addSubview:_labelPrompt];
     
     _btnSave = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     _btnSave.layer.frame = CGRectMake(10, 30, 300, 44);
     _btnSave.titleLabel.font = [UIFont systemFontOfSize:18.0];
     [_btnSave setBackgroundImage:[UIImage imageNamed:@"buttonBg"] forState:UIControlStateNormal];
-    [_btnSave setTitle:LocalString(@"SettingPromptOfDraftBoxWithButton") forState:UIControlStateNormal];
+    [_btnSave setTitle:kSave forState:UIControlStateNormal];
     [_btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_btnSave addTarget:self action:@selector(saveReminder) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:_btnSave];
@@ -150,45 +154,45 @@
 - (void)updateTableFooterViewInCreateState{
     if (nil != _triggerTime) {
         if (YES == [[UserManager defaultManager] isOneself:[_receiverId stringValue]] ) {
-            _labelPrompt.text = LocalString(@"SettingPromptOfAlarm");
-            [_btnSave setTitle:LocalString(@"SettingPromptOfAlarmWithButton") forState:UIControlStateNormal];
+//            _labelPrompt.text = LocalString(@"SettingPromptOfAlarm");
+            [_btnSave setTitle:kSave forState:UIControlStateNormal];
         }else {
-            _labelPrompt.text = LocalString(@"SettingPromptOfSend");
+//            _labelPrompt.text = LocalString(@"SettingPromptOfSend");
             [_btnSave setTitle:LocalString(@"SettingPromptOfSendWithButton") forState:UIControlStateNormal];
         }
     }else {
-        _labelPrompt.text = LocalString(@"SettingPromptOfDraftBox");
-        [_btnSave setTitle:LocalString(@"SettingPromptOfDraftBoxWithButton") forState:UIControlStateNormal];
+//        _labelPrompt.text = LocalString(@"SettingPromptOfDraftBox");
+        [_btnSave setTitle:kSave forState:UIControlStateNormal];
     }
 }
 
 - (void)updateTableFooterViewInModifyInboxState {
     if (nil != _triggerTime) {
         if (YES == [[UserManager defaultManager] isOneself:[_receiverId stringValue]] ) {
-            _labelPrompt.text = LocalString(@"SettingPromptOfAlarm");;
-            [_btnSave setTitle:LocalString(@"SettingPromptOfAlarmWithButton") forState:UIControlStateNormal];
+//            _labelPrompt.text = LocalString(@"SettingPromptOfAlarm");;
+            [_btnSave setTitle:kSave forState:UIControlStateNormal];
         }else {
-            _labelPrompt.text = LocalString(@"SettingPromptOfSend");
+//            _labelPrompt.text = LocalString(@"SettingPromptOfSend");
             [_btnSave setTitle:LocalString(@"SettingPromptOfSendWithButton") forState:UIControlStateNormal];
         }
     }else {
-        _labelPrompt.text = @"";
-        [_btnSave setTitle:@"保存" forState:UIControlStateNormal];
+//        _labelPrompt.text = @"";
+        [_btnSave setTitle:kSave forState:UIControlStateNormal];
     }
 }
 
 - (void)updateTableFooterViewInModifyAlarmState {
     if (nil != _triggerTime) {
         if (YES == [[UserManager defaultManager] isOneself:[_receiverId stringValue]] ) {
-            _labelPrompt.text = @"";
-            [_btnSave setTitle:@"保存" forState:UIControlStateNormal];
+//            _labelPrompt.text = @"";
+            [_btnSave setTitle:kSave forState:UIControlStateNormal];
         }else {
-            _labelPrompt.text = LocalString(@"SettingPromptOfSend");
+//            _labelPrompt.text = LocalString(@"SettingPromptOfSend");
             [_btnSave setTitle:LocalString(@"SettingPromptOfSendWithButton") forState:UIControlStateNormal];
         }
     }else {
-        _labelPrompt.text = LocalString(@"SettingPromptOfDraftBox");
-        [_btnSave setTitle:LocalString(@"SettingPromptOfDraftBoxWithButton") forState:UIControlStateNormal];
+//        _labelPrompt.text = LocalString(@"SettingPromptOfDraftBox");
+        [_btnSave setTitle:kSave forState:UIControlStateNormal];
     }
 }
 
@@ -203,9 +207,10 @@
 - (void)createReminder {
     _reminder.userID = _receiverId;
     _reminder.triggerTime = _triggerTime;
+    _reminder.type = [NSNumber numberWithInteger:_reminderType];
     _reminder.desc = _desc;
     if (NO == [_userManager isOneself:[_reminder.userID stringValue]] &&
-        nil != _reminder.triggerTime) {
+        nil != _reminder.triggerTime &&  ReminderTypeReceiveAndNoAlarm != _reminderType) {
         [[MBProgressManager defaultManager] showHUD:@"发送中"];
     }
     [[ReminderManager defaultManager] sendReminder:_reminder];
@@ -214,12 +219,10 @@
 - (void)modifyReminder {
     _reminder.userID = _receiverId;
     if (YES == [_userManager isOneself:[_receiverId stringValue]] ||
-        nil == _triggerTime) {
-        [[ReminderManager defaultManager] modifyReminder:_reminder withTriggerTime:_triggerTime withDesc:_desc];
+        nil == _triggerTime || ReminderTypeReceiveAndNoAlarm == [_reminder.type integerValue]) {
+        [[ReminderManager defaultManager] modifyReminder:_reminder withTriggerTime:_triggerTime withDesc:_desc withType:_reminderType];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }else {
-        _reminder.triggerTime = _triggerTime;
-        _reminder.desc = _desc;
         [[MBProgressManager defaultManager] showHUD:@"发送中"];
         [[ReminderManager defaultManager] sendReminder:_reminder];
     }
@@ -232,7 +235,7 @@
 
 - (void)initTriggerTime {
     if (DataTypeToday == self.dateType || DataTypeRecent == self.dateType) {
-        NSDate * nowTime = [NSDate date];
+        /*NSDate * nowTime = [NSDate date];
         NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"yyyy-MM-dd"];
         NSUInteger unitFlags = kCFCalendarUnitHour;
@@ -251,7 +254,8 @@
         }else if (22 > curHour) {
             time = [time stringByAppendingString:@" 22:00:00"];
             self.triggerTime = [formatter dateFromString:time];
-        }
+        }*/
+        self.triggerTime = [NSDate date];
     }
 }
 
@@ -322,9 +326,12 @@
 - (void)newReminderSuccess:(NSString *)reminderId {
     self.reminderManager.delegate = nil;
     [[MBProgressManager defaultManager] removeHUD];
-    if (NO == [_userManager isOneself:[_reminder.userID stringValue]] && nil != _reminder.triggerTime) {
-        _reminder.id = reminderId;
-        [self.reminderManager modifyReminder:_reminder withType:ReminderTypeSend];
+    if (NO == [_userManager isOneself:[_reminder.userID stringValue]] && nil != _reminder.triggerTime && ReminderTypeReceiveAndNoAlarm != [_reminder.type integerValue]) {
+        if (nil == _reminder.id || [_reminder.id isEqualToString:@""]) {
+            _reminder.id = reminderId;
+        }
+        
+        [self.reminderManager modifyReminder:_reminder withTriggerTime:_triggerTime withDesc:_desc withType:ReminderTypeSend];
     }
 }
 

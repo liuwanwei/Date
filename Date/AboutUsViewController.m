@@ -79,14 +79,15 @@
 {
     _curIndexPath = indexPath;
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"访问他的微博" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"访问", nil];
+    NSString * title = [NSString stringWithFormat:@"访问%@的微博",[_array objectAtIndex:indexPath.row]];
+    UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:title message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"访问", nil];
     [alertView show];
 }
 
 #pragma AlertView Delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex != alertView.cancelButtonIndex) {
-        NSString * url = @"http://www.weibo.com/";
+        NSString * url = @"http://weibo.com/";
         url = [url stringByAppendingString:[_arrayNumber objectAtIndex:_curIndexPath.row]];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
     }

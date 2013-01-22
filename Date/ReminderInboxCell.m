@@ -57,19 +57,9 @@
         if (nil != reminer.triggerTime) {
             NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
             [formatter setDateFormat:@"HH:mm"];
-
-            if (YES == [reminer.isAlarm boolValue]) {
-                self.labelTriggerDate.textColor = RGBColor(153,153,153);
-                self.labelTriggerDate.font = [UIFont systemFontOfSize:20.0];
-            }else {
-                self.labelTriggerDate.textColor = RGBColor(0,0,0);
-                self.labelTriggerDate.font = [UIFont systemFontOfSize:20.0];
-            }
             self.labelTriggerDate.text =[formatter stringFromDate:reminer.triggerTime];
         }else {
-            self.labelTriggerDate.textColor = RGBColor(153,153,153);
-            self.labelTriggerDate.font = [UIFont systemFontOfSize:18.0];
-            self.labelTriggerDate.text = @"无闹铃";
+            self.labelTriggerDate.text = @"";
         }
     }
 }

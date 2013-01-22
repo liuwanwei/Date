@@ -216,8 +216,6 @@
             [self.tableView reloadData];
             [self.tableView beginUpdates];
         }
-        
-      
         for (Reminder * reminder in self.reminders) {
             if (nil == reminder.triggerTime) {
                 key = [formatter stringFromDate:reminder.createTime];

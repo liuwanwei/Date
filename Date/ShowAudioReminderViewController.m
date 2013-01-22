@@ -19,6 +19,7 @@
     self.receiverId = self.reminder.userID;
     self.triggerTime = self.reminder.triggerTime;
     self.desc = self.reminder.desc;
+    self.reminderType = [self.reminder.type integerValue];
 }
 
 - (void)back {

@@ -21,6 +21,8 @@
 - (NSString *)custumDateTimeString:(NSDate *)date;
 - (NSString *)custumDayString:(NSDate *)date;
 
+- (NSDate *)tomorrow;
+
 - (UIColor *)viewBackground;
 
 @end

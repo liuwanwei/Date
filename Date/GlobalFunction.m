@@ -124,4 +124,14 @@ static GlobalFunction * sGlobalFunction;
     return datetimeString;
 }
 
+- (NSDate *)tomorrow {
+    NSDate * today = [NSDate date];
+    NSDate * tomorrow;
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    today = [formatter dateFromString:[formatter stringFromDate:today]];
+    tomorrow = [today dateByAddingTimeInterval:24*60*60];
+    return tomorrow;
+}
+
 @end

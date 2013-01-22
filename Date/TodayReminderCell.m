@@ -6,8 +6,6 @@
 //  Copyright (c) 2013年 Liu&Mao. All rights reserved.
 //
 
-#define LabelDayOriX    100
-
 #import "TodayReminderCell.h"
 
 @implementation TodayReminderCell
@@ -26,21 +24,20 @@
         if (ReminderTypeReceiveAndNoAlarm == [self.reminder.type integerValue]) {
             [self.labelTriggerDate setHidden:YES];
             self.labelDay.frame = CGRectMake(self.labelTriggerDate.frame.origin.x,self.labelDay.frame.origin.y, self.labelDay.frame.size.width, self.labelDay.frame.size.height);
+            if ([@"" isEqualToString:day]) {
+                self.labelDescription.frame = CGRectMake(self.labelDescription.frame.origin.x, 26, self.labelDescription.frame.size.width, self.labelDescription.frame.size.height);
+            }else {
+                self.labelDescription.frame = CGRectMake(self.labelDescription.frame.origin.x, 42, self.labelDescription.frame.size.width, self.labelDescription.frame.size.height);
+            }
+            
         }else {
             [self.labelTriggerDate setHidden:NO];
             self.labelDay.frame = CGRectMake(LabelDayOriX,self.labelDay.frame.origin.y, self.labelDay.frame.size.width, self.labelDay.frame.size.height);
+            self.labelDescription.frame = CGRectMake(self.labelDescription.frame.origin.x, 42, self.labelDescription.frame.size.width, self.labelDescription.frame.size.height);
         }
-    
+
         NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"HH:mm"];
-    
-        if (YES == [self.reminder.isAlarm boolValue]) {
-            self.labelTriggerDate.textColor = RGBColor(153,153,153);
-            self.labelTriggerDate.font = [UIFont systemFontOfSize:20.0];
-        }else {
-            self.labelTriggerDate.textColor = RGBColor(0,0,0);
-            self.labelTriggerDate.font = [UIFont systemFontOfSize:20.0];
-        }
         self.labelTriggerDate.text =[formatter stringFromDate:self.reminder.triggerTime];
         self.labelDay.text = day;
     }
@@ -66,11 +63,10 @@
     return self;
 }
 
-- (void)setReminder:(Reminder *)reminer {
-    if (nil != reminer) {
-        [super setReminder:reminer];
-        [self setDateTimeView];
-    }
+- (void)setReminder:(Reminder *)reminder {
+     [super setReminder:reminder];
+     [self setDateTimeView];
+    
 }
 
 @end
