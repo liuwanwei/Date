@@ -34,6 +34,7 @@
 
 #define kSinaWeiboBilateralFriendsUpdateDate @"kSinaWeiboBilateralFiendsUpdateDate"
 #define kRemoteRemindersUpdateTimeline @"RemoteRemindersUpdateTimeline"
+#define kCreateDefaultReminders @"CreateDefaultReminders"
 
 #define kLocalServerUrl  @"http://192.168.1.102/"
 #define kRemoteServerUrl   @"http://lingling1.sinaapp.com/"
@@ -47,3 +48,10 @@
 
 #define kBilateralFriendEntity @"BilateralFriend"
 #define kReminderEntity @"Reminder"
+
+#define kInboxTimeDesc  @"加入收集箱，暂不提醒"
+#define kTodayTimeDesc  @"加入今日提醒"
+#define kTomorrowDesc   @"加入明日提醒"
+#define kOneDayTimeDesc @"加入某日提醒"
+#define kAlarmTimeDesc  @"加入闹铃提醒"
+#define kSave   @"保存"

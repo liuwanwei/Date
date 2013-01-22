@@ -418,6 +418,20 @@ static SoundManager * sSoundManager;
     return NO;
 }
 
+- (NSString *)createDefaultAudio:(NSInteger)index {
+    NSString * audioName = [NSString stringWithFormat:@"default%d",index];
+    NSURL * url = [[NSBundle mainBundle] URLForResource:audioName
+                                         withExtension: @"m4a"];
+    NSData * data = [NSData dataWithContentsOfURL:url];
+    NSString * path;
+    DocumentManager * manager = [DocumentManager defaultManager];
+    [manager pathForRandomSoundWithSuffix:@"m4a"];
+    path = [[manager soundPath] stringByAppendingPathComponent:audioName];
+    path = [path stringByAppendingString:@".m4a"];
+    [data writeToFile:path atomically:YES];
+    return path;
+}
+
 #pragma AVAudioPlayerDelegate
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     if (_alarmPlayer == player) {

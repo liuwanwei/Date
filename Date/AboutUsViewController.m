@@ -94,7 +94,7 @@
 #pragma AlertView Delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex != alertView.cancelButtonIndex) {
-        NSString * url = @"http://www.weibo.com/";
+        NSString * url = @"http://weibo.com/";
         url = [url stringByAppendingString:[_arrayNumber objectAtIndex:_curIndexPath.row]];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
     }

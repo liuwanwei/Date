@@ -47,7 +47,7 @@
     self.reminder.audioUrl = [manager.recordFileURL relativePath];
     self.reminder.audioLength = [NSNumber numberWithInteger:manager.currentRecordTime];
     self.desc = @"记得做";
-    
+    self.reminderType = ReminderTypeReceiveAndNoAlarm;
     [self initTriggerTime];
 }
 

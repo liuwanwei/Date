@@ -147,6 +147,9 @@
 		3CD0AE01166877C0001986F0 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CD0ADFF166877C0001986F0 /* MenuViewController.xib */; };
 		3CDA36B616A69EF1008C6E18 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CDA36B516A69EF1008C6E18 /* Icon.png */; };
 		3CDA36BA16A6A42A008C6E18 /* sidebar_separate_light.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CDA36B816A6A427008C6E18 /* sidebar_separate_light.png */; };
+		3CDA755216AD0D2500A1AE9E /* default0.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3CDA755016AD0D2500A1AE9E /* default0.m4a */; };
+		3CDA755316AD0D2500A1AE9E /* default1.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3CDA755116AD0D2500A1AE9E /* default1.m4a */; };
+		3CDA755516AD0D2B00A1AE9E /* default2.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 3CDA755416AD0D2B00A1AE9E /* default2.m4a */; };
 		3CDE9047169EBCEB0099EB81 /* sinaWeiboLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CDE9043169EBCEB0099EB81 /* sinaWeiboLogo.png */; };
 		3CDE9048169EBCEB0099EB81 /* sinaWeiboLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CDE9044169EBCEB0099EB81 /* sinaWeiboLogo@2x.png */; };
 		3CE0ABF716507BD4004B785A /* UserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE0ABF616507BD4004B785A /* UserManager.m */; };
@@ -465,6 +468,9 @@
 		3CD0ADFF166877C0001986F0 /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
 		3CDA36B516A69EF1008C6E18 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = Resources/images/Icon.png; sourceTree = "<group>"; };
 		3CDA36B816A6A427008C6E18 /* sidebar_separate_light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sidebar_separate_light.png; path = Resources/images/sidebar_separate_light.png; sourceTree = "<group>"; };
+		3CDA755016AD0D2500A1AE9E /* default0.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = default0.m4a; sourceTree = "<group>"; };
+		3CDA755116AD0D2500A1AE9E /* default1.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = default1.m4a; sourceTree = "<group>"; };
+		3CDA755416AD0D2B00A1AE9E /* default2.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = default2.m4a; sourceTree = "<group>"; };
 		3CDE9043169EBCEB0099EB81 /* sinaWeiboLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sinaWeiboLogo.png; path = Resources/images/sinaWeiboLogo.png; sourceTree = "<group>"; };
 		3CDE9044169EBCEB0099EB81 /* sinaWeiboLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sinaWeiboLogo@2x.png"; path = "Resources/images/sinaWeiboLogo@2x.png"; sourceTree = "<group>"; };
 		3CE0ABF516507BD4004B785A /* UserManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserManager.h; sourceTree = "<group>"; };
@@ -669,6 +675,9 @@
 				E68A7FEE16AE3C7200DCA6E1 /* bigDog.wav */,
 				E68A7FEF16AE3C7200DCA6E1 /* milkCat.wav */,
 				E68A7FF016AE3C7200DCA6E1 /* nightingale.wav */,
+				3CDA755416AD0D2B00A1AE9E /* default2.m4a */,
+				3CDA755016AD0D2500A1AE9E /* default0.m4a */,
+				3CDA755116AD0D2500A1AE9E /* default1.m4a */,
 				3C1CB06E167873320025BDB2 /* cat.wav */,
 			);
 			name = sound;
@@ -884,6 +893,8 @@
 				3CFCCC0416AA499D002AC474 /* AboutUsViewController.m */,
 				3C93849516882BD800DA6412 /* AudioReminderSettingViewController.h */,
 				3C93849616882BD800DA6412 /* AudioReminderSettingViewController.m */,
+				3C9384901688292D00DA6412 /* TextReminderSettingViewController.h */,
+				3C9384911688292D00DA6412 /* TextReminderSettingViewController.m */,
 				3C3156631681AE4000C1E42C /* BaseViewController.h */,
 				3C3156641681AE4000C1E42C /* BaseViewController.m */,
 				3CC9CE25165F768D00E7E9D9 /* Cell */,
@@ -899,7 +910,6 @@
 				3C198846169804DA002311E5 /* ModifyTextReminderViewController.h */,
 				3C198847169804DA002311E5 /* ModifyTextReminderViewController.m */,
 				3C19884C16982422002311E5 /* NewAudioReminderViewController.h */,
-				3C19884D16982422002311E5 /* NewAudioReminderViewController.m */,
 				3C19884916980CF9002311E5 /* NewTextReminderViewController.h */,
 				3C19884A16980CF9002311E5 /* NewTextReminderViewController.m */,
 				3CB275111654EAF400FAEF1F /* OnlineFriendsRemindViewController.h */,
@@ -908,6 +918,7 @@
 				3C3499371670509D001012B6 /* ReminderDetailViewController.m */,
 				3C044CD6165A8C57000551C5 /* ReminderMapViewController.h */,
 				3C044CD7165A8C58000551C5 /* ReminderMapViewController.m */,
+				3C19884D16982422002311E5 /* NewAudioReminderViewController.m */,
 				3C23E8B21669ACA30098149A /* RemindersBaseViewController.h */,
 				3C23E8B31669ACA30098149A /* RemindersBaseViewController.m */,
 				3CF017DE165B500D00F83814 /* ReminderSendingViewController.h */,
@@ -938,6 +949,8 @@
 				3C9384A41689328A00DA6412 /* TextReminderDetailViewController.m */,
 				3C9384901688292D00DA6412 /* TextReminderSettingViewController.h */,
 				3C9384911688292D00DA6412 /* TextReminderSettingViewController.m */,
+				3CFCCC0316AA499C002AC474 /* AboutUsViewController.h */,
+				3CFCCC0416AA499D002AC474 /* AboutUsViewController.m */,
 			);
 			name = Class;
 			sourceTree = "<group>";
@@ -1054,7 +1067,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Liu&Mao";
 			};
-			buildConfigurationList = 3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "Date" */;
+			buildConfigurationList = 3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "date" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1248,6 +1261,9 @@
 				E68A7FF116AE3C7200DCA6E1 /* bigDog.wav in Resources */,
 				E68A7FF216AE3C7200DCA6E1 /* milkCat.wav in Resources */,
 				E68A7FF316AE3C7200DCA6E1 /* nightingale.wav in Resources */,
+				3CDA755216AD0D2500A1AE9E /* default0.m4a in Resources */,
+				3CDA755316AD0D2500A1AE9E /* default1.m4a in Resources */,
+				3CDA755516AD0D2B00A1AE9E /* default2.m4a in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1582,7 +1598,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "Date" */ = {
+		3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "date" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C13E89B164DF4DB006424A2 /* Debug */,

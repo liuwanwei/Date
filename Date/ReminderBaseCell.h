@@ -32,6 +32,8 @@ typedef enum {
     CellEditingStateDelete = 1
 }CellEditingState;
 
+#define LabelDayOriX    100
+
 @protocol ReminderCellDelegate <NSObject>
 
 @optional

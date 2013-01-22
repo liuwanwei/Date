@@ -67,4 +67,6 @@ typedef enum {
 - (NSInteger)audioTime:(NSString *)path;
 
 - (BOOL)fileExistsAtPath:(NSString *)path;
+
+- (NSString *)createDefaultAudio:(NSInteger)index;
 @end

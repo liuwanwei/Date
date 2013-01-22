@@ -32,6 +32,7 @@ typedef enum {
 - (void)initData {
     self.receiverId = self.reminder.userID;
     self.triggerTime = self.reminder.triggerTime;
+    self.reminderType = [self.reminder.type integerValue];
     self.desc = self.reminder.desc;
 }
 

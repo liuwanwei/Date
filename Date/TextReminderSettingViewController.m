@@ -88,7 +88,7 @@
         cell.detailTextLabel.text = @"";
     }else {
         if (indexPath.row == 0) {
-            cell.textLabel.text = @"闹钟";
+            cell.textLabel.text = @"提醒";
             cell.detailTextLabel.text = [self stringTriggerTime];
         }else if (indexPath.row == 1){
             cell.textLabel.text = @"发送给";

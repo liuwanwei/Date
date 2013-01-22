@@ -5,3 +5,16 @@
   Created by lixiaoyu on 13-1-8.
   Copyright (c) 2013年 Liu&Mao. All rights reserved.
 */
+
+"DraftBox" = "草稿箱";
+
+"SettingAppBadge" = "应用程序标记";
+"SettingAppSNSBinding" = "微博账号绑定";
+"SettingAppSNSRelieve" = "解除绑定";
+
+"SettingPromptOfDraftBox" = "信息将加入本地草稿箱中";
+"SettingPromptOfAlarm" = "信息将加入本地提醒中";
+"SettingPromptOfSend" = "提醒将发送给您的朋友";
+"SettingPromptOfDraftBoxWithButton" = "加入草稿箱";
+"SettingPromptOfAlarmWithButton" = "加入提醒";
+"SettingPromptOfSendWithButton" = "发送提醒";

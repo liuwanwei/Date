@@ -54,24 +54,24 @@
 
 - (void)showAlertViewWithReminder:(Reminder *)reminder {
     UIAlertView * alertView;
-//    BilateralFriend * friend = [[BilateralFriendManager defaultManager] bilateralFriendWithUserID:reminder.userID];
-//    NSString * nickname;
-//    NSString * userId = [reminder.userID stringValue];
-//    if ([userId isEqualToString:[UserManager defaultManager].oneselfId]) {
-//        nickname = @"";
-//    }else {
-//        if (nil == friend) {
-//            nickname = [NSString stringWithFormat:@"%@:",[reminder.userID stringValue]];
-//        }else {
-//            nickname = [NSString stringWithFormat:@"%@:",friend.nickname];
-//        }
-//    }
+    BilateralFriend * friend = [[BilateralFriendManager defaultManager] bilateralFriendWithUserID:reminder.userID];
+    NSString * nickname;
+    NSString * userId = [reminder.userID stringValue];
+    if ([userId isEqualToString:[UserManager defaultManager].oneselfId]) {
+        nickname = @"";
+    }else {
+        if (nil == friend) {
+            nickname = [NSString stringWithFormat:@"%@ ",[reminder.userID stringValue]];
+        }else {
+            nickname = [NSString stringWithFormat:@"%@ ",friend.nickname];
+        }
+    }
     NSString * title;
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"HH:mm"];
     NSString * time = [formatter stringFromDate:reminder.triggerTime];
     title  = time;
-    NSString * message = @"提醒:";
+    NSString * message = [nickname stringByAppendingString:@"提醒:"];
     message = [message stringByAppendingString:reminder.desc];
     
     if (nil != reminder.audioUrl && ![reminder.audioUrl isEqualToString:@""]) {
@@ -133,6 +133,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[SinaWeiboManager defaultManager] initSinaWeibo];
+    [[ReminderManager defaultManager] createDefaultReminders];
+    
     _homeViewController = [[RemindersInboxViewController alloc] initWithNibName:@"RemindersInboxViewController" bundle:nil];
     _navController = [[UINavigationController alloc] initWithRootViewController:_homeViewController];
     
