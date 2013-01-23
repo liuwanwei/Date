@@ -123,12 +123,14 @@
 								<reference key="IBUIHighlightedColor" ref="341335537"/>
 								<int key="IBUIBaselineAdjustment">0</int>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
-									<int key="type">2</int>
-									<double key="pointSize">20</double>
+									<string key="name">TimesNewRomanPSMT</string>
+									<string key="family">Times New Roman</string>
+									<int key="traits">0</int>
+									<double key="pointSize">23</double>
 								</object>
 								<object class="NSFont" key="IBUIFont">
-									<string key="NSName">Helvetica-Bold</string>
-									<double key="NSSize">20</double>
+									<string key="NSName">TimesNewRomanPSMT</string>
+									<double key="NSSize">23</double>
 									<int key="NSfFlags">16</int>
 								</object>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
@@ -202,7 +204,6 @@
 								<string key="NSFrame">{{0, 71}, {320, 1}}</string>
 								<reference key="NSSuperview" ref="441783622"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<int key="IBUITag">3</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
