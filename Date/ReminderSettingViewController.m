@@ -99,7 +99,7 @@
 - (void)clickTrigeerTimeRow:(NSIndexPath *)indexPath {
     ReminderTimeSettingViewController * timeSettingController;
     timeSettingController = [[ReminderTimeSettingViewController alloc] initWithNibName:@"ReminderTimeSettingViewController" bundle:nil];
-    timeSettingController.title = @"设置时间";
+    timeSettingController.title = @"设置提醒方式";
     timeSettingController.parentContoller = self;
     timeSettingController.datePick = _datePicker;
     [self.navigationController pushViewController:timeSettingController animated:YES];
@@ -117,9 +117,7 @@
     NSString * result;
     if (nil != _triggerTime) {
         if (ReminderTypeReceive == _reminderType) {
-            result = kAlarmTimeDesc;
-            result = [result stringByAppendingString:@" "];
-            result = [result stringByAppendingString:[[GlobalFunction defaultGlobalFunction] custumDateTimeString:_triggerTime]];
+            result = [[GlobalFunction defaultGlobalFunction] custumDateTimeString:_triggerTime];
         }else {
             result =  [[GlobalFunction defaultGlobalFunction] custumDayString:_triggerTime];
         }

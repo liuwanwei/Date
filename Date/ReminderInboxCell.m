@@ -36,35 +36,11 @@
 
 - (void)setReminder:(Reminder *)reminer {
     if (nil != reminer) {
-        
         [super setReminder:reminer];
-        
-        if (nil != reminer.isRead && YES == [reminer.isRead integerValue]) {
-            [_btnMark setHidden:YES];
-            [self.btnFinished setHidden:NO];
-        }else {
-            [_btnMark setHidden:NO];
-            [self.btnFinished setHidden:YES];
-        }
-        
-        if (ReminderStateFinish == [reminer.state integerValue]) {
-            [self.btnFinished setHidden:YES];
-        }else{
-            [self.btnFinished setHidden:NO];
-            [self.btnFinished setBackgroundImage:[UIImage imageNamed:@"checkboxOri"] forState:UIControlStateNormal];
-        }
         
         if (nil != reminer.triggerTime) {
             NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
             [formatter setDateFormat:@"HH:mm"];
-
-            if (YES == [reminer.isAlarm boolValue]) {
-                self.labelTriggerDate.textColor = RGBColor(153,153,153);
-//                self.labelTriggerDate.font = [UIFont systemFontOfSize:20.0];
-            }else {
-                self.labelTriggerDate.textColor = RGBColor(0,0,0);
-//                self.labelTriggerDate.font = [UIFont systemFontOfSize:20.0];
-            }
             self.labelTriggerDate.text =[formatter stringFromDate:reminer.triggerTime];
         }else {
             self.labelTriggerDate.text = @"";
