@@ -80,6 +80,14 @@
     }
 }
 
+- (UIColor *)ongoingColor{
+    return RGBColor(9, 84, 181);
+}
+
+- (UIColor *)passedColor{
+    return RGBColor(153, 153, 153);
+}
+
 - (void)setReminder:(Reminder *)reminer {
     if (nil != reminer) {
         _reminder = reminer;
@@ -99,15 +107,10 @@
         
         if (nil != self.reminder.triggerTime) {
             if (YES == [self.reminder.isAlarm boolValue]) {
-                self.labelTriggerDate.textColor = RGBColor(153,153,153);
-                //self.labelTriggerDate.font = [UIFont systemFontOfSize:20.0];
+                self.labelTriggerDate.textColor = [self passedColor];
             }else {
-                self.labelTriggerDate.textColor = RGBColor(0,0,0);
-                //self.labelTriggerDate.font = [UIFont systemFontOfSize:20.0];
+                self.labelTriggerDate.textColor = [self ongoingColor];
             }
-        }else {
-            self.labelTriggerDate.textColor = RGBColor(153,153,153);
-            //self.labelTriggerDate.font = [UIFont systemFontOfSize:18.0];
         }
 
         _labelDescription.text = _reminder.desc;

@@ -13,7 +13,7 @@
 #import "BilateralFriendManager.h"
 #import "SettingAppBadgeViewController.h"
 #import "SettingSNSViewController.h"
-#import "SettingAlertSound.h"
+#import "SettingAlertSoundViewController.h"
 #import "AboutUsViewController.h"
 
 @interface SettingViewController () {
@@ -43,7 +43,7 @@
 
 #pragma 类成员函数
 - (void)updateAppBadgeCell {
-    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
@@ -169,7 +169,7 @@
             controller.parentController = self;
             [self.navigationController pushViewController:controller animated:YES];
         }else if (2 == indexPath.row){
-            SettingAlertSound * contoller = [[SettingAlertSound alloc] initWithStyle:UITableViewStyleGrouped];
+            SettingAlertSoundViewController * contoller = [[SettingAlertSoundViewController alloc] initWithStyle:UITableViewStyleGrouped];
             [self.navigationController pushViewController:contoller animated:YES];
         }
     }else if(1 == indexPath.section){

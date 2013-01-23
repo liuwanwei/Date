@@ -101,9 +101,11 @@ static SoundManager * sSoundManager;
     if (_alertSound == nil) {
         NSString * sound = [[NSUserDefaults standardUserDefaults] objectForKey:AlertSoundKey];
         if (nil != sound) {
+            // 保存到内存。
             self.alertSound = sound;
         }else{
-            self.alertSound = AlertSoundTypeCat;
+            // 保存到内存和“硬盘”。
+            [self saveAlertSound:AlertSoundTypeCat];
         }
     }
     
