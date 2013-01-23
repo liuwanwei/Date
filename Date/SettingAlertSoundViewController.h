@@ -11,6 +11,6 @@
 #define UINotificationRefreshCell       @"UINotificationRefreshCell"
 
 
-@interface SettingAlertSound : UITableViewController
+@interface SettingAlertSoundViewController : UITableViewController
 
 @end

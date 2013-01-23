@@ -9,7 +9,9 @@
 #import "SettingAppBadgeViewController.h"
 #import "GlobalFunction.h"
 
-@interface SettingAppBadgeViewController ()
+@interface SettingAppBadgeViewController (){
+    int _selectedIndex;
+}
 
 @end
 
@@ -27,6 +29,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        _selectedIndex = -1;
     }
     return self;
 }
@@ -67,6 +70,7 @@
     cell.textLabel.text = [_parentController.appBadgeSignRows objectAtIndex:indexPath.row];
     if (_parentController.appBadgeMode == indexPath.row) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        _selectedIndex = indexPath.row;
     }
     
     return cell;
@@ -75,10 +79,19 @@
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
+    if (_selectedIndex != -1 && _selectedIndex != indexPath.row) {
+        NSIndexPath * lastIndexPath = [NSIndexPath indexPathForRow:_selectedIndex inSection:indexPath.section];
+        UITableViewCell * lastSelectedCell = [tableView cellForRowAtIndexPath:lastIndexPath];
+        lastSelectedCell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    
+    _selectedIndex = indexPath.row;
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
     _parentController.appBadgeMode = indexPath.row;
     [[ReminderManager defaultManager] storeAppBadgeMode:_parentController.appBadgeMode];
     [_parentController updateAppBadgeCell];
-    [self back];
+//    [self back];
 }
 
 @end
