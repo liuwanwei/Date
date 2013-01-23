@@ -50,8 +50,8 @@
 #define kReminderEntity @"Reminder"
 
 #define kInboxTimeDesc  @"加入收集箱"
-#define kTodayTimeDesc  @"加入今日提醒"
+#define kTodayTimeDesc  @"今天"
 #define kTomorrowDesc   @"加入明日提醒"
-#define kOneDayTimeDesc @"加入某日提醒"
-#define kAlarmTimeDesc  @"加入闹铃提醒"
+#define kOneDayTimeDesc @"特定日期"
+#define kAlarmTimeDesc  @"闹铃提醒"
 #define kSave   @"保存"

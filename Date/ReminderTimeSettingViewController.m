@@ -13,7 +13,8 @@
 
 @interface ReminderTimeSettingViewController () {
     NSArray * _rows;
-    UIControl * _overView;
+    NSIndexPath * _curIndexPath;
+    UILabel * _labelPrompt;
 }
 
 @end
@@ -33,12 +34,27 @@
 }
 
 - (void)back {
+    switch (_curIndexPath.row) {
+        case 2:
+            _parentContoller.triggerTime = nil;
+            _parentContoller.reminderType = ReminderTypeReceiveAndNoAlarm;
+            break;
+        case 0:
+            _parentContoller.reminderType = ReminderTypeReceiveAndNoAlarm;
+            _parentContoller.triggerTime = _datePick.date;
+            break;
+        case 1:
+            _parentContoller.reminderType = ReminderTypeReceive;
+            _parentContoller.triggerTime = _datePick.date;
+            break;
+        default:
+            break;
+    }
+    [_parentContoller updateTriggerTimeCell];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)restoreView {
-    [_overView removeFromSuperview];
-    _overView = nil;
     float viewHeight = self.view.bounds.size.height;
     // animations settings
     [UIView beginAnimations:nil context:NULL];
@@ -55,26 +71,28 @@
 - (void)showPickerViewWithMode:(UIDatePickerMode)pickMode {
     float viewHeight = self.view.bounds.size.height;
     [_datePick setDatePickerMode:pickMode];
-    if (nil == _overView) {
-        _overView = [[UIControl alloc] init];
-        _overView.backgroundColor = [UIColor whiteColor];
-        _overView.frame = CGRectMake(0, 0, 320,viewHeight - 266);
-        [_overView addTarget:self action:@selector(restoreView) forControlEvents:UIControlEventTouchDown];
-        [self.view addSubview:_overView];
-    }
-    
-    _overView.backgroundColor = [UIColor clearColor];
     // animations settings
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
     [UIView setAnimationDuration:0.25];
     
     // set views with new info
-
     _finshView.frame = CGRectMake(0,viewHeight - 266, 320, 50);
     _datePick.frame = CGRectMake(0,viewHeight - 216 , 320, 216);
     // commit animations
     [UIView commitAnimations];
+}
+
+- (void)initTableFooterView {
+    UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 100, 300, 150)];
+    _labelPrompt = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 300, 20)];
+    _labelPrompt.backgroundColor = [UIColor clearColor];
+    _labelPrompt.textAlignment = NSTextAlignmentCenter;
+    _labelPrompt.textColor = RGBColor(153,153,153);
+    _labelPrompt.text = @"将加入收集箱中，暂不提醒";
+    [_labelPrompt setHidden:YES];
+    [view addSubview:_labelPrompt];
+    self.tableView.tableFooterView = view;
 }
 
 #pragma 事件函数
@@ -92,8 +110,11 @@
     [super viewDidLoad];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    [self initTableFooterView];
     [self initPickerView];
-    _rows = [[NSArray alloc] initWithObjects:kInboxTimeDesc,kTodayTimeDesc,kOneDayTimeDesc,kAlarmTimeDesc, nil];
+    _curIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self showPickerViewWithMode:UIDatePickerModeDate];
+    _rows = [[NSArray alloc] initWithObjects:kOneDayTimeDesc,kAlarmTimeDesc,kInboxTimeDesc, nil];
     [[AppDelegate delegate] initNavleftBarItemWithController:self withAction:@selector(back)];
 }
 
@@ -129,12 +150,11 @@
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
-        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    if (_curIndexPath.row == indexPath.row) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
     cell.textLabel.text = [_rows objectAtIndex:indexPath.row];
-    if (indexPath.row >= 3) {
-        //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
     return cell;
 }
 
@@ -142,38 +162,29 @@
 #pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    BOOL back = NO;
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    UITableViewCell * cell = [tableView cellForRowAtIndexPath:_curIndexPath];
+    cell.accessoryType = UITableViewCellAccessoryNone;
+    _curIndexPath = indexPath;
+    cell = [tableView cellForRowAtIndexPath:_curIndexPath];
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
     switch (indexPath.row) {
         case 0:
-            back = YES;
-            _parentContoller.triggerTime = nil;
-            _parentContoller.reminderType = ReminderTypeReceiveAndNoAlarm;
-            break;
-        case 1:
-            back = YES;
-            _parentContoller.triggerTime = [NSDate date];
-            _parentContoller.reminderType = ReminderTypeReceiveAndNoAlarm;
-            break;
-//        case 2:
-//            back = YES;
-//            _parentContoller.triggerTime = [[GlobalFunction defaultGlobalFunction] tomorrow];
-//            _parentContoller.reminderType = ReminderTypeReceiveAndNoAlarm;
-//            break;
-        case 2:
+            [_labelPrompt setHidden:YES];
             [self showPickerViewWithMode:UIDatePickerModeDate];
             break;
-        case 3:
+        case 1:
+            [_labelPrompt setHidden:YES];
             [self showPickerViewWithMode:UIDatePickerModeDateAndTime];
+            break;
+        case 2:
+            [_labelPrompt setHidden:NO];
+            [self restoreView];
             break;
         default:
             break;
     }
     
-    if (YES == back) {
-        [_parentContoller updateTriggerTimeCell];
-        [self.navigationController popViewControllerAnimated:YES];
-    }
 }
 
 @end
