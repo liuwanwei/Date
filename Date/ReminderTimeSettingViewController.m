@@ -13,7 +13,6 @@
 
 @interface ReminderTimeSettingViewController () {
     NSArray * _rows;
-    NSIndexPath * _curIndexPath;
     UILabel * _labelPrompt;
     
     NSArray * _cellIcons;
@@ -26,6 +25,7 @@
 @synthesize datePick = _datePick;
 @synthesize tableView = _tableView;
 @synthesize finshView = _finshView;
+@synthesize selectedRow = _selectedRow;
 
 #pragma 私有函数
 - (void)initPickerView {
@@ -36,7 +36,7 @@
 }
 
 - (void)back {
-    switch (_curIndexPath.row) {
+    switch (_selectedRow) {
         case 2:
             _parentContoller.triggerTime = nil;
             _parentContoller.reminderType = ReminderTypeReceiveAndNoAlarm;
@@ -54,6 +54,42 @@
     }
     [_parentContoller updateTriggerTimeCell];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)initSelectedReminderTypeIndex{
+    if (_parentContoller.reminderType == ReminderTypeReceiveAndNoAlarm) {
+        if (_parentContoller.triggerTime == nil) {
+            self.selectedRow = 2;
+        }else{
+            self.selectedRow = 0;
+        }
+    }else if(_parentContoller.reminderType == ReminderTypeReceive){
+        self.selectedRow = 1;
+    }else{
+        // 默认选择
+        self.selectedRow = 0;
+    }
+    
+    [self reloadDatePicker];
+}
+
+- (void)reloadDatePicker{
+    switch (self.selectedRow) {
+        case 0:
+            [_labelPrompt setHidden:YES];
+            [self showPickerViewWithMode:UIDatePickerModeDate];
+            break;
+        case 1:
+            [_labelPrompt setHidden:YES];
+            [self showPickerViewWithMode:UIDatePickerModeDateAndTime];
+            break;
+        case 2:
+            [_labelPrompt setHidden:NO];
+            [self restoreView];
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)restoreView {
@@ -115,10 +151,12 @@
     self.tableView.delegate = self;
     [self initTableFooterView];
     [self initPickerView];
-    _curIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+
     [self showPickerViewWithMode:UIDatePickerModeDate];
     _rows = [[NSArray alloc] initWithObjects:kOneDayTimeDesc,kAlarmTimeDesc,kInboxTimeDesc, nil];
     [[AppDelegate delegate] initNavleftBarItemWithController:self withAction:@selector(back)];
+    
+    [self initSelectedReminderTypeIndex];
 }
 
 - (void)didReceiveMemoryWarning
@@ -154,12 +192,12 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
-    if (_curIndexPath.row == indexPath.row) {
+    if (self.selectedRow == indexPath.row) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
     cell.textLabel.text = [_rows objectAtIndex:indexPath.row];
     cell.imageView.image = [UIImage imageNamed:[_cellIcons objectAtIndex:indexPath.row]];
-    
+        
     return cell;
 }
 
@@ -168,28 +206,18 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    UITableViewCell * cell = [tableView cellForRowAtIndexPath:_curIndexPath];
-    cell.accessoryType = UITableViewCellAccessoryNone;
-    _curIndexPath = indexPath;
-    cell = [tableView cellForRowAtIndexPath:_curIndexPath];
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    switch (indexPath.row) {
-        case 0:
-            [_labelPrompt setHidden:YES];
-            [self showPickerViewWithMode:UIDatePickerModeDate];
-            break;
-        case 1:
-            [_labelPrompt setHidden:YES];
-            [self showPickerViewWithMode:UIDatePickerModeDateAndTime];
-            break;
-        case 2:
-            [_labelPrompt setHidden:NO];
-            [self restoreView];
-            break;
-        default:
-            break;
+    
+    if (self.selectedRow != -1 && self.selectedRow != indexPath.row) {
+        NSIndexPath * lastSelectedIndexPath = [NSIndexPath indexPathForRow:self.selectedRow inSection:0];
+        UITableViewCell * lastSelectedCell = [tableView cellForRowAtIndexPath:lastSelectedIndexPath];
+        lastSelectedCell.accessoryType = UITableViewCellAccessoryNone;
     }
     
+    self.selectedRow = indexPath.row;
+    [self reloadDatePicker];
+    
+    UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
 }
 
 @end

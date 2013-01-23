@@ -81,7 +81,7 @@
 }
 
 - (UIColor *)ongoingColor{
-    return RGBColor(9, 84, 181);
+    return RGBColor(61, 145, 255);
 }
 
 - (UIColor *)passedColor{

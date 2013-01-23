@@ -201,9 +201,10 @@
 							<object class="IBUIImageView" id="147239683">
 								<reference key="NSNextResponder" ref="441783622"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{0, 71}, {320, 1}}</string>
+								<string key="NSFrame">{{5, 71}, {310, 1}}</string>
 								<reference key="NSSuperview" ref="441783622"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<int key="IBUITag">3</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
