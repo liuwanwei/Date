@@ -13,7 +13,7 @@
 #import "BilateralFriendManager.h"
 #import "SettingAppBadgeViewController.h"
 #import "SettingSNSViewController.h"
-#import "SettingAlertSound.h"
+#import "SettingAlertSoundViewController.h"
 #import "AboutUsViewController.h"
 
 @interface SettingViewController () {
@@ -169,7 +169,7 @@
             controller.parentController = self;
             [self.navigationController pushViewController:controller animated:YES];
         }else if (2 == indexPath.row){
-            SettingAlertSound * contoller = [[SettingAlertSound alloc] initWithStyle:UITableViewStyleGrouped];
+            SettingAlertSoundViewController * contoller = [[SettingAlertSoundViewController alloc] initWithStyle:UITableViewStyleGrouped];
             [self.navigationController pushViewController:contoller animated:YES];
         }
     }else if(1 == indexPath.section){
