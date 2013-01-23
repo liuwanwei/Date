@@ -826,18 +826,21 @@ typedef enum {
     if (nil == defaultReminders) {
         Reminder * reminder;
         long long userId = [[[UserManager defaultManager] oneselfId] longLongValue];
-//        NSInteger audioLength;
-        for (NSInteger index = 0; index < 3; index++) {
+        NSInteger audioLength;
+        for (NSInteger index = 0; index < 4; index++) {
             reminder = (Reminder *)[NSEntityDescription insertNewObjectForEntityForName:kReminderEntity inManagedObjectContext:self.managedObjectContext];
             if (0 == index) {
                 reminder.id = @"default1";
-                reminder.desc = @"按住最下面按钮创建语音提醒。";
+                reminder.desc = @"按住最下方按钮创建语音任务";
             }else if (1 == index) {
                 reminder.id = @"default2";
-                reminder.desc = @"屏幕下拉创建文字提醒。";
+                reminder.desc = @"手指下拉屏幕创建文字任务";
             }else if (2 == index) {
                 reminder.id = @"default3";
-                reminder.desc = @"左右滑动删除一条提醒。";
+                reminder.desc = @"向右滑动手指删除任务";
+            }else if(3 == index){
+                reminder.id = @"default3";
+                reminder.desc = @"轻触方框完成一个任务";
             }
             
 //            reminder.audioUrl = [[SoundManager defaultSoundManager] createDefaultAudio:index];

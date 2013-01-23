@@ -16,7 +16,7 @@ typedef enum {
     InfoModeText
 }InfoMode;
 
-@interface RemindersInboxViewController : RemindersBaseViewController<UITextFieldDelegate,EGORefreshTableHeaderDelegate>
+@interface RemindersInboxViewController : RemindersBaseViewController<UITextFieldDelegate,EGORefreshTableHeaderDelegate, UIAlertViewDelegate>
 
 @property (nonatomic) DataType dataType;
 @property (weak, nonatomic) IBOutlet UIButton * btnMode;

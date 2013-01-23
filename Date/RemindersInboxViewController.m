@@ -495,8 +495,23 @@
     return YES;
 }
 
+#define NeedDisplayPromptKey    @"NeedDisplayPromptKey"
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 1) {
+        [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:NeedDisplayPromptKey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+}
+
 #pragma mark - FriendReminderCell Delegate
 - (void)clickFinishButton:(NSIndexPath *)indexPath withReminder:(Reminder *)reminder {
+    NSString * prompt = [[NSUserDefaults standardUserDefaults] objectForKey:NeedDisplayPromptKey];
+    if (nil == prompt || [prompt isEqualToString:@"YES"]) {
+        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您可以左侧菜单中找到已完成的任务" delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:@"不再提示", nil];
+        [alert show];
+    }
+    
+    
     [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
     [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     [self clearGroup];

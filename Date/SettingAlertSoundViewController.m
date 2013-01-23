@@ -6,11 +6,11 @@
 //  Copyright (c) 2013年 Liu&Mao. All rights reserved.
 //
 
-#import "SettingAlertSound.h"
+#import "SettingAlertSoundViewController.h"
 #import "GlobalFunction.h"
 #import "SoundManager.h"
 
-@interface SettingAlertSound (){
+@interface SettingAlertSoundViewController (){
     NSArray * _soundTitles;
     NSArray * _soundTypes;
     int _selectedSound;
@@ -18,7 +18,7 @@
 
 @end
 
-@implementation SettingAlertSound
+@implementation SettingAlertSoundViewController
 
 - (void)back{
     [self.navigationController popViewControllerAnimated:YES];
@@ -109,7 +109,7 @@
     // 保存选中的声音。
     NSString * soundName = [_soundTypes objectAtIndex:indexPath.row];
     SoundManager * soundManager = [SoundManager defaultSoundManager];
-    soundManager.alertSound = soundName;
+    [soundManager saveAlertSound:soundName];
     
     // 播放当前选中的声音。
     [soundManager playAlertSound:soundName];
