@@ -947,8 +947,6 @@
 				E6A3980E16918D4F004A460F /* TextEditorViewController.m */,
 				3C9384A31689328A00DA6412 /* TextReminderDetailViewController.h */,
 				3C9384A41689328A00DA6412 /* TextReminderDetailViewController.m */,
-				3C9384901688292D00DA6412 /* TextReminderSettingViewController.h */,
-				3C9384911688292D00DA6412 /* TextReminderSettingViewController.m */,
 				3CFCCC0316AA499C002AC474 /* AboutUsViewController.h */,
 				3CFCCC0416AA499D002AC474 /* AboutUsViewController.m */,
 			);

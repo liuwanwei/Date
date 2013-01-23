@@ -291,8 +291,6 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{0, 71}, {320, 1}}</string>
 								<reference key="NSSuperview" ref="132779415"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<int key="IBUITag">3</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
