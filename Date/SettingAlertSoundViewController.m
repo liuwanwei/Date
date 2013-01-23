@@ -109,7 +109,7 @@
     // 保存选中的声音。
     NSString * soundName = [_soundTypes objectAtIndex:indexPath.row];
     SoundManager * soundManager = [SoundManager defaultSoundManager];
-    soundManager.alertSound = soundName;
+    [soundManager saveAlertSound:soundName];
     
     // 播放当前选中的声音。
     [soundManager playAlertSound:soundName];

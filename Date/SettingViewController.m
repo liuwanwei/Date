@@ -43,7 +43,7 @@
 
 #pragma 类成员函数
 - (void)updateAppBadgeCell {
-    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 

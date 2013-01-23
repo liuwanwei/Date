@@ -15,6 +15,8 @@
     NSArray * _rows;
     NSIndexPath * _curIndexPath;
     UILabel * _labelPrompt;
+    
+    NSArray * _cellIcons;
 }
 
 @end
@@ -101,6 +103,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        _cellIcons = [NSArray arrayWithObjects:@"Calendar", @"Clock", @"CollectingBox", nil];
     }
     return self;
 }
@@ -155,6 +158,8 @@
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
     cell.textLabel.text = [_rows objectAtIndex:indexPath.row];
+    cell.imageView.image = [UIImage imageNamed:[_cellIcons objectAtIndex:indexPath.row]];
+    
     return cell;
 }
 
