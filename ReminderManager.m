@@ -826,7 +826,7 @@ typedef enum {
     if (nil == defaultReminders) {
         Reminder * reminder;
         long long userId = [[[UserManager defaultManager] oneselfId] longLongValue];
-        NSInteger audioLength;
+//        NSInteger audioLength;
         for (NSInteger index = 0; index < 4; index++) {
             reminder = (Reminder *)[NSEntityDescription insertNewObjectForEntityForName:kReminderEntity inManagedObjectContext:self.managedObjectContext];
             if (0 == index) {
