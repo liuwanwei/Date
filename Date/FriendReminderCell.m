@@ -18,7 +18,7 @@
     [[ReminderManager defaultManager] modifyReminder:self.reminder withBellState:isBell];
     if (YES == [self.reminder.isAlarm integerValue]) {
         [self.labelTriggerDate setHidden:NO];
-        [[ReminderManager defaultManager] addLocalNotificationWithReminder:self.reminder withBilateralFriend:self.bilateralFriend];
+        [[ReminderManager defaultManager] addLocalNotificationWithReminder:self.reminder];
     }else {
         [self.labelTriggerDate setHidden:YES];
         [[ReminderManager defaultManager] cancelLocalNotificationWithReminder:self.reminder];

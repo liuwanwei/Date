@@ -13,7 +13,7 @@
 #import "LMLibrary.h"
 
 @interface AudioReminderSettingViewController () {
-     NSArray * _tags;
+    NSArray * _tags;
 }
 
 @end
@@ -31,8 +31,12 @@
 }
 
 - (void)updateTriggerTimeCell {
-    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:1 inSection:1];
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    if (ReminderTypeReceiveAndNoAlarm == self.reminderType) {
+        long long userId = [[[UserManager defaultManager] oneselfId] longLongValue];
+        self.receiverId = [NSNumber numberWithLongLong:userId];
+        self.receiver = @"自己";
+    }
+    [self.tableView reloadData];
 }
 
 - (void)updateDescCell {
@@ -66,8 +70,14 @@
 {
     if (section == 0) {
         return 1;
+    }else {
+        if (ReminderTypeReceiveAndNoAlarm == self.reminderType) {
+            return 2;
+        }
+        
+        return 3;
     }
-    return 3;
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -85,7 +95,7 @@
         cell.textLabel.numberOfLines = 0;
         cell.textLabel.text =  self.desc;
         cell.textLabel.textColor = RGBColor(50, 79, 133);
-        cell.textLabel.font = [UIFont fontWithName:@"Helvetica Bold" size:15.0];
+        cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:15.0];
         cell.detailTextLabel.text = @"";
     }else {
         if (indexPath.row == 0) {

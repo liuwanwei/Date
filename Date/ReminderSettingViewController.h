@@ -31,6 +31,7 @@
 @property (nonatomic) CGSize labelSize;
 @property (nonatomic) DataType dateType;
 @property (nonatomic) ReminderType reminderType;
+@property (nonatomic) BOOL showSendFriendCell;
 
 - (void)updateReceiverCell;
 - (void)updateTriggerTimeCell;

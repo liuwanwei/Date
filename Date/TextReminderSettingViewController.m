@@ -21,8 +21,9 @@
 
 #pragma 类成员函数
 - (void)updateTriggerTimeCell {
-    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
-    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    long long userId = [[[UserManager defaultManager] oneselfId] longLongValue];
+    self.receiverId = [NSNumber numberWithLongLong:userId];
+   [self.tableView reloadData];
 }
 
 - (void)updateReceiverCell {
@@ -64,6 +65,9 @@
     if (0 == section) {
         return 1;
     }else {
+        if (ReminderTypeReceiveAndNoAlarm == self.reminderType) {
+            return 1;
+        }
         return 2;
     }
     return 0;
@@ -83,7 +87,7 @@
         cell.textLabel.text = self.desc;
         cell.textLabel.numberOfLines = 0;
         cell.textLabel.textColor = RGBColor(50, 79, 133);
-        cell.textLabel.font = [UIFont fontWithName:@"Helvetica Bold" size:15.0];
+        cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:15.0];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.detailTextLabel.text = @"";
     }else {

@@ -184,12 +184,16 @@
     if (DataTypeToday == _dataType) {
         self.title = @"今日提醒";
         self.reminders = [self.reminderManager todayUnFinishedReminders];
+        [AppDelegate delegate].menuViewController.lastIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+        
     }else if (DataTypeRecent == _dataType) {
         self.title = @"所有提醒";
         self.reminders = [self.reminderManager recentUnFinishedReminders];
+        [AppDelegate delegate].menuViewController.lastIndexPath = [NSIndexPath indexPathForRow:2 inSection:0];
     }else if (DataTypeCollectingBox == _dataType) {
         self.title = LocalString(@"DraftBox");
         self.reminders = [self.reminderManager collectingBoxReminders];
+        [AppDelegate delegate].menuViewController.lastIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     }else if (DataTypeHistory == _dataType) {
         self.title = @"已完成";
         [self removeRefreshHeadView];

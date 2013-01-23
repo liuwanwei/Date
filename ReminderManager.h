@@ -85,7 +85,7 @@ typedef enum {
 - (void)deleteReminderRequest:(Reminder *)reminder;
 - (void)handleDeleteReminderResponse:(id)json withReminder:(Reminder *)reminder;
 
-- (void)addLocalNotificationWithReminder:(Reminder *)reminder withBilateralFriend:(BilateralFriend *)friend;
+- (void)addLocalNotificationWithReminder:(Reminder *)reminder;
 - (void)cancelLocalNotificationWithReminder:(Reminder *)reminder;
 
 - (void)modifyReminder:(Reminder *)reminder withReadState:(BOOL)isRead;

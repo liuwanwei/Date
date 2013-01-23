@@ -40,6 +40,7 @@
 @synthesize labelSize = _labelSize;
 @synthesize dateType = _dateType;
 @synthesize reminderType = _reminderType;
+@synthesize showSendFriendCell = _showSendFriendCell;
 
 #pragma 私有函数
 - (void)removeHUD {
@@ -227,8 +228,7 @@
 }
 
 - (void)computeFontSize {
-    _labelSize = [self.desc sizeWithFont:[UIFont fontWithName:@"Helvetica" size:15.0] constrainedToSize:CGSizeMake(150, MAXFLOAT) lineBreakMode: NSLineBreakByWordWrapping];
-    _labelSize.height = _labelSize.height + 5;
+    _labelSize = [self.desc sizeWithFont:[UIFont fontWithName:@"Helvetica" size:15.0] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode: UILineBreakModeTailTruncation];
 }
 
 - (void)initTriggerTime {
@@ -304,9 +304,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0 && indexPath.row == 0) {
-        if (_labelSize.height > 44) {
-            return _labelSize.height;
-        }
+        return _labelSize.height + 25;
     }
     
     return 44.0f;
@@ -331,6 +329,14 @@
         
         [self.reminderManager modifyReminder:_reminder withTriggerTime:_triggerTime withDesc:_desc withType:ReminderTypeSend];
     }
+    
+    if (nil == _reminder.triggerTime) {
+        [AppDelegate delegate].homeViewController.dataType = DataTypeCollectingBox;
+     }else {
+         [AppDelegate delegate].homeViewController.dataType = DataTypeRecent;
+    }
+    
+    [[AppDelegate delegate].homeViewController initDataWithAnimation:NO];
 }
 
 - (void)newReminderFailed {

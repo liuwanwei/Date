@@ -87,14 +87,14 @@
             [_btnAudio setHidden:YES];
             [_labelAudioTime setHidden:YES];
             [_indicatorView setHidden:YES];
-            _labelDescription.frame = CGRectMake(_labelDescription.frame.origin.x, _labelDescription.frame.origin.y, 235, _labelDescription.frame.size.height);
+            _labelDescription.frame = CGRectMake(_labelDescription.frame.origin.x, _labelDescription.frame.origin.y, 260, _labelDescription.frame.size.height);
 
         }else {
             [_btnAudio setHidden:NO];
             [_labelAudioTime setHidden:NO];
             [_indicatorView setHidden:NO];
             _labelAudioTime.text = [_reminder.audioLength stringValue];
-            _labelDescription.frame = CGRectMake(_labelDescription.frame.origin.x, _labelDescription.frame.origin.y, 185, _labelDescription.frame.size.height);
+            _labelDescription.frame = CGRectMake(_labelDescription.frame.origin.x, _labelDescription.frame.origin.y, 200, _labelDescription.frame.size.height);
         }
         
         if (nil != self.reminder.triggerTime) {

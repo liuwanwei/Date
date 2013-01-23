@@ -30,7 +30,6 @@ typedef enum {
     SettingViewController * _settingViewController;
     AboutUsViewController * _aboutUsViewController;
     LoginViewController * _loginViewController;
-    NSIndexPath * _lastIndexPath;
 }
 
 @end
@@ -39,6 +38,7 @@ typedef enum {
 @synthesize btnServerMode = _btnServerMode;
 @synthesize tableView = _tableView;
 @synthesize menuCell = _menuCell;
+@synthesize lastIndexPath = _lastIndexPath;
 
 #pragma 私有函数
 - (BOOL)isLogin {

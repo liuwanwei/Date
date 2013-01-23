@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UIButton * btnServerMode;
 @property (weak, nonatomic) IBOutlet UITableView * tableView;
 @property (nonatomic, strong) IBOutlet UITableViewCell * menuCell;
+@property (strong, nonatomic) NSIndexPath * lastIndexPath;
 
 - (IBAction)modifyServerMode:(id)sender;
 

@@ -29,11 +29,12 @@
 - (void)initPickerView {
     [_datePick setFrame:CGRectMake(0, 456, 320, 216)];
     [self.view addSubview:_datePick];
-    _datePick.minimumDate = [NSDate date];
-    _datePick.minuteInterval = 5;
 }
 
 - (void)back {
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:00"];
+    NSString * strTriggerTime = [formatter stringFromDate:_datePick.date];
     switch (_curIndexPath.row) {
         case 2:
             _parentContoller.triggerTime = nil;
@@ -42,10 +43,10 @@
         case 0:
             _parentContoller.reminderType = ReminderTypeReceiveAndNoAlarm;
             _parentContoller.triggerTime = _datePick.date;
-            break;
+            break; 
         case 1:
             _parentContoller.reminderType = ReminderTypeReceive;
-            _parentContoller.triggerTime = _datePick.date;
+            _parentContoller.triggerTime = [formatter dateFromString:strTriggerTime];
             break;
         default:
             break;
@@ -70,7 +71,10 @@
 
 - (void)showPickerViewWithMode:(UIDatePickerMode)pickMode {
     float viewHeight = self.view.bounds.size.height;
+    _datePick.minimumDate = [NSDate date];
+    [_datePick setDate:[NSDate date]];
     [_datePick setDatePickerMode:pickMode];
+        _datePick.minuteInterval = 5;
     // animations settings
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
