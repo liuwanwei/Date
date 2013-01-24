@@ -11,6 +11,7 @@
 #import "UserManager.h"
 #import "SoundManager.h"
 #import "AppDelegate.h"
+#import "GlobalFunction.h"
 
 static ReminderManager * sReminderManager;
 
@@ -219,6 +220,23 @@ typedef enum {
     [self updateAppBadge];
 }
 
+- (void)updateRemindersSizeWithOriTime:(NSDate *)oriTriggerTime withNowTime:(NSDate *)nowTriggerTime withType:(ReminderType)type{
+    if (ReminderTypeSend == type) {
+        if (nil == oriTriggerTime) {
+             _draftRemindersSize--;
+        }else {
+            NSDate * tomorrow = [[GlobalFunction defaultGlobalFunction] tomorrow];
+            if ([oriTriggerTime compare:tomorrow] == NSOrderedAscending) {
+                _todayRemindersSize --;
+            }
+            _allRemindersSize++;
+        }
+    }else {
+        [self updateRemindersSizeWith:oriTriggerTime withOperate:BadgeOperateSub];
+        [self updateRemindersSizeWith:nowTriggerTime withOperate:BadgeOperateAdd];
+    }
+}
+
 /*
  查询具体时间、还没有完成、还没有闹铃过,但除自己以外的提醒
  */
@@ -305,35 +323,32 @@ typedef enum {
 
 - (void)modifyReminder:(Reminder *)reminder withTriggerTime:(NSDate *)triggerTime withDesc:(NSString *)desc withType:(ReminderType)type {
     if (nil != reminder) {
-        if (ReminderTypeSend == type) {
-            [self updateLocalNotificationWithReminder:reminder];
-        }else {
-            BOOL sign = NO;
-            [self updateLocalNotificationWithReminder:reminder];
-            if (ReminderTypeReceive == type) {
-                NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-                [formatter setDateFormat:@"yyyy-MM-dd HH:mm:00"];
-                NSString * strNowTime = [formatter stringFromDate:[NSDate date]];
-                if ([[formatter dateFromString:strNowTime] compare:triggerTime] == NSOrderedAscending) {
-                    sign = YES;
-                    reminder.isAlarm = [NSNumber numberWithBool:NO];
-                }
+        BOOL sign = NO;
+        [self updateLocalNotificationWithReminder:reminder];
+        if (ReminderTypeReceive == type) {
+            NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"yyyy-MM-dd HH:mm:00"];
+            NSString * strNowTime = [formatter stringFromDate:[NSDate date]];
+            if ([[formatter dateFromString:strNowTime] compare:triggerTime] == NSOrderedAscending) {
+                sign = YES;
+                reminder.isAlarm = [NSNumber numberWithBool:NO];
             }
-            
-            reminder.triggerTime = triggerTime;
-            reminder.desc = desc;
-            reminder.type = [NSNumber numberWithInteger:type];
-            
-            if (! [self synchroniseToStore]) {
-                return;
-            }
-            
-            if (YES == sign) {
-                [self addLocalNotificationWithReminder:reminder];
-            }
-
         }
         
+        [self updateRemindersSizeWithOriTime:reminder.triggerTime withNowTime:triggerTime withType:type];
+        
+        reminder.triggerTime = triggerTime;
+        reminder.desc = desc;
+        reminder.type = [NSNumber numberWithInteger:type];
+        
+        if (! [self synchroniseToStore]) {
+            return;
+        }
+
+        if (YES == sign) {
+            [self addLocalNotificationWithReminder:reminder];
+        }
+
         NSNotification * notification = nil;
         notification = [NSNotification notificationWithName:kRemindesUpdateMessage object:nil];
         [[NSNotificationCenter defaultCenter] postNotification:notification];
@@ -628,8 +643,8 @@ typedef enum {
                 //未过期) {
                 reminder.isAlarm = [NSNumber numberWithBool:NO];
                 [self addLocalNotificationWithReminder:reminder];
-                [self updateRemindersSizeWith:reminder.triggerTime withOperate:BadgeOperateAdd];
             }
+            [self updateRemindersSizeWith:reminder.triggerTime withOperate:BadgeOperateAdd];
         }
     }
     
@@ -668,7 +683,7 @@ typedef enum {
     NSSortDescriptor * sortDescriptorByType = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:YES];
     
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"(state = 0 AND (type = %d || type = %d) AND triggerTime >= %@) OR (state = 0 AND (type = %d || type = %d) AND triggerTime < %@)",ReminderTypeReceive,ReminderTypeReceiveAndNoAlarm,[formatter dateFromString:[formatter stringFromDate:date]],ReminderTypeReceive,ReminderTypeReceiveAndNoAlarm,[formatter dateFromString:[formatter stringFromDate:date]]];
-    NSArray * sortDescriptors = [NSArray arrayWithObjects:sortDescriptorByType,sortDescriptor,nil];
+    NSArray * sortDescriptors = [NSArray arrayWithObjects:sortDescriptor,sortDescriptorByType,nil];
     request.sortDescriptors = sortDescriptors;
 
     request.predicate = predicate;
@@ -699,7 +714,7 @@ typedef enum {
     
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"(state = 0 AND (type = %d || type = %d) AND triggerTime >= %@ AND triggerTime < %@) OR (state = 0 AND (type = %d || type = %d) AND triggerTime < %@)",ReminderTypeReceive,ReminderTypeReceiveAndNoAlarm,today,tomorrow,ReminderTypeReceive,ReminderTypeReceiveAndNoAlarm,today];
     
-    NSArray * sortDescriptors = [NSArray arrayWithObjects:sortDescriptorByType,sortDescriptor, nil];
+    NSArray * sortDescriptors = [NSArray arrayWithObjects:sortDescriptor,sortDescriptorByType,nil];
     request.sortDescriptors = sortDescriptors;
     request.predicate = predicate;
     
@@ -727,7 +742,7 @@ typedef enum {
     NSSortDescriptor * sortDescriptorByType = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:YES];
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"(type = %d || type = %d) AND state = 1",ReminderTypeReceive,ReminderTypeReceiveAndNoAlarm];
 
-    NSArray * sortDescriptors = [NSArray arrayWithObjects:sortDescriptorByType,sortDescriptor,nil];
+    NSArray * sortDescriptors = [NSArray arrayWithObjects:sortDescriptor,sortDescriptorByType,nil];
     request.sortDescriptors = sortDescriptors;
     request.predicate = predicate;
     results = [self executeFetchRequest:request];
@@ -826,7 +841,7 @@ typedef enum {
     if (nil == defaultReminders) {
         Reminder * reminder;
         long long userId = [[[UserManager defaultManager] oneselfId] longLongValue];
-        NSInteger audioLength;
+//        NSInteger audioLength;
         for (NSInteger index = 0; index < 4; index++) {
             reminder = (Reminder *)[NSEntityDescription insertNewObjectForEntityForName:kReminderEntity inManagedObjectContext:self.managedObjectContext];
             if (0 == index) {

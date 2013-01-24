@@ -23,6 +23,8 @@
         
         if (ReminderTypeReceiveAndNoAlarm == [self.reminder.type integerValue]) {
             [self.labelTriggerDate setHidden:YES];
+            [self.labelNickname setHidden:YES];
+            [self.labelNickname setHidden:YES];
             self.labelDay.frame = CGRectMake(self.labelTriggerDate.frame.origin.x,self.labelDay.frame.origin.y, self.labelDay.frame.size.width, self.labelDay.frame.size.height);
             if ([@"" isEqualToString:day]) {
                 self.labelDescription.frame = CGRectMake(self.labelDescription.frame.origin.x, 26, self.labelDescription.frame.size.width, self.labelDescription.frame.size.height);
@@ -34,6 +36,13 @@
             [self.labelTriggerDate setHidden:NO];
             self.labelDay.frame = CGRectMake(LabelDayOriX,self.labelDay.frame.origin.y, self.labelDay.frame.size.width, self.labelDay.frame.size.height);
             self.labelDescription.frame = CGRectMake(self.labelDescription.frame.origin.x, 42, self.labelDescription.frame.size.width, self.labelDescription.frame.size.height);
+            if (YES == [self showFrom]) {
+                if ([@"" isEqualToString:day]) {
+                    self.labelNickname.frame = CGRectMake(self.labelDay.frame.origin.x, self.labelNickname.frame.origin.y, self.labelDescription.frame.size.width, self.labelDescription.frame.size.height);
+                }else {
+                    self.labelNickname.frame = CGRectMake(145, self.labelNickname.frame.origin.y, self.labelDescription.frame.size.width, self.labelDescription.frame.size.height);
+                }
+            }
         }
 
         NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
