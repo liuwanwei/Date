@@ -21,6 +21,7 @@
     UIDatePicker * _datePicker;
     UILabel * _labelPrompt;
     UIButton * _btnSave;
+    NSDate * _oriTriggerTime;
 }
 
 @end
@@ -218,42 +219,31 @@
 - (void)modifyReminder {
     _reminder.userID = _receiverId;
     if (YES == [_userManager isOneself:[_receiverId stringValue]] ||
-        nil == _triggerTime || ReminderTypeReceiveAndNoAlarm == [_reminder.type integerValue]) {
+        nil == _triggerTime || ReminderTypeReceiveAndNoAlarm == _reminderType) {
         [[ReminderManager defaultManager] modifyReminder:_reminder withTriggerTime:_triggerTime withDesc:_desc withType:_reminderType];
         [self.navigationController popToRootViewControllerAnimated:YES];
     }else {
         [[MBProgressManager defaultManager] showHUD:@"发送中"];
+        _oriTriggerTime = _reminder.triggerTime;
+        _reminder.triggerTime = _triggerTime;
+        _reminder.desc = _desc;
+        _reminder.type = [NSNumber numberWithInteger:ReminderTypeSend];
         [[ReminderManager defaultManager] sendReminder:_reminder];
     }
 }
 
 - (void)computeFontSize {
-    _labelSize = [self.desc sizeWithFont:[UIFont fontWithName:@"Helvetica" size:15.0] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode: UILineBreakModeTailTruncation];
+    _labelSize = [self.desc sizeWithFont:[UIFont fontWithName:@"Helvetica" size:17.0] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode: UILineBreakModeTailTruncation];
 }
 
 - (void)initTriggerTime {
     if (DataTypeToday == self.dateType || DataTypeRecent == self.dateType) {
-        /*NSDate * nowTime = [NSDate date];
         NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"yyyy-MM-dd"];
-        NSUInteger unitFlags = kCFCalendarUnitHour;
-        NSCalendar * calendar = [NSCalendar currentCalendar];
-        NSDateComponents * components = [calendar components:unitFlags fromDate:nowTime];
-        NSInteger curHour =  components.hour;
-        NSString * time = [formatter stringFromDate:nowTime];
+        NSString * strTriggerTime;
+        [formatter setDateFormat:@"yyyy-MM-dd 23:59:59"];
+        strTriggerTime = [formatter stringFromDate:[NSDate date]];
         [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        
-        if (12 > curHour) {
-            time = [time stringByAppendingString:@" 12:00:00"];
-            self.triggerTime = [formatter dateFromString:time];
-        }else if (18 > curHour) {
-            time = [time stringByAppendingString:@" 18:00:00"];
-            self.triggerTime = [formatter dateFromString:time];
-        }else if (22 > curHour) {
-            time = [time stringByAppendingString:@" 22:00:00"];
-            self.triggerTime = [formatter dateFromString:time];
-        }*/
-        self.triggerTime = [NSDate date];
+        self.triggerTime = [formatter dateFromString:strTriggerTime];
     }
 }
 
@@ -304,7 +294,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0 && indexPath.row == 0) {
-        return _labelSize.height + 25;
+        return _labelSize.height + 21;
     }
     
     return 44.0f;
@@ -327,16 +317,9 @@
             _reminder.id = reminderId;
         }
         
+        _reminder.triggerTime = _oriTriggerTime;
         [self.reminderManager modifyReminder:_reminder withTriggerTime:_triggerTime withDesc:_desc withType:ReminderTypeSend];
     }
-    
-    if (nil == _reminder.triggerTime) {
-        [AppDelegate delegate].homeViewController.dataType = DataTypeCollectingBox;
-     }else {
-         [AppDelegate delegate].homeViewController.dataType = DataTypeRecent;
-    }
-    
-    [[AppDelegate delegate].homeViewController initDataWithAnimation:NO];
 }
 
 - (void)newReminderFailed {

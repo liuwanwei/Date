@@ -69,8 +69,8 @@ typedef enum {
 }
 
 - (void)updateTriggerTimeCell {
-    [self updateView];
     [super updateTriggerTimeCell];
+    [self updateView];
 }
 
 - (void)updateDescCell {
@@ -107,6 +107,7 @@ typedef enum {
 #pragma mark - ReminderManager delegate
 - (void)newReminderSuccess:(NSString *)reminderId {
     [super newReminderSuccess:reminderId];
+    [[AppDelegate delegate].homeViewController initDataWithAnimation:NO];
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 

@@ -153,6 +153,28 @@
     }
 }
 
+- (BOOL)showFrom {
+    NSString * from = @"来自:";
+    BOOL result = NO;
+    if (![[UserManager defaultManager] isOneself:[_reminder.userID stringValue]]) {
+        result = YES;
+        if (nil != _bilateralFriend) {
+            from = [from stringByAppendingString:_bilateralFriend.nickname];
+        }else {
+            from = [from stringByAppendingString:[_reminder.userID stringValue]];
+        }
+    }
+    
+    if (YES == result) {
+        _labelNickname.text = from;
+        [_labelNickname setHidden:NO];
+    }else {
+        [_labelNickname setHidden:YES];
+    }
+    
+    return result;
+}
+
 - (void)modifyReminderReadState {
     
 }

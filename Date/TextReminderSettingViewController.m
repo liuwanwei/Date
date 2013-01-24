@@ -21,9 +21,12 @@
 
 #pragma 类成员函数
 - (void)updateTriggerTimeCell {
-    long long userId = [[[UserManager defaultManager] oneselfId] longLongValue];
-    self.receiverId = [NSNumber numberWithLongLong:userId];
-   [self.tableView reloadData];
+    if (ReminderTypeReceiveAndNoAlarm == self.reminderType) {
+        long long userId = [[[UserManager defaultManager] oneselfId] longLongValue];
+        self.receiverId = [NSNumber numberWithLongLong:userId];
+        self.receiver = @"自己";
+    }
+    [self.tableView reloadData];
 }
 
 - (void)updateReceiverCell {
@@ -87,7 +90,7 @@
         cell.textLabel.text = self.desc;
         cell.textLabel.numberOfLines = 0;
         cell.textLabel.textColor = RGBColor(50, 79, 133);
-        cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:15.0];
+        cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:17.0];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.detailTextLabel.text = @"";
     }else {

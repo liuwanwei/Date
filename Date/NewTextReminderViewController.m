@@ -52,8 +52,8 @@
 }
 
 - (void)updateTriggerTimeCell {
-    [self updateTableFooterViewInCreateState];
     [super updateTriggerTimeCell];
+    [self updateTableFooterViewInCreateState];
 }
 
 #pragma 事件函数
@@ -84,9 +84,20 @@
 #pragma mark - ReminderManager delegate
 - (void)newReminderSuccess:(NSString *)reminderId {
     [super newReminderSuccess:reminderId];
+    if (nil == self.reminder.triggerTime) {
+        [AppDelegate delegate].homeViewController.dataType = DataTypeCollectingBox;
+    }else {
+        NSDate * tommrow = [[GlobalFunction defaultGlobalFunction] tomorrow];
+        if ([self.reminder.triggerTime compare:tommrow] == NSOrderedAscending) {
+            [AppDelegate delegate].homeViewController.dataType = DataTypeToday;
+        }else {
+            [AppDelegate delegate].homeViewController.dataType = DataTypeRecent;
+        }
+    }
     
+    [[AppDelegate delegate].homeViewController initDataWithAnimation:NO];
     [self.navigationController dismissViewControllerAnimated:YES completion:^{
-        
+       
     }];
 }
 

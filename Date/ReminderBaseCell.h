@@ -73,4 +73,5 @@ typedef enum {
 - (void)modifyReminderReadState;
 - (NSString *)custumDayString:(NSDate *)date;
 - (BOOL)isAudioReminder;
+- (BOOL)showFrom;
 @end

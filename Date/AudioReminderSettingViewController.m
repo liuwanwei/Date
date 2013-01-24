@@ -95,7 +95,7 @@
         cell.textLabel.numberOfLines = 0;
         cell.textLabel.text =  self.desc;
         cell.textLabel.textColor = RGBColor(50, 79, 133);
-        cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:15.0];
+        cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:17.0];
         cell.detailTextLabel.text = @"";
     }else {
         if (indexPath.row == 0) {
