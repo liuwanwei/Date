@@ -11,20 +11,22 @@
 @implementation HistoryReminderCell
 
 - (void)setDateTimeView {
-    if (nil != self.reminder.triggerTime) {
-        if (ReminderTypeReceiveAndNoAlarm == [self.reminder.type integerValue]) {
-            [self.labelTriggerDate setHidden:YES];
-            self.labelDescription.frame = CGRectMake(self.labelDescription.frame.origin.x, 26, self.labelDescription.frame.size.width, self.labelDescription.frame.size.height);
-        }else {
+    if (ReminderTypeReceiveAndNoAlarm == [self.reminder.type integerValue]) {
+        [self.labelTriggerDate setHidden:YES];
+        [self.labelNickname setHidden:YES];
+        self.labelDescription.frame = CGRectMake(self.labelDescription.frame.origin.x, 26, self.labelDescription.frame.size.width, self.labelDescription.frame.size.height);
+    }else {
+        if (nil != self.reminder.triggerTime) {
             [self.labelTriggerDate setHidden:NO];
-             self.labelDescription.frame = CGRectMake(self.labelDescription.frame.origin.x, 42, self.labelDescription.frame.size.width, self.labelDescription.frame.size.height);
+            NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"HH:mm"];
+            self.labelTriggerDate.text =[formatter stringFromDate:self.reminder.triggerTime];
+        }else {
+            [self.labelTriggerDate setHidden:YES];
         }
         
-        NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"HH:mm"];
-        self.labelTriggerDate.text =[formatter stringFromDate:self.reminder.triggerTime];
-    }else {
-        [self.labelTriggerDate setHidden:YES];
+        self.labelDescription.frame = CGRectMake(self.labelDescription.frame.origin.x, 42, self.labelDescription.frame.size.width, self.labelDescription.frame.size.height);
+        [self showFrom];
     }
 }
 

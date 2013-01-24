@@ -35,18 +35,22 @@
 
 - (void)back {
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:00"];
-    NSString * strTriggerTime = [formatter stringFromDate:_datePick.date];
+    NSString * strTriggerTime;
     switch (_selectedRow) {
         case 2:
             _parentContoller.triggerTime = nil;
             _parentContoller.reminderType = ReminderTypeReceiveAndNoAlarm;
             break;
         case 0:
+            [formatter setDateFormat:@"yyyy-MM-dd 23:59:59"];
+            strTriggerTime = [formatter stringFromDate:_datePick.date];
+            [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
             _parentContoller.reminderType = ReminderTypeReceiveAndNoAlarm;
-            _parentContoller.triggerTime = _datePick.date;
+            _parentContoller.triggerTime = [formatter dateFromString:strTriggerTime];
             break; 
         case 1:
+            [formatter setDateFormat:@"yyyy-MM-dd HH:mm:00"];
+            strTriggerTime = [formatter stringFromDate:_datePick.date];
             _parentContoller.reminderType = ReminderTypeReceive;
             _parentContoller.triggerTime = [formatter dateFromString:strTriggerTime];
             break;
