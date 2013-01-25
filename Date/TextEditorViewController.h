@@ -14,5 +14,8 @@
 @property (nonatomic, weak) IBOutlet UITextView * textView;
 @property (nonatomic, strong) NSString * text;
 @property (nonatomic, weak) ReminderSettingViewController * parentController;
+@property (nonatomic, weak) IBOutlet UIView * toolBackgroundView;
+
+- (IBAction)clearText:(id)sender;
 
 @end

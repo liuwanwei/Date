@@ -71,7 +71,7 @@
     if (section == 0) {
         return 1;
     }else {
-        if (ReminderTypeReceiveAndNoAlarm == self.reminderType) {
+        if (ReminderTypeReceiveAndNoAlarm == self.reminderType || NO == self.isLogin) {
             return 2;
         }
         
@@ -86,17 +86,19 @@
     ReminderSettingAudioCell * audioCell;
     
     if (0 == indexPath.section) {
-        CellIdentifier = @"Cell";
+        CellIdentifier = @"TextCell";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            [[NSBundle mainBundle] loadNibNamed:@"TextCell" owner:self options:nil];
+            cell = self.textCell;
+            self.textCell = nil;
+            UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
+            view.backgroundColor = [UIColor whiteColor];
+            cell.backgroundView = view;
         }
-        cell.textLabel.numberOfLines = 0;
-        cell.textLabel.text =  self.desc;
-        cell.textLabel.textColor = RGBColor(50, 79, 133);
-        cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:17.0];
-        cell.detailTextLabel.text = @"";
+        UILabel * label = (UILabel *)[cell viewWithTag:2];
+        label.text = self.desc;
+
     }else {
         if (indexPath.row == 0) {
             CellIdentifier = @"ReminderSettingAudioCell";
@@ -104,8 +106,12 @@
             if (audioCell == nil) {
                 audioCell = [[ReminderSettingAudioCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
                 audioCell.delegate = self;
+                UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
+                view.backgroundColor = [UIColor whiteColor];
+                audioCell.backgroundView = view;
             }
             audioCell.labelTitle.text = @"语音";
+            audioCell.imageView.image = [UIImage imageNamed:@"reminderDetailsVoice"];
             audioCell.reminder = self.reminder;
             audioCell.indexPath = indexPath;
             audioCell.audioState = AudioStateNormal;
@@ -117,13 +123,18 @@
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
+                view.backgroundColor = [UIColor whiteColor];
+                cell.backgroundView = view;
             }
             
             if (indexPath.row == 1) {
                 cell.textLabel.text = @"提醒";
+                cell.imageView.image = [UIImage imageNamed:@"reminderDetailsAlertType"];
                 cell.detailTextLabel.text = [self stringTriggerTime];
             }else if (indexPath.row == 2){
                 cell.textLabel.text = @"发送给";
+                cell.imageView.image = [UIImage imageNamed:@"reminderSettingContact"];
                 cell.detailTextLabel.text = self.receiver;
                 if (NO == self.isLogin) {
                     cell.accessoryType = UITableViewCellAccessoryNone;

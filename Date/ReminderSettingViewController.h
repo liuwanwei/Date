@@ -32,6 +32,7 @@
 @property (nonatomic) DataType dateType;
 @property (nonatomic) ReminderType reminderType;
 @property (nonatomic) BOOL showSendFriendCell;
+@property (nonatomic, weak) IBOutlet UITableViewCell * textCell;
 
 - (void)updateReceiverCell;
 - (void)updateTriggerTimeCell;
