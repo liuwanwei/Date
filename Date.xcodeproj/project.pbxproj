@@ -175,6 +175,13 @@
 		3CFCCC0216AA2C26002AC474 /* dateTimeSwitcher@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CFCCC0016AA2C26002AC474 /* dateTimeSwitcher@2x.png */; };
 		3CFCCC0616AA499E002AC474 /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFCCC0416AA499D002AC474 /* AboutUsViewController.m */; };
 		3CFCCC0716AA499E002AC474 /* AboutUsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CFCCC0516AA499D002AC474 /* AboutUsViewController.xib */; };
+		E636B14816B235D4007FC3A8 /* reminderDetailsAlertType@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E636B14316B235D4007FC3A8 /* reminderDetailsAlertType@2x.png */; };
+		E636B14916B235D4007FC3A8 /* reminderDetailsVoice@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E636B14416B235D4007FC3A8 /* reminderDetailsVoice@2x.png */; };
+		E636B14A16B235D4007FC3A8 /* reminderSettingAlarm@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E636B14516B235D4007FC3A8 /* reminderSettingAlarm@2x.png */; };
+		E636B14B16B235D4007FC3A8 /* reminderSettingCalendar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E636B14616B235D4007FC3A8 /* reminderSettingCalendar@2x.png */; };
+		E636B14C16B235D4007FC3A8 /* reminderSettingContact@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E636B14716B235D4007FC3A8 /* reminderSettingContact@2x.png */; };
+		E636B14F16B23721007FC3A8 /* deleteText.png in Resources */ = {isa = PBXBuildFile; fileRef = E636B14D16B23721007FC3A8 /* deleteText.png */; };
+		E636B15016B23721007FC3A8 /* deleteText@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E636B14E16B23721007FC3A8 /* deleteText@2x.png */; };
 		E68A7FF116AE3C7200DCA6E1 /* bigDog.wav in Resources */ = {isa = PBXBuildFile; fileRef = E68A7FEE16AE3C7200DCA6E1 /* bigDog.wav */; };
 		E68A7FF216AE3C7200DCA6E1 /* milkCat.wav in Resources */ = {isa = PBXBuildFile; fileRef = E68A7FEF16AE3C7200DCA6E1 /* milkCat.wav */; };
 		E68A7FF316AE3C7200DCA6E1 /* nightingale.wav in Resources */ = {isa = PBXBuildFile; fileRef = E68A7FF016AE3C7200DCA6E1 /* nightingale.wav */; };
@@ -510,6 +517,13 @@
 		3CFCCC0316AA499C002AC474 /* AboutUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutUsViewController.h; sourceTree = "<group>"; };
 		3CFCCC0416AA499D002AC474 /* AboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutUsViewController.m; sourceTree = "<group>"; };
 		3CFCCC0516AA499D002AC474 /* AboutUsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutUsViewController.xib; sourceTree = "<group>"; };
+		E636B14316B235D4007FC3A8 /* reminderDetailsAlertType@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reminderDetailsAlertType@2x.png"; sourceTree = "<group>"; };
+		E636B14416B235D4007FC3A8 /* reminderDetailsVoice@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reminderDetailsVoice@2x.png"; sourceTree = "<group>"; };
+		E636B14516B235D4007FC3A8 /* reminderSettingAlarm@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reminderSettingAlarm@2x.png"; sourceTree = "<group>"; };
+		E636B14616B235D4007FC3A8 /* reminderSettingCalendar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reminderSettingCalendar@2x.png"; sourceTree = "<group>"; };
+		E636B14716B235D4007FC3A8 /* reminderSettingContact@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reminderSettingContact@2x.png"; sourceTree = "<group>"; };
+		E636B14D16B23721007FC3A8 /* deleteText.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deleteText.png; sourceTree = "<group>"; };
+		E636B14E16B23721007FC3A8 /* deleteText@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "deleteText@2x.png"; sourceTree = "<group>"; };
 		E68A7FEE16AE3C7200DCA6E1 /* bigDog.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bigDog.wav; sourceTree = "<group>"; };
 		E68A7FEF16AE3C7200DCA6E1 /* milkCat.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = milkCat.wav; sourceTree = "<group>"; };
 		E68A7FF016AE3C7200DCA6E1 /* nightingale.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = nightingale.wav; sourceTree = "<group>"; };
@@ -811,6 +825,13 @@
 		3CE0ABF916507EA2004B785A /* images */ = {
 			isa = PBXGroup;
 			children = (
+				E636B14D16B23721007FC3A8 /* deleteText.png */,
+				E636B14E16B23721007FC3A8 /* deleteText@2x.png */,
+				E636B14316B235D4007FC3A8 /* reminderDetailsAlertType@2x.png */,
+				E636B14416B235D4007FC3A8 /* reminderDetailsVoice@2x.png */,
+				E636B14516B235D4007FC3A8 /* reminderSettingAlarm@2x.png */,
+				E636B14616B235D4007FC3A8 /* reminderSettingCalendar@2x.png */,
+				E636B14716B235D4007FC3A8 /* reminderSettingContact@2x.png */,
 				E68A805816AFB86200DCA6E1 /* CollectingBox.png */,
 				E68A805416AFB80100DCA6E1 /* Calendar.png */,
 				E68A805516AFB80100DCA6E1 /* Clock.png */,
@@ -1083,7 +1104,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Liu&Mao";
 			};
-			buildConfigurationList = 3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "date" */;
+			buildConfigurationList = 3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "Date" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1286,6 +1307,13 @@
 				E68A805616AFB80100DCA6E1 /* Calendar.png in Resources */,
 				E68A805716AFB80100DCA6E1 /* Clock.png in Resources */,
 				E68A805916AFB86200DCA6E1 /* CollectingBox.png in Resources */,
+				E636B14816B235D4007FC3A8 /* reminderDetailsAlertType@2x.png in Resources */,
+				E636B14916B235D4007FC3A8 /* reminderDetailsVoice@2x.png in Resources */,
+				E636B14A16B235D4007FC3A8 /* reminderSettingAlarm@2x.png in Resources */,
+				E636B14B16B235D4007FC3A8 /* reminderSettingCalendar@2x.png in Resources */,
+				E636B14C16B235D4007FC3A8 /* reminderSettingContact@2x.png in Resources */,
+				E636B14F16B23721007FC3A8 /* deleteText.png in Resources */,
+				E636B15016B23721007FC3A8 /* deleteText@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1620,7 +1648,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "date" */ = {
+		3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "Date" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C13E89B164DF4DB006424A2 /* Debug */,
