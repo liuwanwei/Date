@@ -14,7 +14,7 @@
 @interface ReminderTimeSettingViewController () {
     NSArray * _rows;
     UILabel * _labelPrompt;
-    
+    float _viewHeight;
     NSArray * _cellIcons;
 }
 
@@ -29,7 +29,7 @@
 
 #pragma 私有函数
 - (void)initPickerView {
-    [_datePick setFrame:CGRectMake(0, 456, 320, 216)];
+    [_datePick setFrame:CGRectMake(0,_viewHeight - 64 , 320, 216)];
     [self.view addSubview:_datePick];
 }
 
@@ -98,21 +98,19 @@
 }
 
 - (void)restoreView {
-    float viewHeight = self.view.bounds.size.height;
     // animations settings
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
     [UIView setAnimationDuration:0.25];
     
     // set views with new info
-    _finshView.frame = CGRectMake(0,viewHeight, 320, 50);
-    _datePick.frame = CGRectMake(0,viewHeight , 320, 216);
+    _datePick.frame = CGRectMake(0,_viewHeight - 64 , 320, 216);
     // commit animations
     [UIView commitAnimations];
 }
 
 - (void)showPickerViewWithMode:(UIDatePickerMode)pickMode {
-    float viewHeight = self.view.bounds.size.height;
+  
     _datePick.minimumDate = [NSDate date];
     [_datePick setDate:[NSDate date]];
     [_datePick setDatePickerMode:pickMode];
@@ -123,8 +121,7 @@
     [UIView setAnimationDuration:0.25];
     
     // set views with new info
-    _finshView.frame = CGRectMake(0,viewHeight - 266, 320, 50);
-    _datePick.frame = CGRectMake(0,viewHeight - 216 , 320, 216);
+    _datePick.frame = CGRectMake(0,_viewHeight - 216 - 64 , 320, 216);
     // commit animations
     [UIView commitAnimations];
 }
@@ -157,6 +154,8 @@
     [super viewDidLoad];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    UIWindow* window = [UIApplication sharedApplication].keyWindow;
+    _viewHeight = window.frame.size.height;
     [self initTableFooterView];
     [self initPickerView];
 

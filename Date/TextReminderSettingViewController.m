@@ -68,7 +68,7 @@
     if (0 == section) {
         return 1;
     }else {
-        if (ReminderTypeReceiveAndNoAlarm == self.reminderType) {
+        if (ReminderTypeReceiveAndNoAlarm == self.reminderType || NO == self.isLogin) {
             return 1;
         }
         return 2;
@@ -82,23 +82,28 @@
     CellIdentifier = @"Cell";
     cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
+        UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 100)];
+        view.backgroundColor = [UIColor whiteColor];
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell.backgroundView = view;
     }
     
     if (indexPath.section == 0) {
         cell.textLabel.text = self.desc;
-        cell.textLabel.numberOfLines = 0;
-        cell.textLabel.textColor = RGBColor(50, 79, 133);
-        cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:17.0];
+        cell.textLabel.numberOfLines = 3;
+//        cell.textLabel.textColor = RGBColor(50, 79, 133);
+//        cell.textLabel.font = [UIFont fontWithName:@"Helvetica" size:17.0];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.detailTextLabel.text = @"";
     }else {
         if (indexPath.row == 0) {
             cell.textLabel.text = @"提醒";
+            cell.imageView.image = [UIImage imageNamed:@"Calendar"];
             cell.detailTextLabel.text = [self stringTriggerTime];
         }else if (indexPath.row == 1){
             cell.textLabel.text = @"发送给";
+            cell.imageView.image = [UIImage imageNamed:@"Calendar"];
             cell.detailTextLabel.text = self.receiver;
             if (NO == self.isLogin) {
                 cell.accessoryType = UITableViewCellAccessoryNone;
