@@ -87,11 +87,13 @@
     if (nil == self.reminder.triggerTime) {
         [AppDelegate delegate].homeViewController.dataType = DataTypeCollectingBox;
     }else {
-        NSDate * tommrow = [[GlobalFunction defaultGlobalFunction] tomorrow];
-        if ([self.reminder.triggerTime compare:tommrow] == NSOrderedAscending) {
-            [AppDelegate delegate].homeViewController.dataType = DataTypeToday;
-        }else {
-            [AppDelegate delegate].homeViewController.dataType = DataTypeRecent;
+        if (DataTypeRecent != [AppDelegate delegate].homeViewController.dataType) {
+            NSDate * tommrow = [[GlobalFunction defaultGlobalFunction] tomorrow];
+            if ([self.reminder.triggerTime compare:tommrow] == NSOrderedAscending) {
+                [AppDelegate delegate].homeViewController.dataType = DataTypeToday;
+            }else {
+                [AppDelegate delegate].homeViewController.dataType = DataTypeRecent;
+            }
         }
     }
     

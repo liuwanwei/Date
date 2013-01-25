@@ -101,22 +101,6 @@ typedef enum {
     // Dispose of any resources that can be recreated.
 }
 
-//#pragma mark - Table view delegate
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    if (indexPath.section == 0 && indexPath.row == 0) {
-//        TextEditorViewController * editor = [[TextEditorViewController alloc] initWithNibName:@"TextEditorViewController" bundle:nil];
-//        editor.text = self.desc;
-//        editor.parentController = self;
-//        [self.navigationController pushViewController:editor animated:YES];
-//    }else if (indexPath.section == 1 && indexPath.row == 0) {
-//        [self clickTrigeerTimeRow:indexPath];
-//    }else if (indexPath.row == 1 && YES == self.isLogin) {
-//        [self clickSendRow];
-//    }
-//}
-
 #pragma mark - ReminderManager delegate
 - (void)newReminderSuccess:(NSString *)reminderId {
     [super newReminderSuccess:reminderId];

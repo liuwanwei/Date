@@ -42,6 +42,7 @@
 @synthesize dateType = _dateType;
 @synthesize reminderType = _reminderType;
 @synthesize showSendFriendCell = _showSendFriendCell;
+@synthesize textCell = _textCell;
 
 #pragma 私有函数
 - (void)removeHUD {
@@ -297,7 +298,8 @@
 {
     if (indexPath.section == 0 && indexPath.row == 0) {
 //        CGFloat height = _labelSize.height;
-        return 23 * 3 + 23;
+        return 23 * 3 + 21;
+        //return 44;
     }
     
     return 44.0f;

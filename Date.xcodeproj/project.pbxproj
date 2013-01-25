@@ -139,6 +139,11 @@
 		3CB275141654EAF400FAEF1F /* OnlineFriendsRemindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB275121654EAF400FAEF1F /* OnlineFriendsRemindViewController.m */; };
 		3CB275151654EAF400FAEF1F /* OnlineFriendsRemindViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CB275131654EAF400FAEF1F /* OnlineFriendsRemindViewController.xib */; };
 		3CBF31E8169D086D00827F1D /* TextEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CBF31E7169D086D00827F1D /* TextEditorViewController.xib */; };
+		3CC64B2C16B26824008D6C77 /* reminderDetailsAlertType.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CC64B2A16B26824008D6C77 /* reminderDetailsAlertType.png */; };
+		3CC64B2D16B26824008D6C77 /* reminderSettingAlarm.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CC64B2B16B26824008D6C77 /* reminderSettingAlarm.png */; };
+		3CC64B3016B26874008D6C77 /* reminderDetailsText.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CC64B2E16B26873008D6C77 /* reminderDetailsText.png */; };
+		3CC64B3116B26874008D6C77 /* reminderDetailsText@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CC64B2F16B26874008D6C77 /* reminderDetailsText@2x.png */; };
+		3CC64B3316B279CE008D6C77 /* TextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CC64B3216B279CE008D6C77 /* TextCell.xib */; };
 		3CC9CE23165F730100E7E9D9 /* FriendRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9CE21165F730100E7E9D9 /* FriendRemindersViewController.m */; };
 		3CC9CE24165F730100E7E9D9 /* FriendRemindersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CC9CE22165F730100E7E9D9 /* FriendRemindersViewController.xib */; };
 		3CC9CE28165F76D000E7E9D9 /* FriendReminderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9CE27165F76D000E7E9D9 /* FriendReminderCell.m */; };
@@ -470,6 +475,11 @@
 		3CB275121654EAF400FAEF1F /* OnlineFriendsRemindViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnlineFriendsRemindViewController.m; sourceTree = "<group>"; };
 		3CB275131654EAF400FAEF1F /* OnlineFriendsRemindViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OnlineFriendsRemindViewController.xib; sourceTree = "<group>"; };
 		3CBF31E7169D086D00827F1D /* TextEditorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextEditorViewController.xib; sourceTree = "<group>"; };
+		3CC64B2A16B26824008D6C77 /* reminderDetailsAlertType.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reminderDetailsAlertType.png; sourceTree = "<group>"; };
+		3CC64B2B16B26824008D6C77 /* reminderSettingAlarm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reminderSettingAlarm.png; sourceTree = "<group>"; };
+		3CC64B2E16B26873008D6C77 /* reminderDetailsText.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = reminderDetailsText.png; path = Resources/images/reminderDetailsText.png; sourceTree = "<group>"; };
+		3CC64B2F16B26874008D6C77 /* reminderDetailsText@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "reminderDetailsText@2x.png"; path = "Resources/images/reminderDetailsText@2x.png"; sourceTree = "<group>"; };
+		3CC64B3216B279CE008D6C77 /* TextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextCell.xib; sourceTree = "<group>"; };
 		3CC9CE20165F730100E7E9D9 /* FriendRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendRemindersViewController.h; sourceTree = "<group>"; };
 		3CC9CE21165F730100E7E9D9 /* FriendRemindersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendRemindersViewController.m; sourceTree = "<group>"; };
 		3CC9CE22165F730100E7E9D9 /* FriendRemindersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendRemindersViewController.xib; sourceTree = "<group>"; };
@@ -753,6 +763,7 @@
 				3C93849D1688539000DA6412 /* ReminderSettingDescCell.xib */,
 				E6A3981016918DE0004A460F /* TextEditorCell.xib */,
 				3C3513C5169C037E00F78FB9 /* MenuCell.xib */,
+				3CC64B3216B279CE008D6C77 /* TextCell.xib */,
 			);
 			name = cell;
 			sourceTree = "<group>";
@@ -825,6 +836,10 @@
 		3CE0ABF916507EA2004B785A /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3CC64B2E16B26873008D6C77 /* reminderDetailsText.png */,
+				3CC64B2F16B26874008D6C77 /* reminderDetailsText@2x.png */,
+				3CC64B2A16B26824008D6C77 /* reminderDetailsAlertType.png */,
+				3CC64B2B16B26824008D6C77 /* reminderSettingAlarm.png */,
 				E636B14D16B23721007FC3A8 /* deleteText.png */,
 				E636B14E16B23721007FC3A8 /* deleteText@2x.png */,
 				E636B14316B235D4007FC3A8 /* reminderDetailsAlertType@2x.png */,
@@ -1104,7 +1119,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Liu&Mao";
 			};
-			buildConfigurationList = 3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "Date" */;
+			buildConfigurationList = 3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "date" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1314,6 +1329,11 @@
 				E636B14C16B235D4007FC3A8 /* reminderSettingContact@2x.png in Resources */,
 				E636B14F16B23721007FC3A8 /* deleteText.png in Resources */,
 				E636B15016B23721007FC3A8 /* deleteText@2x.png in Resources */,
+				3CC64B2C16B26824008D6C77 /* reminderDetailsAlertType.png in Resources */,
+				3CC64B2D16B26824008D6C77 /* reminderSettingAlarm.png in Resources */,
+				3CC64B3016B26874008D6C77 /* reminderDetailsText.png in Resources */,
+				3CC64B3116B26874008D6C77 /* reminderDetailsText@2x.png in Resources */,
+				3CC64B3316B279CE008D6C77 /* TextCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1648,7 +1668,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "Date" */ = {
+		3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "date" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C13E89B164DF4DB006424A2 /* Debug */,
