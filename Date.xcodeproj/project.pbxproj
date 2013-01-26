@@ -88,10 +88,6 @@
 		3C3BE6BD168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3BE6BA168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg.png */; };
 		3C3BE6BE168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3BE6BB168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg@2x.png */; };
 		3C3BE6BF168ADAEC0052A8C5 /* sidebar_separate_light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3BE6BC168ADAEC0052A8C5 /* sidebar_separate_light@2x.png */; };
-		3C3BE6CC168BF7B70052A8C5 /* big-approve.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3BE6C8168BF7B70052A8C5 /* big-approve.png */; };
-		3C3BE6CD168BF7B70052A8C5 /* big-approve@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3BE6C9168BF7B70052A8C5 /* big-approve@2x.png */; };
-		3C3BE6CE168BF7B70052A8C5 /* big-cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3BE6CA168BF7B70052A8C5 /* big-cancel.png */; };
-		3C3BE6CF168BF7B70052A8C5 /* big-cancel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3BE6CB168BF7B70052A8C5 /* big-cancel@2x.png */; };
 		3C3BE6E0168C236A0052A8C5 /* backNavigationBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3BE6DE168C236A0052A8C5 /* backNavigationBar.png */; };
 		3C3BE6E1168C236A0052A8C5 /* backNavigationBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3BE6DF168C236A0052A8C5 /* backNavigationBar@2x.png */; };
 		3C40DE3E1666ED4A005627C9 /* BilateralFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C40DE3D1666ED49005627C9 /* BilateralFriend.m */; };
@@ -124,13 +120,14 @@
 		3C93849E1688539000DA6412 /* ReminderSettingDescCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C93849D1688539000DA6412 /* ReminderSettingDescCell.xib */; };
 		3C9384A61689328D00DA6412 /* TextReminderDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C9384A41689328A00DA6412 /* TextReminderDetailViewController.m */; };
 		3C9384A71689328D00DA6412 /* TextReminderDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9384A51689328C00DA6412 /* TextReminderDetailViewController.xib */; };
-		3C984EBF166C53C4005AA529 /* blueDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C984EBD166C53C4005AA529 /* blueDot.png */; };
-		3C984EC0166C53C4005AA529 /* blueDot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C984EBE166C53C4005AA529 /* blueDot@2x.png */; };
 		3C984ED5166C83CD005AA529 /* btnPause.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C984EC9166C83CD005AA529 /* btnPause.png */; };
 		3C984ED6166C83CD005AA529 /* btnPause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C984ECA166C83CD005AA529 /* btnPause@2x.png */; };
 		3C984ED7166C83CD005AA529 /* btnPlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C984ECB166C83CD005AA529 /* btnPlay.png */; };
 		3C984ED8166C83CD005AA529 /* btnPlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C984ECC166C83CD005AA529 /* btnPlay@2x.png */; };
 		3C984EE0166C90D4005AA529 /* FriendReminderSenderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C984EDF166C90D4005AA529 /* FriendReminderSenderCell.xib */; };
+		3C98FC2616B2849800CDD654 /* reminderSettingCalendar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C98FC2416B2848900CDD654 /* reminderSettingCalendar.png */; };
+		3C98FC2716B2849800CDD654 /* reminderSettingContact.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C98FC2516B2849000CDD654 /* reminderSettingContact.png */; };
+		3C98FC2916B286F700CDD654 /* reminderDetailsVoice.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C98FC2816B286F200CDD654 /* reminderDetailsVoice.png */; };
 		3CB0DC131654F29500209DF6 /* OnlineFriendRemindCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CB0DC121654F29500209DF6 /* OnlineFriendRemindCell.xib */; };
 		3CB0DC1516553CEB00209DF6 /* male.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CB0DC1416553CEB00209DF6 /* male.png */; };
 		3CB0DC331655D17600209DF6 /* HomeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CB0DC321655D17600209DF6 /* HomeCell.xib */; };
@@ -139,6 +136,11 @@
 		3CB275141654EAF400FAEF1F /* OnlineFriendsRemindViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB275121654EAF400FAEF1F /* OnlineFriendsRemindViewController.m */; };
 		3CB275151654EAF400FAEF1F /* OnlineFriendsRemindViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CB275131654EAF400FAEF1F /* OnlineFriendsRemindViewController.xib */; };
 		3CBF31E8169D086D00827F1D /* TextEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CBF31E7169D086D00827F1D /* TextEditorViewController.xib */; };
+		3CC64B2C16B26824008D6C77 /* reminderDetailsAlertType.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CC64B2A16B26824008D6C77 /* reminderDetailsAlertType.png */; };
+		3CC64B2D16B26824008D6C77 /* reminderSettingAlarm.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CC64B2B16B26824008D6C77 /* reminderSettingAlarm.png */; };
+		3CC64B3016B26874008D6C77 /* reminderDetailsText.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CC64B2E16B26873008D6C77 /* reminderDetailsText.png */; };
+		3CC64B3116B26874008D6C77 /* reminderDetailsText@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CC64B2F16B26874008D6C77 /* reminderDetailsText@2x.png */; };
+		3CC64B3316B279CE008D6C77 /* TextCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CC64B3216B279CE008D6C77 /* TextCell.xib */; };
 		3CC9CE23165F730100E7E9D9 /* FriendRemindersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9CE21165F730100E7E9D9 /* FriendRemindersViewController.m */; };
 		3CC9CE24165F730100E7E9D9 /* FriendRemindersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CC9CE22165F730100E7E9D9 /* FriendRemindersViewController.xib */; };
 		3CC9CE28165F76D000E7E9D9 /* FriendReminderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9CE27165F76D000E7E9D9 /* FriendReminderCell.m */; };
@@ -171,8 +173,6 @@
 		3CFCCBB316A90278002AC474 /* TodayReminderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CFCCBB216A90278002AC474 /* TodayReminderCell.xib */; };
 		3CFCCBFA16A999B4002AC474 /* HistoryReminderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFCCBF916A999B4002AC474 /* HistoryReminderCell.m */; };
 		3CFCCBFE16A99A1F002AC474 /* HistoryReminderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CFCCBFD16A99A1F002AC474 /* HistoryReminderCell.xib */; };
-		3CFCCC0116AA2C26002AC474 /* dateTimeSwitcher.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CFCCBFF16AA2C26002AC474 /* dateTimeSwitcher.png */; };
-		3CFCCC0216AA2C26002AC474 /* dateTimeSwitcher@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CFCCC0016AA2C26002AC474 /* dateTimeSwitcher@2x.png */; };
 		3CFCCC0616AA499E002AC474 /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFCCC0416AA499D002AC474 /* AboutUsViewController.m */; };
 		3CFCCC0716AA499E002AC474 /* AboutUsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CFCCC0516AA499D002AC474 /* AboutUsViewController.xib */; };
 		E636B14816B235D4007FC3A8 /* reminderDetailsAlertType@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E636B14316B235D4007FC3A8 /* reminderDetailsAlertType@2x.png */; };
@@ -186,10 +186,8 @@
 		E68A7FF216AE3C7200DCA6E1 /* milkCat.wav in Resources */ = {isa = PBXBuildFile; fileRef = E68A7FEF16AE3C7200DCA6E1 /* milkCat.wav */; };
 		E68A7FF316AE3C7200DCA6E1 /* nightingale.wav in Resources */ = {isa = PBXBuildFile; fileRef = E68A7FF016AE3C7200DCA6E1 /* nightingale.wav */; };
 		E68A7FF616AE5A2000DCA6E1 /* SettingAlertSoundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E68A7FF516AE5A2000DCA6E1 /* SettingAlertSoundViewController.m */; };
-		E68A805116AFB21200DCA6E1 /* Calendar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E68A804E16AFB21200DCA6E1 /* Calendar@2x.png */; };
 		E68A805216AFB21200DCA6E1 /* Clock@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E68A804F16AFB21200DCA6E1 /* Clock@2x.png */; };
 		E68A805316AFB21200DCA6E1 /* CollectingBox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E68A805016AFB21200DCA6E1 /* CollectingBox@2x.png */; };
-		E68A805616AFB80100DCA6E1 /* Calendar.png in Resources */ = {isa = PBXBuildFile; fileRef = E68A805416AFB80100DCA6E1 /* Calendar.png */; };
 		E68A805716AFB80100DCA6E1 /* Clock.png in Resources */ = {isa = PBXBuildFile; fileRef = E68A805516AFB80100DCA6E1 /* Clock.png */; };
 		E68A805916AFB86200DCA6E1 /* CollectingBox.png in Resources */ = {isa = PBXBuildFile; fileRef = E68A805816AFB86200DCA6E1 /* CollectingBox.png */; };
 		E6A3980616913F4F004A460F /* leftMenuDown.png in Resources */ = {isa = PBXBuildFile; fileRef = E6A3980216913F4F004A460F /* leftMenuDown.png */; };
@@ -404,10 +402,6 @@
 		3C3BE6BA168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sidebar_cellhighlighted_bg.png; path = Resources/images/sidebar_cellhighlighted_bg.png; sourceTree = "<group>"; };
 		3C3BE6BB168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sidebar_cellhighlighted_bg@2x.png"; path = "Resources/images/sidebar_cellhighlighted_bg@2x.png"; sourceTree = "<group>"; };
 		3C3BE6BC168ADAEC0052A8C5 /* sidebar_separate_light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sidebar_separate_light@2x.png"; path = "Resources/images/sidebar_separate_light@2x.png"; sourceTree = "<group>"; };
-		3C3BE6C8168BF7B70052A8C5 /* big-approve.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "big-approve.png"; path = "Resources/images/big-approve.png"; sourceTree = "<group>"; };
-		3C3BE6C9168BF7B70052A8C5 /* big-approve@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "big-approve@2x.png"; path = "Resources/images/big-approve@2x.png"; sourceTree = "<group>"; };
-		3C3BE6CA168BF7B70052A8C5 /* big-cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "big-cancel.png"; path = "Resources/images/big-cancel.png"; sourceTree = "<group>"; };
-		3C3BE6CB168BF7B70052A8C5 /* big-cancel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "big-cancel@2x.png"; path = "Resources/images/big-cancel@2x.png"; sourceTree = "<group>"; };
 		3C3BE6D8168C0CC30052A8C5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		3C3BE6D9168C0CC30052A8C5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		3C3BE6DE168C236A0052A8C5 /* backNavigationBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = backNavigationBar.png; path = Resources/images/backNavigationBar.png; sourceTree = "<group>"; };
@@ -452,13 +446,14 @@
 		3C9384A31689328A00DA6412 /* TextReminderDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextReminderDetailViewController.h; sourceTree = "<group>"; };
 		3C9384A41689328A00DA6412 /* TextReminderDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextReminderDetailViewController.m; sourceTree = "<group>"; };
 		3C9384A51689328C00DA6412 /* TextReminderDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextReminderDetailViewController.xib; sourceTree = "<group>"; };
-		3C984EBD166C53C4005AA529 /* blueDot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blueDot.png; path = Resources/images/blueDot.png; sourceTree = "<group>"; };
-		3C984EBE166C53C4005AA529 /* blueDot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blueDot@2x.png"; path = "Resources/images/blueDot@2x.png"; sourceTree = "<group>"; };
 		3C984EC9166C83CD005AA529 /* btnPause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btnPause.png; path = Resources/images/btnPause.png; sourceTree = "<group>"; };
 		3C984ECA166C83CD005AA529 /* btnPause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btnPause@2x.png"; path = "Resources/images/btnPause@2x.png"; sourceTree = "<group>"; };
 		3C984ECB166C83CD005AA529 /* btnPlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btnPlay.png; path = Resources/images/btnPlay.png; sourceTree = "<group>"; };
 		3C984ECC166C83CD005AA529 /* btnPlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btnPlay@2x.png"; path = "Resources/images/btnPlay@2x.png"; sourceTree = "<group>"; };
 		3C984EDF166C90D4005AA529 /* FriendReminderSenderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendReminderSenderCell.xib; sourceTree = "<group>"; };
+		3C98FC2416B2848900CDD654 /* reminderSettingCalendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reminderSettingCalendar.png; sourceTree = "<group>"; };
+		3C98FC2516B2849000CDD654 /* reminderSettingContact.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reminderSettingContact.png; sourceTree = "<group>"; };
+		3C98FC2816B286F200CDD654 /* reminderDetailsVoice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reminderDetailsVoice.png; sourceTree = "<group>"; };
 		3CB0DC121654F29500209DF6 /* OnlineFriendRemindCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OnlineFriendRemindCell.xib; sourceTree = "<group>"; };
 		3CB0DC1416553CEB00209DF6 /* male.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = male.png; path = Resources/images/male.png; sourceTree = "<group>"; };
 		3CB0DC321655D17600209DF6 /* HomeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeCell.xib; sourceTree = "<group>"; };
@@ -470,6 +465,11 @@
 		3CB275121654EAF400FAEF1F /* OnlineFriendsRemindViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnlineFriendsRemindViewController.m; sourceTree = "<group>"; };
 		3CB275131654EAF400FAEF1F /* OnlineFriendsRemindViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OnlineFriendsRemindViewController.xib; sourceTree = "<group>"; };
 		3CBF31E7169D086D00827F1D /* TextEditorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextEditorViewController.xib; sourceTree = "<group>"; };
+		3CC64B2A16B26824008D6C77 /* reminderDetailsAlertType.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reminderDetailsAlertType.png; sourceTree = "<group>"; };
+		3CC64B2B16B26824008D6C77 /* reminderSettingAlarm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reminderSettingAlarm.png; sourceTree = "<group>"; };
+		3CC64B2E16B26873008D6C77 /* reminderDetailsText.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = reminderDetailsText.png; path = Resources/images/reminderDetailsText.png; sourceTree = "<group>"; };
+		3CC64B2F16B26874008D6C77 /* reminderDetailsText@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "reminderDetailsText@2x.png"; path = "Resources/images/reminderDetailsText@2x.png"; sourceTree = "<group>"; };
+		3CC64B3216B279CE008D6C77 /* TextCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextCell.xib; sourceTree = "<group>"; };
 		3CC9CE20165F730100E7E9D9 /* FriendRemindersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendRemindersViewController.h; sourceTree = "<group>"; };
 		3CC9CE21165F730100E7E9D9 /* FriendRemindersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendRemindersViewController.m; sourceTree = "<group>"; };
 		3CC9CE22165F730100E7E9D9 /* FriendRemindersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendRemindersViewController.xib; sourceTree = "<group>"; };
@@ -512,8 +512,6 @@
 		3CFCCBF816A999B4002AC474 /* HistoryReminderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryReminderCell.h; sourceTree = "<group>"; };
 		3CFCCBF916A999B4002AC474 /* HistoryReminderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryReminderCell.m; sourceTree = "<group>"; };
 		3CFCCBFD16A99A1F002AC474 /* HistoryReminderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryReminderCell.xib; sourceTree = "<group>"; };
-		3CFCCBFF16AA2C26002AC474 /* dateTimeSwitcher.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dateTimeSwitcher.png; path = Resources/images/dateTimeSwitcher.png; sourceTree = "<group>"; };
-		3CFCCC0016AA2C26002AC474 /* dateTimeSwitcher@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dateTimeSwitcher@2x.png"; path = "Resources/images/dateTimeSwitcher@2x.png"; sourceTree = "<group>"; };
 		3CFCCC0316AA499C002AC474 /* AboutUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutUsViewController.h; sourceTree = "<group>"; };
 		3CFCCC0416AA499D002AC474 /* AboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutUsViewController.m; sourceTree = "<group>"; };
 		3CFCCC0516AA499D002AC474 /* AboutUsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutUsViewController.xib; sourceTree = "<group>"; };
@@ -529,10 +527,8 @@
 		E68A7FF016AE3C7200DCA6E1 /* nightingale.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = nightingale.wav; sourceTree = "<group>"; };
 		E68A7FF416AE5A2000DCA6E1 /* SettingAlertSoundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingAlertSoundViewController.h; sourceTree = "<group>"; };
 		E68A7FF516AE5A2000DCA6E1 /* SettingAlertSoundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingAlertSoundViewController.m; sourceTree = "<group>"; };
-		E68A804E16AFB21200DCA6E1 /* Calendar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Calendar@2x.png"; sourceTree = "<group>"; };
 		E68A804F16AFB21200DCA6E1 /* Clock@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Clock@2x.png"; sourceTree = "<group>"; };
 		E68A805016AFB21200DCA6E1 /* CollectingBox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "CollectingBox@2x.png"; sourceTree = "<group>"; };
-		E68A805416AFB80100DCA6E1 /* Calendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Calendar.png; sourceTree = "<group>"; };
 		E68A805516AFB80100DCA6E1 /* Clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Clock.png; sourceTree = "<group>"; };
 		E68A805816AFB86200DCA6E1 /* CollectingBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CollectingBox.png; sourceTree = "<group>"; };
 		E6A3980216913F4F004A460F /* leftMenuDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leftMenuDown.png; path = Resources/images/leftMenuDown.png; sourceTree = "<group>"; };
@@ -753,6 +749,7 @@
 				3C93849D1688539000DA6412 /* ReminderSettingDescCell.xib */,
 				E6A3981016918DE0004A460F /* TextEditorCell.xib */,
 				3C3513C5169C037E00F78FB9 /* MenuCell.xib */,
+				3CC64B3216B279CE008D6C77 /* TextCell.xib */,
 			);
 			name = cell;
 			sourceTree = "<group>";
@@ -825,31 +822,11 @@
 		3CE0ABF916507EA2004B785A /* images */ = {
 			isa = PBXGroup;
 			children = (
-				E636B14D16B23721007FC3A8 /* deleteText.png */,
-				E636B14E16B23721007FC3A8 /* deleteText@2x.png */,
-				E636B14316B235D4007FC3A8 /* reminderDetailsAlertType@2x.png */,
-				E636B14416B235D4007FC3A8 /* reminderDetailsVoice@2x.png */,
-				E636B14516B235D4007FC3A8 /* reminderSettingAlarm@2x.png */,
-				E636B14616B235D4007FC3A8 /* reminderSettingCalendar@2x.png */,
-				E636B14716B235D4007FC3A8 /* reminderSettingContact@2x.png */,
-				E68A805816AFB86200DCA6E1 /* CollectingBox.png */,
-				E68A805416AFB80100DCA6E1 /* Calendar.png */,
-				E68A805516AFB80100DCA6E1 /* Clock.png */,
-				E68A804E16AFB21200DCA6E1 /* Calendar@2x.png */,
-				E68A804F16AFB21200DCA6E1 /* Clock@2x.png */,
-				E68A805016AFB21200DCA6E1 /* CollectingBox@2x.png */,
-				3CFCCBFF16AA2C26002AC474 /* dateTimeSwitcher.png */,
-				3CFCCC0016AA2C26002AC474 /* dateTimeSwitcher@2x.png */,
+				3C98FC2816B286F200CDD654 /* reminderDetailsVoice.png */,
 				3C3BE6DE168C236A0052A8C5 /* backNavigationBar.png */,
 				3C3BE6DF168C236A0052A8C5 /* backNavigationBar@2x.png */,
-				3C3BE6C8168BF7B70052A8C5 /* big-approve.png */,
-				3C3BE6C9168BF7B70052A8C5 /* big-approve@2x.png */,
-				3C3BE6CA168BF7B70052A8C5 /* big-cancel.png */,
-				3C3BE6CB168BF7B70052A8C5 /* big-cancel@2x.png */,
 				3C5B1D36169FB8E20079C12F /* blueArrow.png */,
 				3C5B1D37169FB8E20079C12F /* blueArrow@2x.png */,
-				3C984EBD166C53C4005AA529 /* blueDot.png */,
-				3C984EBE166C53C4005AA529 /* blueDot@2x.png */,
 				3C984EC9166C83CD005AA529 /* btnPause.png */,
 				3C984ECA166C83CD005AA529 /* btnPause@2x.png */,
 				3C984ECB166C83CD005AA529 /* btnPlay.png */,
@@ -860,8 +837,14 @@
 				3CE8509E16803DA50025ECA3 /* checkboxCompleted@2x.png */,
 				3CE8509F16803DA50025ECA3 /* checkboxOri.png */,
 				3CE850A016803DA50025ECA3 /* checkboxOri@2x.png */,
+				E68A805516AFB80100DCA6E1 /* Clock.png */,
+				E68A804F16AFB21200DCA6E1 /* Clock@2x.png */,
+				E68A805816AFB86200DCA6E1 /* CollectingBox.png */,
+				E68A805016AFB21200DCA6E1 /* CollectingBox@2x.png */,
 				3C5B1D44169FCF110079C12F /* deleteBtn.png */,
 				3C5B1D45169FCF110079C12F /* deleteBtn@2x.png */,
+				E636B14D16B23721007FC3A8 /* deleteText.png */,
+				E636B14E16B23721007FC3A8 /* deleteText@2x.png */,
 				3CDA36B516A69EF1008C6E18 /* Icon.png */,
 				3C469EF616A6AE220080AF49 /* Icon@2x.png */,
 				E6A3980216913F4F004A460F /* leftMenuDown.png */,
@@ -889,6 +872,17 @@
 				3C044CBC1659E00F000551C5 /* recordingSignal006.png */,
 				3C044CBD1659E00F000551C5 /* recordingSignal007.png */,
 				3C044CBE1659E00F000551C5 /* recordingSignal008.png */,
+				3CC64B2A16B26824008D6C77 /* reminderDetailsAlertType.png */,
+				E636B14316B235D4007FC3A8 /* reminderDetailsAlertType@2x.png */,
+				3CC64B2E16B26873008D6C77 /* reminderDetailsText.png */,
+				3CC64B2F16B26874008D6C77 /* reminderDetailsText@2x.png */,
+				E636B14416B235D4007FC3A8 /* reminderDetailsVoice@2x.png */,
+				3CC64B2B16B26824008D6C77 /* reminderSettingAlarm.png */,
+				E636B14516B235D4007FC3A8 /* reminderSettingAlarm@2x.png */,
+				3C98FC2416B2848900CDD654 /* reminderSettingCalendar.png */,
+				E636B14616B235D4007FC3A8 /* reminderSettingCalendar@2x.png */,
+				3C98FC2516B2849000CDD654 /* reminderSettingContact.png */,
+				E636B14716B235D4007FC3A8 /* reminderSettingContact@2x.png */,
 				3C3BE6BA168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg.png */,
 				3C3BE6BB168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg@2x.png */,
 				3CDA36B816A6A427008C6E18 /* sidebar_separate_light.png */,
@@ -928,18 +922,22 @@
 		3CE0AC541650D5C3004B785A /* Class */ = {
 			isa = PBXGroup;
 			children = (
+				3CC9CE25165F768D00E7E9D9 /* Cell */,
+				3C351392169AC9AD00F78FB9 /* GlobalFunction */,
 				3CFCCC0316AA499C002AC474 /* AboutUsViewController.h */,
 				3CFCCC0416AA499D002AC474 /* AboutUsViewController.m */,
+				3C044CC9165A0E1B000551C5 /* ReminderSettingViewController.h */,
+				3C044CCA165A0E1B000551C5 /* ReminderSettingViewController.m */,
 				3C93849516882BD800DA6412 /* AudioReminderSettingViewController.h */,
 				3C93849616882BD800DA6412 /* AudioReminderSettingViewController.m */,
+				3C9384901688292D00DA6412 /* TextReminderSettingViewController.h */,
+				3C9384911688292D00DA6412 /* TextReminderSettingViewController.m */,
 				3C3156631681AE4000C1E42C /* BaseViewController.h */,
 				3C3156641681AE4000C1E42C /* BaseViewController.m */,
-				3CC9CE25165F768D00E7E9D9 /* Cell */,
 				E6A3980A16914121004A460F /* CustomChoiceViewController.h */,
 				E6A3980B16914121004A460F /* CustomChoiceViewController.m */,
 				3CC9CE20165F730100E7E9D9 /* FriendRemindersViewController.h */,
 				3CC9CE21165F730100E7E9D9 /* FriendRemindersViewController.m */,
-				3C351392169AC9AD00F78FB9 /* GlobalFunction */,
 				3CD0ADFD166877C0001986F0 /* MenuViewController.h */,
 				3CD0ADFE166877C0001986F0 /* MenuViewController.m */,
 				3C19884F16982974002311E5 /* ModifyAudioReminderViewController.h */,
@@ -960,8 +958,6 @@
 				3C23E8B31669ACA30098149A /* RemindersBaseViewController.m */,
 				3CF017DE165B500D00F83814 /* ReminderSendingViewController.h */,
 				3CF017DF165B500E00F83814 /* ReminderSendingViewController.m */,
-				3C044CC9165A0E1B000551C5 /* ReminderSettingViewController.h */,
-				3C044CCA165A0E1B000551C5 /* ReminderSettingViewController.m */,
 				3C349927166EEF62001012B6 /* RemindersInboxViewController.h */,
 				3C349928166EEF62001012B6 /* RemindersInboxViewController.m */,
 				3C40DE3F16670F41005627C9 /* RemindersNotificationViewController.h */,
@@ -984,8 +980,6 @@
 				E6A3980E16918D4F004A460F /* TextEditorViewController.m */,
 				3C9384A31689328A00DA6412 /* TextReminderDetailViewController.h */,
 				3C9384A41689328A00DA6412 /* TextReminderDetailViewController.m */,
-				3C9384901688292D00DA6412 /* TextReminderSettingViewController.h */,
-				3C9384911688292D00DA6412 /* TextReminderSettingViewController.m */,
 				3CFCCC0316AA499C002AC474 /* AboutUsViewController.h */,
 				3CFCCC0416AA499D002AC474 /* AboutUsViewController.m */,
 			);
@@ -1104,7 +1098,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Liu&Mao";
 			};
-			buildConfigurationList = 3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "Date" */;
+			buildConfigurationList = 3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "date" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1226,8 +1220,6 @@
 				3C40DE4316670F41005627C9 /* RemindersNotificationViewController.xib in Resources */,
 				3CD0AE01166877C0001986F0 /* MenuViewController.xib in Resources */,
 				3C23E8AE1669A1C10098149A /* ReminderNotificationCell.xib in Resources */,
-				3C984EBF166C53C4005AA529 /* blueDot.png in Resources */,
-				3C984EC0166C53C4005AA529 /* blueDot@2x.png in Resources */,
 				3C984ED5166C83CD005AA529 /* btnPause.png in Resources */,
 				3C984ED6166C83CD005AA529 /* btnPause@2x.png in Resources */,
 				3C984ED7166C83CD005AA529 /* btnPlay.png in Resources */,
@@ -1254,10 +1246,6 @@
 				3C3BE6BD168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg.png in Resources */,
 				3C3BE6BE168ADAEC0052A8C5 /* sidebar_cellhighlighted_bg@2x.png in Resources */,
 				3C3BE6BF168ADAEC0052A8C5 /* sidebar_separate_light@2x.png in Resources */,
-				3C3BE6CC168BF7B70052A8C5 /* big-approve.png in Resources */,
-				3C3BE6CD168BF7B70052A8C5 /* big-approve@2x.png in Resources */,
-				3C3BE6CE168BF7B70052A8C5 /* big-cancel.png in Resources */,
-				3C3BE6CF168BF7B70052A8C5 /* big-cancel@2x.png in Resources */,
 				3C3BE6E0168C236A0052A8C5 /* backNavigationBar.png in Resources */,
 				3C3BE6E1168C236A0052A8C5 /* backNavigationBar@2x.png in Resources */,
 				3C417A18168D8BE7003FFB1C /* recordingBg.png in Resources */,
@@ -1292,8 +1280,6 @@
 				3C469EF716A6AE220080AF49 /* Icon@2x.png in Resources */,
 				3CFCCBB316A90278002AC474 /* TodayReminderCell.xib in Resources */,
 				3CFCCBFE16A99A1F002AC474 /* HistoryReminderCell.xib in Resources */,
-				3CFCCC0116AA2C26002AC474 /* dateTimeSwitcher.png in Resources */,
-				3CFCCC0216AA2C26002AC474 /* dateTimeSwitcher@2x.png in Resources */,
 				3CFCCC0716AA499E002AC474 /* AboutUsViewController.xib in Resources */,
 				E68A7FF116AE3C7200DCA6E1 /* bigDog.wav in Resources */,
 				E68A7FF216AE3C7200DCA6E1 /* milkCat.wav in Resources */,
@@ -1301,10 +1287,8 @@
 				3CDA755216AD0D2500A1AE9E /* default0.m4a in Resources */,
 				3CDA755316AD0D2500A1AE9E /* default1.m4a in Resources */,
 				3CDA755516AD0D2B00A1AE9E /* default2.m4a in Resources */,
-				E68A805116AFB21200DCA6E1 /* Calendar@2x.png in Resources */,
 				E68A805216AFB21200DCA6E1 /* Clock@2x.png in Resources */,
 				E68A805316AFB21200DCA6E1 /* CollectingBox@2x.png in Resources */,
-				E68A805616AFB80100DCA6E1 /* Calendar.png in Resources */,
 				E68A805716AFB80100DCA6E1 /* Clock.png in Resources */,
 				E68A805916AFB86200DCA6E1 /* CollectingBox.png in Resources */,
 				E636B14816B235D4007FC3A8 /* reminderDetailsAlertType@2x.png in Resources */,
@@ -1314,6 +1298,14 @@
 				E636B14C16B235D4007FC3A8 /* reminderSettingContact@2x.png in Resources */,
 				E636B14F16B23721007FC3A8 /* deleteText.png in Resources */,
 				E636B15016B23721007FC3A8 /* deleteText@2x.png in Resources */,
+				3CC64B2C16B26824008D6C77 /* reminderDetailsAlertType.png in Resources */,
+				3CC64B2D16B26824008D6C77 /* reminderSettingAlarm.png in Resources */,
+				3CC64B3016B26874008D6C77 /* reminderDetailsText.png in Resources */,
+				3CC64B3116B26874008D6C77 /* reminderDetailsText@2x.png in Resources */,
+				3CC64B3316B279CE008D6C77 /* TextCell.xib in Resources */,
+				3C98FC2616B2849800CDD654 /* reminderSettingCalendar.png in Resources */,
+				3C98FC2716B2849800CDD654 /* reminderSettingContact.png in Resources */,
+				3C98FC2916B286F700CDD654 /* reminderDetailsVoice.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1648,7 +1640,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "Date" */ = {
+		3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "date" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C13E89B164DF4DB006424A2 /* Debug */,

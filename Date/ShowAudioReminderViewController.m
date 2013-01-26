@@ -42,7 +42,7 @@
     if (DataTypeHistory != self.dateType) {
         [self hiddenTableFooterView];
     }
-    self.title = @"查看详情";
+    self.title = @"提醒详情";
     [[AppDelegate delegate] initNavleftBarItemWithController:self withAction:@selector(back)];
 }
 

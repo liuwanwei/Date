@@ -42,6 +42,7 @@
 @synthesize dateType = _dateType;
 @synthesize reminderType = _reminderType;
 @synthesize showSendFriendCell = _showSendFriendCell;
+@synthesize textCell = _textCell;
 
 #pragma 私有函数
 - (void)removeHUD {
@@ -233,7 +234,8 @@
 }
 
 - (void)computeFontSize {
-    _labelSize = [self.desc sizeWithFont:[UIFont fontWithName:@"Helvetica" size:17.0] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode: UILineBreakModeTailTruncation];
+//    [UIFont fontWithName:@"Helvetica" size:17.0]
+    _labelSize = [self.desc sizeWithFont:[UIFont boldSystemFontOfSize:17.0] constrainedToSize:CGSizeMake(280, MAXFLOAT) lineBreakMode: UILineBreakModeTailTruncation];
 }
 
 - (void)initTriggerTime {
@@ -260,6 +262,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = RGBColor(244, 244, 244);
     [self computeFontSize];
     if (_dateType == DataTypeRecent || _dateType == DataTypeToday || _dateType == DataTypeCollectingBox) {
         [self initTableFooterView];
@@ -294,19 +297,21 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0 && indexPath.row == 0) {
-        return _labelSize.height + 21;
+//        CGFloat height = _labelSize.height;
+        return 23 * 3 + 21;
+        //return 44;
     }
     
     return 44.0f;
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if (section == 0) {
-        return @"内容";
-    }
-    
-    return nil;
-}
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+//    if (section == 0) {
+//        return @"内容";
+//    }
+//    
+//    return nil;
+//}
 
 #pragma mark - ReminderManager delegate
 - (void)newReminderSuccess:(NSString *)reminderId {

@@ -813,19 +813,11 @@ typedef enum {
 - (void)updateAppBadge {
     AppBadgeMode mode = [self appBadgeMode];
     NSInteger badgeSize = 0;
-    //NSArray * reminders;
     if (AppBadgeModeToady == mode) {
         badgeSize = _todayRemindersSize;
-        //reminders = [self todayUnFinishedReminders];
     }else if (AppBadgeModeRecent == mode){
         badgeSize = _allRemindersSize;
-        //reminders = [self recentUnFinishedReminders];
     }
-//    if (nil != reminders) {
-//        badgeSize = [reminders count];
-//    }else {
-//        badgeSize = 0;
-//    }
     
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badgeSize];
 }
@@ -839,6 +831,7 @@ typedef enum {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString * defaultReminders = [defaults objectForKey:kCreateDefaultReminders];
     if (nil == defaultReminders) {
+        [[UIApplication sharedApplication] cancelAllLocalNotifications];
         Reminder * reminder;
         long long userId = [[[UserManager defaultManager] oneselfId] longLongValue];
 //        NSInteger audioLength;
