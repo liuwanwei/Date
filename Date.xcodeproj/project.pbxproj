@@ -109,6 +109,10 @@
 		3C719E20169E493B00EECCB0 /* SettingAppBadgeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C719E1E169E493B00EECCB0 /* SettingAppBadgeViewController.xib */; };
 		3C719E24169E584700EECCB0 /* SettingSNSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C719E22169E584600EECCB0 /* SettingSNSViewController.m */; };
 		3C719E25169E584700EECCB0 /* SettingSNSViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C719E23169E584700EECCB0 /* SettingSNSViewController.xib */; };
+		3C7A13D616B3A72500B2B77D /* btnPauseBig.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C7A13D216B3A72500B2B77D /* btnPauseBig.png */; };
+		3C7A13D716B3A72500B2B77D /* btnPauseBig@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C7A13D316B3A72500B2B77D /* btnPauseBig@2x.png */; };
+		3C7A13D816B3A72500B2B77D /* btnPlayBig.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C7A13D416B3A72500B2B77D /* btnPlayBig.png */; };
+		3C7A13D916B3A72500B2B77D /* btnPlayBig@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C7A13D516B3A72500B2B77D /* btnPlayBig@2x.png */; };
 		3C838F2F1675D59100A85826 /* ReminderDetailAudioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C838F2E1675D59100A85826 /* ReminderDetailAudioCell.m */; };
 		3C838F311675D5B700A85826 /* ReminderDetailAudioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C838F301675D5B700A85826 /* ReminderDetailAudioCell.xib */; };
 		3C91EAE5169FAD9C0017E3FC /* libEGOTableViewPullRefreshLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C91EAE2169FAD820017E3FC /* libEGOTableViewPullRefreshLibrary.a */; };
@@ -430,6 +434,10 @@
 		3C719E21169E584600EECCB0 /* SettingSNSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingSNSViewController.h; sourceTree = "<group>"; };
 		3C719E22169E584600EECCB0 /* SettingSNSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingSNSViewController.m; sourceTree = "<group>"; };
 		3C719E23169E584700EECCB0 /* SettingSNSViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingSNSViewController.xib; sourceTree = "<group>"; };
+		3C7A13D216B3A72500B2B77D /* btnPauseBig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btnPauseBig.png; path = Resources/images/btnPauseBig.png; sourceTree = "<group>"; };
+		3C7A13D316B3A72500B2B77D /* btnPauseBig@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btnPauseBig@2x.png"; path = "Resources/images/btnPauseBig@2x.png"; sourceTree = "<group>"; };
+		3C7A13D416B3A72500B2B77D /* btnPlayBig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = btnPlayBig.png; path = Resources/images/btnPlayBig.png; sourceTree = "<group>"; };
+		3C7A13D516B3A72500B2B77D /* btnPlayBig@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "btnPlayBig@2x.png"; path = "Resources/images/btnPlayBig@2x.png"; sourceTree = "<group>"; };
 		3C838F2D1675D59100A85826 /* ReminderDetailAudioCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderDetailAudioCell.h; sourceTree = "<group>"; };
 		3C838F2E1675D59100A85826 /* ReminderDetailAudioCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderDetailAudioCell.m; sourceTree = "<group>"; };
 		3C838F301675D5B700A85826 /* ReminderDetailAudioCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderDetailAudioCell.xib; sourceTree = "<group>"; };
@@ -822,6 +830,10 @@
 		3CE0ABF916507EA2004B785A /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3C7A13D216B3A72500B2B77D /* btnPauseBig.png */,
+				3C7A13D316B3A72500B2B77D /* btnPauseBig@2x.png */,
+				3C7A13D416B3A72500B2B77D /* btnPlayBig.png */,
+				3C7A13D516B3A72500B2B77D /* btnPlayBig@2x.png */,
 				3C98FC2816B286F200CDD654 /* reminderDetailsVoice.png */,
 				3C3BE6DE168C236A0052A8C5 /* backNavigationBar.png */,
 				3C3BE6DF168C236A0052A8C5 /* backNavigationBar@2x.png */,
@@ -1306,6 +1318,10 @@
 				3C98FC2616B2849800CDD654 /* reminderSettingCalendar.png in Resources */,
 				3C98FC2716B2849800CDD654 /* reminderSettingContact.png in Resources */,
 				3C98FC2916B286F700CDD654 /* reminderDetailsVoice.png in Resources */,
+				3C7A13D616B3A72500B2B77D /* btnPauseBig.png in Resources */,
+				3C7A13D716B3A72500B2B77D /* btnPauseBig@2x.png in Resources */,
+				3C7A13D816B3A72500B2B77D /* btnPlayBig.png in Resources */,
+				3C7A13D916B3A72500B2B77D /* btnPlayBig@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,6 +12,7 @@
 #define LeftMarge 5
 
 @interface TextEditorViewController () {
+    BOOL _firstShow;
 }
 
 @end
@@ -26,6 +27,7 @@
 #pragma 私有函数
 //Code from Brett Schumann
 -(void) keyboardWillShow:(NSNotification *)note{
+    
     // get keyboard size and loctaion
     CGRect keyboardBounds;
     [[note.userInfo valueForKey:UIKeyboardFrameEndUserInfoKey] getValue: &keyboardBounds];
@@ -36,6 +38,12 @@
     // get a rect for the textView frame
     CGRect containerFrame = _toolBackgroundView.frame;
     containerFrame.origin.y = self.view.bounds.size.height - (keyboardBounds.size.height + containerFrame.size.height);
+    
+    if (YES == _firstShow) {
+        _firstShow = NO;
+        _toolBackgroundView.frame = containerFrame;
+        return;
+    }
     // animations settings
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
@@ -63,6 +71,7 @@
     [super viewDidLoad];
     
     self.title = @"内容";
+    _firstShow = YES;
     _textView.text = _text;
     _textView.delegate  = self;
     [[NSNotificationCenter defaultCenter] addObserver:self

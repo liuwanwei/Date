@@ -69,9 +69,9 @@
         return 1;
     }else {
         if (ReminderTypeReceiveAndNoAlarm == self.reminderType || NO == self.isLogin) {
-            return 1;
+            return 2;
         }
-        return 2;
+        return 3;
     }
     return 0;
 }
@@ -92,11 +92,6 @@
         }
         UILabel * label = (UILabel *)[cell viewWithTag:2];
         label.text = self.desc;
-//        cell.textLabel.text = self.desc;
-//        cell.textLabel.numberOfLines = 3;
-//        cell.imageView.image = [UIImage imageNamed:@"reminderDetailsText"];
-//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//        cell.detailTextLabel.text = @"";
     }else {
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
@@ -107,11 +102,16 @@
             cell.backgroundView = view;
         }
 
+        cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         if (indexPath.row == 0) {
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            cell.backgroundView.backgroundColor = [UIColor clearColor];
+        }else if (indexPath.row == 1) {
             cell.textLabel.text = @"提醒";
             cell.imageView.image = [UIImage imageNamed:@"reminderDetailsAlertType"];
             cell.detailTextLabel.text = [self stringTriggerTime];
-        }else if (indexPath.row == 1){
+        }else if (indexPath.row == 2){
             cell.textLabel.text = @"发送给";
             cell.imageView.image = [UIImage imageNamed:@"reminderSettingContact"];
             cell.detailTextLabel.text = self.receiver;
@@ -134,9 +134,9 @@
         editor.parentController = self;
         [self.navigationController pushViewController:editor animated:YES];
     }
-    else if (indexPath.section == 1 && indexPath.row == 0) {
+    else if (indexPath.section == 1 && indexPath.row == 1) {
         [self clickTrigeerTimeRow:indexPath];
-    }else if (indexPath.section == 1 && indexPath.row == 1 && YES == self.isLogin) {
+    }else if (indexPath.section == 1 && indexPath.row == 2 && YES == self.isLogin) {
         [self clickSendRow];
     }
 }

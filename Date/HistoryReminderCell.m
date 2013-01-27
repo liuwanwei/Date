@@ -14,7 +14,7 @@
     if (ReminderTypeReceiveAndNoAlarm == [self.reminder.type integerValue]) {
         [self.labelTriggerDate setHidden:YES];
         [self.labelNickname setHidden:YES];
-        self.labelDescription.frame = CGRectMake(self.labelDescription.frame.origin.x, 26, self.labelDescription.frame.size.width, self.labelDescription.frame.size.height);
+        self.labelDescription.frame = CGRectMake(13, kLabelDescChangedY, self.labelDescription.frame.size.width + kFinishButtonWidth + kDayLabelWidth, self.labelDescription.frame.size.height);
     }else {
         if (nil != self.reminder.triggerTime) {
             [self.labelTriggerDate setHidden:NO];
@@ -25,7 +25,7 @@
             [self.labelTriggerDate setHidden:YES];
         }
         
-        self.labelDescription.frame = CGRectMake(self.labelDescription.frame.origin.x, 42, self.labelDescription.frame.size.width, self.labelDescription.frame.size.height);
+        self.labelDescription.frame = CGRectMake(13, kLabelDescOriY, self.labelDescription.frame.size.width + kFinishButtonWidth + kDayLabelWidth, self.labelDescription.frame.size.height);
         [self showFrom];
     }
 }

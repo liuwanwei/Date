@@ -95,14 +95,14 @@
             [_btnAudio setHidden:YES];
             [_labelAudioTime setHidden:YES];
             [_indicatorView setHidden:YES];
-            _labelDescription.frame = CGRectMake(_labelDescription.frame.origin.x, _labelDescription.frame.origin.y, 260, _labelDescription.frame.size.height);
+            _labelDescription.frame = CGRectMake(_labelDescription.frame.origin.x,_labelDescription.frame.origin.y, kLabelDescOriWidth + kAudioButtonWidth, _labelDescription.frame.size.height);
 
         }else {
             [_btnAudio setHidden:NO];
             [_labelAudioTime setHidden:NO];
             [_indicatorView setHidden:NO];
-            _labelAudioTime.text = [_reminder.audioLength stringValue];
-            _labelDescription.frame = CGRectMake(_labelDescription.frame.origin.x, _labelDescription.frame.origin.y, 200, _labelDescription.frame.size.height);
+            _labelAudioTime.text = [[_reminder.audioLength stringValue] stringByAppendingString:@"''"];
+             _labelDescription.frame = CGRectMake(_labelDescription.frame.origin.x,_labelDescription.frame.origin.y, kLabelDescOriWidth, _labelDescription.frame.size.height);
         }
         
         if (nil != self.reminder.triggerTime) {
@@ -272,7 +272,6 @@
        
         if ([[SoundManager defaultSoundManager] fileExistsAtPath:_reminder.audioUrl]) {
             [self setAudioState:AudioStatePlaying];
-            self.labelAudioTime.text = [_reminder.audioLength stringValue];
         }else {
             [self setAudioState:AudioStateDownload];
         }

@@ -37,14 +37,6 @@
 - (void)setReminder:(Reminder *)reminer {
     if (nil != reminer) {
         [super setReminder:reminer];
-        
-        if (nil != reminer.triggerTime) {
-            NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-            [formatter setDateFormat:@"HH:mm"];
-            self.labelTriggerDate.text =[formatter stringFromDate:reminer.triggerTime];
-        }else {
-            self.labelTriggerDate.text = @"";
-        }
     }
 }
 
