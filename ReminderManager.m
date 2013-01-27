@@ -732,17 +732,15 @@ typedef enum {
 }
 
 - (NSArray *)historyReminders {
-    NSDate * today = [NSDate date];
-    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy-MM-dd"];
-    today = [formatter dateFromString:[formatter stringFromDate:today]];
     NSArray * results = nil;
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"(type = %d OR type = %d) AND state = 1",ReminderTypeReceive,ReminderTypeReceiveAndNoAlarm];
+    
     NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"triggerTime" ascending:NO];
     NSSortDescriptor * sortDescriptorByType = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:YES];
-    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"(type = %d || type = %d) AND state = 1",ReminderTypeReceive,ReminderTypeReceiveAndNoAlarm];
 
     NSArray * sortDescriptors = [NSArray arrayWithObjects:sortDescriptor,sortDescriptorByType,nil];
+    
     request.sortDescriptors = sortDescriptors;
     request.predicate = predicate;
     results = [self executeFetchRequest:request];
@@ -830,8 +828,16 @@ typedef enum {
 - (void)createDefaultReminders {
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSString * defaultReminders = [defaults objectForKey:kCreateDefaultReminders];
+    
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    NSString * strTriggerTime;
+    [formatter setDateFormat:@"yyyy-MM-dd 23:59:59"];
+    strTriggerTime = [formatter stringFromDate:[NSDate date]];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    
     if (nil == defaultReminders) {
         [[UIApplication sharedApplication] cancelAllLocalNotifications];
+        
         Reminder * reminder;
         long long userId = [[[UserManager defaultManager] oneselfId] longLongValue];
 //        NSInteger audioLength;
@@ -857,7 +863,7 @@ typedef enum {
             reminder.audioUrl = nil;
             reminder.audioLength = 0;
             reminder.userID = [NSNumber numberWithLongLong:userId];;
-            reminder.createTime = [NSDate date];
+            reminder.createTime = [formatter dateFromString:strTriggerTime];
             reminder.latitude = nil;
             reminder.longitude = nil;
             reminder.type = [NSNumber numberWithInteger:ReminderTypeReceiveAndNoAlarm];

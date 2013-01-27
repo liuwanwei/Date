@@ -32,7 +32,14 @@ typedef enum {
     CellEditingStateDelete = 1
 }CellEditingState;
 
-#define LabelDayOriX    100
+#define kLabelDescChangedY 23
+#define kLabelDescOriY 37
+#define kLabelDescOriX 83
+#define kLabelDescChangedX 43
+#define kLabelDescOriWidth 180
+#define kAudioButtonWidth  56
+#define kDayLabelWidth  42
+#define kFinishButtonWidth 26
 
 @protocol ReminderCellDelegate <NSObject>
 

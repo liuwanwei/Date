@@ -11,6 +11,4 @@
 
 @interface ReminderSettingAudioCell : ReminderBaseCell
 
-@property (weak, nonatomic) IBOutlet UILabel * labelTitle;
-
 @end

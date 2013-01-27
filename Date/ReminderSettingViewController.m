@@ -297,21 +297,12 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0 && indexPath.row == 0) {
-//        CGFloat height = _labelSize.height;
-        return 23 * 3 + 21;
-        //return 44;
+        return 90;
+    }else if (indexPath.section == 1 && indexPath.row == 0) {
+        return 12.0f;
     }
-    
     return 44.0f;
 }
-
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-//    if (section == 0) {
-//        return @"内容";
-//    }
-//    
-//    return nil;
-//}
 
 #pragma mark - ReminderManager delegate
 - (void)newReminderSuccess:(NSString *)reminderId {

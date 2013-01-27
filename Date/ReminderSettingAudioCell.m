@@ -9,7 +9,6 @@
 #import "ReminderSettingAudioCell.h"
 
 @implementation ReminderSettingAudioCell
-@synthesize labelTitle = _labelTitle;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -26,6 +25,12 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+- (void)setReminder:(Reminder *)reminder {
+    if (nil != reminder) {
+        [super setReminder:reminder];
+    }
 }
 
 @end
