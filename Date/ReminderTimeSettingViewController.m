@@ -168,7 +168,7 @@
     [self initTableFooterView];
     [self initPickerView];
 
-    [self showPickerViewWithMode:UIDatePickerModeDate];
+    //[self showPickerViewWithMode:UIDatePickerModeDate];
     _rows = [[NSArray alloc] initWithObjects:kOneDayTimeDesc,kAlarmTimeDesc,kInboxTimeDesc, nil];
     [[AppDelegate delegate] initNavleftBarItemWithController:self withAction:@selector(back)];
     

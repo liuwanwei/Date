@@ -42,7 +42,7 @@
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="IBUIImageView" id="1015227973">
 								<reference key="NSNextResponder" ref="558489232"/>
-								<int key="NSvFlags">292</int>
+								<int key="NSvFlags">-2147483356</int>
 								<string key="NSFrame">{{6, 31}, {28, 28}}</string>
 								<reference key="NSSuperview" ref="558489232"/>
 								<reference key="NSWindow"/>
@@ -59,7 +59,7 @@
 							<object class="IBUILabel" id="526803924">
 								<reference key="NSNextResponder" ref="558489232"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{44, 10}, {243, 69}}</string>
+								<string key="NSFrame">{{12, 10}, {273, 69}}</string>
 								<reference key="NSSuperview" ref="558489232"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -82,16 +82,16 @@
 								<int key="IBUIBaselineAdjustment">0</int>
 								<int key="IBUINumberOfLines">3</int>
 								<object class="IBUIFontDescription" key="IBUIFontDescription">
-									<int key="type">2</int>
+									<int key="type">1</int>
 									<double key="pointSize">17</double>
 								</object>
 								<object class="NSFont" key="IBUIFont">
-									<string key="NSName">Helvetica-Bold</string>
+									<string key="NSName">Helvetica</string>
 									<double key="NSSize">17</double>
 									<int key="NSfFlags">16</int>
 								</object>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
-								<double key="preferredMaxLayoutWidth">243</double>
+								<double key="preferredMaxLayoutWidth">273</double>
 							</object>
 						</array>
 						<string key="NSFrameSize">{300, 89}</string>

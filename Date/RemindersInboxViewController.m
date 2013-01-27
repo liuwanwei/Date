@@ -41,6 +41,8 @@
     EGORefreshTableHeaderView * _refreshHeaderView;
     BOOL _reloading;
     UIControl * _overView;
+    
+    NSInteger _curGroupSize;
 }
 
 @end
@@ -355,7 +357,15 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Reminder * reminder = [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+    Reminder * reminder;
+    if (DataTypeHistory == _dataType) {
+        NSArray * reminders = [self.group objectForKey:[self.keys objectAtIndex:indexPath.section]];
+        NSInteger size = [reminders count];
+        reminder = [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] objectAtIndex:size - indexPath.row - 1];
+    }else {
+        reminder = [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+    }
+    
     static NSString * CellIdentifier;
     ReminderBaseCell * cell;
     if (DataTypeToday == _dataType || DataTypeRecent == _dataType) {
@@ -395,12 +405,25 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         _curDeleteIndexPath = indexPath;
-        Reminder * reminder = [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+        Reminder * reminder;
+        if (DataTypeHistory == _dataType) {
+            NSArray * reminders = [self.group objectForKey:[self.keys objectAtIndex:indexPath.section]];
+            _curGroupSize =  [reminders count];
+            reminder = [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] objectAtIndex:_curGroupSize - indexPath.row - 1];
+        }else {
+           reminder = [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+        }
+        
         NSString * userId = [reminder.userID stringValue];
         if ([userId isEqualToString:@"0"] ||
             [_userManager.userID isEqualToString:userId]) {
             [self.reminderManager deleteReminder:reminder];
-            [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
+            if (DataTypeHistory == _dataType) {
+                 [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:_curGroupSize - indexPath.row - 1];
+            }else {
+                [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
+            }
+           
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
             [self clearGroup];
             [self performSelector:@selector(reloadData) withObject:self afterDelay:0.2];
@@ -473,7 +496,12 @@
 - (void)deleteReminderSuccess:(Reminder *)reminder {
     [self.reminderManager deleteReminder:reminder];
     
-    [[self.group objectForKey:[self.keys objectAtIndex:_curDeleteIndexPath.section]] removeObjectAtIndex:_curDeleteIndexPath.row];
+    if (DataTypeHistory == _dataType) {
+        [[self.group objectForKey:[self.keys objectAtIndex:_curDeleteIndexPath.section]] removeObjectAtIndex:_curGroupSize - _curDeleteIndexPath.row - 1];
+    }else {
+        [[self.group objectForKey:[self.keys objectAtIndex:_curDeleteIndexPath.section]] removeObjectAtIndex:_curDeleteIndexPath.row];
+    }
+    
     [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:_curDeleteIndexPath] withRowAnimation:UITableViewRowAnimationFade];
     
     [[MBProgressManager defaultManager] removeHUD];
