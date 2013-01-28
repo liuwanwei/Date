@@ -76,6 +76,7 @@
 }
 
 - (void)setReminder:(Reminder *)reminder {
+    self.labelDescOriwidth = 180;
      [super setReminder:reminder];
      [self setDateTimeView];
     

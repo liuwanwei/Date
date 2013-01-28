@@ -37,7 +37,7 @@ typedef enum {
 #define kLabelDescOriX 83
 #define kLabelDescChangedX 43
 #define kLabelDescOriWidth 180
-#define kAudioButtonWidth  56
+#define kAudioButtonWidth  30
 #define kDayLabelWidth  42
 #define kFinishButtonWidth 26
 
@@ -70,6 +70,7 @@ typedef enum {
 @property (strong, nonatomic) NSIndexPath * indexPath;
 @property (nonatomic) AudioState audioState;
 @property (nonatomic) CellEditingState editingState;
+@property (nonatomic) CGFloat labelDescOriwidth;
 
 @property (weak, nonatomic) id<ReminderCellDelegate> delegate;
 

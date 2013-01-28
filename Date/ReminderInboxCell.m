@@ -36,6 +36,7 @@
 
 - (void)setReminder:(Reminder *)reminer {
     if (nil != reminer) {
+        self.labelDescOriwidth = 220;
         [super setReminder:reminer];
     }
 }

@@ -40,6 +40,7 @@
 @synthesize labelDay = _labelDay;
 @synthesize dateType = _dateType;
 @synthesize editingState = _editingState;
+@synthesize labelDescOriwidth = _labelDescOriwidth;
 
 - (NSString *)custumDayString:(NSDate *)date {
     NSString * dateString = @"" ;
@@ -95,14 +96,14 @@
             [_btnAudio setHidden:YES];
             [_labelAudioTime setHidden:YES];
             [_indicatorView setHidden:YES];
-            _labelDescription.frame = CGRectMake(_labelDescription.frame.origin.x,_labelDescription.frame.origin.y, kLabelDescOriWidth + kAudioButtonWidth, _labelDescription.frame.size.height);
+            _labelDescription.frame = CGRectMake(_labelDescription.frame.origin.x,_labelDescription.frame.origin.y,_labelDescOriwidth + kAudioButtonWidth, _labelDescription.frame.size.height);
 
         }else {
             [_btnAudio setHidden:NO];
             [_labelAudioTime setHidden:NO];
             [_indicatorView setHidden:NO];
             _labelAudioTime.text = [[_reminder.audioLength stringValue] stringByAppendingString:@"''"];
-             _labelDescription.frame = CGRectMake(_labelDescription.frame.origin.x,_labelDescription.frame.origin.y, kLabelDescOriWidth, _labelDescription.frame.size.height);
+             _labelDescription.frame = CGRectMake(_labelDescription.frame.origin.x,_labelDescription.frame.origin.y, _labelDescOriwidth, _labelDescription.frame.size.height);
         }
         
         if (nil != self.reminder.triggerTime) {
