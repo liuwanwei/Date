@@ -347,6 +347,33 @@
     return nil;
 }
 
+- (float)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (DataTypeToday != _dataType) {
+        return 25;
+    }else{
+        return 0;
+    }
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    if (DataTypeToday != _dataType) {
+        UIImageView * imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"navigationBarBg"]];
+        imageView.frame = CGRectMake(0, 0, 320, 25);
+        UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0,0, 320, 25)];
+        [view addSubview:imageView];
+        
+        UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(15, 6, 100, 15)];
+        label.textColor = RGBColor(80, 135, 186);
+        label.backgroundColor = [UIColor clearColor];
+        label.text = [self tableView:tableView titleForHeaderInSection:section];
+        [view addSubview:label];
+        
+        return view;
+    }else{
+        return 0;
+    }
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     NSArray * reminders = [self.group objectForKey:[self.keys objectAtIndex:section]];
