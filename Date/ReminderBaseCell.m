@@ -58,17 +58,11 @@
     NSInteger diffDay  = [cps day];
     if (diffDay == 0) {
         dateString = @"";
-    }else if (diffDay == 1) {
-        dateString = @"";
-    }else if (diffDay == 2) {
-        dateString = @"";
-    }else if (diffDay == -1) {
-        dateString = @"(昨天) ";
+    }else if (diffDay > -7 && diffDay <= -1) {
+        dateString = [NSString stringWithFormat:@"%d天前",diffDay * -1];
     }else {
         [formatter setDateFormat:@"MM-dd"];
-        dateString = [dateString stringByAppendingString:@"("];
         dateString = [dateString stringByAppendingString:[formatter stringFromDate:date]];
-        dateString = [dateString stringByAppendingString:@")"];
     }
     return dateString;
 }
@@ -103,15 +97,11 @@
             [_labelAudioTime setHidden:NO];
             [_indicatorView setHidden:NO];
             _labelAudioTime.text = [[_reminder.audioLength stringValue] stringByAppendingString:@"''"];
-             _labelDescription.frame = CGRectMake(_labelDescription.frame.origin.x,_labelDescription.frame.origin.y, _labelDescOriwidth, _labelDescription.frame.size.height);
+            _labelDescription.frame = CGRectMake(_labelDescription.frame.origin.x,_labelDescription.frame.origin.y, _labelDescOriwidth, _labelDescription.frame.size.height);
         }
         
         if (nil != self.reminder.triggerTime) {
-            if (YES == [self.reminder.isAlarm boolValue]) {
-                self.labelTriggerDate.textColor = [self passedColor];
-            }else {
-                self.labelTriggerDate.textColor = [self ongoingColor];
-            }
+            self.labelTriggerDate.textColor = [self ongoingColor];
         }
 
         _labelDescription.text = _reminder.desc;
