@@ -171,6 +171,8 @@
 		3CE0AC581650D79F004B785A /* SinaWeiboManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE0AC571650D79F004B785A /* SinaWeiboManager.m */; };
 		3CE0AC5E1650F521004B785A /* BilateralFriendManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE0AC5D1650F521004B785A /* BilateralFriendManager.m */; };
 		3CE0AC6D1650FA8D004B785A /* libLMLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CE0AC6A1650FA76004B785A /* libLMLibrary.a */; };
+		3CE660BF16BBA090007C1E0F /* bottomMenu.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CE660BD16BBA090007C1E0F /* bottomMenu.png */; };
+		3CE660C016BBA090007C1E0F /* bottomMenu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CE660BE16BBA090007C1E0F /* bottomMenu@2x.png */; };
 		3CE850A116803DA50025ECA3 /* checkboxCompleted.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CE8509D16803DA50025ECA3 /* checkboxCompleted.png */; };
 		3CE850A216803DA50025ECA3 /* checkboxCompleted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CE8509E16803DA50025ECA3 /* checkboxCompleted@2x.png */; };
 		3CE850A316803DA50025ECA3 /* checkboxOri.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CE8509F16803DA50025ECA3 /* checkboxOri.png */; };
@@ -533,6 +535,8 @@
 		3CE0AC5C1650F521004B785A /* BilateralFriendManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BilateralFriendManager.h; sourceTree = "<group>"; };
 		3CE0AC5D1650F521004B785A /* BilateralFriendManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BilateralFriendManager.m; sourceTree = "<group>"; };
 		3CE0AC621650FA75004B785A /* LMLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LMLibrary.xcodeproj; path = ../LMLibrary/LMLibrary.xcodeproj; sourceTree = "<group>"; };
+		3CE660BD16BBA090007C1E0F /* bottomMenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bottomMenu.png; path = Resources/images/bottomMenu.png; sourceTree = "<group>"; };
+		3CE660BE16BBA090007C1E0F /* bottomMenu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bottomMenu@2x.png"; path = "Resources/images/bottomMenu@2x.png"; sourceTree = "<group>"; };
 		3CE8509D16803DA50025ECA3 /* checkboxCompleted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkboxCompleted.png; path = Resources/images/checkboxCompleted.png; sourceTree = "<group>"; };
 		3CE8509E16803DA50025ECA3 /* checkboxCompleted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "checkboxCompleted@2x.png"; path = "Resources/images/checkboxCompleted@2x.png"; sourceTree = "<group>"; };
 		3CE8509F16803DA50025ECA3 /* checkboxOri.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkboxOri.png; path = Resources/images/checkboxOri.png; sourceTree = "<group>"; };
@@ -874,6 +878,8 @@
 		3CE0ABF916507EA2004B785A /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3CE660BD16BBA090007C1E0F /* bottomMenu.png */,
+				3CE660BE16BBA090007C1E0F /* bottomMenu@2x.png */,
 				3C2E8C8116B96EE8003072BD /* check.png */,
 				3C2E8C8216B96EE8003072BD /* check@2x.png */,
 				3C2E8C8316B96EE8003072BD /* cross.png */,
@@ -1392,6 +1398,8 @@
 				3C2E8C8616B96EE8003072BD /* check@2x.png in Resources */,
 				3C2E8C8716B96EE8003072BD /* cross.png in Resources */,
 				3C2E8C8816B96EE8003072BD /* cross@2x.png in Resources */,
+				3CE660BF16BBA090007C1E0F /* bottomMenu.png in Resources */,
+				3CE660C016BBA090007C1E0F /* bottomMenu@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

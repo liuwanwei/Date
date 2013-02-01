@@ -26,10 +26,12 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIToolbar * toolbar;
 @property (weak, nonatomic) IBOutlet UIView * toolbarView;
 @property (weak, nonatomic) IBOutlet UILabel * labelPrompt;
-@property (weak, nonatomic) IBOutlet UIView * cellBackgroundView;
+@property (weak, nonatomic) IBOutlet UIView * viewBottomMenu;
 
 - (IBAction)startRecord:(id)sender;
 - (IBAction)stopRecord:(id)sender;
+
+- (IBAction)showBottomMenuView:(id)sender;
 
 - (void)initDataWithAnimation:(BOOL)animation;
 

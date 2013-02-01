@@ -40,6 +40,7 @@
     
     EGORefreshTableHeaderView * _refreshHeaderView;
     BOOL _reloading;
+    BOOL _showBottomMenu;
     UIControl * _overView;
     
     NSInteger _curGroupSize;
@@ -57,7 +58,7 @@
 @synthesize toolbar = _toolbar;
 @synthesize toolbarView = _toolbarView;
 @synthesize labelPrompt = _labelPrompt;
-@synthesize cellBackgroundView = _cellBackgroundView;
+@synthesize viewBottomMenu = _viewBottomMenu;
 
 #pragma 私有函数
 - (void)addUserId:(NSNumber *)userId {
@@ -101,6 +102,23 @@
     self.navigationController.navigationBarHidden = NO;
     [_txtDesc setHidden:YES];
     // commit animations
+    [UIView commitAnimations];
+}
+
+- (void)restoreBottomMenuView {
+    [_overView removeFromSuperview];
+    _overView = nil;
+    CGRect frameTableView;
+    CGRect freamMenu;
+    frameTableView = CGRectMake(0, self.tableView.frame.origin.y + 40, 320, self.tableView.frame.size.height);
+    freamMenu = CGRectMake(0, _viewBottomMenu.frame.origin.y + 40, 320, _viewBottomMenu.frame.size.height);
+    
+    _showBottomMenu = !_showBottomMenu;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:0.25];
+    self.tableView.frame = frameTableView;
+    _viewBottomMenu.frame = freamMenu;
     [UIView commitAnimations];
 }
 
@@ -183,9 +201,9 @@
 
 #pragma 类成员函数
 - (void)initDataWithAnimation:(BOOL)animation {
-    [_toolbar setHidden:NO];
+    [_viewBottomMenu setHidden:NO];
     [self addRefreshHeaderView];
-    self.tableView.frame =CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width,self.view.frame.size.height - _toolbar.frame.size.height);
+    self.tableView.frame =CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width,self.view.frame.size.height - 44);
     if (DataTypeToday == _dataType) {
         self.title = @"今日提醒";
         self.reminders = [self.reminderManager todayUnFinishedReminders];
@@ -202,7 +220,7 @@
     }else if (DataTypeHistory == _dataType) {
         self.title = @"已完成";
         [self removeRefreshHeadView];
-        [_toolbar setHidden:YES];
+        [_viewBottomMenu setHidden:YES];
         self.tableView.frame =CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width,self.view.frame.size.height);
         self.reminders = [self.reminderManager historyReminders];
     }
@@ -333,7 +351,35 @@
 - (IBAction)stopRecord:(id)sender {
     SoundManager * manager = [SoundManager defaultSoundManager];
     if (YES == [manager stopRecord]) {
+        [self restoreBottomMenuView];
         [self showAudioReminderSettingController];
+    }
+}
+
+- (IBAction)showBottomMenuView:(id)sender {
+    CGRect frameTableView;
+    CGRect freamMenu;
+    if (NO == _showBottomMenu) {
+        if (nil == _overView) {
+            _overView = [[UIControl alloc] init];
+            _overView.backgroundColor = [UIColor clearColor];
+            _overView.frame = CGRectMake(0, 0, 320,self.view.bounds.size.height - _viewBottomMenu.frame.size.height);
+            [_overView addTarget:self action:@selector(restoreBottomMenuView) forControlEvents:UIControlEventTouchDown];
+            [self.view addSubview:_overView];
+        }
+        
+        frameTableView = CGRectMake(0, self.tableView.frame.origin.y - 40, 320, self.tableView.frame.size.height);
+        freamMenu = CGRectMake(0, _viewBottomMenu.frame.origin.y - 40, 320, _viewBottomMenu.frame.size.height);
+        
+        _showBottomMenu = !_showBottomMenu;
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationDuration:0.25];
+        self.tableView.frame = frameTableView;
+        _viewBottomMenu.frame = freamMenu;
+        [UIView commitAnimations];
+    }else {
+        [self restoreBottomMenuView];
     }
 }
 
@@ -433,43 +479,6 @@
     cell.audioState = AudioStateNormal;
     return cell;
 }
-
-
-// Override to support editing the table view.
-/*- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        _curDeleteIndexPath = indexPath;
-        Reminder * reminder;
-        if (DataTypeHistory == _dataType) {
-            NSArray * reminders = [self.group objectForKey:[self.keys objectAtIndex:indexPath.section]];
-            _curGroupSize =  [reminders count];
-            reminder = [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] objectAtIndex:_curGroupSize - indexPath.row - 1];
-        }else {
-           reminder = [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
-        }
-        
-        NSString * userId = [reminder.userID stringValue];
-        if ([userId isEqualToString:@"0"] ||
-            [_userManager.userID isEqualToString:userId]) {
-            [self.reminderManager deleteReminder:reminder];
-            if (DataTypeHistory == _dataType) {
-                 [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:_curGroupSize - indexPath.row - 1];
-            }else {
-                [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
-            }
-           
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [self clearGroup];
-            [self performSelector:@selector(reloadData) withObject:self afterDelay:0.2];
-        }else {
-            [self.reminderManager deleteReminderRequest:reminder];
-            [[MBProgressManager defaultManager] showHUD:@"删除中"];
-        }
-    }else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationTop];
-    }
-}*/
 
 - (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"begin editing");
@@ -665,14 +674,6 @@
 
     if (state == JTTableViewCellEditingStateLeft) {
         _curDeleteIndexPath = indexPath;
-//        Reminder * reminder;
-//        if (DataTypeHistory == _dataType) {
-//            NSArray * reminders = [self.group objectForKey:[self.keys objectAtIndex:indexPath.section]];
-//            _curGroupSize =  [reminders count];
-//            reminder = [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] objectAtIndex:_curGroupSize - indexPath.row - 1];
-//        }else {
-//            reminder = [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
-//        }
         NSString * userId = [reminder.userID stringValue];
         if ([userId isEqualToString:@"0"] ||
             [_userManager.userID isEqualToString:userId]) {
