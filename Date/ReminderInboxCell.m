@@ -28,8 +28,8 @@
     if (self) {
         NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"ReminderInboxCell" owner:self options:nil] ;
         self = [nib objectAtIndex:0];
-//        [self.contentView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"cellBg"]]];
-
+        self.contentView.backgroundColor  = [UIColor whiteColor];
+        self.backgroundView = [[[NSBundle mainBundle] loadNibNamed:@"TodayReminderCellBackgroundView" owner:self options:nil] objectAtIndex:0];
     }
     return self;
 }

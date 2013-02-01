@@ -13,6 +13,7 @@
 #import "ReminderManager.h"
 #import "UserManager.h"
 #import "LMLibrary.h"
+#import "JTTableViewGestureRecognizer.h"
 
 typedef enum {
     AudioStateNormal = 0,
@@ -32,12 +33,17 @@ typedef enum {
     CellEditingStateDelete = 1
 }CellEditingState;
 
+typedef enum {
+    CellBackgroundImageViewTagFinish = 1,
+    CellBackgroundImageViewTagDelete = 2
+}CellBackgroundImageViewTag;
+
 #define kLabelDescChangedY 20
 #define kLabelDescOriY 20
 #define kLabelDescOriX 42
 #define kAudioButtonWidth  40
-#define kNickNameLabelOriX 90
-#define kNickNameLabelChangedX 90
+#define kNickNameLabelOriX 65
+#define kNickNameLabelChangedX 65
 #define kFinishButtonWidth 26
 
 @protocol ReminderCellDelegate <NSObject>
@@ -81,4 +87,8 @@ typedef enum {
 - (NSString *)custumDayString:(NSDate *)date;
 - (BOOL)isAudioReminder;
 - (BOOL)showFrom;
+- (void)setViewWithGestureState:(JTTableViewCellEditingState)state withTranslation:(CGPoint)translation;
+- (void)restoreView;
+- (void)deleteFailed;
+
 @end

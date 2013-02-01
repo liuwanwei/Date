@@ -10,13 +10,14 @@
 #import "RemindersBaseViewController.h"
 #import "EGORefreshTableHeaderView.h"
 #import "InsetsTextField.h"
+#import "JTTableViewGestureRecognizer.h"
 
 typedef enum {
     InfoModeAudio = 0,
     InfoModeText
 }InfoMode;
 
-@interface RemindersInboxViewController : RemindersBaseViewController<UITextFieldDelegate,EGORefreshTableHeaderDelegate, UIAlertViewDelegate>
+@interface RemindersInboxViewController : RemindersBaseViewController<UITextFieldDelegate,EGORefreshTableHeaderDelegate, UIAlertViewDelegate,JTTableViewGestureEditingRowDelegate>
 
 @property (nonatomic) DataType dataType;
 @property (weak, nonatomic) IBOutlet UIButton * btnMode;
@@ -25,6 +26,7 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UIToolbar * toolbar;
 @property (weak, nonatomic) IBOutlet UIView * toolbarView;
 @property (weak, nonatomic) IBOutlet UILabel * labelPrompt;
+@property (weak, nonatomic) IBOutlet UIView * cellBackgroundView;
 
 - (IBAction)startRecord:(id)sender;
 - (IBAction)stopRecord:(id)sender;

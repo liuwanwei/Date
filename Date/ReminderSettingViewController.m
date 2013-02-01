@@ -70,14 +70,14 @@
 //    }
 //    [view addSubview:_labelPrompt];
     
-    _btnSave = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    _btnSave.layer.frame = CGRectMake(10, 30, 300, 44);
-    _btnSave.titleLabel.font = [UIFont systemFontOfSize:18.0];
-    [_btnSave setBackgroundImage:[UIImage imageNamed:@"buttonBg"] forState:UIControlStateNormal];
-    [_btnSave setTitle:@"还原" forState:UIControlStateNormal];
-    [_btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_btnSave addTarget:self action:@selector(restoreReminder) forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:_btnSave];
+//    _btnSave = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//    _btnSave.layer.frame = CGRectMake(10, 30, 300, 44);
+//    _btnSave.titleLabel.font = [UIFont systemFontOfSize:18.0];
+//    [_btnSave setBackgroundImage:[UIImage imageNamed:@"buttonBg"] forState:UIControlStateNormal];
+//    [_btnSave setTitle:@"还原" forState:UIControlStateNormal];
+//    [_btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [_btnSave addTarget:self action:@selector(restoreReminder) forControlEvents:UIControlEventTouchUpInside];
+//    [view addSubview:_btnSave];
     
     self.tableView.tableFooterView = view;
 
@@ -296,7 +296,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0 && indexPath.row == 0) {
+    if (indexPath.section == 0) {
         return 90;
     }else if (indexPath.section == 1 && indexPath.row == 0) {
         return 12.0f;

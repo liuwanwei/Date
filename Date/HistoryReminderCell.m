@@ -7,6 +7,11 @@
 //
 
 #import "HistoryReminderCell.h"
+@interface HistoryReminderCell () {
+}
+
+@end
+
 
 @implementation HistoryReminderCell
 
@@ -45,6 +50,8 @@
     if (self) {
         NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"HistoryReminderCell" owner:self options:nil] ;
         self = [nib objectAtIndex:0];
+        self.contentView.backgroundColor  = [UIColor whiteColor];
+        self.backgroundView = [[[NSBundle mainBundle] loadNibNamed:@"TodayReminderCellBackgroundView" owner:self options:nil] objectAtIndex:0];
     }
     return self;
 }

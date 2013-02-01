@@ -166,6 +166,55 @@
     return result;
 }
 
+- (void)restoreView {
+    UIImageView * imageViewFinsh = (UIImageView *)[self.backgroundView viewWithTag:CellBackgroundImageViewTagFinish];
+    UIImageView * imageViewDelete = (UIImageView *)[self.backgroundView viewWithTag:CellBackgroundImageViewTagDelete];
+    
+    [imageViewFinsh setAlpha:0.5];
+    imageViewFinsh.frame = CGRectMake(20, imageViewFinsh.frame.origin.y, imageViewFinsh.frame.size.width, imageViewFinsh.frame.size.height);
+    [imageViewDelete setAlpha:0.5];
+     imageViewDelete.frame = CGRectMake(280, imageViewDelete.frame.origin.y, imageViewDelete.frame.size.width, imageViewDelete.frame.size.height);
+    self.labelDay.textColor = RGBColor(197, 73, 6);
+    self.labelDescription.textColor = [UIColor blackColor];
+    self.labelNickname.textColor = RGBColor(9, 84, 181);
+    self.labelTriggerDate.textColor = [self ongoingColor];
+    self.contentView.backgroundColor = [UIColor whiteColor];
+}
+
+- (void)deleteFailed {
+    [UIView beginAnimations:@"" context:nil];
+    self.contentView.frame = self.contentView.bounds;
+    [UIView commitAnimations];
+
+}
+
+- (void)setViewWithGestureState:(JTTableViewCellEditingState)state withTranslation:(CGPoint)translation {
+    UIImageView * imageViewFinsh = (UIImageView *)[self.backgroundView viewWithTag:CellBackgroundImageViewTagFinish];
+    UIImageView * imageViewDelete = (UIImageView *)[self.backgroundView viewWithTag:CellBackgroundImageViewTagDelete];
+    
+    UIColor * backgroundColor = [UIColor whiteColor];
+    switch (state) {
+        case JTTableViewCellEditingStateMiddle:
+            [self restoreView];
+            break;
+        case JTTableViewCellEditingStateRight:
+            [imageViewFinsh setAlpha:1];
+            imageViewFinsh.frame = CGRectMake(20 + translation.x - 61, imageViewFinsh.frame.origin.y, imageViewFinsh.frame.size.width, imageViewFinsh.frame.size.height);
+            backgroundColor = RGBColor(14, 170, 20);
+            self.labelDay.textColor = [UIColor whiteColor];
+            self.labelNickname.textColor = [UIColor whiteColor];
+            self.labelTriggerDate.textColor = [UIColor whiteColor];
+            self.labelDescription.textColor = [UIColor whiteColor];
+            break;
+        default:
+            [imageViewDelete setAlpha:1];
+            imageViewDelete.frame = CGRectMake(280 + translation.x + 61, imageViewDelete.frame.origin.y, imageViewDelete.frame.size.width, imageViewDelete.frame.size.height);
+            break;
+    }
+    self.contentView.backgroundColor = backgroundColor;
+
+}
+
 - (void)modifyReminderReadState {
     
 }

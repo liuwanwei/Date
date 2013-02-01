@@ -66,6 +66,15 @@
 		3C28DA8F16538347009A661E /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C28DA8E16538347009A661E /* CFNetwork.framework */; };
 		3C28DA911653838B009A661E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C28DA901653838B009A661E /* SystemConfiguration.framework */; };
 		3C28DA93165383BC009A661E /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C28DA92165383BC009A661E /* MobileCoreServices.framework */; };
+		3C2E8C3716B7CB2D003072BD /* libGestureBasedTableViewLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C2E8C3416B7CB0D003072BD /* libGestureBasedTableViewLibrary.a */; };
+		3C2E8C4F16B8A6CE003072BD /* TodayReminderCellBackgroundView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C2E8C4E16B8A6CD003072BD /* TodayReminderCellBackgroundView.xib */; };
+		3C2E8C7C16B928AE003072BD /* HistoryReminderCellBackgroundView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C2E8C7B16B928AE003072BD /* HistoryReminderCellBackgroundView.xib */; };
+		3C2E8C7F16B96DBA003072BD /* tableviewSectionHeaderBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C2E8C7D16B96DBA003072BD /* tableviewSectionHeaderBg.png */; };
+		3C2E8C8016B96DBA003072BD /* tableviewSectionHeaderBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C2E8C7E16B96DBA003072BD /* tableviewSectionHeaderBg@2x.png */; };
+		3C2E8C8516B96EE8003072BD /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C2E8C8116B96EE8003072BD /* check.png */; };
+		3C2E8C8616B96EE8003072BD /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C2E8C8216B96EE8003072BD /* check@2x.png */; };
+		3C2E8C8716B96EE8003072BD /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C2E8C8316B96EE8003072BD /* cross.png */; };
+		3C2E8C8816B96EE8003072BD /* cross@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C2E8C8416B96EE8003072BD /* cross@2x.png */; };
 		3C3156651681AE4100C1E42C /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C3156641681AE4000C1E42C /* BaseViewController.m */; };
 		3C3354FB167307CC006E1331 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3354FA167307CC006E1331 /* libxml2.dylib */; };
 		3C34992A166EEF62001012B6 /* RemindersInboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C349928166EEF62001012B6 /* RemindersInboxViewController.m */; };
@@ -210,6 +219,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 3C13E863164DF4DA006424A2;
 			remoteInfo = Date;
+		};
+		3C2E8C3316B7CB0D003072BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C2E8C2C16B7CB0C003072BD /* GestureBasedTableViewLibrary.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3C2E8C0C16B7C9F9003072BD;
+			remoteInfo = GestureBasedTableViewLibrary;
+		};
+		3C2E8C3516B7CB22003072BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C2E8C2C16B7CB0C003072BD /* GestureBasedTableViewLibrary.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C2E8C0B16B7C9F9003072BD;
+			remoteInfo = GestureBasedTableViewLibrary;
 		};
 		3C91EAE1169FAD820017E3FC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -377,6 +400,15 @@
 		3C28DA8E16538347009A661E /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		3C28DA901653838B009A661E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3C28DA92165383BC009A661E /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		3C2E8C2C16B7CB0C003072BD /* GestureBasedTableViewLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GestureBasedTableViewLibrary.xcodeproj; path = ../JTGestureBasedTableViewDemo/GestureBasedTableViewLibrary.xcodeproj; sourceTree = "<group>"; };
+		3C2E8C4E16B8A6CD003072BD /* TodayReminderCellBackgroundView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TodayReminderCellBackgroundView.xib; sourceTree = "<group>"; };
+		3C2E8C7B16B928AE003072BD /* HistoryReminderCellBackgroundView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HistoryReminderCellBackgroundView.xib; sourceTree = "<group>"; };
+		3C2E8C7D16B96DBA003072BD /* tableviewSectionHeaderBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tableviewSectionHeaderBg.png; path = Resources/images/tableviewSectionHeaderBg.png; sourceTree = "<group>"; };
+		3C2E8C7E16B96DBA003072BD /* tableviewSectionHeaderBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tableviewSectionHeaderBg@2x.png"; path = "Resources/images/tableviewSectionHeaderBg@2x.png"; sourceTree = "<group>"; };
+		3C2E8C8116B96EE8003072BD /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = check.png; path = Resources/images/check.png; sourceTree = "<group>"; };
+		3C2E8C8216B96EE8003072BD /* check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check@2x.png"; path = "Resources/images/check@2x.png"; sourceTree = "<group>"; };
+		3C2E8C8316B96EE8003072BD /* cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cross.png; path = Resources/images/cross.png; sourceTree = "<group>"; };
+		3C2E8C8416B96EE8003072BD /* cross@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cross@2x.png"; path = "Resources/images/cross@2x.png"; sourceTree = "<group>"; };
 		3C3156631681AE4000C1E42C /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		3C3156641681AE4000C1E42C /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		3C3354FA167307CC006E1331 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
@@ -555,6 +587,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C2E8C3716B7CB2D003072BD /* libGestureBasedTableViewLibrary.a in Frameworks */,
 				3C5B1D2F169FAF040079C12F /* QuartzCore.framework in Frameworks */,
 				3C91EAE5169FAD9C0017E3FC /* libEGOTableViewPullRefreshLibrary.a in Frameworks */,
 				3C3354FB167307CC006E1331 /* libxml2.dylib in Frameworks */,
@@ -603,6 +636,7 @@
 		3C13E859164DF4DA006424A2 = {
 			isa = PBXGroup;
 			children = (
+				3C2E8C2C16B7CB0C003072BD /* GestureBasedTableViewLibrary.xcodeproj */,
 				3C5B1D2E169FAF040079C12F /* QuartzCore.framework */,
 				3C91EADA169FAD810017E3FC /* EGOTableViewPullRefreshLibrary.xcodeproj */,
 				3C3354FA167307CC006E1331 /* libxml2.dylib */,
@@ -714,6 +748,14 @@
 			path = Resources/sound;
 			sourceTree = "<group>";
 		};
+		3C2E8C2D16B7CB0C003072BD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3C2E8C3416B7CB0D003072BD /* libGestureBasedTableViewLibrary.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		3C351392169AC9AD00F78FB9 /* GlobalFunction */ = {
 			isa = PBXGroup;
 			children = (
@@ -758,6 +800,8 @@
 				E6A3981016918DE0004A460F /* TextEditorCell.xib */,
 				3C3513C5169C037E00F78FB9 /* MenuCell.xib */,
 				3CC64B3216B279CE008D6C77 /* TextCell.xib */,
+				3C2E8C4E16B8A6CD003072BD /* TodayReminderCellBackgroundView.xib */,
+				3C2E8C7B16B928AE003072BD /* HistoryReminderCellBackgroundView.xib */,
 			);
 			name = cell;
 			sourceTree = "<group>";
@@ -830,6 +874,12 @@
 		3CE0ABF916507EA2004B785A /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3C2E8C8116B96EE8003072BD /* check.png */,
+				3C2E8C8216B96EE8003072BD /* check@2x.png */,
+				3C2E8C8316B96EE8003072BD /* cross.png */,
+				3C2E8C8416B96EE8003072BD /* cross@2x.png */,
+				3C2E8C7D16B96DBA003072BD /* tableviewSectionHeaderBg.png */,
+				3C2E8C7E16B96DBA003072BD /* tableviewSectionHeaderBg@2x.png */,
 				3C7A13D216B3A72500B2B77D /* btnPauseBig.png */,
 				3C7A13D316B3A72500B2B77D /* btnPauseBig@2x.png */,
 				3C7A13D416B3A72500B2B77D /* btnPlayBig.png */,
@@ -1070,6 +1120,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				3C2E8C3616B7CB22003072BD /* PBXTargetDependency */,
 				3C91EAE4169FAD900017E3FC /* PBXTargetDependency */,
 				3CF83C19166DF8A4005ED593 /* PBXTargetDependency */,
 				3CF83C1B166DF8A4005ED593 /* PBXTargetDependency */,
@@ -1135,6 +1186,10 @@
 					ProjectRef = 3C91EADA169FAD810017E3FC /* EGOTableViewPullRefreshLibrary.xcodeproj */;
 				},
 				{
+					ProductGroup = 3C2E8C2D16B7CB0C003072BD /* Products */;
+					ProjectRef = 3C2E8C2C16B7CB0C003072BD /* GestureBasedTableViewLibrary.xcodeproj */;
+				},
+				{
 					ProductGroup = 3CF83C07166DF87C005ED593 /* Products */;
 					ProjectRef = 3CF83C06166DF87C005ED593 /* HUDLibrary.xcodeproj */;
 				},
@@ -1156,6 +1211,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		3C2E8C3416B7CB0D003072BD /* libGestureBasedTableViewLibrary.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libGestureBasedTableViewLibrary.a;
+			remoteRef = 3C2E8C3316B7CB0D003072BD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		3C91EAE2169FAD820017E3FC /* libEGOTableViewPullRefreshLibrary.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1322,6 +1384,14 @@
 				3C7A13D716B3A72500B2B77D /* btnPauseBig@2x.png in Resources */,
 				3C7A13D816B3A72500B2B77D /* btnPlayBig.png in Resources */,
 				3C7A13D916B3A72500B2B77D /* btnPlayBig@2x.png in Resources */,
+				3C2E8C4F16B8A6CE003072BD /* TodayReminderCellBackgroundView.xib in Resources */,
+				3C2E8C7C16B928AE003072BD /* HistoryReminderCellBackgroundView.xib in Resources */,
+				3C2E8C7F16B96DBA003072BD /* tableviewSectionHeaderBg.png in Resources */,
+				3C2E8C8016B96DBA003072BD /* tableviewSectionHeaderBg@2x.png in Resources */,
+				3C2E8C8516B96EE8003072BD /* check.png in Resources */,
+				3C2E8C8616B96EE8003072BD /* check@2x.png in Resources */,
+				3C2E8C8716B96EE8003072BD /* cross.png in Resources */,
+				3C2E8C8816B96EE8003072BD /* cross@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1427,6 +1497,11 @@
 			target = 3C13E863164DF4DA006424A2 /* date */;
 			targetProxy = 3C13E890164DF4DB006424A2 /* PBXContainerItemProxy */;
 		};
+		3C2E8C3616B7CB22003072BD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GestureBasedTableViewLibrary;
+			targetProxy = 3C2E8C3516B7CB22003072BD /* PBXContainerItemProxy */;
+		};
 		3C91EAE4169FAD900017E3FC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = EGOTableViewPullRefreshLibrary;
@@ -1500,7 +1575,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: WANWEI LIU (5Y6RV2MD2B)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1520,7 +1595,7 @@
 					"../weibo_ios_sdk_sso-oauth/src/JSONKit",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PROVISIONING_PROFILE = "8943D085-22C4-4891-A9CA-97E205FAAA6F";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1536,7 +1611,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: WANWEI LIU (5Y6RV2MD2B)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1550,7 +1625,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "8943D085-22C4-4891-A9CA-97E205FAAA6F";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1574,6 +1649,7 @@
 					../MBProgressHUD,
 					"../weibo_ios_sdk_sso-oauth/src/JSONKit",
 					../EGOTableViewPullRefresh/EGOTableViewPullRefresh/Classes/View,
+					../JTGestureBasedTableViewDemo/JTGestureBasedTableView,
 				);
 				INFOPLIST_FILE = "Date/Date-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -1604,6 +1680,7 @@
 					../MBProgressHUD,
 					"../weibo_ios_sdk_sso-oauth/src/JSONKit",
 					../EGOTableViewPullRefresh/EGOTableViewPullRefresh/Classes/View,
+					../JTGestureBasedTableViewDemo/JTGestureBasedTableView,
 				);
 				INFOPLIST_FILE = "Date/Date-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;

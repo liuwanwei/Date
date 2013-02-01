@@ -522,7 +522,7 @@
 			<string key="blueDot.png">{16, 16}</string>
 			<string key="btnClock.png">{13, 13}</string>
 			<string key="btnLocation.png">{22, 22}</string>
-			<string key="btnPlay.png">{113, 84}</string>
+			<string key="btnPlay.png">{36, 36}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1926</string>
 	</data>
