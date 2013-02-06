@@ -161,6 +161,9 @@ static BilateralFriendManager * sBilateralFriendManager;
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kBilateralFriendEntity];
     [request setPropertiesToFetch:[NSArray arrayWithObjects:@"userID", nil]];  
     NSArray * results = [self executeFetchRequest:request];
+    if (nil == results || 0 == results.count) {
+        return nil;
+    }
     return results;
 }
 

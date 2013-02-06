@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1536</int>
+		<int key="IBDocument.SystemTarget">1552</int>
 		<string key="IBDocument.SystemVersion">11G56</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2840</string>
+		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
 		<string key="IBDocument.AppKitVersion">1138.51</string>
 		<string key="IBDocument.HIToolboxVersion">569.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-			<string key="NS.object.0">1926</string>
+			<string key="NS.object.0">2083</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
@@ -48,7 +48,6 @@
 								<string key="NSFrame">{{97, 10}, {190, 69}}</string>
 								<reference key="NSSuperview" ref="42726382"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -363,6 +362,10 @@
 						<string key="btnFinished">UIButton</string>
 						<string key="btnMap">UIButton</string>
 						<string key="image">EGOImageView</string>
+						<string key="imageViewAlarm">UIImageView</string>
+						<string key="imageViewContact">UIImageView</string>
+						<string key="imageViewSeperator">UIImageView</string>
+						<string key="imageViewVoice">UIImageView</string>
 						<string key="indicatorView">UIActivityIndicatorView</string>
 						<string key="labelAddress">UILabel</string>
 						<string key="labelAudioTime">UILabel</string>
@@ -388,6 +391,22 @@
 						<object class="IBToOneOutletInfo" key="image">
 							<string key="name">image</string>
 							<string key="candidateClassName">EGOImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="imageViewAlarm">
+							<string key="name">imageViewAlarm</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="imageViewContact">
+							<string key="name">imageViewContact</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="imageViewSeperator">
+							<string key="name">imageViewSeperator</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="imageViewVoice">
+							<string key="name">imageViewVoice</string>
+							<string key="candidateClassName">UIImageView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="indicatorView">
 							<string key="name">indicatorView</string>
@@ -445,6 +464,6 @@
 			<string key="NS.key.0">btnPlayBig.png</string>
 			<string key="NS.object.0">{65, 65}</string>
 		</object>
-		<string key="IBCocoaTouchPluginVersion">1926</string>
+		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
 </archive>

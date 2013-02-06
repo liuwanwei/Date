@@ -19,6 +19,7 @@
 #import "BilateralFriendManager.h"
 #import "RemindersInboxViewController.h"
 #import "GlobalFunction.h"
+#import "MobClick.h"
 
 @interface AppDelegate () {
     BOOL _showingAlert;
@@ -154,6 +155,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleAlarmPlayFinishedMessageMessage:) name:kAlarmPlayFinishedMessage
                                                object:nil];
+    
+    [MobClick startWithAppkey:kUMengAppKey];
 
     
     /*UILocalNotification *localNotif =
@@ -211,6 +214,7 @@
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     [[SinaWeiboManager defaultManager].sinaWeibo applicationDidBecomeActive];
     [[ReminderManager defaultManager] getRemoteRemindersRequest];
+    [MobClick event:kUMengEventLaunchTimes];
     if (NO == _showingAlert) {
         [self checkRemindersExpired];
     }

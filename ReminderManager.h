@@ -65,6 +65,7 @@ typedef enum {
 - (NSArray *)todayUnFinishedReminders;
 - (NSArray *)historyReminders;
 - (NSArray *)collectingBoxReminders;
+- (NSArray *)futureReminders;
 
 - (void)createDefaultReminders;
 

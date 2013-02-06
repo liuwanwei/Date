@@ -210,8 +210,8 @@
         [AppDelegate delegate].menuViewController.lastIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
         
     }else if (DataTypeRecent == _dataType) {
-        self.title = @"所有提醒";
-        self.reminders = [self.reminderManager recentUnFinishedReminders];
+        self.title = @"将来提醒";
+        self.reminders = [self.reminderManager futureReminders];
         [AppDelegate delegate].menuViewController.lastIndexPath = [NSIndexPath indexPathForRow:2 inSection:0];
     }else if (DataTypeCollectingBox == _dataType) {
         self.title = LocalString(@"DraftBox");
@@ -244,7 +244,9 @@
             [self.tableView beginUpdates];
         }
         for (Reminder * reminder in self.reminders) {
-            if (nil == reminder.triggerTime) {
+            if (DataTypeHistory == _dataType) {
+                key = [formatter stringFromDate:reminder.finishedTime];
+            }else if (nil == reminder.triggerTime) {
                 key = [formatter stringFromDate:reminder.createTime];
             }else {
                 key = [formatter stringFromDate:reminder.triggerTime];
@@ -264,7 +266,9 @@
                     
                     indexSection ++;
                 }else {
-                    if (nil == reminder.triggerTime) {
+                    if (DataTypeHistory == _dataType) {
+                        [[self.group objectForKey:key] addObject:reminder];
+                    }else if (nil == reminder.triggerTime) {
                         [[self.group objectForKey:key] insertObject:reminder atIndex:0];
                     }else {
                         [[self.group objectForKey:key] addObject:reminder];
@@ -401,32 +405,39 @@
 }
 
 - (float)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (DataTypeToday != _dataType) {
-        return 21;
-    }else{
+//    if (DataTypeToday != _dataType) {
+//        return 21;
+//    }else{
+//        return 0;
+//    }
+    if (0 == section) {
         return 0;
     }
+    return 4;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    if (DataTypeToday != _dataType) {
-        UIImageView * imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tableviewSectionHeaderBg"]];
-        imageView.frame = CGRectMake(0, 0, 320, 21);
+    NSInteger index = section % 5 + 1;
+    NSInteger height = 4;
+    NSString * imageName = [NSString stringWithFormat:@"sectionSeperator%d",index];
+//    if (DataTypeToday != _dataType) {
+        UIImageView * imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
+        imageView.frame = CGRectMake(0, 0, 320, height);
 //        imageView.transform = CGAffineTransformMakeRotation(M_PI);
         
-        UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0,0, 320, 21)];
+        UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0,0, 320, height)];
         [view addSubview:imageView];
         
-        UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(12, 4, 100, 15)];
-        label.textColor = RGBColor(80, 135, 186);
-        label.backgroundColor = [UIColor clearColor];
-        label.text = [self tableView:tableView titleForHeaderInSection:section];
+        UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, 320 - 60, height)];
+//        label.textColor = RGBColor(80, 135, 186);
+        label.backgroundColor = [UIColor lightGrayColor];
+//        label.text = [self tableView:tableView titleForHeaderInSection:section];
         [view addSubview:label];
-        
+    
         return view;
-    }else{
-        return 0;
-    }
+//    }else{
+//        return 0;
+//    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -440,13 +451,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     Reminder * reminder;
-    if (DataTypeHistory == _dataType) {
-        NSArray * reminders = [self.group objectForKey:[self.keys objectAtIndex:indexPath.section]];
-        NSInteger size = [reminders count];
-        reminder = [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] objectAtIndex:size - indexPath.row - 1];
-    }else {
+//    if (DataTypeHistory == _dataType) {
+//        NSArray * reminders = [self.group objectForKey:[self.keys objectAtIndex:indexPath.section]];
+//        NSInteger size = [reminders count];
+//        reminder = [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] objectAtIndex:size - indexPath.row - 1];
+//    }else {
         reminder = [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
-    }
+//    }
     
     static NSString * CellIdentifier;
     ReminderBaseCell * cell;
@@ -457,15 +468,15 @@
             cell = [[TodayReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
     }else if (DataTypeHistory == _dataType) {
-        CellIdentifier = @"HistoryReminderCell";
+        CellIdentifier = @"TodayReminderCell";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[HistoryReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];}
+            cell = [[TodayReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];}
     }else if (DataTypeCollectingBox == _dataType) {
-        CellIdentifier = @"ReminderInboxCell";
+        CellIdentifier = @"TodayReminderCell";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[ReminderInboxCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell = [[TodayReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
     }
     
@@ -477,6 +488,11 @@
     cell.bilateralFriend = friend;
     cell.reminder = reminder;
     cell.audioState = AudioStateNormal;
+    if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section] - 1) {
+        [cell.imageViewSeperator setHidden:YES];
+    }else {
+        [cell.imageViewSeperator setHidden:NO];
+    }
     return cell;
 }
 
@@ -540,11 +556,11 @@
 - (void)deleteReminderSuccess:(Reminder *)reminder {
     [self.reminderManager deleteReminder:reminder];
     
-    if (DataTypeHistory == _dataType) {
-        [[self.group objectForKey:[self.keys objectAtIndex:_curDeleteIndexPath.section]] removeObjectAtIndex:_curGroupSize - _curDeleteIndexPath.row - 1];
-    }else {
+//    if (DataTypeHistory == _dataType) {
+//        [[self.group objectForKey:[self.keys objectAtIndex:_curDeleteIndexPath.section]] removeObjectAtIndex:_curGroupSize - _curDeleteIndexPath.row - 1];
+//    }else {
         [[self.group objectForKey:[self.keys objectAtIndex:_curDeleteIndexPath.section]] removeObjectAtIndex:_curDeleteIndexPath.row];
-    }
+//    }
     
     [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:_curDeleteIndexPath] withRowAnimation:UITableViewRowAnimationFade];
     
@@ -678,11 +694,11 @@
         if ([userId isEqualToString:@"0"] ||
             [_userManager.userID isEqualToString:userId]) {
             [self.reminderManager deleteReminder:reminder];
-            if (DataTypeHistory == _dataType) {
-                [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:_curGroupSize - indexPath.row - 1];
-            }else {
+//            if (DataTypeHistory == _dataType) {
+//                [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:_curGroupSize - indexPath.row - 1];
+//            }else {
                 [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
-            }
+//            }
             
             [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationRight];
             [self clearGroup];
@@ -708,11 +724,11 @@
             }
         }
         
-        if (DataTypeHistory == _dataType) {
-            [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:_curGroupSize - indexPath.row - 1];
-        }else {
+//        if (DataTypeHistory == _dataType) {
+//            [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:_curGroupSize - indexPath.row - 1];
+//        }else {
             [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
-        }
+//        }
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
         [self clearGroup];
         [self performSelector:@selector(reloadData) withObject:self afterDelay:0.2];
