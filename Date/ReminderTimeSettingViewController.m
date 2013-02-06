@@ -17,6 +17,7 @@
     float _viewHeight;
     NSArray * _cellIcons;
     BOOL _dirty;
+    BOOL _showed;
 }
 
 @end
@@ -30,7 +31,7 @@
 
 #pragma 私有函数
 - (void)initPickerView {
-    [_datePick setFrame:CGRectMake(0,_viewHeight - 64 , 320, 216)];
+    [_datePick setFrame:CGRectMake(0,_viewHeight - 216 - 64 , 320, 216)];
     [self.view addSubview:_datePick];
     [_datePick addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
 }
@@ -79,8 +80,6 @@
         // 默认选择
         self.selectedRow = 0;
     }
-    
-    [self reloadDatePicker];
 }
 
 - (void)reloadDatePicker{
@@ -119,7 +118,11 @@
     _datePick.minimumDate = [NSDate date];
     [_datePick setDate:[NSDate date]];
     [_datePick setDatePickerMode:pickMode];
-        _datePick.minuteInterval = 5;
+    _datePick.minuteInterval = 5;
+    if (NO == _showed) {
+        _showed = YES;
+        return;
+    }
     // animations settings
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationBeginsFromCurrentState:YES];
@@ -161,18 +164,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self initSelectedReminderTypeIndex];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    UIWindow* window = [UIApplication sharedApplication].keyWindow;
+    UIWindow * window = [UIApplication sharedApplication].keyWindow;
     _viewHeight = window.frame.size.height;
     [self initTableFooterView];
-    [self initPickerView];
-
-    //[self showPickerViewWithMode:UIDatePickerModeDate];
     _rows = [[NSArray alloc] initWithObjects:kOneDayTimeDesc,kAlarmTimeDesc,kInboxTimeDesc, nil];
     [[AppDelegate delegate] initNavleftBarItemWithController:self withAction:@selector(back)];
-    
-    [self initSelectedReminderTypeIndex];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self initPickerView];
+    [self reloadDatePicker];
 }
 
 - (void)didReceiveMemoryWarning
@@ -215,6 +220,8 @@
     }
     if (self.selectedRow == indexPath.row) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
     }
     cell.textLabel.text = [_rows objectAtIndex:indexPath.row];
     cell.imageView.image = [UIImage imageNamed:[_cellIcons objectAtIndex:indexPath.row]];

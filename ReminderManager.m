@@ -631,21 +631,23 @@ typedef enum {
 }
 
 - (void)modifyReminder:(Reminder *)reminder withState:(ReminderState)state {
+    NSLog(@"id = %@",reminder.id);
+    NSLog(@"state = %d",state);
     reminder.state = [NSNumber numberWithInteger:state];
     if (ReminderStateFinish == state) {
         reminder.isAlarm = [NSNumber numberWithBool:YES];
         [self updateLocalNotificationWithReminder:reminder];
         [self updateRemindersSizeWith:reminder.triggerTime withOperate:BadgeOperateSub];
     }else {
-        if (nil != reminder.triggerTime) {
+        if (nil != reminder.triggerTime && ReminderTypeReceive == [reminder.type integerValue]) {
             NSDate * nowDate = [NSDate date];
             if ([nowDate compare:reminder.triggerTime] == NSOrderedAscending) {
                 //未过期) {
                 reminder.isAlarm = [NSNumber numberWithBool:NO];
                 [self addLocalNotificationWithReminder:reminder];
             }
-            [self updateRemindersSizeWith:reminder.triggerTime withOperate:BadgeOperateAdd];
         }
+        [self updateRemindersSizeWith:reminder.triggerTime withOperate:BadgeOperateAdd];
     }
     
     [self synchroniseToStore];
@@ -737,9 +739,9 @@ typedef enum {
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"(type = %d OR type = %d) AND state = 1",ReminderTypeReceive,ReminderTypeReceiveAndNoAlarm];
     
     NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"triggerTime" ascending:NO];
-    NSSortDescriptor * sortDescriptorByType = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:YES];
+//    NSSortDescriptor * sortDescriptorByType = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:YES];
 
-    NSArray * sortDescriptors = [NSArray arrayWithObjects:sortDescriptor,sortDescriptorByType,nil];
+    NSArray * sortDescriptors = [NSArray arrayWithObjects:sortDescriptor,nil];
     
     request.sortDescriptors = sortDescriptors;
     request.predicate = predicate;

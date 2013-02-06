@@ -40,6 +40,7 @@
 @synthesize labelDay = _labelDay;
 @synthesize dateType = _dateType;
 @synthesize editingState = _editingState;
+@synthesize labelDescOriwidth = _labelDescOriwidth;
 
 - (NSString *)custumDayString:(NSDate *)date {
     NSString * dateString = @"" ;
@@ -57,17 +58,11 @@
     NSInteger diffDay  = [cps day];
     if (diffDay == 0) {
         dateString = @"";
-    }else if (diffDay == 1) {
-        dateString = @"";
-    }else if (diffDay == 2) {
-        dateString = @"";
-    }else if (diffDay == -1) {
-        dateString = @"(昨天) ";
+    }else if (diffDay > -7 && diffDay <= -1) {
+        dateString = [NSString stringWithFormat:@"%d天前",diffDay * -1];
     }else {
         [formatter setDateFormat:@"MM-dd"];
-        dateString = [dateString stringByAppendingString:@"("];
         dateString = [dateString stringByAppendingString:[formatter stringFromDate:date]];
-        dateString = [dateString stringByAppendingString:@")"];
     }
     return dateString;
 }
@@ -95,22 +90,18 @@
             [_btnAudio setHidden:YES];
             [_labelAudioTime setHidden:YES];
             [_indicatorView setHidden:YES];
-            _labelDescription.frame = CGRectMake(_labelDescription.frame.origin.x,_labelDescription.frame.origin.y, kLabelDescOriWidth + kAudioButtonWidth, _labelDescription.frame.size.height);
+            _labelDescription.frame = CGRectMake(_labelDescription.frame.origin.x,_labelDescription.frame.origin.y,_labelDescOriwidth + kAudioButtonWidth, _labelDescription.frame.size.height);
 
         }else {
             [_btnAudio setHidden:NO];
             [_labelAudioTime setHidden:NO];
             [_indicatorView setHidden:NO];
             _labelAudioTime.text = [[_reminder.audioLength stringValue] stringByAppendingString:@"''"];
-             _labelDescription.frame = CGRectMake(_labelDescription.frame.origin.x,_labelDescription.frame.origin.y, kLabelDescOriWidth, _labelDescription.frame.size.height);
+            _labelDescription.frame = CGRectMake(_labelDescription.frame.origin.x,_labelDescription.frame.origin.y, _labelDescOriwidth, _labelDescription.frame.size.height);
         }
         
         if (nil != self.reminder.triggerTime) {
-            if (YES == [self.reminder.isAlarm boolValue]) {
-                self.labelTriggerDate.textColor = [self passedColor];
-            }else {
-                self.labelTriggerDate.textColor = [self ongoingColor];
-            }
+            self.labelTriggerDate.textColor = [self ongoingColor];
         }
 
         _labelDescription.text = _reminder.desc;
@@ -173,6 +164,55 @@
     }
     
     return result;
+}
+
+- (void)restoreView {
+    UIImageView * imageViewFinsh = (UIImageView *)[self.backgroundView viewWithTag:CellBackgroundImageViewTagFinish];
+    UIImageView * imageViewDelete = (UIImageView *)[self.backgroundView viewWithTag:CellBackgroundImageViewTagDelete];
+    
+    [imageViewFinsh setAlpha:0.5];
+    imageViewFinsh.frame = CGRectMake(20, imageViewFinsh.frame.origin.y, imageViewFinsh.frame.size.width, imageViewFinsh.frame.size.height);
+    [imageViewDelete setAlpha:0.5];
+     imageViewDelete.frame = CGRectMake(280, imageViewDelete.frame.origin.y, imageViewDelete.frame.size.width, imageViewDelete.frame.size.height);
+    self.labelDay.textColor = RGBColor(197, 73, 6);
+    self.labelDescription.textColor = [UIColor blackColor];
+    self.labelNickname.textColor = RGBColor(9, 84, 181);
+    self.labelTriggerDate.textColor = [self ongoingColor];
+    self.contentView.backgroundColor = [UIColor whiteColor];
+}
+
+- (void)deleteFailed {
+    [UIView beginAnimations:@"" context:nil];
+    self.contentView.frame = self.contentView.bounds;
+    [UIView commitAnimations];
+
+}
+
+- (void)setViewWithGestureState:(JTTableViewCellEditingState)state withTranslation:(CGPoint)translation {
+    UIImageView * imageViewFinsh = (UIImageView *)[self.backgroundView viewWithTag:CellBackgroundImageViewTagFinish];
+    UIImageView * imageViewDelete = (UIImageView *)[self.backgroundView viewWithTag:CellBackgroundImageViewTagDelete];
+    
+    UIColor * backgroundColor = [UIColor whiteColor];
+    switch (state) {
+        case JTTableViewCellEditingStateMiddle:
+            [self restoreView];
+            break;
+        case JTTableViewCellEditingStateRight:
+            [imageViewFinsh setAlpha:1];
+            imageViewFinsh.frame = CGRectMake(20 + translation.x - 61, imageViewFinsh.frame.origin.y, imageViewFinsh.frame.size.width, imageViewFinsh.frame.size.height);
+            backgroundColor = RGBColor(14, 170, 20);
+            self.labelDay.textColor = [UIColor whiteColor];
+            self.labelNickname.textColor = [UIColor whiteColor];
+            self.labelTriggerDate.textColor = [UIColor whiteColor];
+            self.labelDescription.textColor = [UIColor whiteColor];
+            break;
+        default:
+            [imageViewDelete setAlpha:1];
+            imageViewDelete.frame = CGRectMake(280 + translation.x + 61, imageViewDelete.frame.origin.y, imageViewDelete.frame.size.width, imageViewDelete.frame.size.height);
+            break;
+    }
+    self.contentView.backgroundColor = backgroundColor;
+
 }
 
 - (void)modifyReminderReadState {

@@ -58,7 +58,7 @@
     [super viewDidLoad];
     self.tableView.delegate = self;
     self.tableView.dataSource  = self;
-    self.tableView.rowHeight = 71.0;
+    self.tableView.rowHeight = 61.0;
 }
 
 - (void)didReceiveMemoryWarning

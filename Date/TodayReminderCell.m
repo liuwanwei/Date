@@ -13,6 +13,10 @@
 
 - (void)setDateTimeView {
     if (nil != self.reminder.triggerTime) {
+        NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"HH:mm"];
+        NSString * triggerTime = [formatter stringFromDate:self.reminder.triggerTime];
+
         NSString * day = @"";
         if (DataTypeRecent == self.dateType) {
             [self.labelDay setHidden:YES];
@@ -24,33 +28,20 @@
         if (ReminderTypeReceiveAndNoAlarm == [self.reminder.type integerValue]) {
             [self.labelTriggerDate setHidden:YES];
             [self.labelNickname setHidden:YES];
-            self.labelDay.frame = CGRectMake(self.labelDay.frame.origin.x,kLabelDescChangedY, self.labelDay.frame.size.width, self.labelDay.frame.size.height);
-            if ([@"" isEqualToString:day]) {
-                self.labelDescription.frame = CGRectMake(kLabelDescChangedX, kLabelDescChangedY, self.labelDescription.frame.size.width + kDayLabelWidth, self.labelDescription.frame.size.height);
-            }else {
-                self.labelDescription.frame = CGRectMake(kLabelDescOriX, kLabelDescChangedY, self.labelDescription.frame.size.width, self.labelDescription.frame.size.height);
-            }
-            
         }else {
-            [self.labelTriggerDate setHidden:NO];
-            self.labelDay.frame = CGRectMake(kLabelDescChangedX,kLabelDescOriY, kDayLabelWidth, self.labelDay.frame.size.height);
             if ([@"" isEqualToString:day]) {
-                self.labelDescription.frame = CGRectMake(kLabelDescChangedX, kLabelDescOriY, self.labelDescription.frame.size.width + kDayLabelWidth, self.labelDescription.frame.size.height);
+                [self.labelTriggerDate setHidden:NO];
+                [self.labelDay setHidden:YES];
+                self.labelTriggerDate.text = triggerTime;
+                self.labelNickname.frame = CGRectMake(kNickNameLabelChangedX, self.labelNickname.frame.origin.y, self.labelNickname.frame.size.width, self.labelNickname.frame.size.height);
             }else {
-                self.labelDescription.frame = CGRectMake(kLabelDescOriX, kLabelDescOriY, kLabelDescOriWidth, self.labelDescription.frame.size.height);
+                [self.labelTriggerDate setHidden:YES];
+                [self.labelDay setHidden:NO];
+                self.labelNickname.frame = CGRectMake(kNickNameLabelOriX, self.labelNickname.frame.origin.y, self.labelNickname.frame.size.width, self.labelNickname.frame.size.height);
             }
-            if (YES == [self showFrom]) {
-//                if ([@"" isEqualToString:day]) {
-//                    self.labelNickname.frame = CGRectMake(self.labelDay.frame.origin.x, self.labelNickname.frame.origin.y, self.labelDescription.frame.size.width, self.labelDescription.frame.size.height);
-//                }else {
-//                    self.labelNickname.frame = CGRectMake(145, self.labelNickname.frame.origin.y, self.labelDescription.frame.size.width, self.labelDescription.frame.size.height);
-//                }
-            }
+            [self showFrom];
         }
 
-        NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"HH:mm"];
-        self.labelTriggerDate.text =[formatter stringFromDate:self.reminder.triggerTime];
         self.labelDay.text = day;
     }
 }
@@ -71,11 +62,14 @@
     if (self) {
         NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"TodayReminderCell" owner:self options:nil] ;
         self = [nib objectAtIndex:0];
+        self.contentView.backgroundColor  = [UIColor whiteColor];
+        self.backgroundView = [[[NSBundle mainBundle] loadNibNamed:@"TodayReminderCellBackgroundView" owner:self options:nil] objectAtIndex:0];
     }
     return self;
 }
 
 - (void)setReminder:(Reminder *)reminder {
+    self.labelDescOriwidth = 220;
      [super setReminder:reminder];
      [self setDateTimeView];
     
