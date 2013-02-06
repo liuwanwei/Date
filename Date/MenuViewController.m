@@ -20,7 +20,8 @@
 typedef enum {
     MenuCellTagTitle = 1,
     MenuCellTagStart,
-    MenuCellTagSeparate
+    MenuCellTagSeparate,
+    MenuCellTagCount
 }MenuCellTag;
 
 @interface MenuViewController () {
@@ -77,7 +78,7 @@ typedef enum {
 {
     [super viewDidLoad];
     [self initServerMode];
-    _rows = [[NSArray alloc] initWithObjects:@"今日提醒",@"所有提醒",@"已完成", nil];
+    _rows = [[NSArray alloc] initWithObjects:@"今日提醒",@"未来提醒",@"已完成", nil];
     _rowImages = [[NSArray alloc] initWithObjects:@"today", @"recently", @"history", nil];
     
     self.tableView.delegate = self;
@@ -135,31 +136,38 @@ typedef enum {
     UIImageView * imageStart = (UIImageView *)[cell viewWithTag:MenuCellTagStart];
     UIImageView * imageSeparate = (UIImageView *)[cell viewWithTag:MenuCellTagSeparate];
     [imageStart setHidden:YES];
+    UILabel * labelCount = (UILabel *)[cell viewWithTag:MenuCellTagCount];
+    
     ReminderManager * reminderManager = [ReminderManager defaultManager];
     NSString * remindersSize;
     if (indexPath.row == 0) {
         remindersSize = [NSString stringWithFormat:@" %d", reminderManager.draftRemindersSize];
         labelTitle.text = LocalString(@"DraftBox");
-        labelTitle.text = [labelTitle.text stringByAppendingString:remindersSize];
+//        labelTitle.text = [labelTitle.text stringByAppendingString:remindersSize];
+        labelCount.text = remindersSize;
+        
 //        [imageSeparate setHidden:NO];
     }
     else if (indexPath.row == 4){
         labelTitle.text = @"设置";
         [imageSeparate setHidden:YES];
-    }else if (indexPath.row == 5) {
+        [labelCount setHidden:YES];
+    }/*else if (indexPath.row == 5) {
         labelTitle.text = @"关于";
         [imageSeparate setHidden:YES];
-    }else {
+    }*/else {
         labelTitle.text = [_rows objectAtIndex:indexPath.row - 1];
         if (indexPath.row != 3) {
             if (indexPath.row == 1) {
                 remindersSize = [NSString stringWithFormat:@" %d", reminderManager.todayRemindersSize];
-                labelTitle.text = [labelTitle.text stringByAppendingString:remindersSize];
+//                labelTitle.text = [labelTitle.text stringByAppendingString:remindersSize];
+                labelCount.text = remindersSize;
                 [imageStart setHidden:NO];
                 [imageSeparate setHidden:YES];
             }else if(indexPath.row == 2) {
                 remindersSize = [NSString stringWithFormat:@" %d", reminderManager.allRemindersSize];
-                labelTitle.text = [labelTitle.text stringByAppendingString:remindersSize];
+//                labelTitle.text = [labelTitle.text stringByAppendingString:remindersSize];
+                labelCount.text = remindersSize;
 //                [imageSeparate setHidden:NO];
             }
         }else {
