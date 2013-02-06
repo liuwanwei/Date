@@ -40,9 +40,12 @@
     
     EGORefreshTableHeaderView * _refreshHeaderView;
     BOOL _reloading;
+    BOOL _showBottomMenu;
     UIControl * _overView;
     
     NSInteger _curGroupSize;
+    
+    JTTableViewGestureRecognizer * _tableViewRecognizer;
 }
 
 @end
@@ -55,6 +58,7 @@
 @synthesize toolbar = _toolbar;
 @synthesize toolbarView = _toolbarView;
 @synthesize labelPrompt = _labelPrompt;
+@synthesize viewBottomMenu = _viewBottomMenu;
 
 #pragma 私有函数
 - (void)addUserId:(NSNumber *)userId {
@@ -98,6 +102,23 @@
     self.navigationController.navigationBarHidden = NO;
     [_txtDesc setHidden:YES];
     // commit animations
+    [UIView commitAnimations];
+}
+
+- (void)restoreBottomMenuView {
+    [_overView removeFromSuperview];
+    _overView = nil;
+    CGRect frameTableView;
+    CGRect freamMenu;
+    frameTableView = CGRectMake(0, self.tableView.frame.origin.y + 40, 320, self.tableView.frame.size.height);
+    freamMenu = CGRectMake(0, _viewBottomMenu.frame.origin.y + 40, 320, _viewBottomMenu.frame.size.height);
+    
+    _showBottomMenu = !_showBottomMenu;
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationBeginsFromCurrentState:YES];
+    [UIView setAnimationDuration:0.25];
+    self.tableView.frame = frameTableView;
+    _viewBottomMenu.frame = freamMenu;
     [UIView commitAnimations];
 }
 
@@ -180,9 +201,9 @@
 
 #pragma 类成员函数
 - (void)initDataWithAnimation:(BOOL)animation {
-    [_toolbar setHidden:NO];
+    [_viewBottomMenu setHidden:NO];
     [self addRefreshHeaderView];
-    self.tableView.frame =CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width,self.view.frame.size.height - _toolbar.frame.size.height);
+    self.tableView.frame =CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width,self.view.frame.size.height - 44);
     if (DataTypeToday == _dataType) {
         self.title = @"今日提醒";
         self.reminders = [self.reminderManager todayUnFinishedReminders];
@@ -199,7 +220,7 @@
     }else if (DataTypeHistory == _dataType) {
         self.title = @"已完成";
         [self removeRefreshHeadView];
-        [_toolbar setHidden:YES];
+        [_viewBottomMenu setHidden:YES];
         self.tableView.frame =CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width,self.view.frame.size.height);
         self.reminders = [self.reminderManager historyReminders];
     }
@@ -243,7 +264,11 @@
                     
                     indexSection ++;
                 }else {
-                    [reminders addObject:reminder];
+                    if (nil == reminder.triggerTime) {
+                        [[self.group objectForKey:key] insertObject:reminder atIndex:0];
+                    }else {
+                        [[self.group objectForKey:key] addObject:reminder];
+                    }
                 }
                 
                 [self addUserId:reminder.userID];
@@ -288,7 +313,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    _tableViewRecognizer = [self.tableView enableGestureTableViewWithDelegate:self];
     _dataType = DataTypeToday;
     [self initMenuButton];
     [self initDataWithAnimation:YES];
@@ -326,7 +351,35 @@
 - (IBAction)stopRecord:(id)sender {
     SoundManager * manager = [SoundManager defaultSoundManager];
     if (YES == [manager stopRecord]) {
+        [self restoreBottomMenuView];
         [self showAudioReminderSettingController];
+    }
+}
+
+- (IBAction)showBottomMenuView:(id)sender {
+    CGRect frameTableView;
+    CGRect freamMenu;
+    if (NO == _showBottomMenu) {
+        if (nil == _overView) {
+            _overView = [[UIControl alloc] init];
+            _overView.backgroundColor = [UIColor clearColor];
+            _overView.frame = CGRectMake(0, 0, 320,self.view.bounds.size.height - _viewBottomMenu.frame.size.height);
+            [_overView addTarget:self action:@selector(restoreBottomMenuView) forControlEvents:UIControlEventTouchDown];
+            [self.view addSubview:_overView];
+        }
+        
+        frameTableView = CGRectMake(0, self.tableView.frame.origin.y - 40, 320, self.tableView.frame.size.height);
+        freamMenu = CGRectMake(0, _viewBottomMenu.frame.origin.y - 40, 320, _viewBottomMenu.frame.size.height);
+        
+        _showBottomMenu = !_showBottomMenu;
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationDuration:0.25];
+        self.tableView.frame = frameTableView;
+        _viewBottomMenu.frame = freamMenu;
+        [UIView commitAnimations];
+    }else {
+        [self restoreBottomMenuView];
     }
 }
 
@@ -349,7 +402,7 @@
 
 - (float)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (DataTypeToday != _dataType) {
-        return 25;
+        return 21;
     }else{
         return 0;
     }
@@ -357,12 +410,14 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (DataTypeToday != _dataType) {
-        UIImageView * imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"navigationBarBg"]];
-        imageView.frame = CGRectMake(0, 0, 320, 25);
-        UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0,0, 320, 25)];
+        UIImageView * imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tableviewSectionHeaderBg"]];
+        imageView.frame = CGRectMake(0, 0, 320, 21);
+//        imageView.transform = CGAffineTransformMakeRotation(M_PI);
+        
+        UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0,0, 320, 21)];
         [view addSubview:imageView];
         
-        UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(15, 6, 100, 15)];
+        UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(12, 4, 100, 15)];
         label.textColor = RGBColor(80, 135, 186);
         label.backgroundColor = [UIColor clearColor];
         label.text = [self tableView:tableView titleForHeaderInSection:section];
@@ -405,8 +460,7 @@
         CellIdentifier = @"HistoryReminderCell";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[HistoryReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        }
+            cell = [[HistoryReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];}
     }else if (DataTypeCollectingBox == _dataType) {
         CellIdentifier = @"ReminderInboxCell";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -416,7 +470,7 @@
     }
     
     cell.delegate = self;
-    
+    [cell restoreView];
     BilateralFriend * friend = [_friends objectForKey:reminder.userID];
     cell.dateType = _dataType;
     cell.indexPath = indexPath;
@@ -424,43 +478,6 @@
     cell.reminder = reminder;
     cell.audioState = AudioStateNormal;
     return cell;
-}
-
-
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        _curDeleteIndexPath = indexPath;
-        Reminder * reminder;
-        if (DataTypeHistory == _dataType) {
-            NSArray * reminders = [self.group objectForKey:[self.keys objectAtIndex:indexPath.section]];
-            _curGroupSize =  [reminders count];
-            reminder = [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] objectAtIndex:_curGroupSize - indexPath.row - 1];
-        }else {
-           reminder = [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
-        }
-        
-        NSString * userId = [reminder.userID stringValue];
-        if ([userId isEqualToString:@"0"] ||
-            [_userManager.userID isEqualToString:userId]) {
-            [self.reminderManager deleteReminder:reminder];
-            if (DataTypeHistory == _dataType) {
-                 [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:_curGroupSize - indexPath.row - 1];
-            }else {
-                [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
-            }
-           
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [self clearGroup];
-            [self performSelector:@selector(reloadData) withObject:self afterDelay:0.2];
-        }else {
-            [self.reminderManager deleteReminderRequest:reminder];
-            [[MBProgressManager defaultManager] showHUD:@"删除中"];
-        }
-    }else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        [tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationTop];
-    }
 }
 
 - (void)tableView:(UITableView *)tableView willBeginEditingRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -538,6 +555,8 @@
 
 - (void)deleteReminderFailed {
     [[MBProgressManager defaultManager] showHUD:@"删除失败"];
+    ReminderBaseCell * cell = (ReminderBaseCell *)[self.tableView cellForRowAtIndexPath:_curDeleteIndexPath];
+    [cell deleteFailed];
     [self performSelector:@selector(removeHUD) withObject:self afterDelay:0.5];
 }
 
@@ -565,7 +584,6 @@
         UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您可以左侧菜单中找到已完成的任务" delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:@"不再提示", nil];
         [alert show];
     }
-    
     
     [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
     [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -634,5 +652,72 @@
 - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
     return _reloading;
 }
+
+#pragma mark JTTableViewGestureEditingRowDelegate
+
+- (void)gestureRecognizer:(JTTableViewGestureRecognizer *)gestureRecognizer didEnterEditingState:(JTTableViewCellEditingState)state forRowAtIndexPath:(NSIndexPath *)indexPath forTranslation:(CGPoint)translation{
+    ReminderBaseCell * cell = (ReminderBaseCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    [cell setViewWithGestureState:state withTranslation:translation];
+}
+
+// This is needed to be implemented to let our delegate choose whether the panning gesture should work
+- (BOOL)gestureRecognizer:(JTTableViewGestureRecognizer *)gestureRecognizer canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)gestureRecognizer:(JTTableViewGestureRecognizer *)gestureRecognizer commitEditingState:(JTTableViewCellEditingState)state forRowAtIndexPath:(NSIndexPath *)indexPath  {
+    UITableView *tableView = gestureRecognizer.tableView;
+    ReminderBaseCell * cell = (ReminderBaseCell *)[tableView cellForRowAtIndexPath:indexPath];
+    Reminder * reminder = cell.reminder;
+    NSArray * reminders = [self.group objectForKey:[self.keys objectAtIndex:indexPath.section]];
+    _curGroupSize =  [reminders count];
+
+    if (state == JTTableViewCellEditingStateLeft) {
+        _curDeleteIndexPath = indexPath;
+        NSString * userId = [reminder.userID stringValue];
+        if ([userId isEqualToString:@"0"] ||
+            [_userManager.userID isEqualToString:userId]) {
+            [self.reminderManager deleteReminder:reminder];
+            if (DataTypeHistory == _dataType) {
+                [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:_curGroupSize - indexPath.row - 1];
+            }else {
+                [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
+            }
+            
+            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationRight];
+            [self clearGroup];
+            [self performSelector:@selector(reloadData) withObject:self afterDelay:0.2];
+        }else {
+            [self.reminderManager deleteReminderRequest:reminder];
+            [[MBProgressManager defaultManager] showHUD:@"删除中"];
+        }
+       
+    } else if (state == JTTableViewCellEditingStateRight) {
+        
+        if (DataTypeHistory == _dataType) {
+            [self.reminderManager modifyReminder:reminder withState:ReminderStateUnFinish];
+        }else {
+            NSString * prompt = [[NSUserDefaults standardUserDefaults] objectForKey:NeedDisplayPromptKey];
+            if (nil == prompt || [prompt isEqualToString:@"YES"]) {
+                UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您可以左侧菜单中找到已完成的任务" delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:@"不再提示", nil];
+                [alert show];
+            }
+            
+            if ([reminder.state integerValue] == ReminderStateUnFinish) {
+                [self.reminderManager modifyReminder:reminder withState:ReminderStateFinish];
+            }
+        }
+        
+        if (DataTypeHistory == _dataType) {
+            [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:_curGroupSize - indexPath.row - 1];
+        }else {
+            [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
+        }
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+        [self clearGroup];
+        [self performSelector:@selector(reloadData) withObject:self afterDelay:0.2];
+    }
+}
+
 
 @end

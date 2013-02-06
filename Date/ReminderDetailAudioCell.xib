@@ -340,7 +340,7 @@
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="NS.key.0">btnPlay.png</string>
-			<string key="NS.object.0">{113, 84}</string>
+			<string key="NS.object.0">{36, 36}</string>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">1926</string>
 	</data>

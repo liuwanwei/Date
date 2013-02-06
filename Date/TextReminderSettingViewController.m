@@ -30,7 +30,7 @@
 }
 
 - (void)updateReceiverCell {
-    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:1 inSection:1];
+    NSIndexPath * indexPath = [NSIndexPath indexPathForRow:2 inSection:1];
     [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 

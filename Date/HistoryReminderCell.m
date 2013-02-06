@@ -7,6 +7,11 @@
 //
 
 #import "HistoryReminderCell.h"
+@interface HistoryReminderCell () {
+}
+
+@end
+
 
 @implementation HistoryReminderCell
 
@@ -14,7 +19,7 @@
     if (ReminderTypeReceiveAndNoAlarm == [self.reminder.type integerValue]) {
         [self.labelTriggerDate setHidden:YES];
         [self.labelNickname setHidden:YES];
-        self.labelDescription.frame = CGRectMake(13, kLabelDescChangedY, self.labelDescription.frame.size.width + kFinishButtonWidth + kDayLabelWidth, self.labelDescription.frame.size.height);
+        self.labelDescription.frame = CGRectMake(13, kLabelDescChangedY, self.labelDescription.frame.size.width , self.labelDescription.frame.size.height);
     }else {
         if (nil != self.reminder.triggerTime) {
             [self.labelTriggerDate setHidden:NO];
@@ -25,7 +30,7 @@
             [self.labelTriggerDate setHidden:YES];
         }
         
-        self.labelDescription.frame = CGRectMake(13, kLabelDescOriY, self.labelDescription.frame.size.width + kFinishButtonWidth + kDayLabelWidth, self.labelDescription.frame.size.height);
+        self.labelDescription.frame = CGRectMake(13, kLabelDescOriY, self.labelDescription.frame.size.width, self.labelDescription.frame.size.height);
         [self showFrom];
     }
 }
@@ -45,12 +50,15 @@
     if (self) {
         NSArray * nib = [[NSBundle mainBundle] loadNibNamed:@"HistoryReminderCell" owner:self options:nil] ;
         self = [nib objectAtIndex:0];
+        self.contentView.backgroundColor  = [UIColor whiteColor];
+        self.backgroundView = [[[NSBundle mainBundle] loadNibNamed:@"TodayReminderCellBackgroundView" owner:self options:nil] objectAtIndex:0];
     }
     return self;
 }
 
 - (void)setReminder:(Reminder *)reminer {
     if (nil != reminer) {
+        self.labelDescOriwidth = 250;
         [super setReminder:reminer];
         [self setDateTimeView];
     }
