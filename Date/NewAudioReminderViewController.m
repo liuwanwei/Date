@@ -9,6 +9,7 @@
 #import "NewAudioReminderViewController.h"
 #import "AppDelegate.h"
 #import "TextEditorViewController.h"
+#import "MobClick.h"
 
 @interface NewAudioReminderViewController ()
 
@@ -90,18 +91,40 @@
 #pragma mark - ReminderManager delegate
 - (void)newReminderSuccess:(NSString *)reminderId {
     [super newReminderSuccess:reminderId];
+    NSString * type;
+    NSString * target;
+    NSString * date;
+    NSString * event = kUMengEventReminderCreate;
+
     if (nil == self.reminder.triggerTime) {
+        target = kUMengEventReminderParamSelf;
+        type = kUMengEventReminderParamNoAlarm;
+        date = kUMengEventReminderParamCollectingBox;
         [AppDelegate delegate].homeViewController.dataType = DataTypeCollectingBox;
     }else {
-        if (DataTypeRecent != [AppDelegate delegate].homeViewController.dataType) {
-            NSDate * tommrow = [[GlobalFunction defaultGlobalFunction] tomorrow];
-            if ([self.reminder.triggerTime compare:tommrow] == NSOrderedAscending) {
-                [AppDelegate delegate].homeViewController.dataType = DataTypeToday;
-            }else {
-                [AppDelegate delegate].homeViewController.dataType = DataTypeRecent;
-            }
+        if (YES == [self.userManager isOneself:[self.reminder.userID stringValue]]) {
+            target = kUMengEventReminderParamSelf;
+        }else {
+            target = kUMengEventReminderParamOthers;
+        }
+        
+        if (ReminderTypeReceiveAndNoAlarm == [self.reminder.type integerValue]) {
+            type = kUMengEventReminderParamNoAlarm;
+        }else {
+            type = kUMengEventReminderParamAlarm;
+        }
+        NSDate * tommrow = [[GlobalFunction defaultGlobalFunction] tomorrow];
+        if ([self.reminder.triggerTime compare:tommrow] == NSOrderedAscending) {
+            date = kUMengEventReminderParamToady;
+            [AppDelegate delegate].homeViewController.dataType = DataTypeToday;
+        }else {
+            date = kUMengEventReminderParamOtherDay;
+            [AppDelegate delegate].homeViewController.dataType = DataTypeRecent;
         }
     }
+    
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:date,kUMengEventReminderParamDate,type, kUMengEventReminderParamType, target, kUMengEventReminderParamTarget, nil];
+    [MobClick event:event attributes:dict];
     
     [[AppDelegate delegate].homeViewController initDataWithAnimation:NO];
     [self.navigationController dismissViewControllerAnimated:YES completion:^{

@@ -179,7 +179,7 @@ typedef enum {
 
 - (void)remindersSize {
     [self collectingBoxReminders];
-    [self recentUnFinishedReminders];
+    [self futureReminders];
 }
 
 - (void)updateRemindersSizeWith:(NSDate *)triggerTime withOperate:(BadgeOperate)operate {
@@ -205,15 +205,18 @@ typedef enum {
         if (BadgeOperateAdd == operate) {
             if (YES == sign) {
                 _todayRemindersSize ++;
-            }
-            _allRemindersSize++;
+            }else {
+                _allRemindersSize++;            }
         }else if (BadgeOperateSub == operate) {
             if (YES == sign && 0 != _todayRemindersSize) {
                 _todayRemindersSize --;
+                
+            }else {
+                if (0 != _allRemindersSize) {
+                    _allRemindersSize --;
+                }
             }
-            if (0 != _allRemindersSize) {
-                _allRemindersSize --;
-            }
+            
         }
     }
     
@@ -631,11 +634,10 @@ typedef enum {
 }
 
 - (void)modifyReminder:(Reminder *)reminder withState:(ReminderState)state {
-    NSLog(@"id = %@",reminder.id);
-    NSLog(@"state = %d",state);
     reminder.state = [NSNumber numberWithInteger:state];
     if (ReminderStateFinish == state) {
         reminder.isAlarm = [NSNumber numberWithBool:YES];
+        reminder.finishedTime = [NSDate date];
         [self updateLocalNotificationWithReminder:reminder];
         [self updateRemindersSizeWith:reminder.triggerTime withOperate:BadgeOperateSub];
     }else {
@@ -702,6 +704,37 @@ typedef enum {
     return results;
 }
 
+- (NSArray *)futureReminders {
+    NSDate * today = [NSDate date];
+    NSDate * tomorrow;
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    today = [formatter dateFromString:[formatter stringFromDate:today]];
+    tomorrow = [today dateByAddingTimeInterval:24*60*60];
+    
+    NSArray * results = nil;
+    NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
+    NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"triggerTime" ascending:YES];
+    NSSortDescriptor * sortDescriptorByType = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:YES];
+    
+    NSPredicate * predicate = [NSPredicate predicateWithFormat:@"(state = 0 AND (type = %d || type = %d) AND triggerTime >= %@)",ReminderTypeReceive,ReminderTypeReceiveAndNoAlarm,[formatter dateFromString:[formatter stringFromDate:tomorrow]]];
+    NSArray * sortDescriptors = [NSArray arrayWithObjects:sortDescriptor,sortDescriptorByType,nil];
+    request.sortDescriptors = sortDescriptors;
+    
+    request.predicate = predicate;
+    results = [self executeFetchRequest:request];
+    
+    if (nil == results || results.count == 0) {
+        _allRemindersSize = 0;
+        [self updateAppBadge];
+        return nil;
+    }else {
+        _allRemindersSize = [results count];
+    }
+    [self updateAppBadge];
+    return results;
+}
+
 - (NSArray *)todayUnFinishedReminders {
     NSDate * today = [NSDate date];
     NSDate * tomorrow;
@@ -738,7 +771,7 @@ typedef enum {
     NSFetchRequest * request = [[NSFetchRequest alloc] initWithEntityName:kReminderEntity];
     NSPredicate * predicate = [NSPredicate predicateWithFormat:@"(type = %d OR type = %d) AND state = 1",ReminderTypeReceive,ReminderTypeReceiveAndNoAlarm];
     
-    NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"triggerTime" ascending:NO];
+    NSSortDescriptor * sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"finishedTime" ascending:NO];
 //    NSSortDescriptor * sortDescriptorByType = [[NSSortDescriptor alloc] initWithKey:@"type" ascending:YES];
 
     NSArray * sortDescriptors = [NSArray arrayWithObjects:sortDescriptor,nil];

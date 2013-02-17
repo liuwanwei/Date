@@ -48,6 +48,17 @@ static GlobalFunction * sGlobalFunction;
     }
 }
 
+- (void)initNavLeftBarCancelItemWithController:(UIViewController *)controller {
+    UIBarButtonItem * leftItem;
+    leftItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:controller action:@selector(dismiss)];
+    UIFont * font = [UIFont systemFontOfSize:12.0];
+    NSValue * offset = [NSValue valueWithUIOffset:UIOffsetMake(0, 2)];
+    NSDictionary * attr = [[NSDictionary alloc] initWithObjectsAndKeys:font, UITextAttributeFont,RGBColor(0, 0, 0), UITextAttributeTextColor,[UIColor whiteColor],UITextAttributeTextShadowColor,offset,UITextAttributeTextShadowOffset,nil];
+    [leftItem setTitleTextAttributes:attr forState:UIControlStateNormal];
+    
+    controller.navigationItem.leftBarButtonItem = leftItem;
+}
+
 - (UIColor *)viewBackground {
     return RGBColor(255,255,255);
 }
@@ -114,6 +125,14 @@ static GlobalFunction * sGlobalFunction;
     return dateString;
 }
 
+- (NSString *)custumDateString2:(NSDate *)date {
+    NSString * dateString;
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MM-dd"];
+    dateString = [formatter stringFromDate:date];
+    return dateString;
+}
+
 - (NSString *)custumDateTimeString:(NSDate *)date {
     NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
     NSString * datetimeString = [self custumDayString:date];
@@ -132,6 +151,21 @@ static GlobalFunction * sGlobalFunction;
     today = [formatter dateFromString:[formatter stringFromDate:today]];
     tomorrow = [today dateByAddingTimeInterval:24*60*60];
     return tomorrow;
+}
+
+- (NSInteger)diffDay:(NSDate *)date {
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yy-MM-dd"];
+    
+    NSDate * nowDate = [NSDate date];
+    nowDate = [formatter dateFromString:[formatter stringFromDate:nowDate]];
+    date = [formatter dateFromString:[formatter stringFromDate:date]];
+    NSCalendar * calendar = [NSCalendar currentCalendar];
+    NSUInteger unitFlags = NSDayCalendarUnit;
+    
+    NSDateComponents * cps = [calendar components:unitFlags fromDate:nowDate  toDate:date  options:0];
+    NSInteger diffDay  = [cps day];
+    return diffDay;
 }
 
 @end

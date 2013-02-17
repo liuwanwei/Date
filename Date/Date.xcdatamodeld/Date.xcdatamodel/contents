@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1810" systemVersion="11G56" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="11G56" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="BilateralFriend" representedClassName="BilateralFriend" syncable="YES">
         <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isOnline" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
@@ -15,6 +15,7 @@
         <attribute name="audioUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="createTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="finishedTime" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="isAlarm" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="isRead" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
@@ -27,6 +28,6 @@
     </entity>
     <elements>
         <element name="BilateralFriend" positionX="-2655" positionY="-1611" width="128" height="165"/>
-        <element name="Reminder" positionX="160" positionY="192" width="128" height="240"/>
+        <element name="Reminder" positionX="160" positionY="192" width="128" height="255"/>
     </elements>
 </model>

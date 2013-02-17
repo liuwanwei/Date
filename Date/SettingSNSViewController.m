@@ -9,6 +9,7 @@
 #import "SettingSNSViewController.h"
 #import "GlobalFunction.h"
 #import "SinaWeiboManager.h"
+#import "MobClick.h"
 
 @interface SettingSNSViewController ()
 
@@ -32,6 +33,10 @@
     [[SinaWeiboManager defaultManager] requestBilateralFriends];
     
     [_parentController updateSNSCell];
+    
+    if (nil == [[BilateralFriendManager defaultManager] allFriendsID]) {
+        [MobClick event:kUMengEventSinaWeiboBinding];
+    }
     [self back];
 }
 
