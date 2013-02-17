@@ -104,6 +104,7 @@
 		3C417A18168D8BE7003FFB1C /* recordingBg.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C417A16168D8BE7003FFB1C /* recordingBg.png */; };
 		3C417A19168D8BE7003FFB1C /* recordingBg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C417A17168D8BE7003FFB1C /* recordingBg@2x.png */; };
 		3C469EF716A6AE220080AF49 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C469EF616A6AE220080AF49 /* Icon@2x.png */; };
+		3C5A57FC16D0B57E0049C1FF /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5A57FA16D0B57E0049C1FF /* libMobClickLibrary.a */; };
 		3C5B1D2F169FAF040079C12F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5B1D2E169FAF040079C12F /* QuartzCore.framework */; };
 		3C5B1D3E169FB8E20079C12F /* blueArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5B1D36169FB8E20079C12F /* blueArrow.png */; };
 		3C5B1D3F169FB8E20079C12F /* blueArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C5B1D37169FB8E20079C12F /* blueArrow@2x.png */; };
@@ -124,7 +125,6 @@
 		3C824CEE16BCF715002BD38D /* DateModeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C824CED16BCF715002BD38D /* DateModeCell.xib */; };
 		3C838F2F1675D59100A85826 /* ReminderDetailAudioCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C838F2E1675D59100A85826 /* ReminderDetailAudioCell.m */; };
 		3C838F311675D5B700A85826 /* ReminderDetailAudioCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C838F301675D5B700A85826 /* ReminderDetailAudioCell.xib */; };
-		3C84B3E716C15166007303F6 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C84B3E516C15166007303F6 /* libMobClickLibrary.a */; };
 		3C84B3ED16C22D7D007303F6 /* sectionSeperator1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C84B3E816C22D7D007303F6 /* sectionSeperator1.png */; };
 		3C84B3EE16C22D7D007303F6 /* sectionSeperator2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C84B3E916C22D7D007303F6 /* sectionSeperator2.png */; };
 		3C84B3EF16C22D7D007303F6 /* sectionSeperator3.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C84B3EA16C22D7D007303F6 /* sectionSeperator3.png */; };
@@ -463,6 +463,8 @@
 		3C417A16168D8BE7003FFB1C /* recordingBg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = recordingBg.png; path = Resources/images/recordingBg.png; sourceTree = "<group>"; };
 		3C417A17168D8BE7003FFB1C /* recordingBg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "recordingBg@2x.png"; path = "Resources/images/recordingBg@2x.png"; sourceTree = "<group>"; };
 		3C469EF616A6AE220080AF49 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "Resources/images/Icon@2x.png"; sourceTree = "<group>"; };
+		3C5A57FA16D0B57E0049C1FF /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobClickLibrary.a; path = UMeng/libMobClickLibrary.a; sourceTree = SOURCE_ROOT; };
+		3C5A57FB16D0B57E0049C1FF /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClick.h; path = UMeng/MobClick.h; sourceTree = SOURCE_ROOT; };
 		3C5B1D2E169FAF040079C12F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3C5B1D36169FB8E20079C12F /* blueArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blueArrow.png; path = Resources/images/blueArrow.png; sourceTree = "<group>"; };
 		3C5B1D37169FB8E20079C12F /* blueArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blueArrow@2x.png"; path = "Resources/images/blueArrow@2x.png"; sourceTree = "<group>"; };
@@ -487,8 +489,6 @@
 		3C838F2D1675D59100A85826 /* ReminderDetailAudioCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReminderDetailAudioCell.h; sourceTree = "<group>"; };
 		3C838F2E1675D59100A85826 /* ReminderDetailAudioCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReminderDetailAudioCell.m; sourceTree = "<group>"; };
 		3C838F301675D5B700A85826 /* ReminderDetailAudioCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderDetailAudioCell.xib; sourceTree = "<group>"; };
-		3C84B3E516C15166007303F6 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobClickLibrary.a; path = ../../UMAnalytics_Sdk_OpenUDID/libMobClickLibrary.a; sourceTree = "<group>"; };
-		3C84B3E616C15166007303F6 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClick.h; path = ../../UMAnalytics_Sdk_OpenUDID/MobClick.h; sourceTree = "<group>"; };
 		3C84B3E816C22D7D007303F6 /* sectionSeperator1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sectionSeperator1.png; path = Resources/images/sectionSeperator1.png; sourceTree = "<group>"; };
 		3C84B3E916C22D7D007303F6 /* sectionSeperator2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sectionSeperator2.png; path = Resources/images/sectionSeperator2.png; sourceTree = "<group>"; };
 		3C84B3EA16C22D7D007303F6 /* sectionSeperator3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sectionSeperator3.png; path = Resources/images/sectionSeperator3.png; sourceTree = "<group>"; };
@@ -638,7 +638,7 @@
 				3C13E86B164DF4DB006424A2 /* Foundation.framework in Frameworks */,
 				3C13E86D164DF4DB006424A2 /* CoreGraphics.framework in Frameworks */,
 				3C13E86F164DF4DB006424A2 /* CoreData.framework in Frameworks */,
-				3C84B3E716C15166007303F6 /* libMobClickLibrary.a in Frameworks */,
+				3C5A57FC16D0B57E0049C1FF /* libMobClickLibrary.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -810,8 +810,8 @@
 		3C84B3E416C150D6007303F6 /* UMeng */ = {
 			isa = PBXGroup;
 			children = (
-				3C84B3E516C15166007303F6 /* libMobClickLibrary.a */,
-				3C84B3E616C15166007303F6 /* MobClick.h */,
+				3C5A57FA16D0B57E0049C1FF /* libMobClickLibrary.a */,
+				3C5A57FB16D0B57E0049C1FF /* MobClick.h */,
 			);
 			name = UMeng;
 			sourceTree = "<group>";
@@ -1726,6 +1726,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../UMAnalytics_Sdk_OpenUDID\"",
+					"\"$(SRCROOT)/UMeng\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1760,6 +1761,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../UMAnalytics_Sdk_OpenUDID\"",
+					"\"$(SRCROOT)/UMeng\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
