@@ -48,16 +48,16 @@ static GlobalFunction * sGlobalFunction;
     }
 }
 
-- (void)initNavLeftBarCancelItemWithController:(UIViewController *)controller {
-    UIBarButtonItem * leftItem;
-    leftItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:controller action:@selector(dismiss)];
-    UIFont * font = [UIFont systemFontOfSize:12.0];
-    NSValue * offset = [NSValue valueWithUIOffset:UIOffsetMake(0, 2)];
-    NSDictionary * attr = [[NSDictionary alloc] initWithObjectsAndKeys:font, UITextAttributeFont,RGBColor(0, 0, 0), UITextAttributeTextColor,[UIColor whiteColor],UITextAttributeTextShadowColor,offset,UITextAttributeTextShadowOffset,nil];
-    [leftItem setTitleTextAttributes:attr forState:UIControlStateNormal];
-    
-    controller.navigationItem.leftBarButtonItem = leftItem;
-}
+//- (void)initNavLeftBarCancelItemWithController:(UIViewController *)controller {
+//    UIBarButtonItem * leftItem;
+//    leftItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:controller action:@selector(dismiss)];
+//    UIFont * font = [UIFont systemFontOfSize:12.0];
+//    NSValue * offset = [NSValue valueWithUIOffset:UIOffsetMake(0, 2)];
+//    NSDictionary * attr = [[NSDictionary alloc] initWithObjectsAndKeys:font, UITextAttributeFont,RGBColor(0, 0, 0), UITextAttributeTextColor,[UIColor whiteColor],UITextAttributeTextShadowColor,offset,UITextAttributeTextShadowOffset,nil];
+//    [leftItem setTitleTextAttributes:attr forState:UIControlStateNormal];
+//    
+//    controller.navigationItem.leftBarButtonItem = leftItem;
+//}
 
 - (UIColor *)viewBackground {
     return RGBColor(255,255,255);
@@ -123,6 +123,13 @@ static GlobalFunction * sGlobalFunction;
         dateString = [formatter stringFromDate:date];
     }
     return dateString;
+}
+
+- (void)customNavigationBarItem:(UIBarButtonItem *)item{
+    UIFont *font = [UIFont systemFontOfSize:12.0];
+    NSValue * offset = [NSValue valueWithUIOffset:UIOffsetMake(0, 2)];
+    NSDictionary *attr = [[NSDictionary alloc] initWithObjectsAndKeys:font, UITextAttributeFont,RGBColor(0, 0, 0), UITextAttributeTextColor,[UIColor whiteColor],UITextAttributeTextShadowColor,offset,UITextAttributeTextShadowOffset,nil];
+    [item setTitleTextAttributes:attr forState:UIControlStateNormal];
 }
 
 - (NSString *)custumDateString2:(NSDate *)date {
