@@ -33,8 +33,31 @@
 }
 
 - (void)setReminder:(Reminder *)reminder {
-    self.labelDescOriwidth = 220;
+    self.imageViewContactOriX = 83.0;
     [super setReminder:reminder];
+    
+    self.oneDay = [self custumDayString:self.reminder.triggerTime];
+
+    if (ReminderTypeReceiveAndNoAlarm == [reminder.type integerValue]) {
+        if ([@"睡觉前" isEqualToString:self.oneDay]) {
+            [self.labelTriggerDate setHidden:NO];
+            [self.labelDay setHidden:YES];
+            self.labelTriggerDate.text = self.oneDay;
+        }
+    }else {
+        if ([@"睡觉前" isEqualToString:self.oneDay]) {
+            [self.labelTriggerDate setHidden:NO];
+            [self.labelDay setHidden:YES];
+            self.labelTriggerDate.text = self.triggerTime;
+        }
+    }
+    
+    if (![@"睡觉前" isEqualToString:self.oneDay]) {
+        [self.labelTriggerDate setHidden:YES];
+        [self.labelDay setHidden:NO];
+        self.labelDay.text = self.oneDay;
+
+    }
 }
 
 @end
