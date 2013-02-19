@@ -18,16 +18,6 @@
 @implementation NewTextReminderViewController
 
 #pragma 私有函数
-- (void)initNavBar {
-    UIBarButtonItem * leftItem;
-    leftItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(dismiss)];
-    UIFont *font = [UIFont systemFontOfSize:12.0];
-    NSValue * offset = [NSValue valueWithUIOffset:UIOffsetMake(0, 2)];
-    NSDictionary *attr = [[NSDictionary alloc] initWithObjectsAndKeys:font, UITextAttributeFont,RGBColor(0, 0, 0), UITextAttributeTextColor,[UIColor whiteColor],UITextAttributeTextShadowColor,offset,UITextAttributeTextShadowOffset,nil];
-    [leftItem setTitleTextAttributes:attr forState:UIControlStateNormal];
-
-    self.navigationItem.leftBarButtonItem = leftItem;
-}
 
 - (void)dismiss {
     [self.navigationController dismissViewControllerAnimated:YES completion:^ {
@@ -71,7 +61,12 @@
 {
     [super viewDidLoad];
     self.title = @"新建提醒";
-    [self initNavBar];
+    
+    UIBarButtonItem * leftItem;
+    leftItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(dismiss)];
+    [[GlobalFunction defaultGlobalFunction] customNavigationBarItem:leftItem];
+    self.navigationItem.leftBarButtonItem = leftItem;
+
     [self initData];
     [self updateTableFooterViewInCreateState];
 }

@@ -38,32 +38,36 @@
     [_datePick addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
 }
 
+- (void)updateTime{
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    NSString * strTriggerTime;
+    switch (_selectedRow) {
+        case 2:
+            _parentContoller.triggerTime = nil;
+            _parentContoller.reminderType = ReminderTypeReceiveAndNoAlarm;
+            break;
+        case 0:
+            [formatter setDateFormat:@"yyyy-MM-dd 23:59:59"];
+            strTriggerTime = [formatter stringFromDate:_datePick.date];
+            [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+            _parentContoller.reminderType = ReminderTypeReceiveAndNoAlarm;
+            _parentContoller.triggerTime = [formatter dateFromString:strTriggerTime];
+            break;
+        case 1:
+            [formatter setDateFormat:@"yyyy-MM-dd HH:mm:00"];
+            strTriggerTime = [formatter stringFromDate:_datePick.date];
+            _parentContoller.reminderType = ReminderTypeReceive;
+            _parentContoller.triggerTime = [formatter dateFromString:strTriggerTime];
+            break;
+        default:
+            break;
+    }
+    [_parentContoller updateTriggerTimeCell];
+}
+
 - (void)back {
     if (YES == _dirty) {
-        NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-        NSString * strTriggerTime;
-        switch (_selectedRow) {
-            case 2:
-                _parentContoller.triggerTime = nil;
-                _parentContoller.reminderType = ReminderTypeReceiveAndNoAlarm;
-                break;
-            case 0:
-                [formatter setDateFormat:@"yyyy-MM-dd 23:59:59"];
-                strTriggerTime = [formatter stringFromDate:_datePick.date];
-                [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-                _parentContoller.reminderType = ReminderTypeReceiveAndNoAlarm;
-                _parentContoller.triggerTime = [formatter dateFromString:strTriggerTime];
-                break;
-            case 1:
-                [formatter setDateFormat:@"yyyy-MM-dd HH:mm:00"];
-                strTriggerTime = [formatter stringFromDate:_datePick.date];
-                _parentContoller.reminderType = ReminderTypeReceive;
-                _parentContoller.triggerTime = [formatter dateFromString:strTriggerTime];
-                break;
-            default:
-                break;
-        }
-        [_parentContoller updateTriggerTimeCell];
+        [self updateTime];
     }
     
     [self.navigationController popViewControllerAnimated:YES];
@@ -164,6 +168,11 @@
     _dirty = YES;
 }
 
+- (void)done{
+    [self updateTime];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kReminderSettingOk object:nil];
+}
+
 #pragma 事件函数
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -186,6 +195,10 @@
     [self initTableFooterView];
     _rows = [[NSArray alloc] initWithObjects:kOneDayTimeDesc,kAlarmTimeDesc,kInboxTimeDesc, nil];
     [[AppDelegate delegate] initNavleftBarItemWithController:self withAction:@selector(back)];
+    
+    UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
+    [[GlobalFunction defaultGlobalFunction] customNavigationBarItem:item];
+    self.navigationItem.rightBarButtonItem = item;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
