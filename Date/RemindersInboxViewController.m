@@ -462,23 +462,23 @@
     
     static NSString * CellIdentifier;
     ReminderBaseCell * cell;
-    if (DataTypeToday == _dataType) {
+    if (DataTypeToday == _dateType) {
         CellIdentifier = @"TodayReminderCell";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[TodayReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
-    }else if (DataTypeRecent == _dataType) {
+    }else if (DataTypeRecent == _dateType) {
         CellIdentifier = @"FutureReminderCell";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[FutureReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];}
-    }else if (DataTypeHistory == _dataType) {
+    }else if (DataTypeHistory == _dateType) {
         CellIdentifier = @"HistoryReminderCell";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[HistoryReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];}
-    }else if (DataTypeCollectingBox == _dataType) {
+    }else if (DataTypeCollectingBox == _dateType) {
         CellIdentifier = @"ReminderInboxCell";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
