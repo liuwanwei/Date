@@ -31,37 +31,43 @@
 
 #pragma 私有函数
 - (void)initPickerView {
-    [_datePick setFrame:CGRectMake(0,_viewHeight - 216 - 64 , 320, 216)];
+    [_datePick setFrame:CGRectMake(0,_viewHeight , 320, 216)];
+    _datePick.minimumDate = [NSDate date];
+    [_datePick setDate:[NSDate date]];
     [self.view addSubview:_datePick];
     [_datePick addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
 }
 
+- (void)updateTime{
+    NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+    NSString * strTriggerTime;
+    switch (_selectedRow) {
+        case 2:
+            _parentContoller.triggerTime = nil;
+            _parentContoller.reminderType = ReminderTypeReceiveAndNoAlarm;
+            break;
+        case 0:
+            [formatter setDateFormat:@"yyyy-MM-dd 23:59:59"];
+            strTriggerTime = [formatter stringFromDate:_datePick.date];
+            [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+            _parentContoller.reminderType = ReminderTypeReceiveAndNoAlarm;
+            _parentContoller.triggerTime = [formatter dateFromString:strTriggerTime];
+            break;
+        case 1:
+            [formatter setDateFormat:@"yyyy-MM-dd HH:mm:00"];
+            strTriggerTime = [formatter stringFromDate:_datePick.date];
+            _parentContoller.reminderType = ReminderTypeReceive;
+            _parentContoller.triggerTime = [formatter dateFromString:strTriggerTime];
+            break;
+        default:
+            break;
+    }
+    [_parentContoller updateTriggerTimeCell];
+}
+
 - (void)back {
     if (YES == _dirty) {
-        NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-        NSString * strTriggerTime;
-        switch (_selectedRow) {
-            case 2:
-                _parentContoller.triggerTime = nil;
-                _parentContoller.reminderType = ReminderTypeReceiveAndNoAlarm;
-                break;
-            case 0:
-                [formatter setDateFormat:@"yyyy-MM-dd 23:59:59"];
-                strTriggerTime = [formatter stringFromDate:_datePick.date];
-                [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-                _parentContoller.reminderType = ReminderTypeReceiveAndNoAlarm;
-                _parentContoller.triggerTime = [formatter dateFromString:strTriggerTime];
-                break;
-            case 1:
-                [formatter setDateFormat:@"yyyy-MM-dd HH:mm:00"];
-                strTriggerTime = [formatter stringFromDate:_datePick.date];
-                _parentContoller.reminderType = ReminderTypeReceive;
-                _parentContoller.triggerTime = [formatter dateFromString:strTriggerTime];
-                break;
-            default:
-                break;
-        }
-        [_parentContoller updateTriggerTimeCell];
+        [self updateTime];
     }
     
     [self.navigationController popViewControllerAnimated:YES];
@@ -94,44 +100,56 @@
             break;
         case 2:
             [_labelPrompt setHidden:NO];
-            [self restoreView];
+            [self hideDatePickerView];
             break;
         default:
             break;
     }
 }
 
-- (void)restoreView {
-    // animations settings
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-    [UIView setAnimationDuration:0.25];
-    
-    // set views with new info
-    _datePick.frame = CGRectMake(0,_viewHeight - 64 , 320, 216);
-    // commit animations
-    [UIView commitAnimations];
+- (void)hideDatePickerView {
+    if (_showed) {
+        // animations settings
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationDuration:0.25];
+        
+        // set views with new info
+        _datePick.frame = CGRectMake(0,_viewHeight - 64 , 320, 216);
+        // commit animations
+        [UIView commitAnimations];
+        
+        _showed = NO;
+    }
 }
 
 - (void)showPickerViewWithMode:(UIDatePickerMode)pickMode {
-  
-    _datePick.minimumDate = [NSDate date];
-    [_datePick setDate:[NSDate date]];
-    [_datePick setDatePickerMode:pickMode];
-    _datePick.minuteInterval = 5;
-    if (NO == _showed) {
-        _showed = YES;
+    if (_showed && _datePick.datePickerMode == pickMode) {
         return;
     }
-    // animations settings
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-    [UIView setAnimationDuration:0.25];
     
-    // set views with new info
-    _datePick.frame = CGRectMake(0,_viewHeight - 216 - 64 , 320, 216);
-    // commit animations
-    [UIView commitAnimations];
+//    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+//    dispatch_async(queue, ^{[_datePick setDatePickerMode:pickMode];});
+    [_datePick setDatePickerMode:pickMode];
+    
+    
+    if (pickMode == UIDatePickerModeDateAndTime) {
+        _datePick.minuteInterval = 5;
+    }
+ 
+    if (! _showed) {
+        // animations settings
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationDuration:0.25];
+        
+        // set views with new info
+        _datePick.frame = CGRectMake(0,_viewHeight - 216 - 64 , 320, 216);
+        // commit animations
+        [UIView commitAnimations];
+        
+        _showed = YES;
+    }
 }
 
 - (void)initTableFooterView {
@@ -148,6 +166,11 @@
 
 - (void)valueChanged:(UIDatePicker *)datePicker {
     _dirty = YES;
+}
+
+- (void)done{
+    [self updateTime];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kReminderSettingOk object:nil];
 }
 
 #pragma 事件函数
@@ -172,6 +195,10 @@
     [self initTableFooterView];
     _rows = [[NSArray alloc] initWithObjects:kOneDayTimeDesc,kAlarmTimeDesc,kInboxTimeDesc, nil];
     [[AppDelegate delegate] initNavleftBarItemWithController:self withAction:@selector(back)];
+    
+    UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
+    [[GlobalFunction defaultGlobalFunction] customNavigationBarItem:item];
+    self.navigationItem.rightBarButtonItem = item;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -204,7 +231,7 @@
 }
 
 - (IBAction)clickCancel:(id)sender {
-    [self restoreView];
+    [self hideDatePickerView];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -220,6 +247,7 @@
     }
     if (self.selectedRow == indexPath.row) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
     }else {
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
@@ -234,7 +262,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     _dirty = YES;
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (self.selectedRow != -1 && self.selectedRow != indexPath.row) {
         NSIndexPath * lastSelectedIndexPath = [NSIndexPath indexPathForRow:self.selectedRow inSection:0];
@@ -243,10 +271,11 @@
     }
     
     self.selectedRow = indexPath.row;
-    [self reloadDatePicker];
     
     UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    
+    [self reloadDatePicker];
 }
 
 @end

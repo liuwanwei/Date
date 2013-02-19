@@ -249,6 +249,14 @@
     }
 }
 
+- (void)saveReminderAndPopToRootView{
+    // saveReminder在派生类中被定义。当前类其实相当于C++中的纯虚类。
+    SEL sel = @selector(saveReminder);
+    if (sel) {
+        SuppressPerformSelectorLeakWarning([self performSelector:sel]);
+    }
+}
+
 #pragma 事件函数
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -274,7 +282,12 @@
     _userManager = [UserManager defaultManager];
     _isLogin = [[SinaWeiboManager defaultManager].sinaWeibo isLoggedIn];
     _isAuthValid = [[SinaWeiboManager defaultManager].sinaWeibo isAuthValid];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveReminderAndPopToRootView) name:kReminderSettingOk object:nil];
+}
 
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

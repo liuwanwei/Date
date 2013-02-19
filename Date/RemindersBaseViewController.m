@@ -75,8 +75,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    _soundManager.delegate  = nil;
-    _reminderManager.delegate = nil;
+//    _soundManager.delegate  = nil;
+//    _reminderManager.delegate = nil;
 }
 
 #pragma mark - Table view data source
