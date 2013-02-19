@@ -14,13 +14,16 @@
 #import "SinaWeiboManager.h"
 #import "AppDelegate.h"
 #import "ReminderTimeSettingViewController.h"
+#import "ShowTextReminderViewController.h"
+#import "ShowAudioReminderViewController.h"
+#import "ModifyAudioReminderViewController.h"
+#import "ModifyTextReminderViewController.h"
 #import "LMLibrary.h"
 #import "GlobalFunction.h"
 
 @interface ReminderSettingViewController () {
     UIDatePicker * _datePicker;
     UILabel * _labelPrompt;
-    UIButton * _btnSave;
     NSDate * _oriTriggerTime;
 }
 
@@ -29,6 +32,7 @@
 @implementation ReminderSettingViewController
 @synthesize tableView = _tableView;
 @synthesize pickerView = _pickerView;
+@synthesize btnSave = _btnSave;
 @synthesize reminder = _reminder;
 @synthesize receiver = _receiver;
 @synthesize desc = _desc;
@@ -43,6 +47,39 @@
 @synthesize reminderType = _reminderType;
 @synthesize showSendFriendCell = _showSendFriendCell;
 @synthesize textCell = _textCell;
+
+
++ (ReminderSettingViewController *)createController:(Reminder *)reminder withDateType:(NSInteger)type{
+    ReminderSettingViewController * controller;
+    NSString * audioPath = reminder.audioUrl;
+    UserManager * userManager = [UserManager defaultManager];
+    if (DataTypeHistory == type ||
+        (NO == [userManager isOneself:[reminder.userID stringValue]] && nil != reminder.triggerTime)) {
+        if (nil == audioPath || [audioPath isEqualToString:@""]) {
+            controller = [[ShowTextReminderViewController alloc] initWithNibName:@"TextReminderSettingViewController" bundle:nil];
+        }else {
+            controller = [[ShowAudioReminderViewController alloc] initWithNibName:@"AudioReminderSettingViewController" bundle:nil];
+        }
+        
+        controller.btnSave.hidden = YES;
+    }else {
+        if (nil == audioPath || [audioPath isEqualToString:@""]) {
+            controller = [[ModifyTextReminderViewController alloc] initWithNibName:@"TextReminderSettingViewController" bundle:nil];
+        }else {
+            controller = [[ModifyAudioReminderViewController alloc] initWithNibName:@"AudioReminderSettingViewController" bundle:nil];
+        }
+        
+        if (DataTypeCollectingBox == type) {
+            controller.isInbox = YES;
+        }else {
+            controller.isInbox = NO;
+        }
+    }
+    
+    controller.reminder = reminder;
+    
+    return controller;
+}
 
 #pragma 私有函数
 - (void)removeHUD {
@@ -272,11 +309,13 @@
     [super viewDidLoad];
     self.view.backgroundColor = RGBColor(244, 244, 244);
     [self computeFontSize];
-    if (_dateType == DataTypeRecent || _dateType == DataTypeToday || _dateType == DataTypeCollectingBox) {
+//    if (_dateType == DataTypeRecent ||
+//        _dateType == DataTypeToday  ||
+//        _dateType == DataTypeCollectingBox) {
         [self initTableFooterView];
-    }else if (_dateType == DataTypeHistory){
-        [self initTableFooterViewOfReminderFinished];
-    }
+//    }else if (_dateType == DataTypeHistory){
+//        [self initTableFooterViewOfReminderFinished];
+//    }
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     _userManager = [UserManager defaultManager];

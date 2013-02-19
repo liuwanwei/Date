@@ -18,6 +18,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView * tableView;
 @property (weak, nonatomic) IBOutlet UIPickerView * pickerView;
+@property (strong, nonatomic) UIButton * btnSave;
 
 @property (strong, nonatomic) Reminder * reminder;
 @property (strong, nonatomic) NSString * desc;
@@ -33,6 +34,8 @@
 @property (nonatomic) ReminderType reminderType;
 @property (nonatomic) BOOL showSendFriendCell;
 @property (nonatomic, weak) IBOutlet UITableViewCell * textCell;
+
++ (ReminderSettingViewController *)createController:(Reminder *)reminder withDateType:(NSInteger)type;
 
 - (void)updateReceiverCell;
 - (void)updateTriggerTimeCell;

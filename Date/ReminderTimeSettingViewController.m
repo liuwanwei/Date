@@ -218,22 +218,6 @@
     [_datePick removeTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
 }
 
-- (IBAction)clickOK:(id)sender {
-    if (UIDatePickerModeDate == _datePick.datePickerMode) {
-        _parentContoller.reminderType = ReminderTypeReceiveAndNoAlarm;
-    }else {
-        _parentContoller.reminderType = ReminderTypeReceive;
-    }
-    
-    _parentContoller.triggerTime = _datePick.date;
-    [_parentContoller updateTriggerTimeCell];
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (IBAction)clickCancel:(id)sender {
-    [self hideDatePickerView];
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [_rows count];

@@ -18,11 +18,13 @@
 #import "TextReminderDetailViewController.h"
 #import "BilateralFriendManager.h"
 #import "RemindersInboxViewController.h"
+#import "ReminderSettingViewController.h"
 #import "GlobalFunction.h"
 #import "MobClick.h"
 
 @interface AppDelegate () {
     BOOL _showingAlert;
+    Reminder * _alertedReminder;
 }
 @end
 
@@ -79,9 +81,11 @@
         [[SoundManager defaultSoundManager] playAudio:reminder.audioUrl];
     }
     
-    alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+    alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"查看"otherButtonTitles:@"知道了", nil, nil];
     alertView.restorationIdentifier = reminder.id;
     [alertView show];
+    
+    _alertedReminder = reminder;
 }
 
 - (void)checkRemindersExpired {
@@ -332,12 +336,25 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSLog(@"buttonIndex %d", buttonIndex);
     [[SoundManager defaultSoundManager] stopAudio];
     ReminderManager * manager = [ReminderManager defaultManager];
     Reminder * reminder = [manager reminderWithId:alertView.restorationIdentifier];
     [manager modifyReminder:reminder withBellState:YES];
     [_homeViewController initDataWithAnimation:NO];
-    _showingAlert = NO;
-    [self checkRemindersExpired];
+    
+    if (buttonIndex == 0) {
+        ReminderSettingViewController * controller = [ReminderSettingViewController createController:_alertedReminder withDateType:DataTypeToday];
+        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
+        [[GlobalFunction defaultGlobalFunction] setNavigationBarBackgroundImage:nav.navigationBar];
+        [_navController presentViewController:nav animated:YES completion:nil];
+        
+        // TODO 弹出界面关闭时，调用下面两行.
+//        _showingAlert = NO;
+//        [self checkRemindersExpired];
+    }else{
+        _showingAlert = NO;
+        [self checkRemindersExpired];
+    }
 }
 @end
