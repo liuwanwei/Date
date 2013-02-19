@@ -1735,7 +1735,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../UMAnalytics_Sdk_OpenUDID\"",
 					"\"$(SRCROOT)/UMeng\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
@@ -1770,7 +1769,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../UMAnalytics_Sdk_OpenUDID\"",
 					"\"$(SRCROOT)/UMeng\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
