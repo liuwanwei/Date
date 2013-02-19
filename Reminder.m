@@ -2,8 +2,8 @@
 //  Reminder.m
 //  date
 //
-//  Created by maoyu on 12-12-13.
-//  Copyright (c) 2012年 Liu&Mao. All rights reserved.
+//  Created by lixiaoyu on 13-2-6.
+//  Copyright (c) 2013年 Liu&Mao. All rights reserved.
 //
 
 #import "Reminder.h"
@@ -13,16 +13,17 @@
 
 @dynamic audioLength;
 @dynamic audioUrl;
+@dynamic createTime;
 @dynamic desc;
 @dynamic id;
 @dynamic isAlarm;
 @dynamic isRead;
 @dynamic latitude;
 @dynamic longitude;
-@dynamic createTime;
+@dynamic state;
 @dynamic triggerTime;
 @dynamic type;
 @dynamic userID;
-@dynamic state;
+@dynamic finishedTime;
 
 @end

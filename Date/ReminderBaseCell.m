@@ -41,6 +41,10 @@
 @synthesize dateType = _dateType;
 @synthesize editingState = _editingState;
 @synthesize labelDescOriwidth = _labelDescOriwidth;
+@synthesize imageViewAlarm = _imageViewAlarm;
+@synthesize imageViewVoice = _imageViewVoice;
+@synthesize imageViewContact = _imageViewContact;
+@synthesize imageViewSeperator = _imageViewSeperator;
 
 - (NSString *)custumDayString:(NSDate *)date {
     NSString * dateString = @"" ;
@@ -57,7 +61,7 @@
     NSDateComponents * cps = [calendar components:unitFlags fromDate:nowDate  toDate:date  options:0];
     NSInteger diffDay  = [cps day];
     if (diffDay == 0) {
-        dateString = @"";
+        dateString = @"睡觉前";
     }else if (diffDay > -7 && diffDay <= -1) {
         dateString = [NSString stringWithFormat:@"%d天前",diffDay * -1];
     }else {
@@ -83,21 +87,60 @@
     return RGBColor(153, 153, 153);
 }
 
-- (void)setReminder:(Reminder *)reminer {
-    if (nil != reminer) {
-        _reminder = reminer;
-        if (! [self isAudioReminder]) {
-            [_btnAudio setHidden:YES];
-            [_labelAudioTime setHidden:YES];
-            [_indicatorView setHidden:YES];
-            _labelDescription.frame = CGRectMake(_labelDescription.frame.origin.x,_labelDescription.frame.origin.y,_labelDescOriwidth + kAudioButtonWidth, _labelDescription.frame.size.height);
+- (void)setReminder:(Reminder *)reminder {
+    if (nil != reminder) {
+        NSInteger offset = 0;
+        _reminder = reminder;
+        NSString * day;
+        NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"HH:mm"];
+        
+        if (nil != reminder.triggerTime) {
+            NSString * triggerTime = [formatter stringFromDate:self.reminder.triggerTime];
+            day = [self custumDayString:self.reminder.triggerTime];
+            if ([@"睡觉前" isEqualToString:day]) {
+                [_imageViewAlarm setHidden:NO];
+                [self.labelTriggerDate setHidden:NO];
+                self.labelTriggerDate.text = triggerTime;
+            }else {
+                offset = 75;
+                [self.labelTriggerDate setHidden:YES];
+            }
+            
+            if (ReminderTypeReceiveAndNoAlarm == [reminder.type integerValue]) {
+                offset = 75;
+                [_imageViewAlarm setHidden:YES];
+                [_labelTriggerDate setHidden:YES];
+            }
 
         }else {
-            [_btnAudio setHidden:NO];
+            if (nil != self.reminder.createTime) {
+                 day = [self custumDayString:self.reminder.createTime];
+            }
+           
+            offset = 75;
+            [_imageViewAlarm setHidden:YES];
+            [_labelTriggerDate setHidden:YES];
+        }
+        
+        if ([self isAudioReminder]) {
+            [_imageViewVoice setHidden:NO];
             [_labelAudioTime setHidden:NO];
-            [_indicatorView setHidden:NO];
+            _imageViewVoice.frame = CGRectMake(130 - offset, 7 , 16, 16);
             _labelAudioTime.text = [[_reminder.audioLength stringValue] stringByAppendingString:@"''"];
-            _labelDescription.frame = CGRectMake(_labelDescription.frame.origin.x,_labelDescription.frame.origin.y, _labelDescOriwidth, _labelDescription.frame.size.height);
+        }else {
+            offset = offset + 20;
+            _imageViewVoice.frame = CGRectMake(130, 7 , 16, 16);
+            [_imageViewVoice setHidden:YES];
+            [_labelAudioTime setHidden:YES];
+        }
+        
+        if ([[UserManager defaultManager] isOneself:[_reminder.userID stringValue]]) {
+            [_imageViewContact setHidden:YES];
+            _imageViewContact.frame = CGRectMake(150 - offset, 7 , 16, 16);
+        }else {
+            [_imageViewContact setHidden:NO];
+            _imageViewVoice.frame = CGRectMake(150, 7 , 16, 16);
         }
         
         if (nil != self.reminder.triggerTime) {
@@ -105,6 +148,7 @@
         }
 
         _labelDescription.text = _reminder.desc;
+        self.labelDay.text = day;
     }
 }
 
