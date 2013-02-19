@@ -15,26 +15,6 @@
 
 @implementation HistoryReminderCell
 
-- (void)setDateTimeView {
-    if (ReminderTypeReceiveAndNoAlarm == [self.reminder.type integerValue]) {
-        [self.labelTriggerDate setHidden:YES];
-        [self.labelNickname setHidden:YES];
-        self.labelDescription.frame = CGRectMake(13, kLabelDescChangedY, self.labelDescription.frame.size.width , self.labelDescription.frame.size.height);
-    }else {
-        if (nil != self.reminder.triggerTime) {
-            [self.labelTriggerDate setHidden:NO];
-            NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-            [formatter setDateFormat:@"HH:mm"];
-            self.labelTriggerDate.text =[formatter stringFromDate:self.reminder.triggerTime];
-        }else {
-            [self.labelTriggerDate setHidden:YES];
-        }
-        
-        self.labelDescription.frame = CGRectMake(13, kLabelDescOriY, self.labelDescription.frame.size.width, self.labelDescription.frame.size.height);
-        [self showFrom];
-    }
-}
-
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -58,9 +38,18 @@
 
 - (void)setReminder:(Reminder *)reminer {
     if (nil != reminer) {
-        self.labelDescOriwidth = 250;
+        self.imageViewContactOriX = 120.0;
         [super setReminder:reminer];
-        [self setDateTimeView];
+        self.oneDay = [self custumDayString:self.reminder.finishedTime];
+        
+        NSString * date = @"完成于: ";
+        if ([@"睡觉前" isEqualToString:self.oneDay]) {
+            date = [date stringByAppendingString:@"今天"];
+        }else {
+            date = [date stringByAppendingString:self.oneDay];
+        }
+        
+        self.labelTriggerDate.text = date;
     }
 }
 

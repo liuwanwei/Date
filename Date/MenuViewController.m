@@ -157,7 +157,7 @@ typedef enum {
         [imageSeparate setHidden:YES];
     }*/else {
         labelTitle.text = [_rows objectAtIndex:indexPath.row - 1];
-        if (indexPath.row != 3) {
+//        if (indexPath.row != 3) {
             if (indexPath.row == 1) {
                 remindersSize = [NSString stringWithFormat:@" %d", reminderManager.todayRemindersSize];
 //                labelTitle.text = [labelTitle.text stringByAppendingString:remindersSize];
@@ -169,10 +169,12 @@ typedef enum {
 //                labelTitle.text = [labelTitle.text stringByAppendingString:remindersSize];
                 labelCount.text = remindersSize;
 //                [imageSeparate setHidden:NO];
+            }else if (indexPath.row == 3) {
+                [labelCount setHidden:YES];
             }
-        }else {
+//        }else {
 //            [imageSeparate setHidden:NO];
-        }
+//        }
     }
     
     if (_lastIndexPath.section == indexPath.section && _lastIndexPath.row == indexPath.row) {

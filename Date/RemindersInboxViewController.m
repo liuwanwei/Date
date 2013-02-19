@@ -11,6 +11,7 @@
 #import "TodayReminderCell.h"
 #import "ReminderBaseCell.h"
 #import "HistoryReminderCell.h"
+#import "FutureReminderCell.h"
 #import "SinaWeiboManager.h"
 #import "LoginViewController.h"
 #import "OnlineFriendsRemindViewController.h"
@@ -461,22 +462,27 @@
     
     static NSString * CellIdentifier;
     ReminderBaseCell * cell;
-    if (DataTypeToday == _dateType || DataTypeRecent == _dateType) {
+    if (DataTypeToday == _dataType) {
         CellIdentifier = @"TodayReminderCell";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[TodayReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
-    }else if (DataTypeHistory == _dateType) {
-        CellIdentifier = @"TodayReminderCell";
+    }else if (DataTypeRecent == _dataType) {
+        CellIdentifier = @"FutureReminderCell";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[TodayReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];}
-    }else if (DataTypeCollectingBox == _dateType) {
-        CellIdentifier = @"TodayReminderCell";
+            cell = [[FutureReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];}
+    }else if (DataTypeHistory == _dataType) {
+        CellIdentifier = @"HistoryReminderCell";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
-            cell = [[TodayReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            cell = [[HistoryReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];}
+    }else if (DataTypeCollectingBox == _dataType) {
+        CellIdentifier = @"ReminderInboxCell";
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[ReminderInboxCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
     }
     

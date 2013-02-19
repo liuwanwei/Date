@@ -35,10 +35,17 @@
 }
 
 - (void)setReminder:(Reminder *)reminer {
-    if (nil != reminer) {
-        self.labelDescOriwidth = 220;
-        [super setReminder:reminer];
+    [super setReminder:reminer];
+    self.oneDay = [self custumDayString:self.reminder.createTime];
+
+    NSString * date = @"创建于: ";
+    if ([@"睡觉前" isEqualToString:self.oneDay]) {
+       date = [date stringByAppendingString:@"今天"];
+    }else {
+       date = [date stringByAppendingString:self.oneDay];
     }
+    
+    self.labelTriggerDate.text = date;
 }
 
 @end
