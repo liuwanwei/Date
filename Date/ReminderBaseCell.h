@@ -68,7 +68,6 @@ typedef enum {
 @property (weak, nonatomic) IBOutlet UILabel * labelAudioTime;
 @property (weak, nonatomic) IBOutlet UIButton * btnFinished;
 @property (weak, nonatomic) IBOutlet UILabel * labelDay;
-@property (weak, nonatomic) IBOutlet UIImageView *imageViewAlarm;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewVoice;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewContact;
 @property (weak, nonatomic) IBOutlet UIImageView *imageViewSeperator;
@@ -79,7 +78,9 @@ typedef enum {
 @property (strong, nonatomic) NSIndexPath * indexPath;
 @property (nonatomic) AudioState audioState;
 @property (nonatomic) CellEditingState editingState;
-@property (nonatomic) CGFloat labelDescOriwidth;
+@property (weak, nonatomic) NSString * oneDay;
+@property (weak, nonatomic) NSString * triggerTime;
+@property (nonatomic) CGFloat imageViewContactOriX;
 
 @property (weak, nonatomic) id<ReminderCellDelegate> delegate;
 

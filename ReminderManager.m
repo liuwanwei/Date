@@ -329,13 +329,13 @@ typedef enum {
         BOOL sign = NO;
         [self updateLocalNotificationWithReminder:reminder];
         if (ReminderTypeReceive == type) {
-            NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-            [formatter setDateFormat:@"yyyy-MM-dd HH:mm:00"];
-            NSString * strNowTime = [formatter stringFromDate:[NSDate date]];
-            if ([[formatter dateFromString:strNowTime] compare:triggerTime] == NSOrderedAscending) {
+//            NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+//            [formatter setDateFormat:@"yyyy-MM-dd HH:mm:00"];
+//            NSString * strNowTime = [formatter stringFromDate:[NSDate date]];
+//            if ([[formatter dateFromString:strNowTime] compare:triggerTime] == NSOrderedAscending) {
                 sign = YES;
                 reminder.isAlarm = [NSNumber numberWithBool:NO];
-            }
+//            }
         }
         
         [self updateRemindersSizeWithOriTime:reminder.triggerTime withNowTime:triggerTime withType:type];
