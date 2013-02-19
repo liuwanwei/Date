@@ -31,7 +31,9 @@
 
 #pragma 私有函数
 - (void)initPickerView {
-    [_datePick setFrame:CGRectMake(0,_viewHeight - 216 - 64 , 320, 216)];
+    [_datePick setFrame:CGRectMake(0,_viewHeight , 320, 216)];
+    _datePick.minimumDate = [NSDate date];
+    [_datePick setDate:[NSDate date]];
     [self.view addSubview:_datePick];
     [_datePick addTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
 }
@@ -94,44 +96,56 @@
             break;
         case 2:
             [_labelPrompt setHidden:NO];
-            [self restoreView];
+            [self hideDatePickerView];
             break;
         default:
             break;
     }
 }
 
-- (void)restoreView {
-    // animations settings
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-    [UIView setAnimationDuration:0.25];
-    
-    // set views with new info
-    _datePick.frame = CGRectMake(0,_viewHeight - 64 , 320, 216);
-    // commit animations
-    [UIView commitAnimations];
+- (void)hideDatePickerView {
+    if (_showed) {
+        // animations settings
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationDuration:0.25];
+        
+        // set views with new info
+        _datePick.frame = CGRectMake(0,_viewHeight - 64 , 320, 216);
+        // commit animations
+        [UIView commitAnimations];
+        
+        _showed = NO;
+    }
 }
 
 - (void)showPickerViewWithMode:(UIDatePickerMode)pickMode {
-  
-    _datePick.minimumDate = [NSDate date];
-    [_datePick setDate:[NSDate date]];
-    [_datePick setDatePickerMode:pickMode];
-    _datePick.minuteInterval = 5;
-    if (NO == _showed) {
-        _showed = YES;
+    if (_showed && _datePick.datePickerMode == pickMode) {
         return;
     }
-    // animations settings
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationBeginsFromCurrentState:YES];
-    [UIView setAnimationDuration:0.25];
     
-    // set views with new info
-    _datePick.frame = CGRectMake(0,_viewHeight - 216 - 64 , 320, 216);
-    // commit animations
-    [UIView commitAnimations];
+//    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+//    dispatch_async(queue, ^{[_datePick setDatePickerMode:pickMode];});
+    [_datePick setDatePickerMode:pickMode];
+    
+    
+    if (pickMode == UIDatePickerModeDateAndTime) {
+        _datePick.minuteInterval = 5;
+    }
+ 
+    if (! _showed) {
+        // animations settings
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationDuration:0.25];
+        
+        // set views with new info
+        _datePick.frame = CGRectMake(0,_viewHeight - 216 - 64 , 320, 216);
+        // commit animations
+        [UIView commitAnimations];
+        
+        _showed = YES;
+    }
 }
 
 - (void)initTableFooterView {
@@ -204,7 +218,7 @@
 }
 
 - (IBAction)clickCancel:(id)sender {
-    [self restoreView];
+    [self hideDatePickerView];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -220,6 +234,7 @@
     }
     if (self.selectedRow == indexPath.row) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
     }else {
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
@@ -234,7 +249,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     _dirty = YES;
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (self.selectedRow != -1 && self.selectedRow != indexPath.row) {
         NSIndexPath * lastSelectedIndexPath = [NSIndexPath indexPathForRow:self.selectedRow inSection:0];
@@ -243,10 +258,11 @@
     }
     
     self.selectedRow = indexPath.row;
-    [self reloadDatePicker];
     
     UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    
+    [self reloadDatePicker];
 }
 
 @end
