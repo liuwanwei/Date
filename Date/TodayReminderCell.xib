@@ -43,7 +43,7 @@
 							<object class="IBUILabel" id="759115386">
 								<reference key="NSNextResponder" ref="132779415"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{60, 5}, {60, 21}}</string>
+								<string key="NSFrame">{{13, 5}, {60, 21}}</string>
 								<reference key="NSSuperview" ref="132779415"/>
 								<reference key="NSNextKeyView" ref="577099418"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -55,8 +55,7 @@
 								<string key="IBUIText">12:12</string>
 								<object class="NSColor" key="IBUITextColor">
 									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MCAwIDAAA</bytes>
-									<string key="IBUIColorCocoaTouchKeyPath">darkTextColor</string>
+									<bytes key="NSRGB">MC4yMzkyMTU2ODYzIDAuNiAxAA</bytes>
 								</object>
 								<object class="NSColor" key="IBUIHighlightedColor" id="151730650">
 									<int key="NSColorSpace">3</int>
@@ -117,7 +116,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{13, 5}, {56, 21}}</string>
 								<reference key="NSSuperview" ref="132779415"/>
-								<reference key="NSNextKeyView" ref="260986105"/>
+								<reference key="NSNextKeyView" ref="891725135"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<reference key="IBUIBackgroundColor" ref="233995219"/>
 								<bool key="IBUIOpaque">NO</bool>
@@ -157,26 +156,12 @@
 									<string key="NSResourceName">sidebar_separate_light@2x.png</string>
 								</object>
 							</object>
-							<object class="IBUIImageView" id="260986105">
-								<reference key="NSNextResponder" ref="132779415"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{110, 7}, {16, 16}}</string>
-								<reference key="NSSuperview" ref="132779415"/>
-								<reference key="NSNextKeyView" ref="891725135"/>
-								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<bool key="IBUIUserInteractionEnabled">NO</bool>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<object class="NSCustomResource" key="IBUIImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">reminderSettingAlarmHint.png</string>
-								</object>
-							</object>
 							<object class="IBUIImageView" id="891725135">
 								<reference key="NSNextResponder" ref="132779415"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{130, 6}, {16, 16}}</string>
+								<string key="NSFrame">{{63, 7}, {16, 16}}</string>
 								<reference key="NSSuperview" ref="132779415"/>
-								<reference key="NSNextKeyView" ref="1059336165"/>
+								<reference key="NSNextKeyView" ref="520857880"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -185,10 +170,10 @@
 									<string key="NSResourceName">reminderVoiceHint.png</string>
 								</object>
 							</object>
-							<object class="IBUIImageView" id="1059336165">
+							<object class="IBUIImageView" id="520857880">
 								<reference key="NSNextResponder" ref="132779415"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{150, 7}, {16, 16}}</string>
+								<string key="NSFrame">{{83, 7}, {16, 16}}</string>
 								<reference key="NSSuperview" ref="132779415"/>
 								<reference key="NSNextKeyView" ref="344416687"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -196,7 +181,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<object class="NSCustomResource" key="IBUIImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">reminderSettingContact.png</string>
+									<string key="NSResourceName">reminderSettingContactHint.png</string>
 								</object>
 							</object>
 						</array>
@@ -252,22 +237,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">imageViewAlarm</string>
-						<reference key="source" ref="5177352"/>
-						<reference key="destination" ref="260986105"/>
-					</object>
-					<int key="connectionID">65</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">imageViewContact</string>
-						<reference key="source" ref="5177352"/>
-						<reference key="destination" ref="1059336165"/>
-					</object>
-					<int key="connectionID">66</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">imageViewVoice</string>
 						<reference key="source" ref="5177352"/>
 						<reference key="destination" ref="891725135"/>
@@ -281,6 +250,14 @@
 						<reference key="destination" ref="103318822"/>
 					</object>
 					<int key="connectionID">68</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">imageViewContact</string>
+						<reference key="source" ref="5177352"/>
+						<reference key="destination" ref="520857880"/>
+					</object>
+					<int key="connectionID">70</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -309,10 +286,9 @@
 							<reference ref="103318822"/>
 							<reference ref="759115386"/>
 							<reference ref="577099418"/>
-							<reference ref="344416687"/>
-							<reference ref="260986105"/>
-							<reference ref="1059336165"/>
 							<reference ref="891725135"/>
+							<reference ref="344416687"/>
+							<reference ref="520857880"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -341,18 +317,13 @@
 						<reference key="parent" ref="5177352"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">62</int>
-						<reference key="object" ref="260986105"/>
-						<reference key="parent" ref="5177352"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">63</int>
 						<reference key="object" ref="891725135"/>
 						<reference key="parent" ref="5177352"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">64</int>
-						<reference key="object" ref="1059336165"/>
+						<int key="objectID">69</int>
+						<reference key="object" ref="520857880"/>
 						<reference key="parent" ref="5177352"/>
 					</object>
 				</array>
@@ -365,9 +336,8 @@
 				<string key="4.CustomClassName">TodayReminderCell</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="62.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="63.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="64.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="69.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
@@ -375,7 +345,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">68</int>
+			<int key="maxID">70</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
@@ -383,8 +353,7 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="reminderSettingAlarmHint.png">{16, 16}</string>
-			<string key="reminderSettingContact.png">{28, 28}</string>
+			<string key="reminderSettingContactHint.png">{16, 16}</string>
 			<string key="reminderVoiceHint.png">{16, 16}</string>
 			<string key="sidebar_separate_light@2x.png">{450, 4}</string>
 		</dictionary>

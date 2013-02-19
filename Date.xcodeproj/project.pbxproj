@@ -98,6 +98,8 @@
 		3C3BE6BF168ADAEC0052A8C5 /* sidebar_separate_light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3BE6BC168ADAEC0052A8C5 /* sidebar_separate_light@2x.png */; };
 		3C3BE6E0168C236A0052A8C5 /* backNavigationBar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3BE6DE168C236A0052A8C5 /* backNavigationBar.png */; };
 		3C3BE6E1168C236A0052A8C5 /* backNavigationBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3BE6DF168C236A0052A8C5 /* backNavigationBar@2x.png */; };
+		3C4037E216D3263F0033249C /* FutureReminderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4037E116D3263F0033249C /* FutureReminderCell.m */; };
+		3C4037E416D326830033249C /* FutureReminderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C4037E316D326830033249C /* FutureReminderCell.xib */; };
 		3C40DE3E1666ED4A005627C9 /* BilateralFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C40DE3D1666ED49005627C9 /* BilateralFriend.m */; };
 		3C40DE4216670F41005627C9 /* RemindersNotificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C40DE4016670F41005627C9 /* RemindersNotificationViewController.m */; };
 		3C40DE4316670F41005627C9 /* RemindersNotificationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C40DE4116670F41005627C9 /* RemindersNotificationViewController.xib */; };
@@ -455,6 +457,9 @@
 		3C3BE6D9168C0CC30052A8C5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		3C3BE6DE168C236A0052A8C5 /* backNavigationBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = backNavigationBar.png; path = Resources/images/backNavigationBar.png; sourceTree = "<group>"; };
 		3C3BE6DF168C236A0052A8C5 /* backNavigationBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "backNavigationBar@2x.png"; path = "Resources/images/backNavigationBar@2x.png"; sourceTree = "<group>"; };
+		3C4037E016D3263F0033249C /* FutureReminderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FutureReminderCell.h; sourceTree = "<group>"; };
+		3C4037E116D3263F0033249C /* FutureReminderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FutureReminderCell.m; sourceTree = "<group>"; };
+		3C4037E316D326830033249C /* FutureReminderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FutureReminderCell.xib; sourceTree = "<group>"; };
 		3C40DE3C1666ED49005627C9 /* BilateralFriend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BilateralFriend.h; sourceTree = "<group>"; };
 		3C40DE3D1666ED49005627C9 /* BilateralFriend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BilateralFriend.m; sourceTree = "<group>"; };
 		3C40DE3F16670F41005627C9 /* RemindersNotificationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemindersNotificationViewController.h; sourceTree = "<group>"; };
@@ -845,6 +850,7 @@
 				3C2E8C4E16B8A6CD003072BD /* TodayReminderCellBackgroundView.xib */,
 				3C2E8C7B16B928AE003072BD /* HistoryReminderCellBackgroundView.xib */,
 				3C824CED16BCF715002BD38D /* DateModeCell.xib */,
+				3C4037E316D326830033249C /* FutureReminderCell.xib */,
 			);
 			name = cell;
 			sourceTree = "<group>";
@@ -881,6 +887,8 @@
 				3C1CB07D167AFABE0025BDB2 /* ReminderSettingTimeCell.m */,
 				3C93849A1688537500DA6412 /* ReminderSettingDescCell.h */,
 				3C93849B1688537500DA6412 /* ReminderSettingDescCell.m */,
+				3C4037E016D3263F0033249C /* FutureReminderCell.h */,
+				3C4037E116D3263F0033249C /* FutureReminderCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -1462,6 +1470,7 @@
 				3C84B3EF16C22D7D007303F6 /* sectionSeperator3.png in Resources */,
 				3C84B3F016C22D7D007303F6 /* sectionSeperator4.png in Resources */,
 				3C84B3F116C22D7D007303F6 /* sectionSeperator5.png in Resources */,
+				3C4037E416D326830033249C /* FutureReminderCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1548,6 +1557,7 @@
 				3CFCCC0616AA499E002AC474 /* AboutUsViewController.m in Sources */,
 				E68A7FF616AE5A2000DCA6E1 /* SettingAlertSoundViewController.m in Sources */,
 				3C84B3F716C232C2007303F6 /* Reminder.m in Sources */,
+				3C4037E216D3263F0033249C /* FutureReminderCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
