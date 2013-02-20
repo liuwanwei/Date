@@ -46,6 +46,16 @@ static char UITopViewControllerKey;
     }
 }
 
+- (BOOL)isRootNavigationViewController:(UIViewController *)controller{
+    if (controller.navigationController) {
+        if (controller.navigationController.viewControllers.count == 1) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
 - (void)initNavleftBarItemWithController:(UIViewController *)controller withAction:(SEL)action{
     controller.navigationItem.hidesBackButton = YES;
     UIButton *leftButton;
@@ -61,8 +71,10 @@ static char UITopViewControllerKey;
         needAssociation = YES;
     }
     
-    // 根据不同的显示模式（模态或导航），实现不同的按钮外观。模态时只能用在第一级view，模态再入导航栈时理应出栈，但会执行成dismiss。
-    if (controller.presentingViewController != nil) {
+    // 根据不同的显示模式（模态或导航），实现不同的返回按钮外观。
+    if (controller.presentingViewController != nil && [self isRootNavigationViewController:controller]) {
+        // 当界面模态展示，并处于导航栈底时，左侧导航按钮处理成“取消”样式。
+        
         item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:actionTarget action:customAction];
         if (needAssociation) {
             objc_setAssociatedObject(item, &UITopViewControllerKey, controller, OBJC_ASSOCIATION_ASSIGN);
