@@ -20,9 +20,7 @@
 #pragma 私有函数
 - (void)dismiss {
     [[SoundManager defaultSoundManager] deleteAudioFile:self.reminder.audioUrl];
-    [self.navigationController dismissViewControllerAnimated:YES completion:^ {
-        //[[AppDelegate delegate] checkRemindersExpired];
-    }];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)saveReminder {
@@ -67,10 +65,7 @@
     [super viewDidLoad];
     self.title = @"新建提醒";
     
-    UIBarButtonItem * leftItem;
-    leftItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(dismiss)];
-    [[GlobalFunction defaultGlobalFunction] customNavigationBarItem:leftItem];
-    self.navigationItem.leftBarButtonItem = leftItem;
+    [[GlobalFunction defaultInstance] initNavleftBarItemWithController:self withAction:@selector(dismiss)];
     
     [self updateTableFooterViewInCreateState];
 }
@@ -106,7 +101,7 @@
         }else {
             type = kUMengEventReminderParamAlarm;
         }
-        NSDate * tommrow = [[GlobalFunction defaultGlobalFunction] tomorrow];
+        NSDate * tommrow = [[GlobalFunction defaultInstance] tomorrow];
         if ([self.reminder.triggerTime compare:tommrow] == NSOrderedAscending) {
             date = kUMengEventReminderParamToady;
             [AppDelegate delegate].homeViewController.dataType = DataTypeToday;
@@ -120,7 +115,9 @@
     [MobClick event:event attributes:dict];
     
     [[AppDelegate delegate].homeViewController initDataWithAnimation:NO];
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    
+    
+    [self dissmissSettingView];
 }
 
 @end

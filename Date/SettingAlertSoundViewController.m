@@ -37,7 +37,7 @@
 {
     [super viewDidLoad];
     
-    [[GlobalFunction defaultGlobalFunction] initNavleftBarItemWithController:self withAction:@selector(back)];
+    [[GlobalFunction defaultInstance] initNavleftBarItemWithController:self withAction:@selector(back)];
 
     _soundTitles = [[[SoundManager defaultSoundManager] aviableAlertSounds] objectAtIndex:0];
     _soundTypes = [[[SoundManager defaultSoundManager] aviableAlertSounds] objectAtIndex:1];

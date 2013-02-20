@@ -8,11 +8,13 @@
 
 #import "GlobalFunction.h"
 #import "LMLibrary.h"
+#import <objc/runtime.h>
+
 static GlobalFunction * sGlobalFunction;
 
 @implementation GlobalFunction
 
-+ (GlobalFunction *)defaultGlobalFunction{
++ (GlobalFunction *)defaultInstance{
     if (nil == sGlobalFunction) {
         sGlobalFunction = [[GlobalFunction alloc] init];
     }
@@ -31,33 +33,67 @@ static GlobalFunction * sGlobalFunction;
    
 }
 
-- (void)initNavleftBarItemWithController:(UIViewController *)controller withAction:(SEL)action{
-    if (action != nil) {
-        controller.navigationItem.hidesBackButton = YES;
-        UIButton *leftButton;
-        UIBarButtonItem * item;
-        
-        leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-        [leftButton setImage:[UIImage imageNamed:@"backNavigationBar"] forState:UIControlStateNormal];
-        [leftButton addTarget:controller action:action forControlEvents:UIControlEventTouchUpInside];
-        item = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-        
-        controller.navigationItem.leftBarButtonItem = item;
-    }else {
-        controller.navigationItem.leftBarButtonItem = nil;
+static char UITopViewControllerKey;
+- (void)sharedBackItemClicked:(id)sender{
+    UIViewController * topVC = (UIViewController *)objc_getAssociatedObject(sender, &UITopViewControllerKey);
+    
+    if (topVC != nil) {
+        if (topVC.presentingViewController != nil) {
+            [topVC dismissModalViewControllerAnimated:YES];
+        }else{
+            [topVC.navigationController popViewControllerAnimated:YES];
+        }
     }
 }
 
-//- (void)initNavLeftBarCancelItemWithController:(UIViewController *)controller {
-//    UIBarButtonItem * leftItem;
-//    leftItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:controller action:@selector(dismiss)];
-//    UIFont * font = [UIFont systemFontOfSize:12.0];
-//    NSValue * offset = [NSValue valueWithUIOffset:UIOffsetMake(0, 2)];
-//    NSDictionary * attr = [[NSDictionary alloc] initWithObjectsAndKeys:font, UITextAttributeFont,RGBColor(0, 0, 0), UITextAttributeTextColor,[UIColor whiteColor],UITextAttributeTextShadowColor,offset,UITextAttributeTextShadowOffset,nil];
-//    [leftItem setTitleTextAttributes:attr forState:UIControlStateNormal];
-//    
-//    controller.navigationItem.leftBarButtonItem = leftItem;
-//}
+- (BOOL)isRootNavigationViewController:(UIViewController *)controller{
+    if (controller.navigationController) {
+        if (controller.navigationController.viewControllers.count == 1) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+- (void)initNavleftBarItemWithController:(UIViewController *)controller withAction:(SEL)action{
+    controller.navigationItem.hidesBackButton = YES;
+    UIButton *leftButton;
+    UIBarButtonItem * item;
+    SEL customAction = action;
+    id actionTarget = controller;
+    BOOL needAssociation = NO;
+
+    // 指定默认的消息处理。
+    if (nil == customAction) {
+        customAction = @selector(sharedBackItemClicked:);
+        actionTarget = self;
+        needAssociation = YES;
+    }
+    
+    // 根据不同的显示模式（模态或导航），实现不同的返回按钮外观。
+    if (controller.presentingViewController != nil && [self isRootNavigationViewController:controller]) {
+        // 当界面模态展示，并处于导航栈底时，左侧导航按钮处理成“取消”样式。
+        
+        item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:actionTarget action:customAction];
+        if (needAssociation) {
+            objc_setAssociatedObject(item, &UITopViewControllerKey, controller, OBJC_ASSOCIATION_ASSIGN);
+        }
+        [self customNavigationBarItem:item];
+    }else{
+        leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        [leftButton setImage:[UIImage imageNamed:@"backNavigationBar"] forState:UIControlStateNormal];
+        [leftButton addTarget:actionTarget action:customAction forControlEvents:UIControlEventTouchUpInside];
+        
+        if (needAssociation) {
+            objc_setAssociatedObject(leftButton, &UITopViewControllerKey, controller, OBJC_ASSOCIATION_ASSIGN);
+        }
+        
+        item = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
+    }
+    
+    controller.navigationItem.leftBarButtonItem = item;
+}
 
 - (UIColor *)viewBackground {
     return RGBColor(255,255,255);

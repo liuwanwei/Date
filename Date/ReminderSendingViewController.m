@@ -91,7 +91,7 @@
     NSLog(@"%@", [EGOImageView class]);
     self.title = @"发送对象";
     [self initData];
-    [[AppDelegate delegate] initNavleftBarItemWithController:self withAction:@selector(back)];
+    [[GlobalFunction defaultInstance] initNavleftBarItemWithController:self withAction:@selector(back)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -174,7 +174,12 @@
 - (void)newReminderSuccess:(NSString *)reminderId {
     _reminderManager.delegate = nil;
     [[MBProgressManager defaultManager] removeHUD];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    if (self.presentingViewController) {
+        [self dismissModalViewControllerAnimated:YES];
+    }else{
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
 }
 
 - (void)newReminderFailed {

@@ -30,10 +30,6 @@ typedef enum {
     self.desc = self.reminder.desc;
 }
 
-- (void)back {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (void)saveReminder {
     [self modifyReminder];
 }
@@ -94,7 +90,7 @@ typedef enum {
     [super viewDidLoad];
     [self updateTitle:TitleTypeShow];
     [self hiddenTableFooterView];
-    [[AppDelegate delegate] initNavleftBarItemWithController:self withAction:@selector(back)];
+    [[GlobalFunction defaultInstance] initNavleftBarItemWithController:self withAction:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -108,7 +104,8 @@ typedef enum {
 - (void)newReminderSuccess:(NSString *)reminderId {
     [super newReminderSuccess:reminderId];
     [[AppDelegate delegate].homeViewController initDataWithAnimation:NO];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    
+    [self dissmissSettingView];
 }
 
 @end

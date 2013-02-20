@@ -87,7 +87,7 @@
     if (YES == [_parentController isLogin]) {
         [self initTableFooterView];
     }
-    [[GlobalFunction defaultGlobalFunction] initNavleftBarItemWithController:self withAction:@selector(back)];
+    [[GlobalFunction defaultInstance] initNavleftBarItemWithController:self withAction:@selector(back)];
     
 }
 

@@ -194,10 +194,11 @@
     _viewHeight = window.frame.size.height;
     [self initTableFooterView];
     _rows = [[NSArray alloc] initWithObjects:kOneDayTimeDesc,kAlarmTimeDesc,kInboxTimeDesc, nil];
-    [[AppDelegate delegate] initNavleftBarItemWithController:self withAction:@selector(back)];
-    
+    [[GlobalFunction defaultInstance] initNavleftBarItemWithController:self withAction:@selector(back)];
+
+    // “完成”快捷按钮。
     UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
-    [[GlobalFunction defaultGlobalFunction] customNavigationBarItem:item];
+    [[GlobalFunction defaultInstance] customNavigationBarItem:item];
     self.navigationItem.rightBarButtonItem = item;
 }
 
@@ -216,22 +217,6 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [_datePick removeTarget:self action:@selector(valueChanged:) forControlEvents:UIControlEventValueChanged];
-}
-
-- (IBAction)clickOK:(id)sender {
-    if (UIDatePickerModeDate == _datePick.datePickerMode) {
-        _parentContoller.reminderType = ReminderTypeReceiveAndNoAlarm;
-    }else {
-        _parentContoller.reminderType = ReminderTypeReceive;
-    }
-    
-    _parentContoller.triggerTime = _datePick.date;
-    [_parentContoller updateTriggerTimeCell];
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (IBAction)clickCancel:(id)sender {
-    [self hideDatePickerView];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

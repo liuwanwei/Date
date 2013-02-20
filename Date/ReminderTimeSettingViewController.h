@@ -19,6 +19,4 @@
 @property (weak, nonatomic) IBOutlet UIView * finshView;
 @property (nonatomic) int selectedRow;
 
-- (IBAction)clickOK:(id)sender;
-- (IBAction)clickCancel:(id)sender;
 @end
