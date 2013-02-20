@@ -64,7 +64,7 @@
     
     UIBarButtonItem * leftItem;
     leftItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(dismiss)];
-    [[GlobalFunction defaultGlobalFunction] customNavigationBarItem:leftItem];
+    [[GlobalFunction defaultInstance] customNavigationBarItem:leftItem];
     self.navigationItem.leftBarButtonItem = leftItem;
 
     [self initData];
@@ -102,7 +102,7 @@
         }else {
             type = kUMengEventReminderParamAlarm;
         }
-        NSDate * tommrow = [[GlobalFunction defaultGlobalFunction] tomorrow];
+        NSDate * tommrow = [[GlobalFunction defaultInstance] tomorrow];
         if ([self.reminder.triggerTime compare:tommrow] == NSOrderedAscending) {
             date = kUMengEventReminderParamToady;
             [AppDelegate delegate].homeViewController.dataType = DataTypeToday;
@@ -116,9 +116,8 @@
     [MobClick event:event attributes:dict];
     
     [[AppDelegate delegate].homeViewController initDataWithAnimation:NO];
-    [self.navigationController dismissViewControllerAnimated:YES completion:^{
-       
-    }];
+    
+    [self dissmissSettingView];
 }
 
 @end

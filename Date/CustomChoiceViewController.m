@@ -8,6 +8,7 @@
 
 #import "CustomChoiceViewController.h"
 #import "AppDelegate.h"
+#import "GlobalFunction.h"
 
 @interface CustomChoiceViewController ()
 
@@ -24,16 +25,12 @@
     return self;
 }
 
-- (void)back{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    [[AppDelegate delegate] initNavleftBarItemWithController:self withAction:@selector(back)];
+    [[GlobalFunction defaultInstance] initNavleftBarItemWithController:self withAction:nil];
 }
 
 - (void)didReceiveMemoryWarning

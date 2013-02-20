@@ -52,7 +52,7 @@
 @end
 
 @implementation RemindersInboxViewController
-@synthesize dataType = _dataType;
+@synthesize dataType = _dateType;
 @synthesize btnAudio = _btnAudio;
 @synthesize btnMode = _btnMode;
 @synthesize txtDesc = _txtDesc;
@@ -131,21 +131,21 @@
     [[MBProgressManager defaultManager] removeHUD];
 }
 
+- (void)presentReminderSettingView:(ReminderSettingViewController *)reminderSettingVC{
+    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:reminderSettingVC];
+    [[GlobalFunction defaultInstance] setNavigationBarBackgroundImage:nav.navigationBar];
+    [self.navigationController presentViewController:nav animated:YES completion:nil];
+}
+
 - (void)showAudioReminderSettingController {
     NewAudioReminderViewController * controller = [[NewAudioReminderViewController alloc] initWithNibName:@"AudioReminderSettingViewController" bundle:nil];
-    controller.dateType = _dataType;
-    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
-    [[GlobalFunction defaultGlobalFunction] setNavigationBarBackgroundImage:nav.navigationBar];
-    [self.navigationController presentViewController:nav animated:YES completion:nil];
+    [self presentReminderSettingView:controller];
 }
 
 - (void)showTextReminderSettingController {
     NewTextReminderViewController * controller = [[NewTextReminderViewController alloc] initWithNibName:@"TextReminderSettingViewController" bundle:nil];
     controller.desc = _context;
-    controller.dateType = _dataType;
-    UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
-    [[GlobalFunction defaultGlobalFunction] setNavigationBarBackgroundImage:nav.navigationBar];
-    [self.navigationController presentViewController:nav animated:YES completion:nil];
+    [self presentReminderSettingView:controller];
 }
 
 - (void)reloadData {
@@ -205,20 +205,20 @@
     [_viewBottomMenu setHidden:NO];
     [self addRefreshHeaderView];
     self.tableView.frame =CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width,self.view.frame.size.height - 44);
-    if (DataTypeToday == _dataType) {
+    if (DataTypeToday == _dateType) {
         self.title = @"今日提醒";
         self.reminders = [self.reminderManager todayUnFinishedReminders];
         [AppDelegate delegate].menuViewController.lastIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
         
-    }else if (DataTypeRecent == _dataType) {
+    }else if (DataTypeRecent == _dateType) {
         self.title = @"将来提醒";
         self.reminders = [self.reminderManager futureReminders];
         [AppDelegate delegate].menuViewController.lastIndexPath = [NSIndexPath indexPathForRow:2 inSection:0];
-    }else if (DataTypeCollectingBox == _dataType) {
+    }else if (DataTypeCollectingBox == _dateType) {
         self.title = LocalString(@"DraftBox");
         self.reminders = [self.reminderManager collectingBoxReminders];
         [AppDelegate delegate].menuViewController.lastIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    }else if (DataTypeHistory == _dataType) {
+    }else if (DataTypeHistory == _dateType) {
         self.title = @"已完成";
         [self removeRefreshHeadView];
         [_viewBottomMenu setHidden:YES];
@@ -245,7 +245,7 @@
             [self.tableView beginUpdates];
         }
         for (Reminder * reminder in self.reminders) {
-            if (DataTypeHistory == _dataType) {
+            if (DataTypeHistory == _dateType) {
                 key = [formatter stringFromDate:reminder.finishedTime];
             }else if (nil == reminder.triggerTime) {
                 key = [formatter stringFromDate:reminder.createTime];
@@ -267,7 +267,7 @@
                     
                     indexSection ++;
                 }else {
-                    if (DataTypeHistory == _dataType) {
+                    if (DataTypeHistory == _dateType) {
                         [[self.group objectForKey:key] addObject:reminder];
                     }else if (nil == reminder.triggerTime) {
                         [[self.group objectForKey:key] insertObject:reminder atIndex:0];
@@ -319,7 +319,7 @@
 {
     [super viewDidLoad];
     _tableViewRecognizer = [self.tableView enableGestureTableViewWithDelegate:self];
-    _dataType = DataTypeToday;
+    _dateType = DataTypeToday;
     [self initMenuButton];
     [self initDataWithAnimation:YES];
     [self registerHandleMessage];
@@ -398,8 +398,8 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if (DataTypeToday != _dataType) {
-        return  [[GlobalFunction defaultGlobalFunction] custumDateString:[self.keys objectAtIndex:section] withShowDate:YES];
+    if (DataTypeToday != _dateType) {
+        return  [[GlobalFunction defaultInstance] custumDateString:[self.keys objectAtIndex:section] withShowDate:YES];
     }
     
     return nil;
@@ -462,23 +462,23 @@
     
     static NSString * CellIdentifier;
     ReminderBaseCell * cell;
-    if (DataTypeToday == _dataType) {
+    if (DataTypeToday == _dateType) {
         CellIdentifier = @"TodayReminderCell";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[TodayReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         }
-    }else if (DataTypeRecent == _dataType) {
+    }else if (DataTypeRecent == _dateType) {
         CellIdentifier = @"FutureReminderCell";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[FutureReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];}
-    }else if (DataTypeHistory == _dataType) {
+    }else if (DataTypeHistory == _dateType) {
         CellIdentifier = @"HistoryReminderCell";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
             cell = [[HistoryReminderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];}
-    }else if (DataTypeCollectingBox == _dataType) {
+    }else if (DataTypeCollectingBox == _dateType) {
         CellIdentifier = @"ReminderInboxCell";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (cell == nil) {
@@ -489,7 +489,7 @@
     cell.delegate = self;
     [cell restoreView];
     BilateralFriend * friend = [_friends objectForKey:reminder.userID];
-    cell.dateType = _dataType;
+    cell.dateType = _dateType;
     cell.indexPath = indexPath;
     cell.bilateralFriend = friend;
     cell.reminder = reminder;
@@ -521,32 +521,9 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     ReminderBaseCell * cell = (ReminderBaseCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    NSString * audioPath = cell.reminder.audioUrl;
     
-    ReminderSettingViewController * controller;
-    if (DataTypeHistory == _dataType || (NO == [_userManager isOneself:[cell.reminder.userID stringValue]] && nil != cell.reminder.triggerTime)) {
-        if (nil == audioPath || [audioPath isEqualToString:@""]) {
-            controller = [[ShowTextReminderViewController alloc] initWithNibName:@"TextReminderSettingViewController" bundle:nil];
-        }else {
-            controller = [[ShowAudioReminderViewController alloc] initWithNibName:@"AudioReminderSettingViewController" bundle:nil];
-        }
-        
-    }else {
-        if (nil == audioPath || [audioPath isEqualToString:@""]) {
-            controller = [[ModifyTextReminderViewController alloc] initWithNibName:@"TextReminderSettingViewController" bundle:nil];
-        }else {
-            controller = [[ModifyAudioReminderViewController alloc] initWithNibName:@"AudioReminderSettingViewController" bundle:nil];
-        }
-        
-        if (DataTypeCollectingBox == _dataType) {
-            controller.isInbox = YES;
-        }else {
-            controller.isInbox = NO;
-        }
-    }
-    
-    controller.reminder = cell.reminder;
-    controller.dateType = _dataType;
+    ReminderSettingViewController * controller = [ReminderSettingViewController createController:cell.reminder withDateType:_dateType];
+
     if (YES == [_userManager isOneself:[cell.reminder.userID stringValue]]) {
         controller.receiver = @"自己";
     }else if (nil != cell.bilateralFriend) {
@@ -716,7 +693,7 @@
        
     } else if (state == JTTableViewCellEditingStateRight) {
         
-        if (DataTypeHistory == _dataType) {
+        if (DataTypeHistory == _dateType) {
             [self.reminderManager modifyReminder:reminder withState:ReminderStateUnFinish];
         }else {
             NSString * prompt = [[NSUserDefaults standardUserDefaults] objectForKey:NeedDisplayPromptKey];

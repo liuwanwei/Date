@@ -105,7 +105,7 @@ static SoundManager * sSoundManager;
             self.alertSound = sound;
         }else{
             // 保存到内存和“硬盘”。
-            [self saveAlertSound:AlertSoundTypeCat];
+            [self saveAlertSound:AlertSoundTypeNightingale];
         }
     }
     

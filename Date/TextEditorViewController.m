@@ -79,7 +79,7 @@
                                                  name:UIKeyboardWillShowNotification
                                                object:nil];
     [_textView becomeFirstResponder];
-    [[AppDelegate delegate] initNavleftBarItemWithController:self withAction:@selector(back)];
+    [[GlobalFunction defaultInstance] initNavleftBarItemWithController:self withAction:@selector(back)];
 }
 
 - (void)didReceiveMemoryWarning
