@@ -54,4 +54,5 @@
 - (void)modifyReminder;
 - (void)computeFontSize;
 - (void)initTriggerTime;
+- (void)dissmissSettingView;
 @end

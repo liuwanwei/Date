@@ -157,9 +157,9 @@
     NSString * result;
     if (nil != _triggerTime) {
         if (ReminderTypeReceive == _reminderType) {
-            result = [[GlobalFunction defaultGlobalFunction] custumDateTimeString:_triggerTime];
+            result = [[GlobalFunction defaultInstance] custumDateTimeString:_triggerTime];
         }else {
-            result =  [[GlobalFunction defaultGlobalFunction] custumDayString:_triggerTime];
+            result =  [[GlobalFunction defaultInstance] custumDayString:_triggerTime];
         }
     }else {
         result = kInboxTimeDesc;
@@ -259,7 +259,8 @@
     if (YES == [_userManager isOneself:[_receiverId stringValue]] ||
         nil == _triggerTime || ReminderTypeReceiveAndNoAlarm == _reminderType) {
         [[ReminderManager defaultManager] modifyReminder:_reminder withTriggerTime:_triggerTime withDesc:_desc withType:_reminderType];
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        
+        [self dissmissSettingView];
     }else {
         [[MBProgressManager defaultManager] showHUD:@"发送中"];
         _oriTriggerTime = _reminder.triggerTime;
@@ -291,6 +292,14 @@
     SEL sel = @selector(saveReminder);
     if (sel) {
         SuppressPerformSelectorLeakWarning([self performSelector:sel]);
+    }
+}
+
+- (void)dissmissSettingView{
+    if (self.presentingViewController != nil) {
+        [self dismissModalViewControllerAnimated:YES];
+    }else{
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
 

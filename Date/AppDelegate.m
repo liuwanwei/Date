@@ -117,22 +117,6 @@
     return delegate;
 }
 
-- (void)initNavleftBarItemWithController:(UIViewController *)controller withAction:(SEL)action{
-    if (action != nil) {
-        controller.navigationItem.hidesBackButton = YES;
-        UIButton *leftButton;
-        UIBarButtonItem * item;
-        
-        leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-        [leftButton setImage:[UIImage imageNamed:@"backNavigationBar"] forState:UIControlStateNormal];
-        [leftButton addTarget:controller action:action forControlEvents:UIControlEventTouchUpInside];
-        item = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-        
-        controller.navigationItem.leftBarButtonItem = item;
-    }else {
-        controller.navigationItem.leftBarButtonItem = nil;
-    }
-}
 
 #pragma 事件函数
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -143,7 +127,7 @@
     _homeViewController = [[RemindersInboxViewController alloc] initWithNibName:@"RemindersInboxViewController" bundle:nil];
     _navController = [[UINavigationController alloc] initWithRootViewController:_homeViewController];
     
-    [[GlobalFunction defaultGlobalFunction] setNavigationBarBackgroundImage:_navController.navigationBar];
+    [[GlobalFunction defaultInstance] setNavigationBarBackgroundImage:_navController.navigationBar];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
@@ -175,6 +159,9 @@
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     UIApplicationState state = application.applicationState;
     if (YES == _showingAlert) {
+#ifdef DEBUG
+        NSLog(@"不允许弹出提醒，因为上一个没有处理完。");
+#endif
         return;
     }else {
         if (UIApplicationStateActive == state) {
@@ -346,11 +333,11 @@
     if (buttonIndex == 0) {
         ReminderSettingViewController * controller = [ReminderSettingViewController createController:_alertedReminder withDateType:DataTypeToday];
         UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
-        [[GlobalFunction defaultGlobalFunction] setNavigationBarBackgroundImage:nav.navigationBar];
+        [[GlobalFunction defaultInstance] setNavigationBarBackgroundImage:nav.navigationBar];
         [_navController presentViewController:nav animated:YES completion:nil];
         
         // TODO 弹出界面关闭时，调用下面两行.
-//        _showingAlert = NO;
+        _showingAlert = NO;
 //        [self checkRemindersExpired];
     }else{
         _showingAlert = NO;

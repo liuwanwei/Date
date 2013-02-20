@@ -40,7 +40,7 @@
     self.title = LocalString(@"SettingAppBadge");
     self.tableView.dataSource= self;
     self.tableView.delegate = self;
-    [[GlobalFunction defaultGlobalFunction] initNavleftBarItemWithController:self withAction:@selector(back)];
+    [[GlobalFunction defaultInstance] initNavleftBarItemWithController:self withAction:@selector(back)];
 }
 
 - (void)didReceiveMemoryWarning

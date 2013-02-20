@@ -22,10 +22,6 @@
     self.reminderType = [self.reminder.type integerValue];
 }
 
-- (void)back {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -43,7 +39,7 @@
         [self hiddenTableFooterView];
     }
     self.title = @"提醒详情";
-    [[AppDelegate delegate] initNavleftBarItemWithController:self withAction:@selector(back)];
+    [[GlobalFunction defaultInstance] initNavleftBarItemWithController:self withAction:nil];
 }
 
 - (void)didReceiveMemoryWarning

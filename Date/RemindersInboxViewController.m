@@ -133,7 +133,7 @@
 
 - (void)presentReminderSettingView:(ReminderSettingViewController *)reminderSettingVC{
     UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:reminderSettingVC];
-    [[GlobalFunction defaultGlobalFunction] setNavigationBarBackgroundImage:nav.navigationBar];
+    [[GlobalFunction defaultInstance] setNavigationBarBackgroundImage:nav.navigationBar];
     [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
 
@@ -399,7 +399,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (DataTypeToday != _dateType) {
-        return  [[GlobalFunction defaultGlobalFunction] custumDateString:[self.keys objectAtIndex:section] withShowDate:YES];
+        return  [[GlobalFunction defaultInstance] custumDateString:[self.keys objectAtIndex:section] withShowDate:YES];
     }
     
     return nil;

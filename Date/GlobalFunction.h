@@ -12,10 +12,13 @@
 
 @interface GlobalFunction : NSObject
 
-+ (GlobalFunction *)defaultGlobalFunction;
++ (GlobalFunction *)defaultInstance;
 
 - (void)setNavigationBarBackgroundImage:(UINavigationBar *)navigationBar;
+
+- (IBAction)sharedBackItemClicked:(id)sender;
 - (void)initNavleftBarItemWithController:(UIViewController *)controller withAction:(SEL)action;
+
 //- (void)initNavLeftBarCancelItemWithController:(UIViewController *)controller;
 - (NSString *)custumDateString:(NSString *)date withShowDate:(BOOL)show;
 - (NSString *)custumDateTimeString:(NSDate *)date;

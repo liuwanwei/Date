@@ -194,10 +194,10 @@
     _viewHeight = window.frame.size.height;
     [self initTableFooterView];
     _rows = [[NSArray alloc] initWithObjects:kOneDayTimeDesc,kAlarmTimeDesc,kInboxTimeDesc, nil];
-    [[AppDelegate delegate] initNavleftBarItemWithController:self withAction:@selector(back)];
+    [[GlobalFunction defaultInstance] initNavleftBarItemWithController:self withAction:@selector(back)];
     
     UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
-    [[GlobalFunction defaultGlobalFunction] customNavigationBarItem:item];
+    [[GlobalFunction defaultInstance] customNavigationBarItem:item];
     self.navigationItem.rightBarButtonItem = item;
 }
 

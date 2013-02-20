@@ -228,7 +228,7 @@ typedef enum {
         if (nil == oriTriggerTime) {
              _draftRemindersSize--;
         }else {
-            NSDate * tomorrow = [[GlobalFunction defaultGlobalFunction] tomorrow];
+            NSDate * tomorrow = [[GlobalFunction defaultInstance] tomorrow];
             if ([oriTriggerTime compare:tomorrow] == NSOrderedAscending) {
                 _todayRemindersSize --;
             }
