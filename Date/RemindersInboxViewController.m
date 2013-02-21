@@ -133,7 +133,7 @@
 
 - (void)presentReminderSettingView:(ReminderSettingViewController *)reminderSettingVC{
     UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:reminderSettingVC];
-    [[GlobalFunction defaultInstance] setNavigationBarBackgroundImage:nav.navigationBar];
+    [[GlobalFunction defaultInstance] customizeNavigationBar:nav.navigationBar];
     [self.navigationController presentViewController:nav animated:YES completion:nil];
 }
 

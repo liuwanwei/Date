@@ -22,7 +22,7 @@ static GlobalFunction * sGlobalFunction;
     return sGlobalFunction;
 }
 
-- (void)setNavigationBarBackgroundImage:(UINavigationBar *)navigationBar{
+- (void)customizeNavigationBar:(UINavigationBar *)navigationBar{
     UIImage * image = [UIImage imageNamed:@"navigationBarBg"];
     [navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
     navigationBar.tintColor = RGBColor(242, 242, 242);
