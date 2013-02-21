@@ -14,13 +14,16 @@
 #import "SinaWeiboManager.h"
 #import "AppDelegate.h"
 #import "ReminderTimeSettingViewController.h"
+#import "ShowTextReminderViewController.h"
+#import "ShowAudioReminderViewController.h"
+#import "ModifyAudioReminderViewController.h"
+#import "ModifyTextReminderViewController.h"
 #import "LMLibrary.h"
 #import "GlobalFunction.h"
 
 @interface ReminderSettingViewController () {
     UIDatePicker * _datePicker;
     UILabel * _labelPrompt;
-    UIButton * _btnSave;
     NSDate * _oriTriggerTime;
 }
 
@@ -29,6 +32,7 @@
 @implementation ReminderSettingViewController
 @synthesize tableView = _tableView;
 @synthesize pickerView = _pickerView;
+@synthesize btnSave = _btnSave;
 @synthesize reminder = _reminder;
 @synthesize receiver = _receiver;
 @synthesize desc = _desc;
@@ -43,6 +47,39 @@
 @synthesize reminderType = _reminderType;
 @synthesize showSendFriendCell = _showSendFriendCell;
 @synthesize textCell = _textCell;
+
+
++ (ReminderSettingViewController *)createController:(Reminder *)reminder withDateType:(NSInteger)type{
+    ReminderSettingViewController * controller;
+    NSString * audioPath = reminder.audioUrl;
+    UserManager * userManager = [UserManager defaultManager];
+    if (DataTypeHistory == type ||
+        (NO == [userManager isOneself:[reminder.userID stringValue]] && nil != reminder.triggerTime)) {
+        if (nil == audioPath || [audioPath isEqualToString:@""]) {
+            controller = [[ShowTextReminderViewController alloc] initWithNibName:@"TextReminderSettingViewController" bundle:nil];
+        }else {
+            controller = [[ShowAudioReminderViewController alloc] initWithNibName:@"AudioReminderSettingViewController" bundle:nil];
+        }
+        
+        controller.btnSave.hidden = YES;
+    }else {
+        if (nil == audioPath || [audioPath isEqualToString:@""]) {
+            controller = [[ModifyTextReminderViewController alloc] initWithNibName:@"TextReminderSettingViewController" bundle:nil];
+        }else {
+            controller = [[ModifyAudioReminderViewController alloc] initWithNibName:@"AudioReminderSettingViewController" bundle:nil];
+        }
+        
+        if (DataTypeCollectingBox == type) {
+            controller.isInbox = YES;
+        }else {
+            controller.isInbox = NO;
+        }
+    }
+    
+    controller.reminder = reminder;
+    
+    return controller;
+}
 
 #pragma 私有函数
 - (void)removeHUD {
@@ -120,9 +157,9 @@
     NSString * result;
     if (nil != _triggerTime) {
         if (ReminderTypeReceive == _reminderType) {
-            result = [[GlobalFunction defaultGlobalFunction] custumDateTimeString:_triggerTime];
+            result = [[GlobalFunction defaultInstance] custumDateTimeString:_triggerTime];
         }else {
-            result =  [[GlobalFunction defaultGlobalFunction] custumDayString:_triggerTime];
+            result =  [[GlobalFunction defaultInstance] custumDayString:_triggerTime];
         }
     }else {
         result = kInboxTimeDesc;
@@ -222,7 +259,8 @@
     if (YES == [_userManager isOneself:[_receiverId stringValue]] ||
         nil == _triggerTime || ReminderTypeReceiveAndNoAlarm == _reminderType) {
         [[ReminderManager defaultManager] modifyReminder:_reminder withTriggerTime:_triggerTime withDesc:_desc withType:_reminderType];
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        
+        [self dissmissSettingView];
     }else {
         [[MBProgressManager defaultManager] showHUD:@"发送中"];
         _oriTriggerTime = _reminder.triggerTime;
@@ -249,6 +287,22 @@
     }
 }
 
+- (void)saveReminderAndPopToRootView{
+    // saveReminder在派生类中被定义。当前类其实相当于C++中的纯虚类。
+    SEL sel = @selector(saveReminder);
+    if (sel) {
+        SuppressPerformSelectorLeakWarning([self performSelector:sel]);
+    }
+}
+
+- (void)dissmissSettingView{
+    if (self.presentingViewController != nil) {
+        [self dismissModalViewControllerAnimated:YES];
+    }else{
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+}
+
 #pragma 事件函数
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -264,17 +318,24 @@
     [super viewDidLoad];
     self.view.backgroundColor = RGBColor(244, 244, 244);
     [self computeFontSize];
-    if (_dateType == DataTypeRecent || _dateType == DataTypeToday || _dateType == DataTypeCollectingBox) {
+//    if (_dateType == DataTypeRecent ||
+//        _dateType == DataTypeToday  ||
+//        _dateType == DataTypeCollectingBox) {
         [self initTableFooterView];
-    }else if (_dateType == DataTypeHistory){
-        [self initTableFooterViewOfReminderFinished];
-    }
+//    }else if (_dateType == DataTypeHistory){
+//        [self initTableFooterViewOfReminderFinished];
+//    }
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     _userManager = [UserManager defaultManager];
     _isLogin = [[SinaWeiboManager defaultManager].sinaWeibo isLoggedIn];
     _isAuthValid = [[SinaWeiboManager defaultManager].sinaWeibo isAuthValid];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveReminderAndPopToRootView) name:kReminderSettingOk object:nil];
+}
 
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

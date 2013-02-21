@@ -12,15 +12,19 @@
 
 @interface GlobalFunction : NSObject
 
-+ (GlobalFunction *)defaultGlobalFunction;
++ (GlobalFunction *)defaultInstance;
 
-- (void)setNavigationBarBackgroundImage:(UINavigationBar *)navigationBar;
+- (void)customizeNavigationBar:(UINavigationBar *)navigationBar;
+
+- (IBAction)sharedBackItemClicked:(id)sender;
 - (void)initNavleftBarItemWithController:(UIViewController *)controller withAction:(SEL)action;
-- (void)initNavLeftBarCancelItemWithController:(UIViewController *)controller;
+
+//- (void)initNavLeftBarCancelItemWithController:(UIViewController *)controller;
 - (NSString *)custumDateString:(NSString *)date withShowDate:(BOOL)show;
 - (NSString *)custumDateTimeString:(NSDate *)date;
 - (NSString *)custumDayString:(NSDate *)date;
 - (NSString *)custumDateString2:(NSDate *)date;
+- (void)customNavigationBarItem:(UIBarButtonItem *)item;
 
 - (NSInteger)diffDay:(NSDate *)date;
 

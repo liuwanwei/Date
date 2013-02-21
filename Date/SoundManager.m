@@ -105,7 +105,7 @@ static SoundManager * sSoundManager;
             self.alertSound = sound;
         }else{
             // 保存到内存和“硬盘”。
-            [self saveAlertSound:AlertSoundTypeCat];
+            [self saveAlertSound:AlertSoundTypeNightingale];
         }
     }
     
@@ -434,6 +434,11 @@ static SoundManager * sSoundManager;
     return path;
 }
 
+#pragma AVAudioRecorderDelegate
+- (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag{
+    [[AVAudioSession sharedInstance] setActive:NO error:nil];
+}
+
 #pragma AVAudioPlayerDelegate
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     if (_alarmPlayer == player) {
@@ -457,9 +462,10 @@ static SoundManager * sSoundManager;
         }
   
     }
+    
+    [[AVAudioSession sharedInstance] setActive:NO error:nil];
 }
 
-#pragma AVAudioPlayerDelegate
 - (void)audioRecorderBeginInterruption:(AVAudioRecorder *)recorder {
     [self stopTimer];
     [self stopRecord];

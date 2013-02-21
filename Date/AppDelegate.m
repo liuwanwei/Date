@@ -18,11 +18,13 @@
 #import "TextReminderDetailViewController.h"
 #import "BilateralFriendManager.h"
 #import "RemindersInboxViewController.h"
+#import "ReminderSettingViewController.h"
 #import "GlobalFunction.h"
 #import "MobClick.h"
 
 @interface AppDelegate () {
     BOOL _showingAlert;
+    Reminder * _alertedReminder;
 }
 @end
 
@@ -79,9 +81,11 @@
         [[SoundManager defaultSoundManager] playAudio:reminder.audioUrl];
     }
     
-    alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+    alertView = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"查看"otherButtonTitles:@"知道了", nil, nil];
     alertView.restorationIdentifier = reminder.id;
     [alertView show];
+    
+    _alertedReminder = reminder;
 }
 
 - (void)checkRemindersExpired {
@@ -113,22 +117,6 @@
     return delegate;
 }
 
-- (void)initNavleftBarItemWithController:(UIViewController *)controller withAction:(SEL)action{
-    if (action != nil) {
-        controller.navigationItem.hidesBackButton = YES;
-        UIButton *leftButton;
-        UIBarButtonItem * item;
-        
-        leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-        [leftButton setImage:[UIImage imageNamed:@"backNavigationBar"] forState:UIControlStateNormal];
-        [leftButton addTarget:controller action:action forControlEvents:UIControlEventTouchUpInside];
-        item = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-        
-        controller.navigationItem.leftBarButtonItem = item;
-    }else {
-        controller.navigationItem.leftBarButtonItem = nil;
-    }
-}
 
 #pragma 事件函数
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -139,7 +127,7 @@
     _homeViewController = [[RemindersInboxViewController alloc] initWithNibName:@"RemindersInboxViewController" bundle:nil];
     _navController = [[UINavigationController alloc] initWithRootViewController:_homeViewController];
     
-    [[GlobalFunction defaultGlobalFunction] setNavigationBarBackgroundImage:_navController.navigationBar];
+    [[GlobalFunction defaultInstance] customizeNavigationBar:_navController.navigationBar];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
@@ -171,6 +159,9 @@
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     UIApplicationState state = application.applicationState;
     if (YES == _showingAlert) {
+#ifdef DEBUG
+        NSLog(@"不允许弹出提醒，因为上一个没有处理完。");
+#endif
         return;
     }else {
         if (UIApplicationStateActive == state) {
@@ -332,12 +323,25 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSLog(@"buttonIndex %d", buttonIndex);
     [[SoundManager defaultSoundManager] stopAudio];
     ReminderManager * manager = [ReminderManager defaultManager];
     Reminder * reminder = [manager reminderWithId:alertView.restorationIdentifier];
     [manager modifyReminder:reminder withBellState:YES];
     [_homeViewController initDataWithAnimation:NO];
-    _showingAlert = NO;
-    [self checkRemindersExpired];
+    
+    if (buttonIndex == 0) {
+        ReminderSettingViewController * controller = [ReminderSettingViewController createController:_alertedReminder withDateType:DataTypeToday];
+        UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
+        [[GlobalFunction defaultInstance] customizeNavigationBar:nav.navigationBar];
+        [_navController presentViewController:nav animated:YES completion:nil];
+        
+        // TODO 弹出界面关闭时，调用下面两行，否则无法处理连续到期的提醒（延迟查看时）。
+        _showingAlert = NO;
+//        [self checkRemindersExpired];
+    }else{
+        _showingAlert = NO;
+        [self checkRemindersExpired];
+    }
 }
 @end

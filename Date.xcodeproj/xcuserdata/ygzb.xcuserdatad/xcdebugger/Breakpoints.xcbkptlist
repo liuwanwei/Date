@@ -7,13 +7,13 @@
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Date/FriendRemindersViewController.m"
-         timestampString = "376298489.404974"
+         filePath = "Date/RemindersInboxViewController.m"
+         timestampString = "383100661.869507"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "68"
-         endingLineNumber = "68"
-         landmarkName = "-tableView:cellForRowAtIndexPath:"
+         startingLineNumber = "371"
+         endingLineNumber = "371"
+         landmarkName = "-startRecord:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

@@ -227,6 +227,8 @@
 		E6A3980C16914121004A460F /* CustomChoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6A3980B16914121004A460F /* CustomChoiceViewController.m */; };
 		E6A3980F16918D50004A460F /* TextEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6A3980E16918D4F004A460F /* TextEditorViewController.m */; };
 		E6A3981116918DE0004A460F /* TextEditorCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E6A3981016918DE0004A460F /* TextEditorCell.xib */; };
+		E6C8EEC916D5CDDD00BBDE5E /* settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E6C8EEC816D5CDDD00BBDE5E /* settings@2x.png */; };
+		E6F376DF16D56C0B00D6DD94 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = E6F376DE16D56C0B00D6DD94 /* settings.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -616,6 +618,8 @@
 		E6A3980D16918D4F004A460F /* TextEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextEditorViewController.h; sourceTree = "<group>"; };
 		E6A3980E16918D4F004A460F /* TextEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextEditorViewController.m; sourceTree = "<group>"; };
 		E6A3981016918DE0004A460F /* TextEditorCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextEditorCell.xib; sourceTree = "<group>"; };
+		E6C8EEC816D5CDDD00BBDE5E /* settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings@2x.png"; path = "Resources/images/settings@2x.png"; sourceTree = "<group>"; };
+		E6F376DE16D56C0B00D6DD94 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settings.png; path = Resources/images/settings.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -925,6 +929,8 @@
 		3CE0ABF916507EA2004B785A /* images */ = {
 			isa = PBXGroup;
 			children = (
+				E6C8EEC816D5CDDD00BBDE5E /* settings@2x.png */,
+				E6F376DE16D56C0B00D6DD94 /* settings.png */,
 				3C84B3E816C22D7D007303F6 /* sectionSeperator1.png */,
 				3C84B3E916C22D7D007303F6 /* sectionSeperator2.png */,
 				3C84B3EA16C22D7D007303F6 /* sectionSeperator3.png */,
@@ -1048,22 +1054,18 @@
 		3CE0AC541650D5C3004B785A /* Class */ = {
 			isa = PBXGroup;
 			children = (
-				3CC9CE25165F768D00E7E9D9 /* Cell */,
-				3C351392169AC9AD00F78FB9 /* GlobalFunction */,
 				3CFCCC0316AA499C002AC474 /* AboutUsViewController.h */,
 				3CFCCC0416AA499D002AC474 /* AboutUsViewController.m */,
-				3C044CC9165A0E1B000551C5 /* ReminderSettingViewController.h */,
-				3C044CCA165A0E1B000551C5 /* ReminderSettingViewController.m */,
 				3C93849516882BD800DA6412 /* AudioReminderSettingViewController.h */,
 				3C93849616882BD800DA6412 /* AudioReminderSettingViewController.m */,
-				3C9384901688292D00DA6412 /* TextReminderSettingViewController.h */,
-				3C9384911688292D00DA6412 /* TextReminderSettingViewController.m */,
 				3C3156631681AE4000C1E42C /* BaseViewController.h */,
 				3C3156641681AE4000C1E42C /* BaseViewController.m */,
+				3CC9CE25165F768D00E7E9D9 /* Cell */,
 				E6A3980A16914121004A460F /* CustomChoiceViewController.h */,
 				E6A3980B16914121004A460F /* CustomChoiceViewController.m */,
 				3CC9CE20165F730100E7E9D9 /* FriendRemindersViewController.h */,
 				3CC9CE21165F730100E7E9D9 /* FriendRemindersViewController.m */,
+				3C351392169AC9AD00F78FB9 /* GlobalFunction */,
 				3CD0ADFD166877C0001986F0 /* MenuViewController.h */,
 				3CD0ADFE166877C0001986F0 /* MenuViewController.m */,
 				3C19884F16982974002311E5 /* ModifyAudioReminderViewController.h */,
@@ -1084,6 +1086,8 @@
 				3C23E8B31669ACA30098149A /* RemindersBaseViewController.m */,
 				3CF017DE165B500D00F83814 /* ReminderSendingViewController.h */,
 				3CF017DF165B500E00F83814 /* ReminderSendingViewController.m */,
+				3C044CC9165A0E1B000551C5 /* ReminderSettingViewController.h */,
+				3C044CCA165A0E1B000551C5 /* ReminderSettingViewController.m */,
 				3C349927166EEF62001012B6 /* RemindersInboxViewController.h */,
 				3C349928166EEF62001012B6 /* RemindersInboxViewController.m */,
 				3C40DE3F16670F41005627C9 /* RemindersNotificationViewController.h */,
@@ -1106,6 +1110,8 @@
 				E6A3980E16918D4F004A460F /* TextEditorViewController.m */,
 				3C9384A31689328A00DA6412 /* TextReminderDetailViewController.h */,
 				3C9384A41689328A00DA6412 /* TextReminderDetailViewController.m */,
+				3C9384901688292D00DA6412 /* TextReminderSettingViewController.h */,
+				3C9384911688292D00DA6412 /* TextReminderSettingViewController.m */,
 				3CFCCC0316AA499C002AC474 /* AboutUsViewController.h */,
 				3CFCCC0416AA499D002AC474 /* AboutUsViewController.m */,
 			);
@@ -1225,7 +1231,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Liu&Mao";
 			};
-			buildConfigurationList = 3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "date" */;
+			buildConfigurationList = 3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "Date" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1471,6 +1477,8 @@
 				3C84B3F016C22D7D007303F6 /* sectionSeperator4.png in Resources */,
 				3C84B3F116C22D7D007303F6 /* sectionSeperator5.png in Resources */,
 				3C4037E416D326830033249C /* FutureReminderCell.xib in Resources */,
+				E6F376DF16D56C0B00D6DD94 /* settings.png in Resources */,
+				E6C8EEC916D5CDDD00BBDE5E /* settings@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1819,7 +1827,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "date" */ = {
+		3C13E85E164DF4DA006424A2 /* Build configuration list for PBXProject "Date" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3C13E89B164DF4DB006424A2 /* Debug */,

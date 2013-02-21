@@ -24,10 +24,6 @@
     _arrayNumber = [[NSArray alloc] initWithObjects:@"iharbor",@"maoyu417",nil];
 }
 
-- (void)back{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -45,8 +41,8 @@
     [self initData];
     self.title = @"关于我们";
     [self initMenuButton];
-//    self.navigationController.navigationItem.hidesBackButton = YES;
-    [[GlobalFunction defaultGlobalFunction] initNavleftBarItemWithController:self withAction:@selector(back)];
+
+    [[GlobalFunction defaultInstance] initNavleftBarItemWithController:self withAction:nil];
 }
 
 - (void)didReceiveMemoryWarning

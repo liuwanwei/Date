@@ -18,22 +18,9 @@
 @implementation NewAudioReminderViewController
 
 #pragma 私有函数
-- (void)initNavBar {
-    UIBarButtonItem * leftItem;
-    leftItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(dismiss)];
-    UIFont *font = [UIFont systemFontOfSize:12.0];
-    NSValue * offset = [NSValue valueWithUIOffset:UIOffsetMake(0, 2)];
-    NSDictionary *attr = [[NSDictionary alloc] initWithObjectsAndKeys:font, UITextAttributeFont,RGBColor(0, 0, 0), UITextAttributeTextColor,[UIColor whiteColor],UITextAttributeTextShadowColor,offset,UITextAttributeTextShadowOffset,nil];
-    [leftItem setTitleTextAttributes:attr forState:UIControlStateNormal];
-    
-    self.navigationItem.leftBarButtonItem = leftItem;
-}
-
 - (void)dismiss {
     [[SoundManager defaultSoundManager] deleteAudioFile:self.reminder.audioUrl];
-    [self.navigationController dismissViewControllerAnimated:YES completion:^ {
-        //[[AppDelegate delegate] checkRemindersExpired];
-    }];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)saveReminder {
@@ -77,7 +64,8 @@
     [self initData];
     [super viewDidLoad];
     self.title = @"新建提醒";
-    [self initNavBar];
+    
+    [[GlobalFunction defaultInstance] initNavleftBarItemWithController:self withAction:@selector(dismiss)];
     
     [self updateTableFooterViewInCreateState];
 }
@@ -113,7 +101,7 @@
         }else {
             type = kUMengEventReminderParamAlarm;
         }
-        NSDate * tommrow = [[GlobalFunction defaultGlobalFunction] tomorrow];
+        NSDate * tommrow = [[GlobalFunction defaultInstance] tomorrow];
         if ([self.reminder.triggerTime compare:tommrow] == NSOrderedAscending) {
             date = kUMengEventReminderParamToady;
             [AppDelegate delegate].homeViewController.dataType = DataTypeToday;
@@ -127,9 +115,9 @@
     [MobClick event:event attributes:dict];
     
     [[AppDelegate delegate].homeViewController initDataWithAnimation:NO];
-    [self.navigationController dismissViewControllerAnimated:YES completion:^{
-        
-    }];
+    
+    
+    [self dissmissSettingView];
 }
 
 @end

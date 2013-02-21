@@ -228,7 +228,7 @@ typedef enum {
         if (nil == oriTriggerTime) {
              _draftRemindersSize--;
         }else {
-            NSDate * tomorrow = [[GlobalFunction defaultGlobalFunction] tomorrow];
+            NSDate * tomorrow = [[GlobalFunction defaultInstance] tomorrow];
             if ([oriTriggerTime compare:tomorrow] == NSOrderedAscending) {
                 _todayRemindersSize --;
             }
@@ -329,13 +329,14 @@ typedef enum {
         BOOL sign = NO;
         [self updateLocalNotificationWithReminder:reminder];
         if (ReminderTypeReceive == type) {
-//            NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
-//            [formatter setDateFormat:@"yyyy-MM-dd HH:mm:00"];
-//            NSString * strNowTime = [formatter stringFromDate:[NSDate date]];
-//            if ([[formatter dateFromString:strNowTime] compare:triggerTime] == NSOrderedAscending) {
+            // 测试时可以打开，可以设置过去时间的提醒。
+            NSDateFormatter * formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"yyyy-MM-dd HH:mm:00"];
+            NSString * strNowTime = [formatter stringFromDate:[NSDate date]];
+            if ([[formatter dateFromString:strNowTime] compare:triggerTime] == NSOrderedAscending) {
                 sign = YES;
                 reminder.isAlarm = [NSNumber numberWithBool:NO];
-//            }
+            }
         }
         
         [self updateRemindersSizeWithOriTime:reminder.triggerTime withNowTime:triggerTime withType:type];
