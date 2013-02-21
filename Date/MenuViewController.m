@@ -79,12 +79,12 @@ typedef enum {
 {
     [super viewDidLoad];
     [self initServerMode];
-    _rows = [[NSArray alloc] initWithObjects:@"今日提醒",@"未来提醒",@"已完成", nil];
+    _rows = [[NSArray alloc] initWithObjects:@"今日待办",@"即将到来",@"已完成", nil];
     _rowImages = [[NSArray alloc] initWithObjects:@"today", @"recently", @"history", nil];
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.rowHeight = 50.0;
+//    self.tableView.rowHeight = 50.0;
     _lastIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
     [self.tableView selectRowAtIndexPath:_lastIndexPath animated:NO scrollPosition:0];
 
@@ -138,11 +138,11 @@ typedef enum {
         cell = self.menuCell;
         _menuCell = nil;
         cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
-        cell.selectedBackgroundView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"sidebar_cellhighlighted_bg"]];
+        cell.selectedBackgroundView.backgroundColor = [UIColor lightGrayColor];
     }
 
     UILabel * labelTitle = (UILabel *)[cell viewWithTag:MenuCellTagTitle];
-    labelTitle.textColor = RGBColor(255, 255, 255);
+//    labelTitle.textColor = RGBColor(255, 255, 255);
     UIImageView * imageStart = (UIImageView *)[cell viewWithTag:MenuCellTagStar];
     UIImageView * imageSeparate = (UIImageView *)[cell viewWithTag:MenuCellTagSeparator];
     [imageStart setHidden:YES];
@@ -151,40 +151,29 @@ typedef enum {
     ReminderManager * reminderManager = [ReminderManager defaultManager];
     NSString * remindersSize;
     if (indexPath.row == 0) {
-        remindersSize = [NSString stringWithFormat:@" %d", reminderManager.draftRemindersSize];
+        remindersSize = [NSString stringWithFormat:@"%d", reminderManager.draftRemindersSize];
         labelTitle.text = LocalString(@"DraftBox");
-//        labelTitle.text = [labelTitle.text stringByAppendingString:remindersSize];
         labelCount.text = remindersSize;
-        
-//        [imageSeparate setHidden:NO];
     }
     else if (indexPath.row == 4){
         labelTitle.text = @"设置";
         [imageSeparate setHidden:YES];
         [labelCount setHidden:YES];
-    }/*else if (indexPath.row == 5) {
-        labelTitle.text = @"关于";
-        [imageSeparate setHidden:YES];
-    }*/else {
+    }else {
         labelTitle.text = [_rows objectAtIndex:indexPath.row - 1];
-//        if (indexPath.row != 3) {
             if (indexPath.row == 1) {
-                remindersSize = [NSString stringWithFormat:@" %d", reminderManager.todayRemindersSize];
-//                labelTitle.text = [labelTitle.text stringByAppendingString:remindersSize];
+                remindersSize = [NSString stringWithFormat:@"%d", reminderManager.todayRemindersSize];
                 labelCount.text = remindersSize;
-//                [imageStart setHidden:NO];
                 [imageSeparate setHidden:YES];
             }else if(indexPath.row == 2) {
-                remindersSize = [NSString stringWithFormat:@" %d", reminderManager.allRemindersSize];
-//                labelTitle.text = [labelTitle.text stringByAppendingString:remindersSize];
+                remindersSize = [NSString stringWithFormat:@"%d", reminderManager.futureRemindersSize];
                 labelCount.text = remindersSize;
-//                [imageSeparate setHidden:NO];
             }else if (indexPath.row == 3) {
-                [labelCount setHidden:YES];
+                // TODO 计算已完成比较耗时，可精简。
+                remindersSize = [NSString stringWithFormat:@"%d",
+                                 reminderManager.historyReminders.count];
+                labelCount.text = remindersSize;
             }
-//        }else {
-//            [imageSeparate setHidden:NO];
-//        }
     }
     
     if (_lastIndexPath.section == indexPath.section && _lastIndexPath.row == indexPath.row) {
@@ -216,9 +205,6 @@ typedef enum {
     
     cell = [tableView cellForRowAtIndexPath:_lastIndexPath];
     imageSeparate = (UIImageView *)[cell viewWithTag:MenuCellTagSeparator];
-    if (0 == _lastIndexPath.row || 2 == _lastIndexPath.row) {
-//        [imageSeparate setHidden:NO];
-    }
     
     cell = [tableView cellForRowAtIndexPath:indexPath];
     imageSeparate = (UIImageView *)[cell viewWithTag:MenuCellTagSeparator];
@@ -228,22 +214,10 @@ typedef enum {
     
     _lastIndexPath = indexPath;
     
-    if (4 == indexPath.row){
-        if (_settingViewController == nil) {
-            _settingViewController = [[SettingViewController alloc] initWithNibName:@"SettingViewController" bundle:nil];
-        }
-        [[AppDelegate delegate].navController pushViewController:_settingViewController animated:NO];
-    }if (5 == indexPath.row) {
-        if (_aboutUsViewController == nil) {
-            _aboutUsViewController = [[AboutUsViewController alloc] initWithNibName:@"AboutUsViewController" bundle:nil];
-        }
-        [[AppDelegate delegate].navController pushViewController:_aboutUsViewController animated:NO];
-    }else {
-        uint types[] = {DataTypeCollectingBox,DataTypeToday, DataTypeRecent, DataTypeHistory};
-        if ([AppDelegate delegate].homeViewController.dataType != types[indexPath.row]) {
-            [AppDelegate delegate].homeViewController.dataType = types[indexPath.row];
-            [[AppDelegate delegate].homeViewController initDataWithAnimation:YES];
-        }
+    uint types[] = {DataTypeCollectingBox,DataTypeToday, DataTypeRecent, DataTypeHistory};
+    if ([AppDelegate delegate].homeViewController.dataType != types[indexPath.row]) {
+        [AppDelegate delegate].homeViewController.dataType = types[indexPath.row];
+        [[AppDelegate delegate].homeViewController initDataWithAnimation:YES];
     }
     
     [[AppDelegate delegate].homeViewController restoreViewLocation];
