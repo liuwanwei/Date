@@ -136,9 +136,6 @@ typedef enum {
             }
         }
         
-        if ([data count] > 0) {
-            [self saveTimeline];
-        }
         NSNotification * notification = nil;
         notification = [NSNotification notificationWithName:kRemindesUpdateMessage object:nil];
         [[NSNotificationCenter defaultCenter] postNotification:notification];
@@ -493,6 +490,7 @@ typedef enum {
         if ([json isKindOfClass:[NSDictionary class]]) {
             NSString * status = [json objectForKey:@"status"];
             if ([status isEqualToString:@"success"]) {
+                [self saveTimeline];
                 id data = [json objectForKey:@"data"];
                 if ([data isKindOfClass:[NSArray class]]) {
                     [self saveRemotesReminders:data];
