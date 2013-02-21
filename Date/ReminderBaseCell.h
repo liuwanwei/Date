@@ -52,6 +52,7 @@ typedef enum {
 - (void)clickAudioButton:(NSIndexPath *)indexPath withReminder:(Reminder *)reminder;
 - (void)clickMapButton:(NSIndexPath *)indexPath withReminder:(Reminder *)reminder;
 - (void)clickFinishButton:(NSIndexPath *)indexPath withReminder:(Reminder *)reminder;
+- (void)clickDelButton:(NSIndexPath *)indexPath withReminder:(Reminder *)reminder;
 @end
 
 @interface ReminderBaseCell : UITableViewCell
@@ -87,6 +88,7 @@ typedef enum {
 - (IBAction)palyAudio:(UIButton *)sender;
 - (IBAction)showMap:(UIButton *)sender;
 - (IBAction)finish:(UIButton *)sender;
+- (IBAction)deleteReminder:(UIButton *)sender;
 
 - (void)modifyReminderReadState;
 - (NSString *)custumDayString:(NSDate *)date;
