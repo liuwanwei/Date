@@ -46,7 +46,7 @@ typedef enum {
 @property (weak, nonatomic) id<ReminderManagerDelegate> delegate;
 @property (nonatomic) NSInteger draftRemindersSize;
 @property (nonatomic) NSInteger todayRemindersSize;
-@property (nonatomic) NSInteger allRemindersSize;
+@property (nonatomic) NSInteger futureRemindersSize;
 
 + (ReminderManager *)defaultManager;
 
