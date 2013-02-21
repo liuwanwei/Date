@@ -114,7 +114,7 @@
     // 播放当前选中的声音。
     [soundManager playAlertSound:soundName];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:UINotificationRefreshCell object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:0], @"section", [NSNumber numberWithInt:2], @"row", nil]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:UINotificationRefreshCell object:self userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:0], @"section", [NSNumber numberWithInt:1], @"row", nil]];
 }
 
 @end
