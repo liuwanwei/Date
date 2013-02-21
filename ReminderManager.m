@@ -206,14 +206,14 @@ typedef enum {
             if (YES == sign) {
                 _todayRemindersSize ++;
             }else {
-                _allRemindersSize++;            }
+                _futureRemindersSize++;            }
         }else if (BadgeOperateSub == operate) {
             if (YES == sign && 0 != _todayRemindersSize) {
                 _todayRemindersSize --;
                 
             }else {
-                if (0 != _allRemindersSize) {
-                    _allRemindersSize --;
+                if (0 != _futureRemindersSize) {
+                    _futureRemindersSize --;
                 }
             }
             
@@ -232,7 +232,7 @@ typedef enum {
             if ([oriTriggerTime compare:tomorrow] == NSOrderedAscending) {
                 _todayRemindersSize --;
             }
-            _allRemindersSize++;
+            _futureRemindersSize++;
         }
     }else {
         [self updateRemindersSizeWith:oriTriggerTime withOperate:BadgeOperateSub];
@@ -695,11 +695,11 @@ typedef enum {
     results = [self executeFetchRequest:request];
     
     if (nil == results || results.count == 0) {
-        _allRemindersSize = 0;
+        _futureRemindersSize = 0;
         [self updateAppBadge];
         return nil;
     }else {
-        _allRemindersSize = [results count];
+        _futureRemindersSize = [results count];
     }
     [self updateAppBadge];
     return results;
@@ -726,11 +726,11 @@ typedef enum {
     results = [self executeFetchRequest:request];
     
     if (nil == results || results.count == 0) {
-        _allRemindersSize = 0;
+        _futureRemindersSize = 0;
         [self updateAppBadge];
         return nil;
     }else {
-        _allRemindersSize = [results count];
+        _futureRemindersSize = [results count];
     }
     [self updateAppBadge];
     return results;
@@ -850,7 +850,7 @@ typedef enum {
     if (AppBadgeModeToady == mode) {
         badgeSize = _todayRemindersSize;
     }else if (AppBadgeModeRecent == mode){
-        badgeSize = _allRemindersSize;
+        badgeSize = _futureRemindersSize;
     }
     
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badgeSize];
