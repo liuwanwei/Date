@@ -81,6 +81,11 @@
     return self;
 }
 
+- (void)checkParent{
+    CGRect frame = [[[AppDelegate delegate] window] rootViewController].view.frame;
+    NSLog(@"navigation frame: x=%f, y=%f", frame.origin.x, frame.origin.y);
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -98,6 +103,12 @@
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+    [self checkParent];
 }
 
 - (void)didReceiveMemoryWarning
