@@ -17,7 +17,7 @@ typedef enum {
     InfoModeText
 }InfoMode;
 
-@interface RemindersInboxViewController : RemindersBaseViewController<UITextFieldDelegate,EGORefreshTableHeaderDelegate, UIAlertViewDelegate,JTTableViewGestureEditingRowDelegate>
+@interface RemindersInboxViewController : RemindersBaseViewController<UITextFieldDelegate,EGORefreshTableHeaderDelegate, UIAlertViewDelegate,MYTableViewGestureSwipeRowDelegate>
 
 @property (nonatomic) DataType dataType;
 @property (weak, nonatomic) IBOutlet UIButton * btnMode;
@@ -32,6 +32,10 @@ typedef enum {
 - (IBAction)stopRecord:(id)sender;
 
 - (IBAction)showBottomMenuView:(id)sender;
+
+- (IBAction)finishReminder:(id)sender;
+- (IBAction)deleteReminder:(id)sender;
+- (IBAction)recoverReminder:(id)sender;
 
 - (void)initDataWithAnimation:(BOOL)animation;
 

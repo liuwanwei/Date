@@ -398,4 +398,12 @@
     }
 }
 
+- (IBAction)deleteReminder:(UIButton *)sender {
+    if (self.delegate != nil) {
+        if ([self.delegate respondsToSelector:@selector(clickDelButton: withReminder:)]) {
+            [self.delegate performSelector:@selector(clickDelButton: withReminder:) withObject:_indexPath withObject:_reminder];
+        }
+    }
+}
+
 @end
