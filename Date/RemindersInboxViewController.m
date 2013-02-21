@@ -47,6 +47,10 @@
     NSInteger _curGroupSize;
     
     JTTableViewGestureRecognizer * _tableViewRecognizer;
+    UIView * _swipeForFinishView;
+    UIView * _swipeForRecoverView;
+    
+    Reminder * _curReminder;
 }
 
 @end
@@ -60,6 +64,8 @@
 @synthesize toolbarView = _toolbarView;
 @synthesize labelPrompt = _labelPrompt;
 @synthesize viewBottomMenu = _viewBottomMenu;
+
+#define NeedDisplayPromptKey    @"NeedDisplayPromptKey"
 
 #pragma 私有函数
 - (void)addUserId:(NSNumber *)userId {
@@ -184,6 +190,9 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     [_toolbar setBackgroundImage:[UIImage imageNamed:@"navigationBarBg"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+    
+    _swipeForFinishView = [[[NSBundle mainBundle] loadNibNamed:@"TodayReminderCellBackgroundView" owner:self options:nil] objectAtIndex:0];
+    _swipeForRecoverView = [[[NSBundle mainBundle] loadNibNamed:@"HistoryReminderCellBackgroundView" owner:self options:nil] objectAtIndex:0];
 }
 
 - (void)addRefreshHeaderView {
@@ -200,9 +209,19 @@
     _refreshHeaderView = nil;
 }
 
+- (void)setSwipeView {
+    if (DataTypeHistory == _dataType) {
+        _tableViewRecognizer.sideSwipeView = _swipeForRecoverView;
+    }else {
+        _tableViewRecognizer.sideSwipeView = _swipeForFinishView;
+    }
+}
+
 #pragma 类成员函数
 - (void)initDataWithAnimation:(BOOL)animation {
     [_viewBottomMenu setHidden:NO];
+    [_tableViewRecognizer removeSideSwipeView:NO];
+    [self setSwipeView];
     [self addRefreshHeaderView];
     self.tableView.frame =CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width,self.view.frame.size.height - 44);
     if (DataTypeToday == _dataType) {
@@ -324,6 +343,7 @@
     [self initDataWithAnimation:YES];
     [self registerHandleMessage];
     [self initView];
+    [self setSwipeView];
     [self performSelector:@selector(computeRemindersSize) withObject:self afterDelay:0.5];
     if (YES == [_sinaWeiboManager.sinaWeibo isAuthValid]) {
         [_sinaWeiboManager requestBilateralFriends];
@@ -388,6 +408,48 @@
     }
 }
 
+- (IBAction)finishReminder:(id)sender {
+    if (nil != _curReminder) {
+        NSString * prompt = [[NSUserDefaults standardUserDefaults] objectForKey:NeedDisplayPromptKey];
+        if (nil == prompt || [prompt isEqualToString:@"YES"]) {
+            UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您可以左侧菜单中找到已完成的任务" delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:@"不再提示", nil];
+            [alert show];
+        }
+        
+        if ([_curReminder.state integerValue] == ReminderStateUnFinish) {
+            [self.reminderManager modifyReminder:_curReminder withState:ReminderStateFinish];
+        }
+        
+        [_tableViewRecognizer removeSideSwipeView:NO];
+        [[self.group objectForKey:[self.keys objectAtIndex:_curDeleteIndexPath.section]] removeObjectAtIndex:_curDeleteIndexPath.row];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:_curDeleteIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self clearGroup];
+        
+        [self performSelector:@selector(reloadData) withObject:self afterDelay:0.2];
+    }
+    
+}
+
+- (IBAction)deleteReminder:(id)sender {
+    if (nil != _curReminder) {
+        UIAlertView * alertView = [[UIAlertView alloc] initWithTitle:@"确定?" message:@"删除后不能恢复" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"删除", nil];
+        alertView.tag = 1;
+        [alertView show];
+    }
+}
+
+- (IBAction)recoverReminder:(id)sender {
+    if (nil != _curReminder) {
+        [self.reminderManager modifyReminder:_curReminder withState:ReminderStateUnFinish];
+        [_tableViewRecognizer removeSideSwipeView:NO];
+
+        [[self.group objectForKey:[self.keys objectAtIndex:_curDeleteIndexPath.section]] removeObjectAtIndex:_curDeleteIndexPath.row];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:_curDeleteIndexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [self clearGroup];
+        [self performSelector:@selector(reloadData) withObject:self afterDelay:0.2];
+    }
+}
+
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -414,12 +476,12 @@
     if (0 == section) {
         return 0;
     }
-    return 4;
+    return 2;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     NSInteger index = section % 5 + 1;
-    NSInteger height = 4;
+    NSInteger height = 2;
     NSString * imageName = [NSString stringWithFormat:@"sectionSeperator%d",index];
 //    if (DataTypeToday != _dataType) {
         UIImageView * imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
@@ -562,14 +624,11 @@
 - (void)deleteReminderSuccess:(Reminder *)reminder {
     [self.reminderManager deleteReminder:reminder];
     
-//    if (DataTypeHistory == _dataType) {
-//        [[self.group objectForKey:[self.keys objectAtIndex:_curDeleteIndexPath.section]] removeObjectAtIndex:_curGroupSize - _curDeleteIndexPath.row - 1];
-//    }else {
-        [[self.group objectForKey:[self.keys objectAtIndex:_curDeleteIndexPath.section]] removeObjectAtIndex:_curDeleteIndexPath.row];
-//    }
+
+     [_tableViewRecognizer removeSideSwipeView:NO];
+    [[self.group objectForKey:[self.keys objectAtIndex:_curDeleteIndexPath.section]] removeObjectAtIndex:_curDeleteIndexPath.row];
     
     [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:_curDeleteIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-    
     [[MBProgressManager defaultManager] removeHUD];
     [self clearGroup];
     [self performSelector:@selector(reloadData) withObject:self afterDelay:0.2];
@@ -591,28 +650,49 @@
     return YES;
 }
 
-#define NeedDisplayPromptKey    @"NeedDisplayPromptKey"
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 1) {
-        [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:NeedDisplayPromptKey];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+    if (1 == alertView.tag && buttonIndex != alertView.cancelButtonIndex) {
+        NSString * userId = [_curReminder.userID stringValue];
+        if ([userId isEqualToString:@"0"] ||
+            [_userManager.userID isEqualToString:userId]) {
+            [self.reminderManager deleteReminder:_curReminder];
+            
+            [_tableViewRecognizer removeSideSwipeView:NO];
+            [[self.group objectForKey:[self.keys objectAtIndex:_curDeleteIndexPath.section]] removeObjectAtIndex:_curDeleteIndexPath.row];
+            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:_curDeleteIndexPath] withRowAnimation:UITableViewRowAnimationRight];
+            [self clearGroup];
+            [self performSelector:@selector(reloadData) withObject:self afterDelay:0.2];
+        }else {
+            [self.reminderManager deleteReminderRequest:_curReminder];
+            [[MBProgressManager defaultManager] showHUD:@"删除中"];
+        }
+
+    }else {
+        if (buttonIndex == 1) {
+            [[NSUserDefaults standardUserDefaults] setObject:@"NO" forKey:NeedDisplayPromptKey];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
     }
 }
 
 #pragma mark - FriendReminderCell Delegate
-- (void)clickFinishButton:(NSIndexPath *)indexPath withReminder:(Reminder *)reminder {
-    NSString * prompt = [[NSUserDefaults standardUserDefaults] objectForKey:NeedDisplayPromptKey];
-    if (nil == prompt || [prompt isEqualToString:@"YES"]) {
-        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您可以左侧菜单中找到已完成的任务" delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:@"不再提示", nil];
-        [alert show];
-    }
-    
-    [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
-    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    [self clearGroup];
-    
-    [self performSelector:@selector(reloadData) withObject:self afterDelay:0.2];
-}
+//- (void)clickFinishButton:(NSIndexPath *)indexPath withReminder:(Reminder *)reminder {
+//    NSString * prompt = [[NSUserDefaults standardUserDefaults] objectForKey:NeedDisplayPromptKey];
+//    if (nil == prompt || [prompt isEqualToString:@"YES"]) {
+//        UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您可以左侧菜单中找到已完成的任务" delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:@"不再提示", nil];
+//        [alert show];
+//    }
+//    
+//    if ([reminder.state integerValue] == ReminderStateUnFinish) {
+//        [self.reminderManager modifyReminder:reminder withState:ReminderStateFinish];
+//    }
+//    
+//    [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
+//    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//    [self clearGroup];
+//    
+//    [self performSelector:@selector(reloadData) withObject:self afterDelay:0.2];
+//}
 
 #pragma mark -
 #pragma mark UIScrollViewDelegate Methods
@@ -675,71 +755,78 @@
     return _reloading;
 }
 
+#pragma mark MYTableViewGestureSwipeRowDelegate
+- (void)gestureRecognizer:(JTTableViewGestureRecognizer *)gestureRecognizer forRowAtIndexPath:(NSIndexPath *)indexPath {;
+    ReminderBaseCell * cell = (ReminderBaseCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    _curReminder = cell.reminder;
+    _curDeleteIndexPath = indexPath;
+}
+
 #pragma mark JTTableViewGestureEditingRowDelegate
 
-- (void)gestureRecognizer:(JTTableViewGestureRecognizer *)gestureRecognizer didEnterEditingState:(JTTableViewCellEditingState)state forRowAtIndexPath:(NSIndexPath *)indexPath forTranslation:(CGPoint)translation{
-    ReminderBaseCell * cell = (ReminderBaseCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    [cell setViewWithGestureState:state withTranslation:translation];
-}
-
-// This is needed to be implemented to let our delegate choose whether the panning gesture should work
-- (BOOL)gestureRecognizer:(JTTableViewGestureRecognizer *)gestureRecognizer canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-
-- (void)gestureRecognizer:(JTTableViewGestureRecognizer *)gestureRecognizer commitEditingState:(JTTableViewCellEditingState)state forRowAtIndexPath:(NSIndexPath *)indexPath  {
-    UITableView *tableView = gestureRecognizer.tableView;
-    ReminderBaseCell * cell = (ReminderBaseCell *)[tableView cellForRowAtIndexPath:indexPath];
-    Reminder * reminder = cell.reminder;
-    NSArray * reminders = [self.group objectForKey:[self.keys objectAtIndex:indexPath.section]];
-    _curGroupSize =  [reminders count];
-
-    if (state == JTTableViewCellEditingStateLeft) {
-        _curDeleteIndexPath = indexPath;
-        NSString * userId = [reminder.userID stringValue];
-        if ([userId isEqualToString:@"0"] ||
-            [_userManager.userID isEqualToString:userId]) {
-            [self.reminderManager deleteReminder:reminder];
-//            if (DataTypeHistory == _dataType) {
-//                [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:_curGroupSize - indexPath.row - 1];
-//            }else {
-                [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
-//            }
-            
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationRight];
-            [self clearGroup];
-            [self performSelector:@selector(reloadData) withObject:self afterDelay:0.2];
-        }else {
-            [self.reminderManager deleteReminderRequest:reminder];
-            [[MBProgressManager defaultManager] showHUD:@"删除中"];
-        }
-       
-    } else if (state == JTTableViewCellEditingStateRight) {
-        
-        if (DataTypeHistory == _dataType) {
-            [self.reminderManager modifyReminder:reminder withState:ReminderStateUnFinish];
-        }else {
-            NSString * prompt = [[NSUserDefaults standardUserDefaults] objectForKey:NeedDisplayPromptKey];
-            if (nil == prompt || [prompt isEqualToString:@"YES"]) {
-                UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您可以左侧菜单中找到已完成的任务" delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:@"不再提示", nil];
-                [alert show];
-            }
-            
-            if ([reminder.state integerValue] == ReminderStateUnFinish) {
-                [self.reminderManager modifyReminder:reminder withState:ReminderStateFinish];
-            }
-        }
-        
-//        if (DataTypeHistory == _dataType) {
-//            [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:_curGroupSize - indexPath.row - 1];
+//- (void)gestureRecognizer:(JTTableViewGestureRecognizer *)gestureRecognizer didEnterEditingState:(JTTableViewCellEditingState)state forRowAtIndexPath:(NSIndexPath *)indexPath forTranslation:(CGPoint)translation{
+//    ReminderBaseCell * cell = (ReminderBaseCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+//    [cell setViewWithGestureState:state withTranslation:translation];
+//}
+//
+//// This is needed to be implemented to let our delegate choose whether the panning gesture should work
+//- (BOOL)gestureRecognizer:(JTTableViewGestureRecognizer *)gestureRecognizer canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return YES;
+//}
+//
+//- (void)gestureRecognizer:(JTTableViewGestureRecognizer *)gestureRecognizer commitEditingState:(JTTableViewCellEditingState)state forRowAtIndexPath:(NSIndexPath *)indexPath  {
+//    UITableView *tableView = gestureRecognizer.tableView;
+//    ReminderBaseCell * cell = (ReminderBaseCell *)[tableView cellForRowAtIndexPath:indexPath];
+//    Reminder * reminder = cell.reminder;
+//    NSArray * reminders = [self.group objectForKey:[self.keys objectAtIndex:indexPath.section]];
+//    _curGroupSize =  [reminders count];
+//
+//    if (state == JTTableViewCellEditingStateLeft) {
+//        _curDeleteIndexPath = indexPath;
+//        NSString * userId = [reminder.userID stringValue];
+//        if ([userId isEqualToString:@"0"] ||
+//            [_userManager.userID isEqualToString:userId]) {
+//            [self.reminderManager deleteReminder:reminder];
+////            if (DataTypeHistory == _dataType) {
+////                [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:_curGroupSize - indexPath.row - 1];
+////            }else {
+//                [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
+////            }
+//            
+//            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationRight];
+//            [self clearGroup];
+//            [self performSelector:@selector(reloadData) withObject:self afterDelay:0.2];
 //        }else {
-            [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
+//            [self.reminderManager deleteReminderRequest:reminder];
+//            [[MBProgressManager defaultManager] showHUD:@"删除中"];
 //        }
-        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-        [self clearGroup];
-        [self performSelector:@selector(reloadData) withObject:self afterDelay:0.2];
-    }
-}
+//       
+//    } else if (state == JTTableViewCellEditingStateRight) {
+//        
+//        if (DataTypeHistory == _dataType) {
+//            [self.reminderManager modifyReminder:reminder withState:ReminderStateUnFinish];
+//        }else {
+//            NSString * prompt = [[NSUserDefaults standardUserDefaults] objectForKey:NeedDisplayPromptKey];
+//            if (nil == prompt || [prompt isEqualToString:@"YES"]) {
+//                UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您可以左侧菜单中找到已完成的任务" delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:@"不再提示", nil];
+//                [alert show];
+//            }
+//            
+//            if ([reminder.state integerValue] == ReminderStateUnFinish) {
+//                [self.reminderManager modifyReminder:reminder withState:ReminderStateFinish];
+//            }
+//        }
+//        
+////        if (DataTypeHistory == _dataType) {
+////            [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:_curGroupSize - indexPath.row - 1];
+////        }else {
+//            [[self.group objectForKey:[self.keys objectAtIndex:indexPath.section]] removeObjectAtIndex:indexPath.row];
+////        }
+//        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+//        [self clearGroup];
+//        [self performSelector:@selector(reloadData) withObject:self afterDelay:0.2];
+//    }
+//}
 
 
 @end
