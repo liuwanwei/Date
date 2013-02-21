@@ -79,7 +79,7 @@ typedef enum {
 {
     [super viewDidLoad];
     [self initServerMode];
-    _rows = [[NSArray alloc] initWithObjects:@"今日待办",@"即将到来",@"已完成", nil];
+    _rows = [[NSArray alloc] initWithObjects:kTodayReminder,kFutureReminder,kFinishedReminder, nil];
     _rowImages = [[NSArray alloc] initWithObjects:@"today", @"recently", @"history", nil];
     
     self.tableView.delegate = self;
