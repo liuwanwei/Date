@@ -210,7 +210,7 @@
 }
 
 - (void)setSwipeView {
-    if (DataTypeHistory == _dataType) {
+    if (DataTypeHistory == _dateType) {
         _tableViewRecognizer.sideSwipeView = _swipeForRecoverView;
     }else {
         _tableViewRecognizer.sideSwipeView = _swipeForFinishView;
