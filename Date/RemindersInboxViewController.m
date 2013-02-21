@@ -225,12 +225,12 @@
     [self addRefreshHeaderView];
     self.tableView.frame =CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width,self.view.frame.size.height - 44);
     if (DataTypeToday == _dateType) {
-        self.title = @"今日提醒";
+        self.title = kTodayReminder;
         self.reminders = [self.reminderManager todayUnFinishedReminders];
         [AppDelegate delegate].menuViewController.lastIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
         
     }else if (DataTypeRecent == _dateType) {
-        self.title = @"将来提醒";
+        self.title = kFutureReminder;
         self.reminders = [self.reminderManager futureReminders];
         [AppDelegate delegate].menuViewController.lastIndexPath = [NSIndexPath indexPathForRow:2 inSection:0];
     }else if (DataTypeCollectingBox == _dateType) {
@@ -238,7 +238,7 @@
         self.reminders = [self.reminderManager collectingBoxReminders];
         [AppDelegate delegate].menuViewController.lastIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     }else if (DataTypeHistory == _dateType) {
-        self.title = @"已完成";
+        self.title = kFinishedReminder;
         [self removeRefreshHeadView];
         [_viewBottomMenu setHidden:YES];
         self.tableView.frame =CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y, self.tableView.frame.size.width,self.view.frame.size.height);

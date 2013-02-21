@@ -146,16 +146,17 @@
             [_labelAudioTime setHidden:NO];
             _labelAudioTime.text = [[_reminder.audioLength stringValue] stringByAppendingString:@"''"];
         }else {
+            offset = 20;
             [_imageViewVoice setHidden:YES];
             [_labelAudioTime setHidden:YES];
         }
         
         if ([[UserManager defaultManager] isOneself:[_reminder.userID stringValue]]) {
             [_imageViewContact setHidden:YES];
-            _imageViewContact.frame = CGRectMake(_imageViewContactOriX - offset, 7 , 16, 16);
+            _imageViewContact.frame = CGRectMake(_imageViewContactOriX, 7 , 16, 16);
         }else {
             [_imageViewContact setHidden:NO];
-            _imageViewVoice.frame = CGRectMake(_imageViewContactOriX, 7 , 16, 16);
+            _imageViewContact.frame = CGRectMake(_imageViewContactOriX - offset, 7 , 16, 16);
         }
 
         _labelDescription.text = _reminder.desc;

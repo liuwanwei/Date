@@ -55,6 +55,9 @@
 #define kOneDayTimeDesc @"特定日期"
 #define kAlarmTimeDesc  @"闹铃提醒"
 #define kSave   @"保存"
+#define kTodayReminder  @"今日待办"
+#define kFutureReminder @"即将到来"
+#define kFinishedReminder @"已完成"
 
 #define kUMengAppKey @"5108901a52701578fc00007c"
 #define kUMengEventLaunchTimes @"launch_times"
