@@ -40,7 +40,6 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{14, 11}, {52, 40}}</string>
 						<reference key="NSSuperview" ref="754680605"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -89,7 +88,7 @@
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<double key="IBUITitleEdgeInsets.top">29</double>
 						<double key="IBUITitleEdgeInsets.bottom">0.0</double>
-						<double key="IBUITitleEdgeInsets.left">-7</double>
+						<double key="IBUITitleEdgeInsets.left">-8</double>
 						<double key="IBUITitleEdgeInsets.right">0.0</double>
 						<double key="IBUIImageEdgeInsets.top">-13</double>
 						<double key="IBUIImageEdgeInsets.bottom">0.0</double>
@@ -113,7 +112,7 @@
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
-					<bytes key="NSWhite">MAA</bytes>
+					<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
 				</object>
 				<object class="IBUIScreenMetrics" key="IBUISimulatedDestinationMetrics">
 					<string key="IBUISimulatedSizeMetricsClass">IBUIScreenMetrics</string>
@@ -220,7 +219,7 @@
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="check.png">{24, 20}</string>
-			<string key="cross.png">{17, 17}</string>
+			<string key="cross.png">{20, 20}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
