@@ -43,7 +43,7 @@
 							<object class="IBUILabel" id="622504328">
 								<reference key="NSNextResponder" ref="150124379"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{31, 14}, {149, 21}}</string>
+								<string key="NSFrame">{{10, 14}, {149, 21}}</string>
 								<reference key="NSSuperview" ref="150124379"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="169071642"/>
@@ -81,7 +81,7 @@
 							</object>
 							<object class="IBUIImageView" id="609089310">
 								<reference key="NSNextResponder" ref="150124379"/>
-								<int key="NSvFlags">292</int>
+								<int key="NSvFlags">-2147483356</int>
 								<string key="NSFrame">{{7, 16}, {18, 18}}</string>
 								<reference key="NSSuperview" ref="150124379"/>
 								<reference key="NSWindow"/>
@@ -116,7 +116,6 @@
 								<string key="NSFrame">{{175, 14}, {43, 21}}</string>
 								<reference key="NSSuperview" ref="150124379"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -252,17 +251,20 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">MenuViewController</string>
 					<string key="superclassName">UIViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">modifyServerMode:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">modifyServerMode:</string>
-						<object class="IBActionInfo" key="NS.object.0">
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="modifyServerMode:">id</string>
+						<string key="settingButtonClicked:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="modifyServerMode:">
 							<string key="name">modifyServerMode:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-					</object>
+						<object class="IBActionInfo" key="settingButtonClicked:">
+							<string key="name">settingButtonClicked:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="btnServerMode">UIButton</string>
 						<string key="menuCell">UITableViewCell</string>

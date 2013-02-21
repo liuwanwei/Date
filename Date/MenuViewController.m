@@ -16,11 +16,12 @@
 #import "LMLibrary.h"
 #import "GlobalFunction.h"
 #import "AboutUsViewController.h"
+#import "SettingViewController.h"
 
 typedef enum {
     MenuCellTagTitle = 1,
-    MenuCellTagStart,
-    MenuCellTagSeparate,
+    MenuCellTagStar,
+    MenuCellTagSeparator,
     MenuCellTagCount
 }MenuCellTag;
 
@@ -86,7 +87,7 @@ typedef enum {
     self.tableView.rowHeight = 50.0;
     _lastIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
     [self.tableView selectRowAtIndexPath:_lastIndexPath animated:NO scrollPosition:0];
-//    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"sidebar_background"]];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -109,6 +110,15 @@ typedef enum {
     [self initServerMode];
 }
 
+- (IBAction)settingButtonClicked:(id)sender{
+    SettingViewController * settingsVC = [[SettingViewController alloc] initWithNibName:@"SettingViewController" bundle:nil];
+    UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:settingsVC];
+    
+    [[GlobalFunction defaultInstance] customizeNavigationBar:nav.navigationBar];
+    UIViewController * controller = [[[AppDelegate delegate] window] rootViewController];
+    [controller presentViewController:nav animated:YES completion:nil];
+}
+
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -117,7 +127,7 @@ typedef enum {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -133,8 +143,8 @@ typedef enum {
 
     UILabel * labelTitle = (UILabel *)[cell viewWithTag:MenuCellTagTitle];
     labelTitle.textColor = RGBColor(255, 255, 255);
-    UIImageView * imageStart = (UIImageView *)[cell viewWithTag:MenuCellTagStart];
-    UIImageView * imageSeparate = (UIImageView *)[cell viewWithTag:MenuCellTagSeparate];
+    UIImageView * imageStart = (UIImageView *)[cell viewWithTag:MenuCellTagStar];
+    UIImageView * imageSeparate = (UIImageView *)[cell viewWithTag:MenuCellTagSeparator];
     [imageStart setHidden:YES];
     UILabel * labelCount = (UILabel *)[cell viewWithTag:MenuCellTagCount];
     
@@ -162,7 +172,7 @@ typedef enum {
                 remindersSize = [NSString stringWithFormat:@" %d", reminderManager.todayRemindersSize];
 //                labelTitle.text = [labelTitle.text stringByAppendingString:remindersSize];
                 labelCount.text = remindersSize;
-                [imageStart setHidden:NO];
+//                [imageStart setHidden:NO];
                 [imageSeparate setHidden:YES];
             }else if(indexPath.row == 2) {
                 remindersSize = [NSString stringWithFormat:@" %d", reminderManager.allRemindersSize];
@@ -205,13 +215,13 @@ typedef enum {
     UIImageView * imageSeparate;
     
     cell = [tableView cellForRowAtIndexPath:_lastIndexPath];
-    imageSeparate = (UIImageView *)[cell viewWithTag:MenuCellTagSeparate];
+    imageSeparate = (UIImageView *)[cell viewWithTag:MenuCellTagSeparator];
     if (0 == _lastIndexPath.row || 2 == _lastIndexPath.row) {
 //        [imageSeparate setHidden:NO];
     }
     
     cell = [tableView cellForRowAtIndexPath:indexPath];
-    imageSeparate = (UIImageView *)[cell viewWithTag:MenuCellTagSeparate];
+    imageSeparate = (UIImageView *)[cell viewWithTag:MenuCellTagSeparator];
     if (0 == indexPath.row || 2 == indexPath.row) {
         [imageSeparate setHidden:YES];
     }

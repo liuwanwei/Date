@@ -127,7 +127,7 @@
     _homeViewController = [[RemindersInboxViewController alloc] initWithNibName:@"RemindersInboxViewController" bundle:nil];
     _navController = [[UINavigationController alloc] initWithRootViewController:_homeViewController];
     
-    [[GlobalFunction defaultInstance] setNavigationBarBackgroundImage:_navController.navigationBar];
+    [[GlobalFunction defaultInstance] customizeNavigationBar:_navController.navigationBar];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
@@ -333,10 +333,10 @@
     if (buttonIndex == 0) {
         ReminderSettingViewController * controller = [ReminderSettingViewController createController:_alertedReminder withDateType:DataTypeToday];
         UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:controller];
-        [[GlobalFunction defaultInstance] setNavigationBarBackgroundImage:nav.navigationBar];
+        [[GlobalFunction defaultInstance] customizeNavigationBar:nav.navigationBar];
         [_navController presentViewController:nav animated:YES completion:nil];
         
-        // TODO 弹出界面关闭时，调用下面两行.
+        // TODO 弹出界面关闭时，调用下面两行，否则无法处理连续到期的提醒（延迟查看时）。
         _showingAlert = NO;
 //        [self checkRemindersExpired];
     }else{
