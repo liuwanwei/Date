@@ -14,7 +14,7 @@
 
 + (GlobalFunction *)defaultInstance;
 
-- (void)setNavigationBarBackgroundImage:(UINavigationBar *)navigationBar;
+- (void)customizeNavigationBar:(UINavigationBar *)navigationBar;
 
 - (IBAction)sharedBackItemClicked:(id)sender;
 - (void)initNavleftBarItemWithController:(UIViewController *)controller withAction:(SEL)action;

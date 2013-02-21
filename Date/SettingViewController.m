@@ -15,6 +15,8 @@
 #import "SettingSNSViewController.h"
 #import "SettingAlertSoundViewController.h"
 #import "AboutUsViewController.h"
+#import "AppDelegate.h"
+#import "RemindersInboxViewController.h"
 
 @interface SettingViewController () {
     NSArray * _otherInfo;
@@ -88,7 +90,8 @@
     [self initData];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    self.navigationController.navigationItem.hidesBackButton = YES;
+    
+    [[GlobalFunction defaultInstance] initNavleftBarItemWithController:self withAction:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTable:) name:UINotificationRefreshCell object:nil];
 }
