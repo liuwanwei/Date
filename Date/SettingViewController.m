@@ -114,7 +114,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
-        return 3;
+        return 2;
     }else{
         return 1;
     }
@@ -129,23 +129,24 @@
     }
     
     if (0 == indexPath.section) {
+//        if (0 == indexPath.row) {
+//            //cell.imageView.image = [UIImage imageNamed:@"sinaWeiboLogo"];
+//            cell.textLabel.text = LocalString(@"SettingAppSNSBinding");
+//            if (YES == [self isLogin]) {
+//                if (NO == [self isAuthValid]) {
+//                    cell.detailTextLabel.text = @"已过期";
+//                }else {
+//                    cell.detailTextLabel.text = @"已绑定";
+//                }
+//            }else {
+//                cell.detailTextLabel.text = @"未绑定";
+//            }
+//        }else if (1 == indexPath.row) {
         if (0 == indexPath.row) {
-            //cell.imageView.image = [UIImage imageNamed:@"sinaWeiboLogo"];
-            cell.textLabel.text = LocalString(@"SettingAppSNSBinding");
-            if (YES == [self isLogin]) {
-                if (NO == [self isAuthValid]) {
-                    cell.detailTextLabel.text = @"已过期";
-                }else {
-                    cell.detailTextLabel.text = @"已绑定";
-                }
-            }else {
-                cell.detailTextLabel.text = @"未绑定";
-            }
-        }else if (1 == indexPath.row) {
             //cell.imageView.image = [UIImage imageNamed:@"notification"];
             cell.textLabel.text = @"应用程序标记";
             cell.detailTextLabel.text = [_appBadgeSignRows objectAtIndex:_appBadgeMode];
-        }else if(2 == indexPath.row){
+        }else if(1 == indexPath.row){
             cell.textLabel.text = @"提醒声音";
             SoundManager * soundManager = [SoundManager defaultSoundManager];
             cell.detailTextLabel.text = [soundManager alertSoundTitleForType:soundManager.alertSound];
@@ -162,16 +163,17 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (0 == indexPath.section) {
+//        if (0 == indexPath.row) {
+//            SettingSNSViewController * controller = [[SettingSNSViewController alloc] initWithNibName:@"SettingSNSViewController" bundle:nil];
+//            controller.parentController = self;
+//            [self.navigationController pushViewController:controller animated:YES];
+//            
+//        }else if (1 == indexPath.row) {
         if (0 == indexPath.row) {
-            SettingSNSViewController * controller = [[SettingSNSViewController alloc] initWithNibName:@"SettingSNSViewController" bundle:nil];
-            controller.parentController = self;
-            [self.navigationController pushViewController:controller animated:YES];
-            
-        }else if (1 == indexPath.row) {
             SettingAppBadgeViewController * controller = [[SettingAppBadgeViewController alloc] initWithNibName:@"SettingAppBadgeViewController" bundle:nil];
             controller.parentController = self;
             [self.navigationController pushViewController:controller animated:YES];
-        }else if (2 == indexPath.row){
+        }else if (1 == indexPath.row){
             SettingAlertSoundViewController * contoller = [[SettingAlertSoundViewController alloc] initWithStyle:UITableViewStyleGrouped];
             [self.navigationController pushViewController:contoller animated:YES];
         }

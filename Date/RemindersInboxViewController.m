@@ -345,11 +345,11 @@
     [self initView];
     [self setSwipeView];
     [self performSelector:@selector(computeRemindersSize) withObject:self afterDelay:0.5];
-    if (YES == [_sinaWeiboManager.sinaWeibo isAuthValid]) {
-        [_sinaWeiboManager requestBilateralFriends];
-        [[BilateralFriendManager defaultManager] checkRegisteredFriendsRequest];
-        [self registerForRemoteNotification];
-    }
+//    if (YES == [_sinaWeiboManager.sinaWeibo isAuthValid]) {
+//        [_sinaWeiboManager requestBilateralFriends];
+//        [[BilateralFriendManager defaultManager] checkRegisteredFriendsRequest];
+//        [self registerForRemoteNotification];
+//    }
     
 }
 

@@ -123,7 +123,7 @@ typedef enum {
                     reminder.triggerTime = nil;
                 }else {
                     reminder.triggerTime = [dateFormatter dateFromString:triggerTime];
-                                            isBell = YES;
+                    isBell = YES;
                     reminder.isAlarm = [NSNumber numberWithBool:NO];
                     [self updateRemindersSizeWith:reminder.triggerTime withOperate:BadgeOperateAdd];
                 }
