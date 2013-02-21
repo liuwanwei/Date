@@ -38,7 +38,7 @@ static char UITopViewControllerKey;
     UIViewController * topVC = (UIViewController *)objc_getAssociatedObject(sender, &UITopViewControllerKey);
     
     if (topVC != nil) {
-        if (topVC.presentingViewController != nil) {
+        if (topVC.presentingViewController != nil && [self isRootNavigationViewController:topVC]) {
             [topVC dismissModalViewControllerAnimated:YES];
         }else{
             [topVC.navigationController popViewControllerAnimated:YES];

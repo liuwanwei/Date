@@ -41,7 +41,7 @@
     [self initData];
     self.title = @"关于我们";
     [self initMenuButton];
-//    self.navigationController.navigationItem.hidesBackButton = YES;
+
     [[GlobalFunction defaultInstance] initNavleftBarItemWithController:self withAction:nil];
 }
 
