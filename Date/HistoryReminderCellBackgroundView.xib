@@ -40,6 +40,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{14, 10}, {52, 40}}</string>
 						<reference key="NSSuperview" ref="822627652"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="859602581"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -82,6 +83,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{72, 10}, {52, 40}}</string>
 						<reference key="NSSuperview" ref="822627652"/>
+						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -89,7 +91,7 @@
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<double key="IBUITitleEdgeInsets.top">29</double>
 						<double key="IBUITitleEdgeInsets.bottom">0.0</double>
-						<double key="IBUITitleEdgeInsets.left">-7</double>
+						<double key="IBUITitleEdgeInsets.left">-8</double>
 						<double key="IBUITitleEdgeInsets.right">0.0</double>
 						<double key="IBUIImageEdgeInsets.top">-13</double>
 						<double key="IBUIImageEdgeInsets.bottom">0.0</double>
@@ -109,11 +111,12 @@
 				</array>
 				<string key="NSFrameSize">{320, 61}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="56699125"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
-					<int key="NSColorSpace">1</int>
-					<bytes key="NSRGB">MC44MTk2MDc4NDMxIDAuODE5NjA3ODQzMSAwLjgxOTYwNzg0MzEAA</bytes>
+					<int key="NSColorSpace">3</int>
+					<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
 				</object>
 				<object class="IBUIScreenMetrics" key="IBUISimulatedDestinationMetrics">
 					<string key="IBUISimulatedSizeMetricsClass">IBUIScreenMetrics</string>
@@ -213,14 +216,144 @@
 			<nil key="sourceID"/>
 			<int key="maxID">20</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">BaseViewController</string>
+					<string key="superclassName">UIViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">leftBarBtnTapped:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">leftBarBtnTapped:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">leftBarBtnTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/BaseViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">InsetsTextField</string>
+					<string key="superclassName">UITextField</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/InsetsTextField.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">RemindersBaseViewController</string>
+					<string key="superclassName">BaseViewController</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">tableView</string>
+						<string key="NS.object.0">UITableView</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">tableView</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">tableView</string>
+							<string key="candidateClassName">UITableView</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/RemindersBaseViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">RemindersInboxViewController</string>
+					<string key="superclassName">RemindersBaseViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="deleteReminder:">id</string>
+						<string key="finishReminder:">id</string>
+						<string key="recoverReminder:">id</string>
+						<string key="showBottomMenuView:">id</string>
+						<string key="startRecord:">id</string>
+						<string key="stopRecord:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="deleteReminder:">
+							<string key="name">deleteReminder:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="finishReminder:">
+							<string key="name">finishReminder:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="recoverReminder:">
+							<string key="name">recoverReminder:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="showBottomMenuView:">
+							<string key="name">showBottomMenuView:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="startRecord:">
+							<string key="name">startRecord:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="stopRecord:">
+							<string key="name">stopRecord:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="btnAudio">UIButton</string>
+						<string key="btnMode">UIButton</string>
+						<string key="labelPrompt">UILabel</string>
+						<string key="toolbar">UIToolbar</string>
+						<string key="toolbarView">UIView</string>
+						<string key="txtDesc">InsetsTextField</string>
+						<string key="viewBottomMenu">UIView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="btnAudio">
+							<string key="name">btnAudio</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="btnMode">
+							<string key="name">btnMode</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="labelPrompt">
+							<string key="name">labelPrompt</string>
+							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="toolbar">
+							<string key="name">toolbar</string>
+							<string key="candidateClassName">UIToolbar</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="toolbarView">
+							<string key="name">toolbarView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="txtDesc">
+							<string key="name">txtDesc</string>
+							<string key="candidateClassName">InsetsTextField</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="viewBottomMenu">
+							<string key="name">viewBottomMenu</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/RemindersInboxViewController.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="check.png">{24, 20}</string>
-			<string key="cross.png">{17, 17}</string>
+			<string key="cross.png">{20, 20}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>
