@@ -8,6 +8,7 @@
 
 #import "GlobalFunction.h"
 #import "LMLibrary.h"
+#import "AppDelegate.h"
 #import <objc/runtime.h>
 
 static GlobalFunction * sGlobalFunction;
@@ -39,7 +40,10 @@ static char UITopViewControllerKey;
     
     if (topVC != nil) {
         if (topVC.presentingViewController != nil && [self isRootNavigationViewController:topVC]) {
-            [topVC dismissModalViewControllerAnimated:YES];
+            UIViewController * vc = [[[AppDelegate delegate] window] rootViewController];
+            CGRect frame = vc.view.frame;
+            NSLog(@"SettingVC %@: x=%f, y=%f", @"back", frame.origin.x, frame.origin.y);
+            [vc dismissViewControllerAnimated:YES completion:nil];
         }else{
             [topVC.navigationController popViewControllerAnimated:YES];
         }

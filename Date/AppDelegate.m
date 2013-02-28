@@ -37,6 +37,7 @@
 @synthesize menuViewController = _menuViewController;
 @synthesize window = _window;
 @synthesize homeViewController = _homeViewController;
+@synthesize revealSideViewController = _revealSideViewController;
 
 #pragma 私有函数
 - (void)showRemindersNotificationViewControllerWithReminders:(Reminder *)reminder{
@@ -102,15 +103,6 @@
 }
 
 #pragma 类成员函数
-- (void)makeMenuViewVisible {
-    /*_navController.view.layer.shadowColor = [UIColor blackColor].CGColor;
-    _navController.view.layer.shadowOpacity = 0.4f;
-    _navController.view.layer.shadowOffset = CGSizeMake(-12.0, 1.0f);
-    _navController.view.layer.shadowRadius = 7.0f;
-    _navController.view.layer.masksToBounds = NO;*/
-    [_menuViewController setVisible:YES];
-    [_menuViewController.tableView reloadData];
-}
 
 +(AppDelegate *)delegate{
     AppDelegate * delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -127,17 +119,19 @@
     _homeViewController = [[RemindersInboxViewController alloc] initWithNibName:@"RemindersInboxViewController" bundle:nil];
     _navController = [[UINavigationController alloc] initWithRootViewController:_homeViewController];
     
+    _revealSideViewController = [[PPRevealSideViewController alloc] initWithRootViewController:_navController];
+    
     [[GlobalFunction defaultInstance] customizeNavigationBar:_navController.navigationBar];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     _menuViewController = [[MenuViewController alloc] initWithNibName:@"MenuViewController" bundle:nil];
-    _menuViewController.view.frame = CGRectMake(0, 20, 320, self.window.frame.size.height);
+//    _menuViewController.view.frame = CGRectMake(0, 20, 320, self.window.frame.size.height);
     
-    self.window.rootViewController = _navController;
-    [self.window addSubview:_menuViewController.view];
+    self.window.rootViewController = _revealSideViewController;
+//    [self.window addSubview:_menuViewController.view];
     
-    [_menuViewController setVisible:NO];
+//    _menuViewController.view.hidden = YES;
     [self.window makeKeyAndVisible];
     
     [[NSNotificationCenter defaultCenter] addObserver:self

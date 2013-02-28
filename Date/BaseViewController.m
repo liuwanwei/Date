@@ -8,6 +8,7 @@
 
 #import "BaseViewController.h"
 #import "AppDelegate.h"
+#import "PPRevealSideViewController.h"
 
 @interface BaseViewController ()
 
@@ -53,7 +54,7 @@
                      completion:^(BOOL finished){
                          UIControl *overView = (UIControl *)[[[UIApplication sharedApplication] keyWindow] viewWithTag:10086];
                          [overView removeFromSuperview];
-                         [[AppDelegate delegate].menuViewController setVisible:NO];
+                         [AppDelegate delegate].menuViewController.view.hidden = YES;
                      }];
 }
 
@@ -99,7 +100,19 @@
 }
 
 - (IBAction)leftBarBtnTapped:(id)sender {
-    [[AppDelegate delegate] makeMenuViewVisible];
+    MenuViewController * menuVC = [AppDelegate delegate].menuViewController;
+    PPRevealSideViewController * revealVC = [[AppDelegate delegate] revealSideViewController];
+    [revealVC pushViewController:menuVC onDirection:PPRevealSideDirectionLeft animated:YES];
+    
+    
+    return;
+   
+    if (menuVC.view.hidden) {
+        menuVC.view.hidden = NO;
+    }
+    
+    [menuVC.tableView reloadData];
+    
     [self moveToRightSide];
 }
 

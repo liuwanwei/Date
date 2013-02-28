@@ -18,6 +18,4 @@
 - (IBAction)modifyServerMode:(id)sender;
 - (IBAction)settingButtonClicked:(id)sender;
 
-- (void)setVisible:(BOOL)visible;
-
 @end
