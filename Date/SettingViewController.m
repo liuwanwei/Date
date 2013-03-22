@@ -81,6 +81,18 @@
     return self;
 }
 
+- (void)checkParent:(NSString *)msg{
+//    UINavigationController * nav = [[AppDelegate delegate] navController];
+    UIWindow * window = [[AppDelegate delegate] window];
+    CGRect frame = window.rootViewController.view.frame;
+    NSLog(@"SettingVC %@: x=%f, y=%f", msg, frame.origin.x, frame.origin.y);
+}
+
+- (void)tmpBack{
+    [self checkParent:@"back"];
+    [self.parentViewController dismissModalViewControllerAnimated:YES];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -98,6 +110,34 @@
 
 - (void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+    [self checkParent:@"appear"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self checkParent:@"willDisappear"];
+//    [self test];
+}
+
+- (void)test{
+    UINavigationController * nav = [AppDelegate delegate].navController;
+    CGRect rect = CGRectMake(220.0f,
+                             nav.view.frame.origin.y,
+                             nav.view.frame.size.width,
+                             nav.view.frame.size.height);
+    
+    [AppDelegate delegate].window.rootViewController.view.frame = rect;
+}
+
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [self checkParent:@"didDisappear"];
+//    [self test];
 }
 
 - (void)didReceiveMemoryWarning
