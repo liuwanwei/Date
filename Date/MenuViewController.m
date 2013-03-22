@@ -52,9 +52,6 @@ typedef enum {
 }
 
 #pragma 类成员函数
-- (void)setVisible:(BOOL)visible {
-    self.view.hidden = !visible;
-}
 
 - (void)initServerMode {
     _serverMode = [[HttpRequestManager defaultManager] serverMode];
@@ -115,8 +112,10 @@ typedef enum {
     UINavigationController * nav = [[UINavigationController alloc] initWithRootViewController:settingsVC];
     
     [[GlobalFunction defaultInstance] customizeNavigationBar:nav.navigationBar];
-    UIViewController * controller = [[[AppDelegate delegate] window] rootViewController];
-    [controller presentViewController:nav animated:YES completion:nil];
+//    UIViewController * controller = [[[AppDelegate delegate] window] rootViewController];
+//    nav.modalPresentationStyle = UIModalPresentationFormSheet;
+//    RemindersInboxViewController * inbox = [[AppDelegate delegate] homeViewController];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 #pragma mark - Table view data source

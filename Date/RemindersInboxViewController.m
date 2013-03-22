@@ -353,12 +353,28 @@
     
 }
 
+- (void)checkParent:(NSString *)msg{
+//    UINavigationController * nav = [[AppDelegate delegate] navController];
+    UIWindow * window = [[AppDelegate delegate] window];
+    CGRect frame = window.rootViewController.view.frame;
+    NSLog(@"InBox %@: x=%f, y=%f", msg, frame.origin.x, frame.origin.y);
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+//    [self checkParent:@"willAppear"];
+//    CGRect frame = CGRectMake(220.0f,
+//               self.navigationController.view.frame.origin.y,
+//               self.navigationController.view.frame.size.width,
+//                              self.navigationController.view.frame.size.height);
+//    [[[AppDelegate delegate] window] rootViewController].view.frame = frame;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    
+//    [self checkParent:@"willDisappear"];
 }
 
 - (void)didReceiveMemoryWarning
